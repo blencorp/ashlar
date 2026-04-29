@@ -30,7 +30,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - run: pnpm build
-      - run: node packages/cli/dist/index.js audit --policy federal --sarif examples/plain-html/index.html examples/vite/index.html > ashlar.sarif
+      - run: node packages/cli/dist/index.js audit --policy federal --sarif examples/plain-html/index.html > ashlar.sarif
 
       - uses: actions/upload-artifact@v4
         if: always()

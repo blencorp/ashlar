@@ -3,14 +3,41 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ashlar Plain HTML Example</title>
+    <title>Apply for federal benefits | Ashlar Plain HTML Example</title>
+    <meta
+      name="description"
+      content="Reference federal page shell rendered as plain HTML, demonstrating the Ashlar Button capsule plus banner and identifier compliance with current Federal Web Standards."
+    >
     <link rel="stylesheet" href="./src/button.css">
   </head>
   <body>
+    <!-- Federal banner — placed at top of body to satisfy Federal Web Standards (pending). -->
+    <section class="ashlar-banner" aria-label="Official website of the United States government"></section>
+
     <main>
+      <h1>Apply for federal benefits</h1>
+      <p>
+        This is the Ashlar plain HTML example. It demonstrates the L0 Button
+        capsule and renders a federal-compliant page shell that passes
+        <code>ashlar audit --policy federal</code>.
+      </p>
       <button class="ashlar-button" data-variant="primary" type="button">
         Apply
       </button>
     </main>
+
+    <!--
+      Identifier with the seven required links per USWDS / M-23-22 trust-marker guidance:
+      About, Accessibility, FOIA, No FEAR Act, Office of Inspector General, Performance, Privacy.
+    -->
+    <footer class="ashlar-identifier">
+      <a href="/about">About this example agency</a>
+      <a href="/accessibility">Accessibility statement</a>
+      <a href="/foia">FOIA requests</a>
+      <a href="/no-fear-act">No FEAR Act data</a>
+      <a href="/inspector-general">Office of Inspector General</a>
+      <a href="/performance">Performance reports</a>
+      <a href="/privacy">Privacy policy</a>
+    </footer>
   </body>
 </html>

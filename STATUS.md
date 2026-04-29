@@ -22,8 +22,8 @@ These are wired up, tested, and run as documented.
 - `registry/index.json` — local source of truth for registry discovery.
 - `registry/components/button/0.0.1/` — one capsule with `button.css`, `button.html`, `button.cem.json`, `button.evidence.json`. Status: `experimental`, evidence `not-reviewed`.
 - CI workflow — runs `pnpm check`, `pnpm build`, an `ashlar audit --sarif` step (currently audits no files; see Known Gaps), and uploads SARIF as an artifact and to GitHub Code Scanning when available.
-- `examples/plain-html/` — minimal static demo using the Button CSS directly.
-- `examples/vite/` — theme switching workbench across Federal, VA, and USDA themes with light/dark/system modes; consumes the generated `ashlar.css` entrypoint and `components.json` index.
+- `examples/plain-html/` — federal-compliant reference page shell (banner, identifier with required links, page title, meta description) demonstrating the Button capsule. Used as the CI audit target; passes `audit --policy federal` with zero findings.
+- `examples/vite/` — theme switching *workbench* across Federal, VA, and USDA themes with light/dark/system modes; consumes the generated `ashlar.css` entrypoint and `components.json` index. Not a federal page shell and not subject to federal audit in CI.
 
 ## Experimental (in code, not stable)
 
@@ -67,14 +67,15 @@ These are what the v0.0 gate requires before public alpha. Each is a slice spec 
 
 These are tracked failures that should be fixed before public launch. They are not the same as planned-but-unbuilt features above; they are mistakes or shortcuts that need correction.
 
-- `hasClassToken` (in `packages/cli/src/lib/html.ts:44`) uses substring matching; `class="ashlar-banner-secondary"` matches `hasClassToken(node, "ashlar-banner")`. Fix: use whole-token equality.
-- Vite example (`examples/vite/index.html`) lacks a federal banner and identifier; running `audit --policy federal` would emit ~9 warnings. Either make the example compliant or annotate it as the audit's punching bag.
-- CI workflow runs `audit --sarif` without `--policy federal`, producing always-empty SARIF. Fix: target the example HTML files explicitly with `--policy federal`.
-- SARIF output (`packages/cli/src/lib/sarif.ts`) emits `physicalLocation.artifactLocation.uri` only; no `region`. parse5 carries source offsets that should be threaded through.
-- AGENTS.md template references "Link" component which does not exist.
-- `ashlar.config.json` declares `$schema: "https://ashlar.dev/schemas/config.schema.json"` but no such schema file exists in `packages/schemas/src/`.
-- Token namespace inconsistency between `architecture/overview.md` (`--ashlar-action-primary-bg`) and `architecture/tokens.md` (`--ashlar-color-action-primary-bg`); pin the canonical form.
-- `radius.control` is consumed by the Button CEM but not defined in `architecture/tokens.md`.
+- ~~`hasClassToken` substring match~~ **Fixed 2026-04-29**: whole-token equality, regression test added.
+- ~~Vite example failing its own audit~~ **Reframed 2026-04-29**: `examples/plain-html/` is now the federal-compliant CI audit target; vite is explicitly a theme workbench, not a federal page.
+- ~~CI workflow always-empty SARIF~~ **Fixed 2026-04-29**: CI runs `audit --policy federal --sarif examples/plain-html/index.html`.
+- ~~AGENTS.md references nonexistent Link~~ **Fixed 2026-04-29**.
+- SARIF output (`packages/cli/src/lib/sarif.ts`) emits `physicalLocation.artifactLocation.uri` only; no `region`. parse5 carries source offsets that should be threaded through. **Slice 2 (validator wedge) work.**
+- `ashlar.config.json` declares `$schema: "https://ashlar.dev/schemas/config.schema.json"` but no such schema file exists in `packages/schemas/src/`. **Slice 2 work.**
+- Token namespace inconsistency between `architecture/overview.md` (`--ashlar-action-primary-bg`) and `architecture/tokens.md` (`--ashlar-color-action-primary-bg`); pin the canonical form. **Slice 6 (token pipeline) work.**
+- `radius.control` is consumed by the Button CEM but not defined in `architecture/tokens.md`. **Slice 6 work.**
+- Governance doc reads as if multi-organization maintenance and funded maintainer line already exist; soften to "will" / "is committed to" until those conditions are met. **GitHub-launch-readiness gate work.**
 
 ## Documentation factual corrections applied 2026-04-29
 
