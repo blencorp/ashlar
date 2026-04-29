@@ -565,6 +565,9 @@ git commit -m "docs: enrich button capsule metadata"
 - Modify: `README.md`
 - Modify: `docs/README.md`
 - Modify: `docs/roadmap/01-v0.0-foundation.md`
+- Modify: `packages/cli/src/commands/init.ts`
+- Create: `packages/cli/src/commands/design.ts`
+- Modify: `packages/cli/src/index.ts`
 
 - [ ] **Step 1: Add next-slice command examples**
 
@@ -574,9 +577,50 @@ Add examples for:
 npx ashlar search button
 npx ashlar view button
 npx ashlar audit --policy federal --explain
+npx ashlar design sync
 ```
 
-- [ ] **Step 2: Run full verification**
+- [ ] **Step 2: Add DESIGN.md generation**
+
+Update `packages/cli/src/commands/init.ts` so `ashlar init` writes a root `DESIGN.md` next to `AGENTS.md`. The file is an agent-facing export generated from Ashlar's default tokens and rules, not the canonical token source.
+
+Use this first template:
+
+```md
+---
+name: Ashlar Default
+description: Government-first, evidence-backed public-service UI system.
+colors:
+  action-primary: "#005EA8"
+  focus-ring: "#2491FF"
+typography:
+  body:
+    fontFamily: Public Sans
+    fontSize: 1rem
+spacing:
+  md: 16px
+rounded:
+  control: 6px
+---
+
+## Overview
+
+Use a restrained, trustworthy civic interface. Prioritize clarity, plain language, visible focus, and resilient layouts over novelty.
+
+## Do's and Don'ts
+
+- Do use Ashlar tokens and installed components.
+- Do preserve focus indicators and forced-colors behavior.
+- Do keep forms dense enough for repeat use but readable at 200% zoom.
+- Do not invent brand colors outside the agency theme.
+- Do not remove focus-visible styles.
+```
+
+- [ ] **Step 3: Add `ashlar design sync` command**
+
+Create `packages/cli/src/commands/design.ts` with a `design sync` subcommand that rewrites `DESIGN.md` from the same template for v0.0. Register it in `packages/cli/src/index.ts`.
+
+- [ ] **Step 4: Run full verification**
 
 Run:
 
@@ -589,6 +633,7 @@ pnpm build
 node packages/cli/dist/index.js search button
 node packages/cli/dist/index.js view button
 node packages/cli/dist/index.js audit --policy federal --sarif > ashlar.sarif
+node packages/cli/dist/index.js design sync
 ```
 
 Expected:
@@ -596,9 +641,9 @@ Expected:
 - Format, check, and build pass.
 - CLI commands work.
 
-- [ ] **Step 3: Commit**
+- [ ] **Step 5: Commit**
 
 ```bash
-git add README.md docs/README.md docs/roadmap/01-v0.0-foundation.md
-git commit -m "docs: document standards evidence slice"
+git add README.md docs/README.md docs/roadmap/01-v0.0-foundation.md packages/cli/src/commands/init.ts packages/cli/src/commands/design.ts packages/cli/src/index.ts
+git commit -m "feat: scaffold design md context"
 ```

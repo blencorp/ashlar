@@ -163,6 +163,11 @@ This document is the master index. Topic-specific sources are also cited inline 
 
 ## AI-native distribution
 
+- Google Labs DESIGN.md: https://github.com/google-labs-code/design.md
+- Google Labs Stitch design-md skill: https://github.com/google-labs-code/stitch-skills/tree/main/skills/design-md
+- Google Stitch DESIGN.md docs: https://stitch.withgoogle.com/docs/design-md/overview
+- Google Stitch announcement: https://blog.google/innovation-and-ai/models-and-research/google-labs/stitch-ai-ui-design/
+- DESIGN.md community library: https://designmd.ai/
 - shadcn/ui docs: https://ui.shadcn.com/docs
 - shadcn registry-item.json: https://ui.shadcn.com/docs/registry/registry-item-json
 - shadcn MCP docs: https://ui.shadcn.com/docs/mcp

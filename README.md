@@ -98,6 +98,7 @@ See [docs/roadmap/00-roadmap.md](docs/roadmap/00-roadmap.md) and [docs/roadmap/g
 - [Compliance, security, and CI tooling](docs/architecture/compliance-security-ci.md)
 - [Final research pass](docs/research/07-final-research-2026-04-29.md)
 - [Gap analysis](docs/research/08-gap-analysis-2026-04-29.md)
+- [DESIGN.md research note](docs/research/09-design-md-2026-04-29.md)
 - [Governance model](docs/governance/00-governance-model.md)
 - [v0 foundation implementation plan](docs/superpowers/plans/2026-04-29-ashlar-v0-foundation.md)
 - [v0 standards and evidence slice plan](docs/superpowers/plans/2026-04-29-v0-0-standards-evidence-slice.md)
