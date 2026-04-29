@@ -2,7 +2,7 @@
 
 Ashlar uses **ast-grep** with **tree-sitter** grammars as the validator engine. The same YAML rule validates component usage across the languages where ast-grep has real coverage today.
 
-> **Status (2026-04-29)**: only the federal HTML policy pack (parser-backed via parse5) ships in slice 1. ast-grep integration and component-anti-pattern checks land in [v0.0 slice 2 — the validator wedge](../superpowers/specs/2026-04-29-v0-0-validator-wedge-spec.md). The support matrix below is the *target* state at v0.0 GATE, not what ships today. See [STATUS.md](../../STATUS.md).
+> **Status (2026-04-29)**: federal HTML policy (parser-backed via parse5) shipped in slice 1; ast-grep integration via `@ast-grep/napi` and the CEM-to-rule compiler (`audit --policy components`, `--policy all`) shipped in slice 2. The support matrix below describes coverage as of slice 2: HTML, TSX, JSX, and CSS are wired; Vue/Svelte/Astro/ERB are documented for opt-in via custom-language registration (CLI hook lands in a follow-up); Twig/Jinja/Nunjucks return `language-unsupported` cleanly. See [STATUS.md](../../STATUS.md) for the live truth table.
 
 This document specifies the rule format, rule generation from CEM, integration patterns, and the **honest** support matrix — what works first-party, what is opt-in via custom-language registration, and what is currently unsupported.
 
