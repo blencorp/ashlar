@@ -154,11 +154,19 @@ jobs:
       - run: npx ashlar theme validate
       - run: npx ashlar evidence --check
       - run: npx ashlar audit --severity error --sarif > ashlar.sarif
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-sarif
+          path: ashlar.sarif
       - uses: github/codeql-action/upload-sarif@v4
         if: always()
+        continue-on-error: true
         with:
           sarif_file: ashlar.sarif
 ```
+
+`upload-sarif` requires GitHub Code Security/code scanning to be enabled for the repository. Keep the artifact upload as the portable fallback, and make code-scanning upload non-blocking unless the repository is configured to require it.
 
 ## Security model
 

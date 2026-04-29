@@ -746,8 +746,14 @@ jobs:
       - run: pnpm test
       - run: pnpm build
       - run: pnpm --silent ashlar audit --sarif > ashlar.sarif
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-sarif
+          path: ashlar.sarif
       - uses: github/codeql-action/upload-sarif@v4
         if: always()
+        continue-on-error: true
         with:
           sarif_file: ashlar.sarif
 ```

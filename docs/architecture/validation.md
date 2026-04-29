@@ -153,11 +153,15 @@ Fails commit if any error-level rule fires on staged files.
 # .github/workflows/ci.yml
 - name: Ashlar audit
   run: npx ashlar audit --severity error --output sarif > ashlar.sarif
+- uses: actions/upload-artifact@v4
+  if: always()
+  with: { name: ashlar-sarif, path: ashlar.sarif }
 - uses: github/codeql-action/upload-sarif@v4
+  continue-on-error: true
   with: { sarif_file: ashlar.sarif }
 ```
 
-SARIF output integrates with GitHub Code Scanning, GitLab, and other CI systems.
+SARIF output integrates with GitHub Code Scanning, GitLab, and other CI systems. GitHub Code Scanning upload requires Code Security to be enabled on the repository, so CI should keep a SARIF artifact fallback.
 
 ### Optional ESLint shim
 
