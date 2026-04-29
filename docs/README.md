@@ -23,8 +23,10 @@ The work is led by engineers at [Blen](https://blencorp.com) with the intent to 
 9. [`roadmap/00-roadmap.md`](./roadmap/00-roadmap.md) — phased delivery plan and success gates.
 10. [`roadmap/github-launch.md`](./roadmap/github-launch.md) — public GitHub launch checklist, milestones, and labels.
 11. [`research/`](./research/) — the body of research informing design decisions, including the final April 29, 2026 current-source pass.
-12. [`governance/`](./governance/) — community model and contribution rules.
-13. [`examples/`](./examples/) — concrete schema examples.
+12. [`research/08-gap-analysis-2026-04-29.md`](./research/08-gap-analysis-2026-04-29.md) — gap analysis and next roadmap correction.
+13. [`superpowers/plans/2026-04-29-v0-0-standards-evidence-slice.md`](./superpowers/plans/2026-04-29-v0-0-standards-evidence-slice.md) — next implementation slice.
+14. [`governance/`](./governance/) — community model and contribution rules.
+15. [`examples/`](./examples/) — concrete schema examples.
 
 ## What problem this solves
 

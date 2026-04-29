@@ -11,7 +11,7 @@ This document specifies the engineering target, the evidence packet schema, the 
 Legal baselines are documented separately:
 
 - **Section 508** (federal procurement and federal agencies) — incorporates **WCAG 2.0 AA** by reference.
-- **ADA Title II** (state and local government, public-facing web/mobile) — references **WCAG 2.1 AA**.
+- **ADA Title II** (state and local government, public-facing web/mobile) — references **WCAG 2.1 AA**. As of the current ADA.gov fact sheet reviewed on April 29, 2026, compliance dates are April 26, 2027 for governments with total population of 50,000 or more, and April 26, 2028 for governments below 50,000 and special district governments.
 - **European Accessibility Act** (private sector serving EU consumers, enforced June 2025) — references **WCAG 2.1 AA** via EN 301 549.
 
 Targeting 2.2 future-proofs the system without overpromising compliance for any single regime. Compliance language in docs explicitly disclaims that component-level support guarantees application-level compliance.
@@ -69,6 +69,15 @@ Every stable component ships `*.evidence.json`:
       "title": "Name, Role, Value",
       "status": "pass",
       "evidence": "tests/aria.spec.ts manual-screen-reader.md"
+    }
+  ],
+
+  "baselineTests": [
+    {
+      "source": "Section 508 ICT Testing Baseline for Web",
+      "test": "Keyboard Accessible",
+      "status": "pass",
+      "evidence": "tests/keyboard.spec.ts manual-screen-reader.md"
     }
   ],
 
@@ -151,6 +160,7 @@ Required for every component (proposal/experimental status onwards):
 - Token contrast validation (`ashlar theme validate` against defaults).
 - Forced-colors render checks.
 - Reduced-motion render checks where animation is used.
+- Section 508 ICT Baseline mapping where the baseline includes an applicable test.
 
 ## Manual test matrix
 
@@ -220,14 +230,15 @@ Files within a capsule that affect accessibility behavior are tagged `critical_f
 A component cannot be marked `stable` without:
 
 1. Complete `*.evidence.json` with all required WCAG criteria addressed.
-2. At least three manual screen-reader tests recorded (NVDA, VoiceOver, one of JAWS/TalkBack).
-3. Automated axe results showing zero violations.
-4. Playwright keyboard tests passing.
-5. Forced-colors render check passing.
-6. Token contrast validation against the default theme.
-7. CEM `_ashlar.antiPatterns` populated for known misuse vectors.
-8. ast-grep rules generated and tested.
-9. Documentation includes "do not" examples and known limitations.
+2. Section 508 ICT Baseline mapping for applicable component behavior.
+3. At least three manual screen-reader tests recorded (NVDA, VoiceOver, one of JAWS/TalkBack).
+4. Automated axe results showing zero violations.
+5. Playwright keyboard tests passing.
+6. Forced-colors render check passing.
+7. Token contrast validation against the default theme.
+8. CEM `_ashlar.antiPatterns` populated for known misuse vectors.
+9. ast-grep rules generated and tested.
+10. Documentation includes "do not" examples and known limitations.
 
 `ashlar audit registry` checks all of the above before a component graduates to stable.
 
@@ -254,4 +265,3 @@ The status is visible in the registry, in component docs, and queryable via `ash
 - Section 508: [https://www.section508.gov/manage/laws-and-policies/](https://www.section508.gov/manage/laws-and-policies/)
 - ADA Title II rule: [https://www.ada.gov/resources/2024-03-08-web-rule/](https://www.ada.gov/resources/2024-03-08-web-rule/)
 - EAA WCAG 2.2 alignment: [https://www.wcag.com/compliance/european-accessibility-act/](https://www.wcag.com/compliance/european-accessibility-act/)
-

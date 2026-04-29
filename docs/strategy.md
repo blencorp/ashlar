@@ -1,6 +1,6 @@
 # Strategy
 
-Ashlar is a government-first design-system infrastructure project. It is not a visual reskin of USWDS, a React component library, or a Tailwind theme. It is a modern delivery layer for public-service interfaces: source-owned components, evidence-backed accessibility, signed distribution, agency theming, polyglot validation, and AI-readable contracts.
+Ashlar is a government-first design-system infrastructure project. It is not a visual reskin of USWDS, a React component library, or a Tailwind theme. It is a modern delivery layer for public-service interfaces: source-owned components, evidence-backed accessibility, signed distribution, agency theming, federal standards packs, polyglot validation, and AI-readable contracts.
 
 ## The case
 
@@ -51,6 +51,10 @@ Capsules are signed, content-addressed, and tracked in a lockfile. Agencies can 
 ### CI-ready validation
 
 `ashlar audit` runs framework-agnostic rules across TSX, JSX, Vue, Svelte, Astro, HTML, Twig, Jinja, ERB, and Nunjucks. It can emit SARIF so agency findings show up in GitHub Advanced Security, GitLab, Azure DevOps, or other scanning dashboards.
+
+### Federal standards packs
+
+Ashlar should validate more than component usage. Federal page shells and service flows need page titles, meta descriptions, banners, identifiers, required links, privacy and accessibility statement placement, contact/search/timeliness patterns, and plain-language content hooks. These become versioned policy packs that run through the same audit/evidence system.
 
 ### Cross-stack reach
 

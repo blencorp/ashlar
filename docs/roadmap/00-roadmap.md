@@ -8,14 +8,14 @@ When this repository is published on GitHub, this roadmap should be treated as t
 
 The central rule is:
 
-> Do not scale component count until the registry, evidence, validation, update, and security infrastructure works.
+> Do not scale component count until the registry, evidence, validation, update, security, and policy-standard infrastructure works.
 
 ## Phases at a glance
 
 | Phase | Duration | Audience | Theme |
 |---|---|---|---|
 | **GitHub launch readiness** | 1-2 weeks | Public readers, design partners | Make the repository credible before code lands. |
-| **v0.0 — Foundation** | 8 weeks | Internal alpha + 2–3 design partners | Prove the architecture with the smallest viable product. |
+| **v0.0 — Foundation** | 8 weeks | Internal alpha + 2–3 design partners | Prove capsules, evidence, policy packs, and drift with the smallest viable service slice. |
 | **v0.1 — Public alpha** | 12 weeks (cumulative 20) | Public alpha; ~10 design-partner teams | Expand component coverage; validate AI integration; harden drift. |
 | **v0.2 — Multi-framework + patterns** | 24 weeks (cumulative 44) | Public beta; broader gov-tech adoption | Vue / Svelte / Solid adapters; L3 patterns; codemods; templates. |
 | **v0.3+ — Research frontier** | ongoing | Selective | Resumability, CRDT-aware patterns, typed accessibility research. |
@@ -30,6 +30,12 @@ Each phase below has a dedicated document with detailed scope.
 - [`04-v0.3-research-frontier.md`](./04-v0.3-research-frontier.md)
 - [`risks-and-mitigations.md`](./risks-and-mitigations.md)
 
+## Current research correction
+
+The April 29, 2026 gap analysis found that Ashlar's architecture is strong on capsules, evidence, update safety, and AI-readable contracts, but too thin on federal page-level standards and service UX. Starting now, roadmap gates treat policy packs and service patterns as part of the foundation, not a later documentation layer.
+
+See [research/08-gap-analysis-2026-04-29.md](../research/08-gap-analysis-2026-04-29.md).
+
 ## Top-line success criteria
 
 If Ashlar does these, it succeeds. If it cannot, we redesign before scaling.
@@ -41,6 +47,7 @@ If Ashlar does these, it succeeds. If it cannot, we redesign before scaling.
 - **Time-to-first-component**: under 10 minutes from `ashlar init` to a working accessible form.
 - **Stable accessibility evidence**: at least 12 components reach `stable` with full evidence packets (axe, keyboard, NVDA, VoiceOver, JAWS).
 - **CI usable by agencies**: `audit`, `verify`, `theme validate`, `evidence --check`, and SARIF output run in GitHub Actions.
+- **Federal standards coverage**: Ashlar can audit page title, meta description, banner, identifier, required links, and accessibility/privacy statement placement as policy-pack rules.
 - **Security provenance credible**: capsules are signed, lockfile-verifiable, SBOM-backed, and mirrorable for air-gapped environments.
 - **Governance healthy**: at least 3 contributing organizations before beta-scale claims.
 
@@ -51,8 +58,8 @@ Use these as GitHub milestones:
 | Milestone | Exit gate |
 |---|---|
 | Repository readiness | License, governance, security policy, contribution model, roadmap, and disclaimers are public. |
-| v0.0 foundation prototype | Fresh project can install and verify a small accessible form in under 10 minutes. |
-| v0.0 update and CI gate | `ashlar update` works across drift scenarios and `ashlar audit --sarif` uploads to code scanning. |
+| v0.0 foundation prototype | Fresh project can install and verify a small accessible form in under 10 minutes, with evidence and policy-pack rules installed. |
+| v0.0 update and CI gate | `ashlar update` works across drift scenarios and `ashlar audit --sarif` produces a CI artifact; code-scanning upload works when repository Code Security is enabled. |
 | v0.1 public alpha | Public registry, MCP, docs site, 20+ components, first pattern, and 12 evidence-complete components. |
 | v0.2 beta | Multi-framework adapters, complex components, USWDS migration tooling, third-party a11y audit. |
 | v1.0 stable | 25-30 stable components, 6+ patterns, third-party audits, LTS policy, and durable governance. |
@@ -75,9 +82,11 @@ Every release — v0.0 through v0.3+ — ships:
 - Signed capsules (Sigstore).
 - Lockfile + 3-way merge for drift.
 - Extended CEM for every published component.
+- Platform feature metadata and fallback notes for every capsule.
 - AGENTS.md + MCP server.
 - DTCG tokens with Tailwind v4 `@theme` output.
 - Polyglot validation (ast-grep).
+- Federal policy packs for page/service-level rules.
 - Real demo apps (Next.js + Drupal Twig + plain HTML at minimum).
 - Accessibility evidence appropriate to each component's stability tier.
 
@@ -97,6 +106,7 @@ Every release — v0.0 through v0.3+ — ships:
 | AI generation accuracy | Eval suite against Cursor/Claude/Copilot | 0 hallucinated props |
 | Time-to-first-component | Onboarding video timing | <10 min |
 | Accessibility evidence | `ashlar evidence --report` | All `stable` components have full packet |
+| Federal standards coverage | `ashlar audit --policy federal` | Page shell and service metadata rules pass |
 | Cross-stack parity | Snapshot tests in 4 demo apps | 100% pass |
 | CI integration | GitHub Actions / SARIF | Findings visible in code scanning |
 | Registry trust | `ashlar verify` | Tampered capsule detected |

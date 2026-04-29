@@ -4,7 +4,7 @@ This checklist defines the work required before publishing Ashlar as a public Gi
 
 ## Launch posture
 
-Public status should be **pre-alpha research and implementation planning** until the v0.0 prototype exists.
+Public status should be **pre-alpha foundation prototype** until the v0.0 standards, evidence, drift, and demo gates pass.
 
 Recommended repository tagline:
 
@@ -31,6 +31,9 @@ Required disclaimer:
 - [x] Add `docs/strategy.md` link in README.
 - [x] Add "not official" disclaimer in README.
 - [x] Add source map and research memo links.
+- [x] Ship first CLI/capsule prototype.
+- [x] Add the April 29, 2026 gap-analysis findings to public roadmap.
+- [x] Add a clear next-slice spec for standards-pack and evidence infrastructure.
 
 ## Recommended GitHub milestones
 
@@ -60,6 +63,8 @@ Issues:
 - CLI shell: `init`, `add`, `audit`, `verify`, `evidence`.
 - Static registry prototype.
 - Capsule schema and hash verification.
+- Federal policy-pack prototype.
+- Evidence schema with ICT Baseline mappings.
 - DTCG token compiler.
 - L0 Button, Alert, Form Field, Text Input, Banner.
 - Evidence packet schema and first examples.

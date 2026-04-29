@@ -41,7 +41,11 @@ This document is the master index. Topic-specific sources are also cited inline 
 - 21st Century IDEA — DOT summary: https://www.transportation.gov/digitalstrategy/21st-century-idea
 - ADA Title II web/mobile rule: https://www.ada.gov/resources/2024-03-08-web-rule/
 - ADA Title II April 20 2026 interim final rule extending compliance dates: https://www.ada.gov/assets/pdfs/2026-ifr.pdf
+- Federal Website Standards index: https://standards.digital.gov/standards/
+- Federal Website Standards — banner: https://standards.digital.gov/standards/banner/
 - Digital.gov OMB fact sheet article (2023 baseline): https://digital.gov/2023/11/01/one-agencys-plan-for-improving-the-customer-experience-with-its-public-websites/
+- OMB M-23-22 PDF: https://www.whitehouse.gov/wp-content/uploads/2023/09/M-23-22-Delivering-a-Digital-First-Public-Experience.pdf
+- GAO 21st Century IDEA review: https://www.gao.gov/products/gao-24-106764
 - White House EO "Improving Our Nation Through Better Design" (Aug 21 2025): https://www.whitehouse.gov/presidential-actions/2025/08/improving-our-nation-through-better-design/
 - White House fact sheet — "<20% of Federal websites use USWDS code": https://www.whitehouse.gov/fact-sheets/2025/08/fact-sheet-president-donald-j-trump-improves-our-nation-through-better-design/
 - National Design Studio: https://ndstudio.gov/
@@ -59,6 +63,9 @@ This document is the master index. Topic-specific sources are also cited inline 
 - WCAG 2.2: https://www.w3.org/TR/WCAG22/
 - ARIA 1.3: https://www.w3.org/TR/wai-aria-1.3/
 - AccName 1.2: https://www.w3.org/TR/accname-1.2/
+- WAI-ARIA APG patterns: https://www.w3.org/WAI/ARIA/apg/patterns/
+- WAI-ARIA APG dialog pattern: https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/
+- WAI-ARIA APG combobox pattern: https://www.w3.org/WAI/ARIA/apg/patterns/combobox/
 
 ## Modern web platform
 
@@ -75,6 +82,9 @@ This document is the master index. Topic-specific sources are also cited inline 
 - Can I Use — form-associated custom elements: https://caniuse.com/wf-form-associated-custom-elements
 - Tailwind CSS v4.0 announcement: https://tailwindcss.com/blog/tailwindcss-v4
 - Tailwind theme variables: https://tailwindcss.com/docs/theme
+- MDN `light-dark()`: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark
+- MDN Popover API: https://developer.mozilla.org/en-US/docs/Web/API/Popover_API
+- MDN `@scope`: https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/%40scope
 
 ## Web Components ecosystem
 
@@ -172,6 +182,7 @@ This document is the master index. Topic-specific sources are also cited inline 
 - AGENTS.md guide: https://www.remio.ai/post/what-is-agents-md-a-complete-guide-to-the-new-ai-coding-agent-standard-in-2025
 - llms.txt vs agents.md: https://dacharycarey.com/2026/02/26/llms-vs-agents-as-docs-consumers/
 - Model Context Protocol specification: https://modelcontextprotocol.io/specification/2025-11-25
+- MCP security best practices: https://modelcontextprotocol.io/docs/tutorials/security/security_best_practices
 - MCP announcement: https://www.anthropic.com/news/model-context-protocol
 
 ## Lightweight tooling
@@ -191,6 +202,9 @@ This document is the master index. Topic-specific sources are also cited inline 
 - Zig 0.16.0 release notes: https://ziglang.org/download/0.16.0/release-notes.html
 - SLSA v1.2 specification: https://slsa.dev/spec/v1.2/
 - NIST SP 800-218 SSDF: https://csrc.nist.gov/publications/detail/sp/800-218/final
+- npm trusted publishing: https://docs.npmjs.com/trusted-publishers/
+- Sigstore overview: https://docs.sigstore.dev/
+- GitHub SARIF upload docs: https://docs.github.com/en/code-security/how-tos/scan-code-for-vulnerabilities/integrate-with-existing-tools/uploading-a-sarif-file-to-github
 
 ## Trussworks and react-uswds
 
