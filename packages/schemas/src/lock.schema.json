@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atrium.dev/schemas/lock.schema.json",
+  "title": "Atrium Consumer Lockfile",
+  "type": "object",
+  "required": ["version", "registry", "components"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "version": {
+      "const": "1"
+    },
+    "registry": {
+      "type": "string"
+    },
+    "trustRoots": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "components": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["version", "capsule_hash", "files"],
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "capsule_hash": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "signature": {
+            "type": "string"
+          },
+          "installed_at": {
+            "type": "string"
+          },
+          "installed_via": {
+            "type": "string"
+          },
+          "stability": {
+            "enum": ["proposal", "experimental", "beta", "stable", "deprecated"]
+          },
+          "files": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "required": ["original_hash", "current_hash"],
+              "properties": {
+                "original_hash": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "current_hash": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "critical_for_a11y": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "tokens": {
+      "type": "object"
+    },
+    "themes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

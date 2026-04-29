@@ -1,0 +1,23 @@
+{
+  "component": "button",
+  "version": "0.0.1",
+  "stability": "experimental",
+  "accessibilityStatus": "not-reviewed",
+  "wcag": [
+    {
+      "criterion": "2.4.7",
+      "level": "AA",
+      "title": "Focus Visible",
+      "status": "planned"
+    },
+    {
+      "criterion": "4.1.2",
+      "level": "A",
+      "title": "Name, Role, Value",
+      "status": "planned"
+    }
+  ],
+  "manualTests": [],
+  "automatedResults": {},
+  "knownLimitations": []
+}

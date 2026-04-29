@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atrium.dev/schemas/capsule.schema.json",
+  "title": "Atrium Capsule Manifest",
+  "type": "object",
+  "required": ["schemaVersion", "name", "version", "layer", "stability", "files", "capsule_hash"],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "version": {
+      "type": "string"
+    },
+    "tier": {
+      "enum": ["foundation", "primitive", "composite", "pattern", "block"]
+    },
+    "layer": {
+      "enum": ["L0", "L1", "L2", "L3", "L4"]
+    },
+    "stability": {
+      "enum": ["proposal", "experimental", "beta", "stable", "deprecated"]
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^sha256:[a-f0-9]{64}$"
+      }
+    },
+    "capsule_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "signature": {
+      "type": "string"
+    },
+    "dependencies": {
+      "type": "object"
+    },
+    "templates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "frameworks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

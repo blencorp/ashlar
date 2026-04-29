@@ -1,0 +1,29 @@
+{
+  "name": "@atrium/schemas",
+  "version": "0.0.0",
+  "description": "JSON Schemas and TypeScript constants for Atrium registry artifacts.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./capsule.schema.json": "./src/capsule.schema.json",
+    "./lock.schema.json": "./src/lock.schema.json"
+  },
+  "files": [
+    "dist",
+    "src/*.json"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "biome lint src"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

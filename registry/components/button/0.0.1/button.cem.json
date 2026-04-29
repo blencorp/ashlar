@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "button.html",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "AtriumButton",
+          "tagName": "button",
+          "description": "Accessible semantic action control for forms and workflows.",
+          "_atrium": {
+            "version": "0.0.1",
+            "tier": "primitive",
+            "layer": "L0",
+            "stability": "experimental",
+            "selector": ".atrium-button",
+            "variants": ["primary"],
+            "a11yRequirements": [
+              {
+                "id": "accessible-name-required",
+                "wcag": "4.1.2",
+                "severity": "error",
+                "description": "Button must have visible text content or an aria-label."
+              },
+              {
+                "id": "focus-visible-required",
+                "wcag": "2.4.7",
+                "severity": "error",
+                "description": "Focus must be visually distinct."
+              }
+            ],
+            "antiPatterns": [
+              {
+                "id": "icon-only-needs-label",
+                "pattern": "<button class=\"atrium-button\">$ICON</button>",
+                "constraint": {
+                  "has": "<svg/>",
+                  "not_has": "aria-label"
+                },
+                "fix": "Add visible text or aria-label.",
+                "wcag": "4.1.2",
+                "severity": "error"
+              }
+            ],
+            "tokensConsumed": [
+              "color.action.primary.bg",
+              "color.action.primary.fg",
+              "focus.ring.color",
+              "radius.control"
+            ],
+            "rendering": "server-safe",
+            "hydrationCost": "none",
+            "criticalForA11y": true
+          }
+        }
+      ]
+    }
+  ]
+}

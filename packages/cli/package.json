@@ -1,0 +1,30 @@
+{
+  "name": "@atrium/cli",
+  "version": "0.0.0",
+  "description": "Atrium component registry CLI.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": {
+    "atrium": "./dist/index.js"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --exclude \"dist/**\"",
+    "lint": "biome lint src"
+  },
+  "dependencies": {
+    "commander": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
