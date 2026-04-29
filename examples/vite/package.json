@@ -1,0 +1,19 @@
+{
+  "name": "@ashlar/example-vite",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "dev:local": "vite --host 127.0.0.1 --port 4173 --strictPort",
+    "build": "vite build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "biome lint src"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

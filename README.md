@@ -80,7 +80,8 @@ The current prototype includes:
 - DESIGN.md export for coding agents;
 - initial verify and evidence commands;
 - CI workflow with SARIF;
-- plain HTML demo.
+- plain HTML demo;
+- Vite theme lab for testing agency tokens, light/dark mode, and registry components in action.
 
 ## Roadmap
 

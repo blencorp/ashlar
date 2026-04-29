@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en" data-theme="system" data-agency="civic">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashlar Vite Theme Lab</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23005ea8'/%3E%3Cpath d='M14 44h36v8H14zM18 20h28v20H18zM24 12h16v8H24z' fill='white'/%3E%3C/svg%3E"
+    >
+    <meta
+      name="description"
+      content="A Vite-powered Ashlar demo showing source-owned components, agency tokens, light and dark modes, and federal shell validation."
+    >
+  </head>
+  <body>
+    <section class="ashlar-banner" aria-label="Official government website">
+      <div class="shell banner-inner">
+        <span class="banner-mark" aria-hidden="true">US</span>
+        <span>An official government website. This demo shell is validated by Ashlar policy checks.</span>
+      </div>
+    </section>
+
+    <header class="masthead">
+      <div class="shell masthead-grid">
+        <div class="masthead-copy">
+          <p class="eyebrow">Ashlar Vite example</p>
+          <h1>Agency theming, live on source-owned components</h1>
+          <p class="lede">
+            The button is plain semantic HTML styled by an Ashlar capsule. The agency identity,
+            light/dark mode, focus ring, and surfaces are controlled by CSS tokens.
+          </p>
+        </div>
+
+        <section class="theme-console" aria-label="Theme controls">
+          <div class="control-group">
+            <h2>Mode</h2>
+            <div class="segmented-control" data-theme-control>
+              <button type="button" data-theme-option="system" aria-pressed="true">System</button>
+              <button type="button" data-theme-option="light" aria-pressed="false">Light</button>
+              <button type="button" data-theme-option="dark" aria-pressed="false">Dark</button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <h2>Agency</h2>
+            <div class="segmented-control" data-agency-control>
+              <button type="button" data-agency-option="civic" aria-pressed="true">Civic</button>
+              <button type="button" data-agency-option="forest" aria-pressed="false">Forest</button>
+              <button type="button" data-agency-option="transit" aria-pressed="false">Transit</button>
+            </div>
+          </div>
+
+          <p class="active-theme" data-theme-summary>Civic tokens, system mode</p>
+        </section>
+      </div>
+    </header>
+
+    <main class="shell workspace">
+      <section class="intake-panel" aria-labelledby="intake-heading">
+        <div class="section-heading">
+          <p class="eyebrow">Service flow</p>
+          <h2 id="intake-heading">Review an eligibility intake</h2>
+          <p>
+            This is the kind of government workflow Ashlar has to serve: compact, readable,
+            keyboard-friendly, and safe to validate in CI.
+          </p>
+        </div>
+
+        <form class="intake-form">
+          <label>
+            <span>Applicant name</span>
+            <input value="Jordan Rivera" autocomplete="name">
+          </label>
+
+          <label>
+            <span>Program</span>
+            <select>
+              <option>Emergency housing support</option>
+              <option>Transit access assistance</option>
+              <option>Small business recovery</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Case note</span>
+            <textarea rows="4">Needs same-week eligibility review and document follow-up.</textarea>
+          </label>
+
+          <div class="actions">
+            <button class="ashlar-button" data-variant="primary" type="button">Continue review</button>
+            <a class="inline-link" href="#evidence">Inspect evidence</a>
+          </div>
+        </form>
+      </section>
+
+      <aside class="inspector" id="evidence" aria-labelledby="inspector-heading">
+        <p class="eyebrow">Component capsule</p>
+        <h2 id="inspector-heading">What travels with the source</h2>
+        <dl>
+          <div>
+            <dt>Component</dt>
+            <dd>button@0.0.1</dd>
+          </div>
+          <div>
+            <dt>Layer</dt>
+            <dd>L0 HTML/CSS</dd>
+          </div>
+          <div>
+            <dt>Evidence</dt>
+            <dd>not-reviewed, with planned WCAG and ICT Baseline mappings</dd>
+          </div>
+          <div>
+            <dt>Policy</dt>
+            <dd>Page title, meta description, banner, and identifier are executable checks</dd>
+          </div>
+        </dl>
+      </aside>
+
+      <section class="token-band" aria-labelledby="token-heading">
+        <div class="section-heading">
+          <p class="eyebrow">Tokens</p>
+          <h2 id="token-heading">Theme without forking the component</h2>
+        </div>
+        <div class="token-grid">
+          <article>
+            <span class="swatch swatch-action" aria-hidden="true"></span>
+            <h3>Action</h3>
+            <code>--ashlar-color-action-primary-bg</code>
+          </article>
+          <article>
+            <span class="swatch swatch-focus" aria-hidden="true"></span>
+            <h3>Focus</h3>
+            <code>--ashlar-focus-ring-color</code>
+          </article>
+          <article>
+            <span class="swatch swatch-surface" aria-hidden="true"></span>
+            <h3>Surface</h3>
+            <code>--ashlar-color-surface</code>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="ashlar-identifier" data-ashlar-component="identifier">
+      <div class="shell identifier-grid">
+        <div>
+          <strong>Example Agency</strong>
+          <p>Demonstration footer for public-service theming and policy validation.</p>
+        </div>
+        <nav aria-label="Required agency links">
+          <a href="/about">About</a>
+          <a href="/accessibility">Accessibility</a>
+          <a href="/foia">FOIA</a>
+          <a href="/no-fear-act">No FEAR Act</a>
+          <a href="/oig">Office of Inspector General</a>
+          <a href="/performance">Performance reports</a>
+          <a href="/privacy">Privacy</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
