@@ -1,10 +1,11 @@
 import { copyFileSync, mkdirSync } from "node:fs";
-import { basename, join } from "node:path";
+import { dirname, join } from "node:path";
 import type { Command } from "commander";
 import { buildCapsuleManifest } from "../lib/capsule.js";
 import { sha256File } from "../lib/hash.js";
 import { readConfig, readLockfile, writeJson } from "../lib/project.js";
 import { getComponent } from "../lib/registry.js";
+import { syncAshlarProject } from "../lib/styles.js";
 
 export function registerAddCommand(program: Command) {
   program
@@ -38,11 +39,10 @@ export function registerAddCommand(program: Command) {
           { original_hash: string; current_hash: string; critical_for_a11y: boolean }
         > = {};
 
-        mkdirSync(config.componentsDir, { recursive: true });
-
         for (const file of Object.keys(manifest.files)) {
           const source = join(detail.directory, file);
-          const target = join(config.componentsDir, basename(file));
+          const target = join(config.componentsDir, component, file);
+          mkdirSync(dirname(target), { recursive: true });
           copyFileSync(source, target);
           const hash = sha256File(target);
           installedFiles[target] = {
@@ -65,5 +65,6 @@ export function registerAddCommand(program: Command) {
       }
 
       writeJson("ashlar-lock.json", lockfile);
+      syncAshlarProject(process.cwd(), config, lockfile);
     });
 }

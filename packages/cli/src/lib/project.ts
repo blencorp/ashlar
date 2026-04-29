@@ -5,6 +5,16 @@ export type AshlarConfig = {
   $schema?: string;
   registry: string;
   componentsDir: string;
+  indexesDir?: string;
+  styles?: {
+    entrypoint: string;
+    theme: string;
+  };
+};
+
+export type ResolvedAshlarConfig = Required<Omit<AshlarConfig, "$schema" | "styles">> & {
+  $schema?: string;
+  styles: NonNullable<AshlarConfig["styles"]>;
 };
 
 export type AshlarLockfile = {
@@ -31,12 +41,39 @@ export type AshlarLockfile = {
   >;
 };
 
-export function readConfig(): AshlarConfig {
+export function readConfig(): ResolvedAshlarConfig {
   if (!existsSync("ashlar.config.json")) {
-    return { registry: "./registry", componentsDir: "src/ashlar" };
+    return defaultConfig();
   }
 
-  return JSON.parse(readFileSync("ashlar.config.json", "utf8")) as AshlarConfig;
+  return normalizeConfig(JSON.parse(readFileSync("ashlar.config.json", "utf8")) as AshlarConfig);
+}
+
+export function defaultConfig(overrides: Partial<AshlarConfig> = {}): ResolvedAshlarConfig {
+  return normalizeConfig({
+    $schema: "https://ashlar.dev/schemas/config.schema.json",
+    registry: "./registry",
+    componentsDir: "src/ashlar/components",
+    indexesDir: "src/ashlar/indexes",
+    styles: {
+      entrypoint: "src/ashlar/ashlar.css",
+      theme: "src/ashlar/themes/theme.css",
+    },
+    ...overrides,
+  });
+}
+
+export function normalizeConfig(config: AshlarConfig): ResolvedAshlarConfig {
+  return {
+    $schema: config.$schema,
+    registry: config.registry ?? "./registry",
+    componentsDir: config.componentsDir ?? "src/ashlar/components",
+    indexesDir: config.indexesDir ?? "src/ashlar/indexes",
+    styles: {
+      entrypoint: config.styles?.entrypoint ?? "src/ashlar/ashlar.css",
+      theme: config.styles?.theme ?? "src/ashlar/themes/theme.css",
+    },
+  };
 }
 
 export function readLockfile(): AshlarLockfile {

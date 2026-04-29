@@ -2,16 +2,22 @@
   .ashlar-button {
     align-items: center;
     border: 1px solid transparent;
-    border-radius: var(--ashlar-radius-control, 0.375rem);
+    border-radius: var(--ashlar-button-radius, var(--ashlar-radius-control, 0.375rem));
     cursor: pointer;
     display: inline-flex;
     font: inherit;
     font-weight: 700;
     gap: 0.5rem;
     justify-content: center;
-    min-block-size: 2.75rem;
+    min-block-size: var(--ashlar-button-min-block-size, 2.75rem);
     padding-block: 0.625rem;
     padding-inline: 1rem;
+    text-decoration: none;
+    transition:
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease,
+      transform 150ms ease;
   }
 
   .ashlar-button[data-variant="primary"] {
@@ -19,9 +25,37 @@
     color: var(--ashlar-color-action-primary-fg, #fff);
   }
 
+  .ashlar-button[data-variant="primary"]:hover {
+    background: var(--ashlar-color-action-primary-hover, #1a4480);
+  }
+
+  .ashlar-button[data-variant="secondary"] {
+    border-color: var(--ashlar-color-action-secondary-border, #005ea8);
+    background: var(--ashlar-color-action-secondary-bg, #fff);
+    color: var(--ashlar-color-action-secondary-fg, #005ea8);
+  }
+
+  .ashlar-button[data-variant="secondary"]:hover {
+    background: color-mix(
+      in srgb,
+      var(--ashlar-color-action-secondary-fg, #005ea8),
+      transparent 92%
+    );
+  }
+
+  .ashlar-button:active {
+    transform: translateY(1px);
+  }
+
   .ashlar-button:focus-visible {
     outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
     outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
+  }
+
+  .ashlar-button[aria-disabled="true"],
+  .ashlar-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.62;
   }
 }
 
