@@ -14,14 +14,15 @@ The work is led by engineers at [Blen](https://blencorp.com) with the intent to 
 2. [`philosophy.md`](./philosophy.md) — the thesis and design principles.
 3. [`architecture/overview.md`](./architecture/overview.md) — the layered architecture and how the pieces fit.
 4. [`architecture/toolchain.md`](./architecture/toolchain.md) — the recommended v0/v1 technical foundation.
-5. [`architecture/compliance-security-ci.md`](./architecture/compliance-security-ci.md) — accessibility, security, provenance, and CI tooling scope.
-6. [`architecture/`](./architecture/) — detailed architecture documents (capsule format, drift management, AI-native strategy, validation, tokens, accessibility evidence, future architecture).
-7. [`adr/`](./adr/) — architecture decision records.
-8. [`roadmap/00-roadmap.md`](./roadmap/00-roadmap.md) — phased delivery plan and success gates.
-9. [`roadmap/github-launch.md`](./roadmap/github-launch.md) — public GitHub launch checklist, milestones, and labels.
-10. [`research/`](./research/) — the body of research informing design decisions, including the final April 29, 2026 current-source pass.
-11. [`governance/`](./governance/) — community model and contribution rules.
-12. [`examples/`](./examples/) — concrete schema examples.
+5. [`architecture/tooling-baseline.md`](./architecture/tooling-baseline.md) — pinned stable runtime and monorepo tool versions.
+6. [`architecture/compliance-security-ci.md`](./architecture/compliance-security-ci.md) — accessibility, security, provenance, and CI tooling scope.
+7. [`architecture/`](./architecture/) — detailed architecture documents (capsule format, drift management, AI-native strategy, validation, tokens, accessibility evidence, future architecture).
+8. [`adr/`](./adr/) — architecture decision records.
+9. [`roadmap/00-roadmap.md`](./roadmap/00-roadmap.md) — phased delivery plan and success gates.
+10. [`roadmap/github-launch.md`](./roadmap/github-launch.md) — public GitHub launch checklist, milestones, and labels.
+11. [`research/`](./research/) — the body of research informing design decisions, including the final April 29, 2026 current-source pass.
+12. [`governance/`](./governance/) — community model and contribution rules.
+13. [`examples/`](./examples/) — concrete schema examples.
 
 ## What problem this solves
 

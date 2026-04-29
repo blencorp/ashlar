@@ -10,7 +10,7 @@ The project is pre-alpha. Early contributions should focus on repository setup, 
 
 Prerequisites:
 
-- Node.js 24 LTS.
+- Node.js 24 LTS. Current baseline: 24.15.0.
 - pnpm 10.
 - Git.
 

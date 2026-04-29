@@ -92,6 +92,7 @@ See [docs/roadmap/00-roadmap.md](docs/roadmap/00-roadmap.md) and [docs/roadmap/g
 - [Philosophy](docs/philosophy.md)
 - [Architecture overview](docs/architecture/overview.md)
 - [Toolchain decision](docs/architecture/toolchain.md)
+- [Tooling baseline](docs/architecture/tooling-baseline.md)
 - [Compliance, security, and CI tooling](docs/architecture/compliance-security-ci.md)
 - [Final research pass](docs/research/07-final-research-2026-04-29.md)
 - [Governance model](docs/governance/00-governance-model.md)

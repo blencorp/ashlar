@@ -6,9 +6,9 @@ This document defines the recommended v0/v1 technical foundation. The goal is to
 
 | Area | Decision | Rationale |
 |---|---|---|
-| CLI runtime | Node + TypeScript + ESM | Best `npx`/npm ergonomics; easiest agency and contractor adoption. |
+| CLI runtime | Node 24 LTS + TypeScript 6 + ESM | Best `npx`/npm ergonomics; newest stable LTS runtime; easiest agency and contractor adoption. |
 | Native validation engine | ast-grep + tree-sitter | Cross-language rules for JS, TS, HTML, and server templates; fast Rust binary. |
-| Formatting / JS linting | Biome optional | Useful where it works; Vue/Svelte/Astro support is still marked experimental. |
+| Formatting / JS linting | Biome | Useful for formatting and JS/TS linting; ast-grep remains the cross-template validator. |
 | Token source | DTCG 2025.10 JSON | Stable, vendor-neutral design token format. |
 | Token compiler | Terrazzo primary, Style Dictionary fallback | Terrazzo has strong DTCG coverage; fallback reduces tool risk. |
 | CSS authoring | Semantic CSS + cascade layers | Works everywhere, including CMS and static HTML stacks. |
@@ -20,9 +20,11 @@ This document defines the recommended v0/v1 technical foundation. The goal is to
 | AI interface | Extended CEM + MCP + AGENTS.md | Structured component contract plus tool access. |
 | Zig | Experimental only | Promising, but not stable enough for core federal tooling yet. |
 
+See [`tooling-baseline.md`](./tooling-baseline.md) for the exact pinned versions currently used by the repository.
+
 ## CLI
 
-The CLI should be a Node + TypeScript ESM package:
+The CLI should be a Node 24 LTS + TypeScript ESM package:
 
 ```bash
 npx atrium init

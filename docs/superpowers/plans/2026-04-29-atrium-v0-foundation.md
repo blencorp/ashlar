@@ -6,7 +6,9 @@
 
 **Architecture:** Start with a TypeScript monorepo containing `@atrium/cli`, `@atrium/schemas`, and a local registry package. The first capsule is Button, installed as source with CSS, HTML, CEM, evidence, and ast-grep rules. Verification is hash-based first; Sigstore/SLSA wiring lands after the local registry flow works.
 
-**Tech Stack:** Node 22, TypeScript, pnpm, Vitest, Playwright, axe-core, ast-grep, DTCG JSON, semantic CSS, GitHub Actions.
+**Tech Stack:** Node.js 24 LTS (24.15.0 baseline), TypeScript 6, pnpm 10, Turborepo 2, Vitest 4, Playwright, axe-core, ast-grep, DTCG JSON, semantic CSS, GitHub Actions.
+
+**Baseline correction:** This plan was originally drafted before repository initialization. The implemented repository uses the stable tooling baseline in `docs/architecture/tooling-baseline.md`; stale examples in this plan should be interpreted through that baseline.
 
 ---
 
@@ -38,7 +40,7 @@ Add `package.json`:
   "name": "atrium",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@10.0.0",
+  "packageManager": "pnpm@10.33.2",
   "scripts": {
     "build": "pnpm -r build",
     "test": "pnpm -r test",
@@ -47,9 +49,9 @@ Add `package.json`:
     "atrium": "pnpm --filter @atrium/cli exec atrium"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
-    "typescript": "^5.8.0",
-    "vitest": "^3.0.0"
+    "@types/node": "^24.12.2",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
   }
 }
 ```
@@ -145,11 +147,11 @@ Add `packages/cli/package.json`:
     "lint": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "commander": "^14.0.0"
+    "commander": "^14.0.3"
   },
   "devDependencies": {
-    "typescript": "^5.8.0",
-    "vitest": "^3.0.0"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
   }
 }
 ```
@@ -309,8 +311,8 @@ Add `packages/schemas/package.json`:
     "lint": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
-    "typescript": "^5.8.0",
-    "vitest": "^3.0.0"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
   }
 }
 ```
@@ -729,10 +731,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
         with:
-          version: 10.0.0
+          version: 10.33.2
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24.15.0
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
