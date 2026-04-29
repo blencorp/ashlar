@@ -4,6 +4,8 @@
 
 Ashlar is a government-first, AI-native design-system infrastructure project for public-service interfaces.
 
+In masonry, an ashlar is a stone block cut with precise faces so it can fit cleanly into a larger structure. The name reflects the project goal: small, well-specified UI building blocks that teams can verify, own, and assemble safely.
+
 It is inspired by the values of the U.S. Web Design System, but it is not trying to be a cosmetic refresh of USWDS. The thesis is that government teams need a new delivery model: accessible components with evidence, source ownership with safe updates, signed distribution, agency theming, CI validation, and structured contracts that AI tools can use correctly.
 
 ## Why this exists
@@ -62,9 +64,9 @@ npx ashlar evidence button
 
 ## Current status
 
-This repository is currently a research, strategy, architecture, and roadmap workspace. No production implementation has been written yet.
+This repository now contains the first v0.0 foundation prototype alongside the research, strategy, architecture, and roadmap docs.
 
-The next milestone is the v0.0 foundation prototype:
+The current prototype includes:
 
 - TypeScript CLI skeleton;
 - local registry format;

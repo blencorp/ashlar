@@ -724,6 +724,11 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+  actions: read
+  security-events: write
+
 jobs:
   checks:
     runs-on: ubuntu-latest
@@ -741,7 +746,7 @@ jobs:
       - run: pnpm test
       - run: pnpm build
       - run: pnpm --silent ashlar audit --sarif > ashlar.sarif
-      - uses: github/codeql-action/upload-sarif@v3
+      - uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: ashlar.sarif

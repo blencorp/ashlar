@@ -2,9 +2,11 @@
 
 Ashlar is a government-first, web-platform-native, AI-readable design system distributed as a registry of versioned, signed, evidence-backed component capsules.
 
+In masonry, an ashlar is a precisely cut stone block. The name is shorthand for the project thesis: component building blocks should be well-shaped, verifiable, and fit cleanly into many public-service stacks.
+
 ## What this repository is
 
-This repository is a research and design package for an upcoming open-source design system. No code has been written yet. The contents here describe the philosophy, architecture, research base, and roadmap that will guide the implementation.
+This repository contains the Ashlar v0.0 foundation prototype plus the philosophy, architecture, research base, and roadmap that guide the implementation.
 
 The work is led by engineers at [Blen](https://blencorp.com) with the intent to release as community-governed open source. It is not affiliated with the official U.S. Web Design System (USWDS) or with the National Design Studio.
 
@@ -57,7 +59,7 @@ Zig remains a future experiment, not a v0/v1 foundation, because Zig 0.16 still 
 | Final current-source research pass | Complete | April 29, 2026 |
 | Public strategy and GitHub launch docs | Complete | April 29, 2026 |
 | Roadmap and v0.0 specification | Drafted | April 2026 |
-| v0.0 prototype | Not started | — |
+| v0.0 prototype | First foundation slice implemented | April 29, 2026 |
 
 ## License
 

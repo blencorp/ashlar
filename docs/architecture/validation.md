@@ -153,7 +153,7 @@ Fails commit if any error-level rule fires on staged files.
 # .github/workflows/ci.yml
 - name: Ashlar audit
   run: npx ashlar audit --severity error --output sarif > ashlar.sarif
-- uses: github/codeql-action/upload-sarif@v3
+- uses: github/codeql-action/upload-sarif@v4
   with: { sarif_file: ashlar.sarif }
 ```
 

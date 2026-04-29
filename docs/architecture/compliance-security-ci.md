@@ -136,6 +136,11 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: read
+  actions: read
+  security-events: write
+
 jobs:
   ashlar:
     runs-on: ubuntu-latest
@@ -149,7 +154,7 @@ jobs:
       - run: npx ashlar theme validate
       - run: npx ashlar evidence --check
       - run: npx ashlar audit --severity error --sarif > ashlar.sarif
-      - uses: github/codeql-action/upload-sarif@v3
+      - uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: ashlar.sarif
