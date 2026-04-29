@@ -4,6 +4,7 @@ export const lockSchemaId = "https://ashlar.dev/schemas/lock.schema.json";
 export const registryIndexSchemaId = "https://ashlar.dev/schemas/registry-index.schema.json";
 export const ashlarCemSchemaId = "https://ashlar.dev/schemas/ashlar-cem.schema.json";
 export const configSchemaId = "https://ashlar.dev/schemas/config.schema.json";
+export const agencyThemeSchemaId = "https://ashlar.dev/schemas/agency-theme.schema.json";
 
 export const capsuleFormatVersion = "1.0";
 export const evidenceFormatVersion = "1.0";

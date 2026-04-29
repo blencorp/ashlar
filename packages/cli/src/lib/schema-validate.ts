@@ -40,6 +40,7 @@ const validators = {
   registryIndex: compile("registry-index.schema.json"),
   ashlarCem: compile("ashlar-cem.schema.json"),
   config: compile("config.schema.json"),
+  agencyTheme: compile("agency-theme.schema.json"),
 } as const;
 
 export type SchemaName = keyof typeof validators;

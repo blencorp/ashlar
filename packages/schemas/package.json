@@ -14,7 +14,8 @@
     "./registry-index.schema.json": "./src/registry-index.schema.json",
     "./lock.schema.json": "./src/lock.schema.json",
     "./ashlar-cem.schema.json": "./src/ashlar-cem.schema.json",
-    "./config.schema.json": "./src/config.schema.json"
+    "./config.schema.json": "./src/config.schema.json",
+    "./agency-theme.schema.json": "./src/agency-theme.schema.json"
   },
   "files": [
     "dist",
