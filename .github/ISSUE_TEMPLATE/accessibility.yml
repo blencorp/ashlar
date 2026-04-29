@@ -1,0 +1,35 @@
+name: Accessibility issue
+description: Report an accessibility defect or evidence gap.
+title: "[A11y]: "
+labels: ["area: accessibility"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+    validations:
+      required: true
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impact
+      options:
+        - Blocks use with assistive technology
+        - Causes confusing or incorrect output
+        - Evidence gap
+        - Enhancement
+    validations:
+      required: true
+  - type: textarea
+    id: assistive-tech
+    attributes:
+      label: Assistive technology and browser
+      description: Include screen reader, browser, OS, and versions when applicable.
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+  - type: textarea
+    id: criteria
+    attributes:
+      label: Relevant WCAG / 508 criteria

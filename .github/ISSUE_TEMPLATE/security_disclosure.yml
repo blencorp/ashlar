@@ -1,0 +1,11 @@
+name: Security disclosure
+description: Do not file security disclosures publicly.
+title: "[Security]: "
+labels: ["type: security", "status: blocked"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please do not file public security reports.
+
+        Email security@blencorp.com with details. See SECURITY.md for scope and response expectations.

@@ -1,0 +1,10 @@
+.DS_Store
+node_modules
+dist
+coverage
+.turbo
+*.tsbuildinfo
+*.log
+atrium.sarif
+atrium-lock.json
+TEMP_SESSION_NOTE.md

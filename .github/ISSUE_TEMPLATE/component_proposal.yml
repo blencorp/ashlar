@@ -1,0 +1,36 @@
+name: Component proposal
+description: Propose a new component capsule or major component change.
+title: "[Component]: "
+labels: ["type: component-proposal", "area: components", "status: proposal"]
+body:
+  - type: textarea
+    id: user-need
+    attributes:
+      label: User need
+      description: What public-service problem does this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: prior-art
+    attributes:
+      label: Existing solution scan
+      description: Include USWDS and peer government design-system references.
+    validations:
+      required: true
+  - type: textarea
+    id: api
+    attributes:
+      label: DOM/API sketch
+    validations:
+      required: true
+  - type: textarea
+    id: accessibility
+    attributes:
+      label: Accessibility plan
+      description: Keyboard map, accessible names, ARIA, WCAG criteria, evidence plan.
+    validations:
+      required: true
+  - type: textarea
+    id: tokens
+    attributes:
+      label: Token impact

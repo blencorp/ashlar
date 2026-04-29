@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security disclosure
+    url: mailto:security@blencorp.com
+    about: Please report suspected vulnerabilities privately.
