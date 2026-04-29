@@ -1,6 +1,6 @@
 # Tokens
 
-The token system is the framework-neutral contract that drives every other layer of Atrium. Components reference tokens; agencies override tokens; modes (light/dark/HC/forced) switch through tokens; AI tools query tokens.
+The token system is the framework-neutral contract that drives every other layer of Ashlar. Components reference tokens; agencies override tokens; modes (light/dark/HC/forced) switch through tokens; AI tools query tokens.
 
 Source format: **DTCG 2025.10** JSON. Compiler: **Terrazzo**. Outputs: CSS variables, Tailwind v4 `@theme` block, typed TypeScript, JSON, Figma variables.
 
@@ -133,28 +133,28 @@ Modes overlay the same hierarchy with overrides. Implemented in CSS via `light-d
 Compiler emits `tokens.css`, `theme.css`, and mode-overlay files in cascade layers:
 
 ```css
-@layer atrium.tokens {
+@layer ashlar.tokens {
   :root {
-    --atrium-color-text-default:
+    --ashlar-color-text-default:
       light-dark(oklch(0.22 0.05 260), oklch(0.96 0.02 260));
-    --atrium-color-surface-default:
+    --ashlar-color-surface-default:
       light-dark(white, oklch(0.18 0.02 260));
-    --atrium-color-action-primary-bg:
+    --ashlar-color-action-primary-bg:
       light-dark(oklch(0.42 0.18 250), oklch(0.62 0.18 250));
-    --atrium-color-action-primary-fg: white;
-    --atrium-radius-md: 0.375rem;
-    --atrium-focus-ring-color:
+    --ashlar-color-action-primary-fg: white;
+    --ashlar-radius-md: 0.375rem;
+    --ashlar-focus-ring-color:
       light-dark(oklch(0.62 0.18 250), oklch(0.78 0.18 250));
   }
 
   /* Forced colors (Windows High Contrast / accessibility tools) */
   @media (forced-colors: active) {
     :root {
-      --atrium-color-text-default: CanvasText;
-      --atrium-color-surface-default: Canvas;
-      --atrium-color-action-primary-bg: ButtonText;
-      --atrium-color-action-primary-fg: ButtonFace;
-      --atrium-focus-ring-color: Highlight;
+      --ashlar-color-text-default: CanvasText;
+      --ashlar-color-surface-default: Canvas;
+      --ashlar-color-action-primary-bg: ButtonText;
+      --ashlar-color-action-primary-fg: ButtonFace;
+      --ashlar-focus-ring-color: Highlight;
     }
   }
 }
@@ -166,14 +166,14 @@ Compiler emits `tokens.css`, `theme.css`, and mode-overlay files in cascade laye
 
 ```css
 @theme {
-  --color-atrium-text-default: var(--atrium-color-text-default);
-  --color-atrium-surface-default: var(--atrium-color-surface-default);
-  --color-atrium-action-primary: var(--atrium-color-action-primary-bg);
-  --radius-atrium-md: var(--atrium-radius-md);
+  --color-ashlar-text-default: var(--ashlar-color-text-default);
+  --color-ashlar-surface-default: var(--ashlar-color-surface-default);
+  --color-ashlar-action-primary: var(--ashlar-color-action-primary-bg);
+  --radius-ashlar-md: var(--ashlar-radius-md);
 }
 ```
 
-Tailwind users get utility classes (`bg-atrium-action-primary`, `rounded-atrium-md`) backed by Atrium tokens. Atrium components themselves continue to use the underlying CSS variables.
+Tailwind users get utility classes (`bg-ashlar-action-primary`, `rounded-ashlar-md`) backed by Ashlar tokens. Ashlar components themselves continue to use the underlying CSS variables.
 
 ## Output: TypeScript
 
@@ -182,12 +182,12 @@ Tailwind users get utility classes (`bg-atrium-action-primary`, `rounded-atrium-
 export const tokens = {
   color: {
     text: {
-      default: 'var(--atrium-color-text-default)' as const,
-      muted: 'var(--atrium-color-text-muted)' as const
+      default: 'var(--ashlar-color-text-default)' as const,
+      muted: 'var(--ashlar-color-text-muted)' as const
     },
     action: {
       primary: {
-        bg: 'var(--atrium-color-action-primary-bg)' as const
+        bg: 'var(--ashlar-color-action-primary-bg)' as const
       }
     }
   }
@@ -214,9 +214,9 @@ Agency themes extend the default theme by overriding allowed tokens. The theme s
 
 ```json
 {
-  "$schema": "https://atrium.dev/schemas/theme.schema.json",
+  "$schema": "https://ashlar.dev/schemas/theme.schema.json",
   "name": "example-agency",
-  "extends": "atrium/default",
+  "extends": "ashlar/default",
   "tokens": {
     "color.brand.primary": { "$type": "color", "$value": "oklch(0.42 0.12 250)" },
     "color.action.primary.bg": { "$type": "color", "$value": "{color.brand.primary}" }
@@ -233,7 +233,7 @@ Agency themes extend the default theme by overriding allowed tokens. The theme s
 }
 ```
 
-`atrium theme validate` enforces all of the above.
+`ashlar theme validate` enforces all of the above.
 
 ## Contrast policy
 
@@ -259,7 +259,7 @@ Density affects spacing and control height tokens; it does **not** reduce touch 
 
 ## USWDS interop mapping
 
-For agencies migrating from USWDS, a mapping layer converts USWDS Sass settings to Atrium semantic tokens. Best-effort, not guaranteed visual equivalence.
+For agencies migrating from USWDS, a mapping layer converts USWDS Sass settings to Ashlar semantic tokens. Best-effort, not guaranteed visual equivalence.
 
 ```
 $theme-color-primary       →  color.brand.primary

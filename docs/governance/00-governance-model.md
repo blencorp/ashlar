@@ -1,6 +1,6 @@
 # Governance model
 
-Atrium is community-governed open source. This document describes the governance model: license, maintainer roles, contribution process, component lifecycle, release channels, security posture, and the rules for agency themes and custom registries.
+Ashlar is community-governed open source. This document describes the governance model: license, maintainer roles, contribution process, component lifecycle, release channels, security posture, and the rules for agency themes and custom registries.
 
 The governance is designed to avoid the AuDS trap (single-organization ownership, single point of failure). Multi-organization maintenance is a hard requirement, not a nice-to-have.
 
@@ -18,19 +18,19 @@ The license is finalized before public v0.1 release. Pre-public-alpha work may b
 
 ## Project name
 
-The project name is **Atrium**. Naming criteria:
+The project name is **Ashlar**. Naming criteria:
 
 - Not confused with the official USWDS or NDS branding.
 - Available as an npm package name and `.dev` / `.org` domain.
 - Trademark-clear in the design-system / open-source space.
 - Memorable; pronounceable internationally.
-- Short enough to read in a CLI prompt (`npx atrium ...`).
+- Short enough to read in a CLI prompt (`npx ashlar ...`).
 
 If a trademark or package-namespace review later finds a blocking conflict, the project will rename before public release; backup names are tracked privately.
 
 ## Maintainer model
 
-Atrium is maintained by a **community maintainer team** with at least three contributing organizations represented (avoiding bus-factor=1).
+Ashlar is maintained by a **community maintainer team** with at least three contributing organizations represented (avoiding bus-factor=1).
 
 ### Roles
 
@@ -94,7 +94,7 @@ This mirrors USWDS lifecycle governance, adapted for registry-first distribution
 
 Status is declared in the capsule manifest and visible in the registry index.
 
-`atrium add` defaults to stable+. `--allow-experimental` opts in.
+`ashlar add` defaults to stable+. `--allow-experimental` opts in.
 
 ## Release channels
 
@@ -123,7 +123,7 @@ Security maintainer coordinates disclosure and patches.
 Not every submission is accepted. Admission criteria:
 
 - **Accessible by evidence** — automated tests pass; manual evidence on a credible path.
-- **Token-compatible** — uses Atrium semantic tokens; no hard-coded brand values.
+- **Token-compatible** — uses Ashlar semantic tokens; no hard-coded brand values.
 - **Minimal dependency weight** — justified per-component dependencies.
 - **Clear user need** — problem statement with research signal.
 - **Documented update path** — codemods for any breaking change.
@@ -138,7 +138,7 @@ Registry-level rejection is fine; the contributor can iterate. Rejection reasons
 Agency themes are first-class registry items. They:
 
 - Extend the default theme via DTCG token overrides.
-- Pass `atrium theme validate` (contrast pairs, forced-colors fallbacks, dark mode if declared).
+- Pass `ashlar theme validate` (contrast pairs, forced-colors fallbacks, dark mode if declared).
 - Preserve interaction semantics — themes change visual identity, not component behavior.
 - Document the brand source (which agency, which guidelines, which version).
 - Include at least one example application using the theme.
@@ -149,12 +149,12 @@ Themes ship in the same registry as components, with their own versioning and ev
 
 Agencies and regulated-industry consumers can run their own registries:
 
-- Atrium registry build tooling (`@atrium/registry-build`) is open-source.
+- Ashlar registry build tooling (`@ashlar/registry-build`) is open-source.
 - Custom registries bring their own signing keys.
 - Custom registries can mirror the canonical registry plus add agency-specific capsules.
-- The Atrium core team does not gate-keep custom-registry contents.
+- The Ashlar core team does not gate-keep custom-registry contents.
 
-This enables federal agencies to maintain agency-internal mirrors with FedRAMP-authorized infrastructure while still consuming the canonical Atrium components.
+This enables federal agencies to maintain agency-internal mirrors with FedRAMP-authorized infrastructure while still consuming the canonical Ashlar components.
 
 ## Community channels
 
@@ -168,15 +168,15 @@ This enables federal agencies to maintain agency-internal mirrors with FedRAMP-a
 
 ## Relationship to USWDS
 
-Atrium's posture toward USWDS is explicit:
+Ashlar's posture toward USWDS is explicit:
 
-- Atrium is **informed by** USWDS — civic principles, accessibility discipline, plain-language guidance.
-- Atrium is **not affiliated with** USWDS, GSA, the U.S. federal government, or the National Design Studio.
-- Atrium **may offer migration aids** from USWDS markup and Sass settings, on a best-effort basis.
-- Atrium **will contribute findings upstream** to USWDS where useful (e.g., extended CEM patterns, polyglot validation rules).
-- Atrium **will not claim** "USWDS Next" status or imply official endorsement.
+- Ashlar is **informed by** USWDS — civic principles, accessibility discipline, plain-language guidance.
+- Ashlar is **not affiliated with** USWDS, GSA, the U.S. federal government, or the National Design Studio.
+- Ashlar **may offer migration aids** from USWDS markup and Sass settings, on a best-effort basis.
+- Ashlar **will contribute findings upstream** to USWDS where useful (e.g., extended CEM patterns, polyglot validation rules).
+- Ashlar **will not claim** "USWDS Next" status or imply official endorsement.
 
-If a future USWDS or NDS-led modernization wants to adopt Atrium components or patterns, Atrium maintainers will engage in good faith and contribute upstream where possible.
+If a future USWDS or NDS-led modernization wants to adopt Ashlar components or patterns, Ashlar maintainers will engage in good faith and contribute upstream where possible.
 
 ## Funding model (preliminary)
 
@@ -186,9 +186,9 @@ A community OSS project still costs real money to maintain at federal-credible q
 - **Open Collective / GitHub Sponsors** — small-scale community funding.
 - **Foundation grants** — Sloan Foundation, Mozilla Foundation, civic-tech philanthropies have funded similar work.
 - **Vendor sponsorship** — Vercel, Cloudflare, Anthropic have sponsored OSS in adjacent spaces.
-- **Federal contract carve-outs** — agencies adopting Atrium for production systems may fund accessibility evidence work as a deliverable.
+- **Federal contract carve-outs** — agencies adopting Ashlar for production systems may fund accessibility evidence work as a deliverable.
 
-Funding model is documented and updated as it firms up. **Atrium does not start from a "if we build it, the money will come" assumption**; before v0.1 public alpha, at least one funded maintainer line is required.
+Funding model is documented and updated as it firms up. **Ashlar does not start from a "if we build it, the money will come" assumption**; before v0.1 public alpha, at least one funded maintainer line is required.
 
 ## How this changes
 

@@ -8,8 +8,8 @@ export function registerVerifyCommand(program: Command) {
     .command("verify")
     .description("Verify installed capsule hashes")
     .action(() => {
-      if (!existsSync("atrium-lock.json")) {
-        console.error("atrium-lock.json not found. Run `atrium init` first.");
+      if (!existsSync("ashlar-lock.json")) {
+        console.error("ashlar-lock.json not found. Run `ashlar init` first.");
         process.exitCode = 1;
         return;
       }

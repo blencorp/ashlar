@@ -8,8 +8,8 @@ function emptySarif() {
       {
         tool: {
           driver: {
-            name: "atrium",
-            informationUri: "https://github.com/blencorp/atrium",
+            name: "ashlar",
+            informationUri: "https://github.com/blencorp/ashlar",
             rules: [],
           },
         },
@@ -22,7 +22,7 @@ function emptySarif() {
 export function registerAuditCommand(program: Command) {
   program
     .command("audit")
-    .description("Validate Atrium usage")
+    .description("Validate Ashlar usage")
     .option("--sarif", "Emit SARIF")
     .action((options: { sarif?: boolean }) => {
       if (options.sarif) {

@@ -6,7 +6,7 @@ For the current implementation foundation, see [`toolchain.md`](./toolchain.md).
 
 ## The five layers
 
-Atrium is organized as five independently usable layers. Each layer has a clear contract; consumers can adopt one without adopting the others.
+Ashlar is organized as five independently usable layers. Each layer has a clear contract; consumers can adopt one without adopting the others.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -16,7 +16,7 @@ Atrium is organized as five independently usable layers. Each layer has a clear 
 │    │              address-form, identity-shell, etc.    │
 ├─────────────────────────────────────────────────────────┤
 │ L2 │ Adapters     Auto-generated from CEM:              │
-│    │              @atrium/react, @atrium/vue, …          │
+│    │              @ashlar/react, @ashlar/vue, …          │
 ├─────────────────────────────────────────────────────────┤
 │ L1 │ Components   Lit custom elements wrapping Zag      │
 │    │              statecharts + signals (~30% of items) │
@@ -64,11 +64,11 @@ Light DOM is the default for theming compatibility; Shadow DOM is used only when
 
 Thin per-framework wrappers generated from each component's Custom Elements Manifest:
 
-- `@atrium/react` — idiomatic React props, event handlers, refs
-- `@atrium/vue` — Vue 3.5+ composition API + slots
-- `@atrium/svelte` — Svelte 5 runes
-- `@atrium/solid` — Solid signals
-- `@atrium/element` — the Lit custom element itself, for plain HTML / Drupal / Sitecore consumers
+- `@ashlar/react` — idiomatic React props, event handlers, refs
+- `@ashlar/vue` — Vue 3.5+ composition API + slots
+- `@ashlar/svelte` — Svelte 5 runes
+- `@ashlar/solid` — Solid signals
+- `@ashlar/element` — the Lit custom element itself, for plain HTML / Drupal / Sitecore consumers
 
 Adapters are not hand-maintained. When the underlying machine or component changes, adapters regenerate. There is no parallel React tree drifting from the canonical implementation.
 
@@ -107,7 +107,7 @@ A capsule is a content-addressed bundle of everything needed to use, verify, upd
 
 ```
 button/
-├── button.css                # @layer atrium.components, @scope
+├── button.css                # @layer ashlar.components, @scope
 ├── button.html.njk           # Nunjucks template (canonical HTML)
 ├── button.html.twig          # Twig template
 ├── button.html               # plain HTML example
@@ -121,7 +121,7 @@ button/
 └── button.checksum.txt       # content hash
 ```
 
-Each capsule is signed via Sigstore. The lockfile records the signature; `atrium verify` checks all installed capsule files against recorded signatures.
+Each capsule is signed via Sigstore. The lockfile records the signature; `ashlar verify` checks all installed capsule files against recorded signatures.
 
 See [`capsule.md`](./capsule.md) for the full capsule schema and content-addressing rules.
 
@@ -136,29 +136,29 @@ The CLI is a pure Node + ESM tool, distributed via npm and runnable via `npx`, `
 
 ```bash
 # Day 1
-npx atrium init                       # writes atrium.config.json + tokens + lockfile
-npx atrium add button alert dialog    # adds L0 capsules — pure CSS, zero JS
-npx atrium add combobox               # adds an L1 capsule (Lit + Zag)
+npx ashlar init                       # writes ashlar.config.json + tokens + lockfile
+npx ashlar add button alert dialog    # adds L0 capsules — pure CSS, zero JS
+npx ashlar add combobox               # adds an L1 capsule (Lit + Zag)
 
 # Day 30
-npx atrium update                     # safe 3-way merge for any drift
-npx atrium audit                      # ast-grep validation across the project
-npx atrium evidence button            # show me the a11y evidence
+npx ashlar update                     # safe 3-way merge for any drift
+npx ashlar audit                      # ast-grep validation across the project
+npx ashlar evidence button            # show me the a11y evidence
 
 # Day 90
-npx atrium theme new my-agency        # scaffold custom DTCG theme
-npx atrium verify                     # signature/supply-chain check
-npx atrium mcp                        # start MCP server for Cursor/Claude/etc.
+npx ashlar theme new my-agency        # scaffold custom DTCG theme
+npx ashlar verify                     # signature/supply-chain check
+npx ashlar mcp                        # start MCP server for Cursor/Claude/etc.
 ```
 
 ## Drift management — the lockfile and three-way merge
 
-shadcn's most-cited unfixed problem is that copied components drift after install with no safe upgrade path. Atrium's lockfile and three-way merge is the direct fix.
+shadcn's most-cited unfixed problem is that copied components drift after install with no safe upgrade path. Ashlar's lockfile and three-way merge is the direct fix.
 
 ```json
-// atrium-lock.json
+// ashlar-lock.json
 {
-  "registry": "https://registry.atrium.dev",
+  "registry": "https://registry.ashlar.dev",
   "components": {
     "button": {
       "version": "1.2.3",
@@ -166,7 +166,7 @@ shadcn's most-cited unfixed problem is that copied components drift after instal
       "installed_at": "2026-04-27T10:00:00Z",
       "signature": "sigstore:...",
       "files": {
-        "src/components/atrium/button.css": {
+        "src/components/ashlar/button.css": {
           "original_hash": "sha256:def...",
           "current_hash": "sha256:def..."
         }
@@ -176,7 +176,7 @@ shadcn's most-cited unfixed problem is that copied components drift after instal
 }
 ```
 
-`atrium update button`:
+`ashlar update button`:
 
 1. Hash each local file. If matches `original_hash`, no local edits — replace cleanly.
 2. If hashes differ, fetch the original (at locked version) and the new version from the registry, then run `git merge-file --diff3 local original new`.
@@ -190,21 +190,21 @@ See [`drift-and-updates.md`](./drift-and-updates.md) for the full update protoco
 
 ## Validation — polyglot, framework-agnostic
 
-`atrium audit` runs ast-grep rules generated from each component's CEM. ast-grep is a tree-sitter-based AST tool with a YAML rule DSL that handles TSX, JSX, Vue SFCs, Svelte, Astro, plain HTML, and Drupal Twig from the same rule.
+`ashlar audit` runs ast-grep rules generated from each component's CEM. ast-grep is a tree-sitter-based AST tool with a YAML rule DSL that handles TSX, JSX, Vue SFCs, Svelte, Astro, plain HTML, and Drupal Twig from the same rule.
 
 ```yaml
-# Generated from button.cem.json _atrium.anti_patterns
-id: atrium/button-icon-only-needs-label
+# Generated from button.cem.json _ashlar.anti_patterns
+id: ashlar/button-icon-only-needs-label
 language: [tsx, jsx, vue, svelte, astro, html, twig]
 rule:
-  pattern: <atrium-button>$ICON</atrium-button>
+  pattern: <ashlar-button>$ICON</ashlar-button>
   has:
     pattern: <svg/>
   not:
     has:
       pattern: aria-label="$_"
 message: "Icon-only Button requires aria-label (WCAG 4.1.2)"
-fix: '<atrium-button aria-label="TODO">$ICON</atrium-button>'
+fix: '<ashlar-button aria-label="TODO">$ICON</ashlar-button>'
 ```
 
 ast-grep is distributed as a single Rust binary (~3MB). No JS dependency tree, no framework coupling, no build-pipeline integration required. CI integration is one line; pre-commit hook integration is one line.
@@ -215,11 +215,11 @@ See [`validation.md`](./validation.md) for the rule generation pipeline, integra
 
 Three artifacts, each does one thing:
 
-1. **Extended CEM** (`atrium-cem.json` aggregated from installed capsules) — the structured contract. Includes variants, anti-patterns, accessibility constraints, token consumption, rendering classification, and canonical examples. This is consumed by Storybook MCP, our own MCP server, AI editor integrations, and code generators.
+1. **Extended CEM** (`ashlar-cem.json` aggregated from installed capsules) — the structured contract. Includes variants, anti-patterns, accessibility constraints, token consumption, rendering classification, and canonical examples. This is consumed by Storybook MCP, our own MCP server, AI editor integrations, and code generators.
 
-2. **AGENTS.md** in the project root — coding-agent instructions for using Atrium correctly in the user's codebase. Symlinked from `CLAUDE.md`, `.cursor/rules/atrium.mdc`, and `.windsurfrules` to cover the editor fragmentation.
+2. **AGENTS.md** in the project root — coding-agent instructions for using Ashlar correctly in the user's codebase. Symlinked from `CLAUDE.md`, `.cursor/rules/ashlar.mdc`, and `.windsurfrules` to cover the editor fragmentation.
 
-3. **MCP server** at `npx atrium mcp` — exposes tools that go beyond shadcn's install-only MCP:
+3. **MCP server** at `npx ashlar mcp` — exposes tools that go beyond shadcn's install-only MCP:
    - `search_components(query)` — semantic search across capsules
    - `get_component(name)` — full extended CEM
    - `validate_usage(file_or_glob)` — runs ast-grep rules, returns violations
@@ -250,11 +250,11 @@ Outputs:
 Tokens use modern color spaces (`oklch()`, `color-mix()`, `light-dark()`) so a single token set generates light, dark, and high-contrast palettes without JavaScript:
 
 ```css
-@layer atrium.tokens {
+@layer ashlar.tokens {
   :root {
-    --atrium-action-primary-bg:
+    --ashlar-action-primary-bg:
       light-dark(oklch(0.48 0.16 250), oklch(0.68 0.16 250));
-    --atrium-surface-default:
+    --ashlar-surface-default:
       light-dark(white, oklch(0.18 0.02 260));
   }
 }
@@ -295,7 +295,7 @@ See [`accessibility.md`](./accessibility.md) for the test matrix, evidence schem
 
 Several architectural primitives shape the long-term direction without being in the v0.0 scope:
 
-- **Signals as the reactive layer** — TC39 Signals is in Stage 1; Solid, Preact, Vue, and Angular all align with the proposal. L1 components use signals internally. When TC39 Signals lands as a platform standard, Atrium components migrate without breaking changes.
+- **Signals as the reactive layer** — TC39 Signals is in Stage 1; Solid, Preact, Vue, and Angular all align with the proposal. L1 components use signals internally. When TC39 Signals lands as a platform standard, Ashlar components migrate without breaking changes.
 
 - **Resumability-friendly serialization** — L1 components' machine state should serialize to data attributes so the entire SSR + client-takeover flow can resume without re-execution. This is a discipline now; an exploitation later.
 
@@ -313,13 +313,13 @@ The "lightweight" claim must be backed by real numbers. Targets for a typical 5-
 
 | Stack | Gzipped JS+CSS |
 |---|---|
-| Atrium L0 only (CSS+HTML) | **6–8 KB** |
-| Atrium L0 + 1 L1 (Combobox) | 12–15 KB |
+| Ashlar L0 only (CSS+HTML) | **6–8 KB** |
+| Ashlar L0 + 1 L1 (Combobox) | 12–15 KB |
 | shadcn/ui (Tailwind + Radix) | 40–55 KB |
 | Carbon Web Components | 50–70 KB |
 | Spectrum Web Components | 60–90 KB |
 
-Atrium is targeting 5–10× smaller than the alternatives for typical government pages. Not by cutting features — by exploiting the platform.
+Ashlar is targeting 5–10× smaller than the alternatives for typical government pages. Not by cutting features — by exploiting the platform.
 
 ## What follows
 

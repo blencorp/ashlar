@@ -1,13 +1,13 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 
-export type AtriumConfig = {
+export type AshlarConfig = {
   $schema?: string;
   registry: string;
   componentsDir: string;
 };
 
-export type AtriumLockfile = {
+export type AshlarLockfile = {
   $schema?: string;
   version: "1";
   registry: string;
@@ -31,20 +31,20 @@ export type AtriumLockfile = {
   >;
 };
 
-export function readConfig(): AtriumConfig {
-  if (!existsSync("atrium.config.json")) {
-    return { registry: "./registry", componentsDir: "src/atrium" };
+export function readConfig(): AshlarConfig {
+  if (!existsSync("ashlar.config.json")) {
+    return { registry: "./registry", componentsDir: "src/ashlar" };
   }
 
-  return JSON.parse(readFileSync("atrium.config.json", "utf8")) as AtriumConfig;
+  return JSON.parse(readFileSync("ashlar.config.json", "utf8")) as AshlarConfig;
 }
 
-export function readLockfile(): AtriumLockfile {
-  if (!existsSync("atrium-lock.json")) {
+export function readLockfile(): AshlarLockfile {
+  if (!existsSync("ashlar-lock.json")) {
     return { version: "1", registry: "./registry", components: {} };
   }
 
-  return JSON.parse(readFileSync("atrium-lock.json", "utf8")) as AtriumLockfile;
+  return JSON.parse(readFileSync("ashlar-lock.json", "utf8")) as AshlarLockfile;
 }
 
 export function writeJson(path: string, value: unknown): void {

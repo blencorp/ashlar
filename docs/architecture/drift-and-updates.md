@@ -1,32 +1,32 @@
 # Drift management and updates
 
-shadcn's most-cited unfixed problem is that copied components drift after install with no safe upgrade path. Atrium's lockfile and three-way merge protocol is the direct, mechanical fix.
+shadcn's most-cited unfixed problem is that copied components drift after install with no safe upgrade path. Ashlar's lockfile and three-way merge protocol is the direct, mechanical fix.
 
 This document specifies the lockfile format, the update protocol, conflict resolution UX, and codemod application.
 
-## The lockfile (`atrium-lock.json`)
+## The lockfile (`ashlar-lock.json`)
 
 Located at the consumer project root. Records every installed capsule, content hashes, signatures, and per-file install state.
 
 ```json
 {
-  "$schema": "https://atrium.dev/schemas/lock.schema.json",
+  "$schema": "https://ashlar.dev/schemas/lock.schema.json",
   "version": "1",
-  "registry": "https://registry.atrium.dev",
+  "registry": "https://registry.ashlar.dev",
   "components": {
     "button": {
       "version": "1.2.3",
       "capsule_hash": "sha256:abc...",
       "signature": "sigstore:...",
       "installed_at": "2026-04-27T10:00:00Z",
-      "installed_via": "atrium-cli@0.1.0",
+      "installed_via": "ashlar-cli@0.1.0",
       "files": {
-        "src/components/atrium/button.css": {
+        "src/components/ashlar/button.css": {
           "original_hash": "sha256:def...",
           "current_hash": "sha256:def...",
           "critical_for_a11y": true
         },
-        "src/components/atrium/button.html.njk": {
+        "src/components/ashlar/button.html.njk": {
           "original_hash": "sha256:ghi...",
           "current_hash": "sha256:ghi...",
           "critical_for_a11y": false
@@ -38,13 +38,13 @@ Located at the consumer project root. Records every installed capsule, content h
     "version": "0.5.0",
     "signature": "sigstore:..."
   },
-  "themes": ["atrium/default", "agency/example"]
+  "themes": ["ashlar/default", "agency/example"]
 }
 ```
 
 `original_hash` is the content hash at install time.
 `current_hash` is recomputed every time the CLI runs, to detect local edits.
-`critical_for_a11y` is sourced from the capsule's `_atrium.criticalForA11y` flag in the CEM.
+`critical_for_a11y` is sourced from the capsule's `_ashlar.criticalForA11y` flag in the CEM.
 
 ## The drift detection model
 
@@ -57,7 +57,7 @@ Three states for any installed file:
 | Differ | Match | **Forked** — local edits, upstream unchanged. No update needed. |
 | Differ | Differ | **Conflicted** — local edits AND upstream changed. Three-way merge required. |
 
-## `atrium update` protocol
+## `ashlar update` protocol
 
 ### Per-component flow
 
@@ -89,8 +89,8 @@ Codemods ship in the capsule as ast-grep YAML rules:
   to: 1.2.x
   language: [tsx, jsx, vue, svelte, astro, html, twig]
   rule:
-    pattern: <atrium-button color="$VAL">
-  fix: <atrium-button variant="$VAL">
+    pattern: <ashlar-button color="$VAL">
+  fix: <ashlar-button variant="$VAL">
   message: "color prop renamed to variant in 1.2.0"
   confirm: false
 ```
@@ -110,7 +110,7 @@ For codemods marked `confirm: true`, CLI pauses for user approval before applyin
 When `git merge-file` produces conflicts:
 
 ```
-$ atrium update button
+$ ashlar update button
 
 Updating button: 1.1.5 → 1.2.0
 
@@ -123,20 +123,20 @@ Merging files:
   ⚠ button.html.njk    (conflict — review required)
   ✓ button.cem.json    (replaced, no local edits)
 
-Conflict in src/components/atrium/button.html.njk:
+Conflict in src/components/ashlar/button.html.njk:
 
   <<<<<<< local
-    <button class="atrium-button atrium-button--{{ variant }}">
+    <button class="ashlar-button ashlar-button--{{ variant }}">
   ||||||| base
-    <button class="atrium-button atrium-button--{{ color }}">
+    <button class="ashlar-button ashlar-button--{{ color }}">
   =======
-    <button class="atrium-button" data-variant="{{ variant }}">
+    <button class="ashlar-button" data-variant="{{ variant }}">
   >>>>>>> upstream
 
-Resolve the conflict and run `atrium update --resolved button` to finalize.
+Resolve the conflict and run `ashlar update --resolved button` to finalize.
 ```
 
-`atrium update --resolved button`:
+`ashlar update --resolved button`:
 
 1. Verifies no `<<<<<<<` markers remain in the file.
 2. Computes new `current_hash` and `original_hash` (set to upstream's new content).
@@ -147,7 +147,7 @@ Resolve the conflict and run `atrium update --resolved button` to finalize.
 For any file with `critical_for_a11y: true`:
 
 ```
-$ atrium update dialog
+$ ashlar update dialog
 
 Updating dialog: 1.0.4 → 1.1.0
 
@@ -161,12 +161,12 @@ Continue? [y/N]
 
 Even on a clean merge, the user must explicitly accept. This is the safety net for "AI generated code, the merge looked fine, but it broke focus management for screen-reader users."
 
-## Verifying no tampering: `atrium verify`
+## Verifying no tampering: `ashlar verify`
 
-`atrium verify` re-hashes every installed file and checks against the lockfile's `original_hash` (for unmodified files) or notes presence of local edits. It also re-verifies the registry signature on the capsule.
+`ashlar verify` re-hashes every installed file and checks against the lockfile's `original_hash` (for unmodified files) or notes presence of local edits. It also re-verifies the registry signature on the capsule.
 
 ```
-$ atrium verify
+$ ashlar verify
 
 Components:
   ✓ button         (1.2.3) — files match, signature valid
@@ -183,19 +183,19 @@ A signature mismatch is treated as a hard error — the consumer is shown which 
 For environments that cannot reach the public registry:
 
 ```
-$ atrium registry mirror --output ./atrium-mirror
-$ atrium update --registry ./atrium-mirror
+$ ashlar registry mirror --output ./ashlar-mirror
+$ ashlar update --registry ./ashlar-mirror
 ```
 
-`registry mirror` produces a tarball of the entire signed registry plus a verification keyring. The lockfile records `registry: "./atrium-mirror"`. Updates work entirely offline.
+`registry mirror` produces a tarball of the entire signed registry plus a verification keyring. The lockfile records `registry: "./ashlar-mirror"`. Updates work entirely offline.
 
 ## What this means in practice
 
 **Day-1**: install components, lockfile records original hashes.
 **Day-30**: customize a button to add an icon slot. Lockfile sees the drift but does nothing.
-**Day-60**: registry releases button 1.3.0 with a focus-handling fix. Run `atrium update`. CLI runs codemods (none for this version), three-way merges your local icon-slot edit with the upstream focus fix, presents one minor conflict in the click handler, you resolve it, run `atrium update --resolved button`, and you have the upstream a11y fix plus your local feature, with both diffed cleanly.
+**Day-60**: registry releases button 1.3.0 with a focus-handling fix. Run `ashlar update`. CLI runs codemods (none for this version), three-way merges your local icon-slot edit with the upstream focus fix, presents one minor conflict in the click handler, you resolve it, run `ashlar update --resolved button`, and you have the upstream a11y fix plus your local feature, with both diffed cleanly.
 
-shadcn cannot do this. Atrium can.
+shadcn cannot do this. Ashlar can.
 
 ## References
 

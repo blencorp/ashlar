@@ -70,13 +70,13 @@ export function registerAddCommand(program: Command) {
           capsule_hash: manifest.capsule_hash,
           stability: manifest.stability,
           installed_at: new Date().toISOString(),
-          installed_via: "atrium-cli@0.0.0",
+          installed_via: "ashlar-cli@0.0.0",
           files: installedFiles,
         };
 
         console.log(`Added ${component}@${version}`);
       }
 
-      writeJson("atrium-lock.json", lockfile);
+      writeJson("ashlar-lock.json", lockfile);
     });
 }

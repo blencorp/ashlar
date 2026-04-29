@@ -1,6 +1,6 @@
 # Roadmap
 
-Atrium is delivered in phased releases. Each phase has clear deliverables, success criteria, and an honest scope. The roadmap is conservative on scope and ambitious on quality — the project succeeds by shipping a small thing well, then expanding from a stable base.
+Ashlar is delivered in phased releases. Each phase has clear deliverables, success criteria, and an honest scope. The roadmap is conservative on scope and ambitious on quality — the project succeeds by shipping a small thing well, then expanding from a stable base.
 
 ## Public roadmap posture
 
@@ -32,13 +32,13 @@ Each phase below has a dedicated document with detailed scope.
 
 ## Top-line success criteria
 
-If Atrium does these, it succeeds. If it cannot, we redesign before scaling.
+If Ashlar does these, it succeeds. If it cannot, we redesign before scaling.
 
 - **Bundle target met**: a typical 5-component L0-only page under 10KB gzipped (versus shadcn's 40–55KB).
-- **Drift solved**: `atrium update` works on 50+ real updates with under 10% conflict rate.
-- **AI integration meaningful**: Cursor/Claude/Copilot generate Atrium code with zero hallucinated props when grounded by extended CEM and AGENTS.md; `atrium audit` catches violations.
+- **Drift solved**: `ashlar update` works on 50+ real updates with under 10% conflict rate.
+- **AI integration meaningful**: Cursor/Claude/Copilot generate Ashlar code with zero hallucinated props when grounded by extended CEM and AGENTS.md; `ashlar audit` catches violations.
 - **Cross-stack proven**: same component capsule renders in Next.js, Drupal Twig, plain HTML, and a Vite SPA — all with passing accessibility evidence.
-- **Time-to-first-component**: under 10 minutes from `atrium init` to a working accessible form.
+- **Time-to-first-component**: under 10 minutes from `ashlar init` to a working accessible form.
 - **Stable accessibility evidence**: at least 12 components reach `stable` with full evidence packets (axe, keyboard, NVDA, VoiceOver, JAWS).
 - **CI usable by agencies**: `audit`, `verify`, `theme validate`, `evidence --check`, and SARIF output run in GitHub Actions.
 - **Security provenance credible**: capsules are signed, lockfile-verifiable, SBOM-backed, and mirrorable for air-gapped environments.
@@ -52,7 +52,7 @@ Use these as GitHub milestones:
 |---|---|
 | Repository readiness | License, governance, security policy, contribution model, roadmap, and disclaimers are public. |
 | v0.0 foundation prototype | Fresh project can install and verify a small accessible form in under 10 minutes. |
-| v0.0 update and CI gate | `atrium update` works across drift scenarios and `atrium audit --sarif` uploads to code scanning. |
+| v0.0 update and CI gate | `ashlar update` works across drift scenarios and `ashlar audit --sarif` uploads to code scanning. |
 | v0.1 public alpha | Public registry, MCP, docs site, 20+ components, first pattern, and 12 evidence-complete components. |
 | v0.2 beta | Multi-framework adapters, complex components, USWDS migration tooling, third-party a11y audit. |
 | v1.0 stable | 25-30 stable components, 6+ patterns, third-party audits, LTS policy, and durable governance. |
@@ -92,15 +92,15 @@ Every release — v0.0 through v0.3+ — ships:
 
 | Metric | Tool | Target |
 |---|---|---|
-| Bundle size | `atrium audit --bundle` | <10KB L0-only, <15KB with one L1 |
-| Drift conflict rate | `atrium update` telemetry (opt-in) | <10% |
+| Bundle size | `ashlar audit --bundle` | <10KB L0-only, <15KB with one L1 |
+| Drift conflict rate | `ashlar update` telemetry (opt-in) | <10% |
 | AI generation accuracy | Eval suite against Cursor/Claude/Copilot | 0 hallucinated props |
 | Time-to-first-component | Onboarding video timing | <10 min |
-| Accessibility evidence | `atrium evidence --report` | All `stable` components have full packet |
+| Accessibility evidence | `ashlar evidence --report` | All `stable` components have full packet |
 | Cross-stack parity | Snapshot tests in 4 demo apps | 100% pass |
 | CI integration | GitHub Actions / SARIF | Findings visible in code scanning |
-| Registry trust | `atrium verify` | Tampered capsule detected |
-| Theme safety | `atrium theme validate` | Critical contrast failures block |
+| Registry trust | `ashlar verify` | Tampered capsule detected |
+| Theme safety | `ashlar theme validate` | Critical contrast failures block |
 
 ## Cadence
 
@@ -112,7 +112,7 @@ After v0.0:
 
 ## Where this roadmap ends
 
-When v1.0 ships, Atrium has:
+When v1.0 ships, Ashlar has:
 
 - 25–30 stable components covering primary federal-service UI needs.
 - L3 patterns for at least 6 service flows.

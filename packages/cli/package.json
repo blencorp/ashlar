@@ -1,11 +1,11 @@
 {
-  "name": "@atrium/cli",
+  "name": "@ashlar/cli",
   "version": "0.0.0",
-  "description": "Atrium component registry CLI.",
+  "description": "Ashlar component registry CLI.",
   "license": "Apache-2.0",
   "type": "module",
   "bin": {
-    "atrium": "./dist/index.js"
+    "ashlar": "./dist/index.js"
   },
   "exports": {
     ".": "./dist/index.js"

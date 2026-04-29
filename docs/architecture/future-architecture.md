@@ -1,6 +1,6 @@
 # Future architecture
 
-This document records architectural primitives that shape Atrium's long-term direction without being part of v0.0 scope. Each is evaluated for **what it would deliver**, **what it would cost**, and **the conditions under which Atrium would adopt it**.
+This document records architectural primitives that shape Ashlar's long-term direction without being part of v0.0 scope. Each is evaluated for **what it would deliver**, **what it would cost**, and **the conditions under which Ashlar would adopt it**.
 
 The intent is to keep the v0.x architecture compatible with these directions, even if we do not exploit them yet. Decisions made now should not preclude any of them.
 
@@ -10,9 +10,9 @@ The intent is to keep the v0.x architecture compatible with these directions, ev
 
 **What**: Signals model fine-grained reactive data flow. **TC39 Signals (Stage 1)** is the emerging platform standard. Solid Signals, Preact Signals, Angular Signals, and Vue Refs all align with the proposal.
 
-**Atrium uses signals for**: derived ARIA attributes, computed validity, filtered options, anything where reactive recomputation is more natural than statechart context updates.
+**Ashlar uses signals for**: derived ARIA attributes, computed validity, filtered options, anything where reactive recomputation is more natural than statechart context updates.
 
-**Forward conditions**: when TC39 Signals reaches Stage 3+ and ships in browsers, Atrium migrates from a userland signals library to the platform implementation. The migration surface is contained (machine implementations and Lit shells); consumers should not see breaking changes.
+**Forward conditions**: when TC39 Signals reaches Stage 3+ and ships in browsers, Ashlar migrates from a userland signals library to the platform implementation. The migration surface is contained (machine implementations and Lit shells); consumers should not see breaking changes.
 
 ## 2. Resumability-friendly serialization
 
@@ -20,11 +20,11 @@ The intent is to keep the v0.x architecture compatible with these directions, ev
 
 **What**: Standard SSR runs component logic on the server, sends HTML, then re-runs the same logic on the client to "hydrate." Resumability (Qwik's contribution) serializes the entire execution state — including a statechart's current state — into HTML, then resumes on the client without re-running setup.
 
-**Atrium discipline**: L1 components serialize machine state to `data-atrium-state` and `data-atrium-context` attributes. The custom element on the client reads these and jumps directly to that state.
+**Ashlar discipline**: L1 components serialize machine state to `data-ashlar-state` and `data-ashlar-context` attributes. The custom element on the client reads these and jumps directly to that state.
 
 **What this preserves**: future ability to ship a resumability-driven render mode (Qwik-style or successor framework). For government services on slow devices, kiosks, rural connections, this is materially better than hydration.
 
-**Forward conditions**: when a resumability-friendly framework reaches enterprise-grade production maturity (Qwik, post-Qwik successor, or framework-neutral resumability standard), Atrium ships an `@atrium/resume` package that exploits the discipline. v0.3+ at the earliest.
+**Forward conditions**: when a resumability-friendly framework reaches enterprise-grade production maturity (Qwik, post-Qwik successor, or framework-neutral resumability standard), Ashlar ships an `@ashlar/resume` package that exploits the discipline. v0.3+ at the earliest.
 
 ## 3. Event-sourced patterns for L3
 
@@ -34,7 +34,7 @@ The intent is to keep the v0.x architecture compatible with these directions, ev
 
 **Government relevance**: federal benefits, eligibility, and case-management contexts have hard audit requirements. Every form submission, every eligibility determination, every benefits decision must be reconstructible from logs. **Event sourcing is the natural architecture for this.** Statecharts compose with it cleanly — every transition is an event.
 
-**Atrium pattern**: an "event-sourced form" pattern in L3 that consumers can adopt for audit-heavy flows. It includes:
+**Ashlar pattern**: an "event-sourced form" pattern in L3 that consumers can adopt for audit-heavy flows. It includes:
 
 - An event log API (consumer pluggable; can be IndexedDB locally, server-streamed, or fully server-side).
 - Replay tooling for time-travel debugging.
@@ -49,7 +49,7 @@ The intent is to keep the v0.x architecture compatible with these directions, ev
 
 **What**: Government services are increasingly collaborative — case management with multiple caseworkers, application forms reviewed by multiple staff, eligibility flows that survive intermittent connectivity. **CRDTs (Conflict-Free Replicated Data Types)** — Yjs, Automerge — let multiple clients edit shared state without coordination. **Local-first** sync engines — Replicache, ElectricSQL, RxDB, PowerSync — let apps work offline and sync on reconnect.
 
-**Atrium does not ship a sync engine.** Atrium ships patterns and components that are **CRDT-aware**: form fields that can present a "this field was updated by another user" indicator, conflict-resolution UX, optimistic-update visuals.
+**Ashlar does not ship a sync engine.** Ashlar ships patterns and components that are **CRDT-aware**: form fields that can present a "this field was updated by another user" indicator, conflict-resolution UX, optimistic-update visuals.
 
 **Forward conditions**: a pattern category, not a runtime requirement. Ships when an L3 pattern (likely "collaborative review" or "field case management") reaches priority and we have a clear consumer with a real CRDT integration.
 
@@ -71,7 +71,7 @@ The intent is to keep the v0.x architecture compatible with these directions, ev
 
 **What**: A capsule's behavior could be described in a portable specification language (state machine + ARIA + keyboard + focus + i18n constraints) from which the React component, Vue component, Lit shell, and even Web Component could be generated.
 
-**Atrium's current model**: Zag machines plus Lit shell plus auto-generated framework adapters already approximate this. The behavioral spec **is** the Zag machine.
+**Ashlar's current model**: Zag machines plus Lit shell plus auto-generated framework adapters already approximate this. The behavioral spec **is** the Zag machine.
 
 **Forward conditions**: only promote to a separate spec format if (a) consumers ask for it, (b) we have a use case Zag cannot serve, or (c) a community standard emerges. Otherwise, Zag machines plus extended CEM is the de-facto behavioral contract.
 
@@ -91,7 +91,7 @@ The intent is to keep the v0.x architecture compatible with these directions, ev
 
 **What**: Multi-window government workflows (case management screens spread across monitors, kiosk applications driving multiple displays) benefit from process-calculus-derived primitives — CSP, π-calculus, channel-based communication. Erlang and Akka are inspired by these models.
 
-**Why this is far-future**: not a current Atrium-audience pain point. If federal call-center / casework systems become a target audience, this becomes relevant.
+**Why this is far-future**: not a current Ashlar-audience pain point. If federal call-center / casework systems become a target audience, this becomes relevant.
 
 **Forward conditions**: only if a clear enterprise consumer asks. Otherwise out of scope indefinitely.
 
@@ -101,15 +101,15 @@ The intent is to keep the v0.x architecture compatible with these directions, ev
 
 **What**: Beyond AI-generated component code, AI-driven composition: a designer describes a flow, the AI assembles patterns and components. Storybook MCP and Figma's design-token / component-mapping work are precursors.
 
-**Atrium's posture**: provide the primitives (extended CEM, MCP server, AGENTS.md, evidence packets, anti-patterns). Don't build the AI orchestrator; let the ecosystem do it.
+**Ashlar's posture**: provide the primitives (extended CEM, MCP server, AGENTS.md, evidence packets, anti-patterns). Don't build the AI orchestrator; let the ecosystem do it.
 
-**Forward conditions**: ongoing. Atrium ships the contract; consumers and tool authors build the orchestration.
+**Forward conditions**: ongoing. Ashlar ships the contract; consumers and tool authors build the orchestration.
 
 ## 10. Local-first identity / authentication shells
 
 **Status**: Pattern direction (v0.2+).
 
-**What**: Patterns for federated identity (Login.gov, ID.me, DHS, agency SSO) without binding Atrium to any specific provider. Local-first credential caches for offline-tolerant kiosks.
+**What**: Patterns for federated identity (Login.gov, ID.me, DHS, agency SSO) without binding Ashlar to any specific provider. Local-first credential caches for offline-tolerant kiosks.
 
 **Forward conditions**: ships when the identity pattern reaches priority. Most likely paired with the `account-creation` pattern in L3.
 

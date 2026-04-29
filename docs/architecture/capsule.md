@@ -1,14 +1,14 @@
 # Capsule format
 
-The capsule is Atrium's atomic unit. It bundles every artifact needed to use, verify, update, and reason about a component into a content-addressed, signed archive that the registry distributes and the CLI installs.
+The capsule is Ashlar's atomic unit. It bundles every artifact needed to use, verify, update, and reason about a component into a content-addressed, signed archive that the registry distributes and the CLI installs.
 
 ## Directory layout
 
-A capsule is a directory in the registry source tree. The CLI materializes capsule files into the consumer's project on `atrium add`.
+A capsule is a directory in the registry source tree. The CLI materializes capsule files into the consumer's project on `ashlar add`.
 
 ```
 button/
-├── button.css                # @layer atrium.components, semantic CSS
+├── button.css                # @layer ashlar.components, semantic CSS
 ├── button.html               # canonical HTML example
 ├── button.html.njk           # Nunjucks template
 ├── button.html.twig          # Twig template (Drupal)
@@ -28,7 +28,7 @@ Files are optional except for `*.cem.json`, `*.docs.md`, `*.lock.json`, and at l
 
 ## Capsule manifest (`*.lock.json`)
 
-The capsule's own manifest, distinct from the consumer's `atrium-lock.json`. Records the capsule's identity, version, content hashes, dependencies, and signature.
+The capsule's own manifest, distinct from the consumer's `ashlar-lock.json`. Records the capsule's identity, version, content hashes, dependencies, and signature.
 
 ```json
 {
@@ -80,7 +80,7 @@ Cross-cuts the layer model:
 
 ## Extended Custom Elements Manifest
 
-Every capsule emits a CEM (`*.cem.json`) that conforms to the W3C-CG schema, augmented with an `_atrium` namespace. See [`ai-native.md`](./ai-native.md) for the full schema; the relevant excerpt:
+Every capsule emits a CEM (`*.cem.json`) that conforms to the W3C-CG schema, augmented with an `_ashlar` namespace. See [`ai-native.md`](./ai-native.md) for the full schema; the relevant excerpt:
 
 ```json
 {
@@ -90,17 +90,17 @@ Every capsule emits a CEM (`*.cem.json`) that conforms to the W3C-CG schema, aug
       "path": "button.html",
     "declarations": [{
       "kind": "class",
-      "name": "AtriumButton",
+      "name": "AshlarButton",
       "tagName": "button",
       "members": [],
       "events": [],
       "slots": [{ "name": "default", "description": "Button label" }],
       "cssProperties": [
-        { "name": "--atrium-button-bg", "syntax": "<color>" }
+        { "name": "--ashlar-button-bg", "syntax": "<color>" }
       ],
-      "_atrium": {
+      "_ashlar": {
         "variants": ["primary", "secondary", "outline", "ghost", "destructive"],
-        "selector": ".atrium-button",
+        "selector": ".ashlar-button",
         "sizes": ["sm", "md", "lg"],
         "a11yRequirements": [
           { "rule": "accessible_name_required", "wcag": "4.1.2" },
@@ -108,12 +108,12 @@ Every capsule emits a CEM (`*.cem.json`) that conforms to the W3C-CG schema, aug
         ],
         "antiPatterns": [
           {
-            "pattern": "<button class=\"atrium-button\" onClick={navigate}>",
-            "fix": "<a class=\"atrium-link\" href=...>",
+            "pattern": "<button class=\"ashlar-button\" onClick={navigate}>",
+            "fix": "<a class=\"ashlar-link\" href=...>",
             "reason": "Use Link for navigation, Button for actions"
           },
           {
-            "pattern": "<button class=\"atrium-button\"><svg/></button>",
+            "pattern": "<button class=\"ashlar-button\"><svg/></button>",
             "fix": "Add aria-label or visible text",
             "reason": "Icon-only buttons require accessible name"
           }
@@ -156,7 +156,7 @@ See [`accessibility.md`](./accessibility.md) for the full schema; structurally:
 
 ## Codemods (`*.codemods.yaml`)
 
-ast-grep YAML rules that transform consumer code from the previous version of the capsule to the current one. Run by `atrium update` when version skip detected.
+ast-grep YAML rules that transform consumer code from the previous version of the capsule to the current one. Run by `ashlar update` when version skip detected.
 
 ```yaml
 - id: button-rename-color-prop
@@ -164,8 +164,8 @@ ast-grep YAML rules that transform consumer code from the previous version of th
   to: 1.2.x
   language: [tsx, vue, html, twig]
   rule:
-    pattern: <atrium-button color="$VAL">
-  fix: <atrium-button variant="$VAL">
+    pattern: <ashlar-button color="$VAL">
+  fix: <ashlar-button variant="$VAL">
   message: "color prop renamed to variant in 1.2.0"
 ```
 
@@ -189,14 +189,14 @@ Determinism rules: keys sorted, no whitespace, line endings normalized to `\n`, 
 
 ## Signing
 
-Atrium uses **Sigstore** with cosign for capsule signatures:
+Ashlar uses **Sigstore** with cosign for capsule signatures:
 
 1. Registry build pipeline produces capsule contents and `capsule_hash`.
 2. Pipeline signs `capsule_hash` via Sigstore (keyless, with OIDC identity tied to the registry's GitHub Actions workflow).
 3. Signature and signing certificate chain are recorded in the capsule manifest.
-4. `atrium verify` re-computes the capsule hash from local files and verifies the signature against the embedded chain.
+4. `ashlar verify` re-computes the capsule hash from local files and verifies the signature against the embedded chain.
 
-Custom registries (agency-internal mirrors, regulated-industry consumers) bring their own keys via `atrium.config.json`. Air-gapped operation supported by bundling a verification keyring with the registry tarball.
+Custom registries (agency-internal mirrors, regulated-industry consumers) bring their own keys via `ashlar.config.json`. Air-gapped operation supported by bundling a verification keyring with the registry tarball.
 
 ## Backwards compatibility
 

@@ -1,9 +1,9 @@
 {
-  "$schema": "https://atrium.dev/schemas/theme.schema.json",
+  "$schema": "https://ashlar.dev/schemas/theme.schema.json",
   "name": "example-agency",
   "displayName": "Example Department of Civic Services",
   "version": "0.1.0",
-  "extends": "atrium/default",
+  "extends": "ashlar/default",
   "tokens": {
     "color.brand.primary": {
       "$type": "color",

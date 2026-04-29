@@ -1,6 +1,6 @@
 # Risks and mitigations
 
-This document records the active risk register for Atrium across all phases. It supersedes the older `12-risk-register.md` (deleted in the April 2026 cleanup).
+This document records the active risk register for Ashlar across all phases. It supersedes the older `12-risk-register.md` (deleted in the April 2026 cleanup).
 
 Risks are categorized by severity and tracked through phase delivery. Every risk has at least one mitigation and a kill criterion.
 
@@ -11,7 +11,7 @@ Risks are categorized by severity and tracked through phase delivery. Every risk
 **Severity**: High.
 **Phase exposure**: v0.0 (gate).
 
-shadcn discussion #790 has been open for 2+ years. If Atrium's three-way merge protocol does not actually feel safe to consumers in real-world updates, the entire architectural premise collapses. We are betting that lockfile + content hashing + `git merge-file --diff3` plus codemods is sufficient.
+shadcn discussion #790 has been open for 2+ years. If Ashlar's three-way merge protocol does not actually feel safe to consumers in real-world updates, the entire architectural premise collapses. We are betting that lockfile + content hashing + `git merge-file --diff3` plus codemods is sufficient.
 
 **Mitigations**:
 - Build the merge protocol first in v0.0; instrument heavily.
@@ -34,7 +34,7 @@ Government accessibility is legally consequential. "Accessible by default" witho
 - Stable components require complete evidence packets (axe, keyboard, manual SR on NVDA + VoiceOver + JAWS).
 - Known limitations are mandatory; published as machine-readable JSON.
 - Independent third-party audit before v1.0.
-- Audit tooling (`atrium audit`) catches common app-level misuse.
+- Audit tooling (`ashlar audit`) catches common app-level misuse.
 
 **Kill criterion**: if independent audit at v1.0 finds material gaps not previously documented as known limitations, do not ship v1.0; address before release.
 
@@ -43,7 +43,7 @@ Government accessibility is legally consequential. "Accessible by default" witho
 **Severity**: High.
 **Phase exposure**: All phases.
 
-The Australian Government Design System died because a single agency owned it. Atrium must avoid this.
+The Australian Government Design System died because a single agency owned it. Ashlar must avoid this.
 
 **Mitigations**:
 - Multi-organization maintainer charter from day 1.
@@ -79,7 +79,7 @@ A poorly-designed MCP server could allow malicious prompts to install or modify 
 
 **Mitigations**:
 - Read-only by default; install/update gated behind explicit user approval.
-- Local-by-default (`npx atrium mcp` runs in consumer's process).
+- Local-by-default (`npx ashlar mcp` runs in consumer's process).
 - Signed manifests verified before any registry interaction.
 - No hidden prompts — tool descriptions and resource contents are exactly the published CEM and capsule files.
 - Security review before v0.1 public alpha.
@@ -91,7 +91,7 @@ A poorly-designed MCP server could allow malicious prompts to install or modify 
 **Severity**: High.
 **Phase exposure**: v0.0, v0.1, v0.2.
 
-Trying to ship USWDS feature parity at any phase will fail. Atrium succeeds by shipping less, better.
+Trying to ship USWDS feature parity at any phase will fail. Ashlar succeeds by shipping less, better.
 
 **Mitigations**:
 - Explicit out-of-scope lists per phase.
@@ -106,7 +106,7 @@ Trying to ship USWDS feature parity at any phase will fail. Atrium succeeds by s
 **Severity**: High.
 **Phase exposure**: v0.0, v0.1.
 
-If `atrium audit`, `atrium verify`, `atrium theme validate`, and `atrium evidence` feel like demos rather than credible agency tooling, Atrium will be perceived as another component library instead of infrastructure.
+If `ashlar audit`, `ashlar verify`, `ashlar theme validate`, and `ashlar evidence` feel like demos rather than credible agency tooling, Ashlar will be perceived as another component library instead of infrastructure.
 
 **Mitigations**:
 - Ship CI commands as first-class deliverables, not docs-only examples.
@@ -128,8 +128,8 @@ Two override mental models (cascade-layer-aware Tailwind utilities vs direct CSS
 
 **Mitigations**:
 - Documentation includes a "two override paths" guide with worked examples.
-- `@atrium/tailwind` companion in v0.2 provides Tailwind-source variants for shadcn-style consumers.
-- Cascade-layer ordering is explicit and validated by `atrium audit`.
+- `@ashlar/tailwind` companion in v0.2 provides Tailwind-source variants for shadcn-style consumers.
+- Cascade-layer ordering is explicit and validated by `ashlar audit`.
 
 ### R8 — DTCG / Terrazzo immaturity
 
@@ -165,7 +165,7 @@ Firefox's `ElementInternals` ARIA reflection is incomplete. This causes accessib
 **Mitigations**:
 - All L1 components set ARIA via host attributes, not via `internals.aria*`.
 - Per-component test specs include Firefox-specific ARIA propagation checks.
-- `_atrium.firefoxFallbacks` field in CEM documents per-component fallbacks.
+- `_ashlar.firefoxFallbacks` field in CEM documents per-component fallbacks.
 
 ### R11 — Token system becomes too abstract for theme authors
 
@@ -190,7 +190,7 @@ Government tech adoption is slow. Even an excellent OSS project may take years t
 **Mitigations**:
 - Ship for adjacent audiences (regulated industries, civic-tech, state digital services) in parallel.
 - Do not optimize for federal-only; the architecture serves a broader audience.
-- Patience: the Atrium thesis is multi-year. Plan accordingly.
+- Patience: the Ashlar thesis is multi-year. Plan accordingly.
 
 ## Lower-severity risks (track but don't actively work)
 
@@ -204,19 +204,19 @@ Zig is promising for small native binaries and cross-compilation, but Zig 0.16 s
 
 ### R18 — Public positioning creates official-status confusion
 
-Because Atrium is government-first and informed by USWDS, readers may infer official GSA, NDS, or USWDS endorsement. Mitigation: every public README, docs site, package page, and launch announcement includes the independence disclaimer. Avoid any public naming that implies official USWDS continuity.
+Because Ashlar is government-first and informed by USWDS, readers may infer official GSA, NDS, or USWDS endorsement. Mitigation: every public README, docs site, package page, and launch announcement includes the independence disclaimer. Avoid any public naming that implies official USWDS continuity.
 
 ### R14 — Sigstore / cosign service availability
 
 If Sigstore signing infrastructure goes down, registry publication blocks. Mitigation: signing is async; we can buffer releases. Sigstore has good uptime; not a primary concern.
 
-### R15 — `npx atrium` package-name collision
+### R15 — `npx ashlar` package-name collision
 
-If `atrium` is taken on npm, we rename. Mitigation: reserve before public alpha; have backup names ready (the project has been working under "Atrium" but that may not survive trademark search).
+If `ashlar` is taken on npm, we rename. Mitigation: reserve before public alpha; have backup names ready (the project has been working under "Ashlar" but that may not survive trademark search).
 
 ## Kill criteria summary
 
-Atrium does not ship if:
+Ashlar does not ship if:
 
 - Drift conflict rate is unmanageable (R1).
 - Accessibility claims cannot be substantiated (R2).

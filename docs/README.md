@@ -1,6 +1,6 @@
-# Atrium
+# Ashlar
 
-Atrium is a government-first, web-platform-native, AI-readable design system distributed as a registry of versioned, signed, evidence-backed component capsules.
+Ashlar is a government-first, web-platform-native, AI-readable design system distributed as a registry of versioned, signed, evidence-backed component capsules.
 
 ## What this repository is
 
@@ -10,7 +10,7 @@ The work is led by engineers at [Blen](https://blencorp.com) with the intent to 
 
 ## Reading order
 
-1. [`strategy.md`](./strategy.md) — the public case for Atrium and how to position it.
+1. [`strategy.md`](./strategy.md) — the public case for Ashlar and how to position it.
 2. [`philosophy.md`](./philosophy.md) — the thesis and design principles.
 3. [`architecture/overview.md`](./architecture/overview.md) — the layered architecture and how the pieces fit.
 4. [`architecture/toolchain.md`](./architecture/toolchain.md) — the recommended v0/v1 technical foundation.
@@ -30,11 +30,11 @@ USWDS, the official U.S. federal design system, remains active and valuable. Its
 
 shadcn/ui demonstrated that source-code distribution beats package-based distribution for modern teams, but its production users continue to report unsolved problems: components drift after install, accessibility evidence is absent, theming is shallow, framework coupling is real, and the registry is built for installation rather than governance.
 
-Atrium is the response. It assumes a 2026 web platform that delivers most UI without JavaScript, treats statecharts as the right abstraction for the components that genuinely need state, ships extended Custom Elements Manifests as the AI contract, and uses lockfiles plus three-way merges to make source ownership safely updateable.
+Ashlar is the response. It assumes a 2026 web platform that delivers most UI without JavaScript, treats statecharts as the right abstraction for the components that genuinely need state, ships extended Custom Elements Manifests as the AI contract, and uses lockfiles plus three-way merges to make source ownership safely updateable.
 
 ## Technical foundation
 
-Atrium's v0/v1 foundation is intentionally conservative where agency adoption depends on trust:
+Ashlar's v0/v1 foundation is intentionally conservative where agency adoption depends on trust:
 
 - Node + TypeScript CLI, distributed through npm and runnable with `npx`.
 - DTCG 2025.10 tokens compiled to CSS variables, Tailwind v4 `@theme`, TypeScript, and design-tool outputs.

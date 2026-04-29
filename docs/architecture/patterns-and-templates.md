@@ -67,7 +67,7 @@ Patterns reference component capsules as registry dependencies:
 }
 ```
 
-Adding a pattern via `atrium add pattern/eligibility-check` installs the pattern's files plus any missing component dependencies.
+Adding a pattern via `ashlar add pattern/eligibility-check` installs the pattern's files plus any missing component dependencies.
 
 ### Content guidance (plain language)
 
@@ -108,7 +108,7 @@ These are tested in pattern evidence packets in addition to component-level evid
 
 ## L4 — Templates
 
-The L4 layer answers GOV.UK Frontend's empirical observation that government runs 24+ template languages. Atrium ships the same component as multiple templates so server-rendered, CMS, and framework-less stacks can consume without a build step.
+The L4 layer answers GOV.UK Frontend's empirical observation that government runs 24+ template languages. Ashlar ships the same component as multiple templates so server-rendered, CMS, and framework-less stacks can consume without a build step.
 
 ### Supported template languages
 
@@ -137,33 +137,33 @@ Each template renders the same DOM contract — same class names, same data attr
 {% set type = type|default('button') %}
 
 <button
-  class="atrium-button"
+  class="ashlar-button"
   data-variant="{{ variant }}"
   type="{{ type }}"
   {% if disabled %}disabled{% endif %}
   {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
 >
-  {% if icon_start %}<span class="atrium-button__icon-start">{{ icon_start|raw }}</span>{% endif %}
+  {% if icon_start %}<span class="ashlar-button__icon-start">{{ icon_start|raw }}</span>{% endif %}
   {{ label|default('Submit') }}
-  {% if icon_end %}<span class="atrium-button__icon-end">{{ icon_end|raw }}</span>{% endif %}
+  {% if icon_end %}<span class="ashlar-button__icon-end">{{ icon_end|raw }}</span>{% endif %}
 </button>
 ```
 
 ### Drupal integration
 
-For Drupal sites, Atrium publishes a companion module/theme:
+For Drupal sites, Ashlar publishes a companion module/theme:
 
-- `@atrium/drupal-theme` — installs Atrium tokens and Twig partials.
-- Theme functions/preprocess hooks make Atrium components feel native to Drupal.
+- `@ashlar/drupal-theme` — installs Ashlar tokens and Twig partials.
+- Theme functions/preprocess hooks make Ashlar components feel native to Drupal.
 - Compatible with USWDS's Drupal theme migration path (token mapping, class-name compatibility shim).
 
 ### Server-side rendering of L1
 
-For L1 components (stateful WC), templates render the initial DOM with attributes (machine state serialized to `data-atrium-state`/`data-atrium-context`); the custom element upgrades on the client. See [`web-components.md`](./web-components.md) for the resumability discipline.
+For L1 components (stateful WC), templates render the initial DOM with attributes (machine state serialized to `data-ashlar-state`/`data-ashlar-context`); the custom element upgrades on the client. See [`web-components.md`](./web-components.md) for the resumability discipline.
 
 ### Template generation pipeline
 
-Templates are not handwritten per language. The Atrium build pipeline:
+Templates are not handwritten per language. The Ashlar build pipeline:
 
 1. Authors maintain a single canonical Nunjucks template per component.
 2. A template transpiler (custom, or a tool like `nunjucks-to-twig`) generates Twig, Jinja, ERB, and plain-HTML versions.
@@ -175,16 +175,16 @@ Snapshot equality is enforced — the same input must produce the same DOM contr
 
 A pattern shipped as both rendered HTML (L4) and as a Lit element (L1) can serve:
 
-- Drupal site: `{% include '@atrium/eligibility-check' with {...} %}`.
-- Rails site: `<%= render 'atrium/eligibility_check', ... %>`.
+- Drupal site: `{% include '@ashlar/eligibility-check' with {...} %}`.
+- Rails site: `<%= render 'ashlar/eligibility_check', ... %>`.
 - Next.js: `<EligibilityCheck options={...} />`.
-- Plain HTML: include CSS + JS; use `<atrium-eligibility-check>`.
+- Plain HTML: include CSS + JS; use `<ashlar-eligibility-check>`.
 
 All four render the same DOM, share the same CSS, share the same accessibility evidence.
 
 ## Why this matters
 
-USWDS components are HTML snippets. Teams either copy-paste (drift), wrap in their framework (parallel ecosystem), or struggle. Atrium's L3+L4 model meets each stack where it lives:
+USWDS components are HTML snippets. Teams either copy-paste (drift), wrap in their framework (parallel ecosystem), or struggle. Ashlar's L3+L4 model meets each stack where it lives:
 
 - React/Vue teams: framework adapters (L2).
 - Drupal teams: Twig partial (L4).

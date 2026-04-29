@@ -1,6 +1,6 @@
 # GitHub Launch Checklist
 
-This checklist defines the work required before publishing Atrium as a public GitHub project.
+This checklist defines the work required before publishing Ashlar as a public GitHub project.
 
 ## Launch posture
 
@@ -12,11 +12,11 @@ Recommended repository tagline:
 
 Required disclaimer:
 
-> Atrium is an independent open-source project. It is informed by USWDS but is not affiliated with, endorsed by, or sponsored by GSA, USWDS, NDS, or the U.S. federal government.
+> Ashlar is an independent open-source project. It is informed by USWDS but is not affiliated with, endorsed by, or sponsored by GSA, USWDS, NDS, or the U.S. federal government.
 
 ## Before public repository launch
 
-- [ ] Complete trademark and package-namespace review for `Atrium`.
+- [ ] Complete trademark and package-namespace review for `Ashlar`.
 - [ ] Confirm npm package namespace availability.
 - [ ] Confirm domain availability.
 - [x] Finalize Apache-2.0 license or document why another license is chosen.
@@ -49,7 +49,7 @@ Issues:
 
 Exit gate:
 
-- External reader can understand what Atrium is, what it is not, and how to engage.
+- External reader can understand what Ashlar is, what it is not, and how to engage.
 
 ### Milestone 1 — v0.0 foundation prototype
 
@@ -72,11 +72,11 @@ Exit gate:
 
 ### Milestone 2 — v0.0 update and CI gate
 
-Goal: prove Atrium can be safely maintained after install.
+Goal: prove Ashlar can be safely maintained after install.
 
 Issues:
 
-- `atrium-lock.json`.
+- `ashlar-lock.json`.
 - Three-way update flow.
 - Codemod runner.
 - SARIF output.
@@ -86,7 +86,7 @@ Issues:
 
 Exit gate:
 
-- `atrium update` works across instrumented drift scenarios and `atrium audit --sarif` uploads to code scanning.
+- `ashlar update` works across instrumented drift scenarios and `ashlar audit --sarif` uploads to code scanning.
 
 ### Milestone 3 — v0.1 public alpha
 
@@ -105,7 +105,7 @@ Issues:
 
 Exit gate:
 
-- At least five design partners can evaluate Atrium in non-toy projects.
+- At least five design partners can evaluate Ashlar in non-toy projects.
 
 ### Milestone 4 — v0.2 beta
 
@@ -117,13 +117,13 @@ Issues:
 - Drupal/Twig production-style demo.
 - Date Picker, Data Table, File Upload.
 - USWDS migration tooling.
-- `@atrium/tailwind`.
+- `@ashlar/tailwind`.
 - Public evidence dashboard.
 - Third-party accessibility audit.
 
 Exit gate:
 
-- At least 20 teams running Atrium in non-toy projects and at least three contributing organizations.
+- At least 20 teams running Ashlar in non-toy projects and at least three contributing organizations.
 
 ### Milestone 5 — v1.0 stable
 
@@ -140,7 +140,7 @@ Issues:
 
 Exit gate:
 
-- Atrium is safe to recommend for production evaluation by agencies and contractors.
+- Ashlar is safe to recommend for production evaluation by agencies and contractors.
 
 ## Repository labels
 
@@ -172,7 +172,7 @@ Recommended labels:
 
 Use this order:
 
-1. What Atrium is.
+1. What Ashlar is.
 2. Current status.
 3. Why it exists.
 4. What makes it different.

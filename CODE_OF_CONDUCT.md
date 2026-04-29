@@ -1,6 +1,6 @@
 # Code of Conduct
 
-Atrium follows a simple standard: participate professionally, assume public-service impact, and keep criticism focused on the work.
+Ashlar follows a simple standard: participate professionally, assume public-service impact, and keep criticism focused on the work.
 
 ## Expected Behavior
 

@@ -6,9 +6,9 @@ Proposed.
 
 ## Decision
 
-Author L1 components as **Lit-based Web Components** wrapping Zag statecharts and signals. Generate framework-specific adapters (`@atrium/react`, `@atrium/vue`, `@atrium/svelte`, `@atrium/solid`) **automatically from extended Custom Elements Manifests**. React is not privileged; it is one consumer among several.
+Author L1 components as **Lit-based Web Components** wrapping Zag statecharts and signals. Generate framework-specific adapters (`@ashlar/react`, `@ashlar/vue`, `@ashlar/svelte`, `@ashlar/solid`) **automatically from extended Custom Elements Manifests**. React is not privileged; it is one consumer among several.
 
-Ship the Lit custom element itself (`@atrium/element`) as a first-class delivery for Drupal, Sitecore, AEM, plain HTML, and other framework-less environments.
+Ship the Lit custom element itself (`@ashlar/element`) as a first-class delivery for Drupal, Sitecore, AEM, plain HTML, and other framework-less environments.
 
 Do **not** hand-maintain parallel framework component trees.
 
@@ -35,7 +35,7 @@ Lit is preferred over Stencil because of larger community, simpler model, alignm
 - Single source of behavior (Zag machine + Lit shell) drives all consumers.
 - Adapters are not hand-maintained; CEM regenerates them when components change.
 - Framework-agnostic by construction. New framework adapter = new generator template.
-- WC delivery (`@atrium/element`) covers Drupal, Sitecore, AEM, plain HTML directly.
+- WC delivery (`@ashlar/element`) covers Drupal, Sitecore, AEM, plain HTML directly.
 - Aligns with USWDS Elements direction, preserving future upstream-contribution potential.
 - React not privileged means we are not held hostage to React's release cadence or design choices.
 
@@ -44,13 +44,13 @@ Lit is preferred over Stencil because of larger community, simpler model, alignm
 - Web Components have hydration friction in some framework SSR setups (Next.js requires `"use client"` boundaries).
 - Custom-element ARIA reflection is incomplete in Firefox; explicit ARIA fallbacks required.
 - Adapter generation tooling must be built and maintained.
-- Lit SSR is still labs; Atrium does not promise streaming SSR.
+- Lit SSR is still labs; Ashlar does not promise streaming SSR.
 
 **Mitigations**
 
-- Framework integration testing as a v0.0 success gate: prove `@atrium/element` + Next.js SSR + Vite SPA + Drupal Twig + plain HTML all work for a representative L1 component (Combobox).
+- Framework integration testing as a v0.0 success gate: prove `@ashlar/element` + Next.js SSR + Vite SPA + Drupal Twig + plain HTML all work for a representative L1 component (Combobox).
 - Document Firefox ARIA fallbacks per L1 component.
-- Adapter generators ship as part of the Atrium build pipeline; consumers do not need to run them.
+- Adapter generators ship as part of the Ashlar build pipeline; consumers do not need to run them.
 - Lit SSR escape hatch: ship CSS-only "shell" SSR mode for non-JS environments via L4 templates.
 
 ## References

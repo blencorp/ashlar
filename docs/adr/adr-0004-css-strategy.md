@@ -6,7 +6,7 @@ Proposed.
 
 ## Decision
 
-Style Atrium components using:
+Style Ashlar components using:
 
 - **Cascade layers** (`@layer`) for predictable specificity and consumer overrides.
 - **`@scope`** for component-local styles without Shadow DOM (Baseline December 2025).
@@ -17,7 +17,7 @@ Components are authored in semantic CSS, not Tailwind classes. Tailwind v4 is a 
 
 ## Rationale
 
-Cascade layers make consumer override behavior predictable. Component authors define an `atrium.components` layer; consumers can reliably override by writing into a higher layer (or the unlayered cascade). No specificity wars, no `!important`.
+Cascade layers make consumer override behavior predictable. Component authors define an `ashlar.components` layer; consumers can reliably override by writing into a higher layer (or the unlayered cascade). No specificity wars, no `!important`.
 
 `@scope` (Baseline December 2025 with Firefox 146) provides component-local styles without Shadow DOM — useful for Light DOM L1 components and CSS-only L0 components. It avoids the theming friction Shadow DOM creates.
 
@@ -43,7 +43,7 @@ Authoring in semantic CSS instead of Tailwind classes is essential for the ~70% 
 
 **Mitigations**
 
-- Ship a Tailwind v4 preset (`@atrium/tailwind`) that wires `@theme` and ensures cascade-layer compatibility with utility classes.
+- Ship a Tailwind v4 preset (`@ashlar/tailwind`) that wires `@theme` and ensures cascade-layer compatibility with utility classes.
 - Document cascade-layer ordering and override patterns extensively.
 - `@scope` graceful degradation by hoisting the ruleset to the document scope without `@scope` (no breakage, slightly broader specificity).
 

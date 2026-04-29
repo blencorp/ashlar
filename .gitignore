@@ -5,6 +5,6 @@ coverage
 .turbo
 *.tsbuildinfo
 *.log
-atrium.sarif
-atrium-lock.json
+ashlar.sarif
+ashlar-lock.json
 TEMP_SESSION_NOTE.md

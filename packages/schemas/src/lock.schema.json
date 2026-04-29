@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://atrium.dev/schemas/lock.schema.json",
-  "title": "Atrium Consumer Lockfile",
+  "$id": "https://ashlar.dev/schemas/lock.schema.json",
+  "title": "Ashlar Consumer Lockfile",
   "type": "object",
   "required": ["version", "registry", "components"],
   "properties": {

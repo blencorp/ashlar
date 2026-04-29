@@ -8,7 +8,7 @@ import { registerVerifyCommand } from "./commands/verify.js";
 
 const program = new Command();
 
-program.name("atrium").description("Atrium component registry CLI").version("0.0.0");
+program.name("ashlar").description("Ashlar component registry CLI").version("0.0.0");
 
 registerInitCommand(program);
 registerAddCommand(program);

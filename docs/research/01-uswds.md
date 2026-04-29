@@ -81,13 +81,13 @@ USWDS has a token system and Sass settings. The token docs describe design token
 
 The problem is not that USWDS lacks tokens. The problem is that the primary operational contract is still Sass-centric. Modern design systems increasingly use platform-neutral JSON token formats, CSS custom properties, runtime theme switching, dark mode, high-contrast variants, and variable-driven utility classes.
 
-Atrium should learn from the semantic richness of USWDS tokens, but should move the source of truth to a vendor-neutral token spec and emit Sass only if needed, not as the primary contract.
+Ashlar should learn from the semantic richness of USWDS tokens, but should move the source of truth to a vendor-neutral token spec and emit Sass only if needed, not as the primary contract.
 
 ## Utility model
 
 USWDS includes utilities. The utilities docs show a utilities package and indicate the entire package is roughly 198 KB uncompressed. Utility classes are useful, but the modern utility-first ecosystem has shifted toward generated, token-driven, tree-shakable, CSS-variable-aware systems.
 
-Atrium should not blindly adopt all utility-first practice, but it should assume that teams expect a low-friction CSS surface. Tailwind v4’s CSS-first configuration and theme variables are especially relevant because they make design tokens available as CSS variables and can be configured directly in CSS.
+Ashlar should not blindly adopt all utility-first practice, but it should assume that teams expect a low-friction CSS surface. Tailwind v4’s CSS-first configuration and theme variables are especially relevant because they make design tokens available as CSS variables and can be configured directly in CSS.
 
 ## Current release posture
 
@@ -115,7 +115,7 @@ The `uswds-elements` repository is described as a Web Component version of USWDS
 
 This is a signal that the USWDS community recognizes the framework-independence problem. But a full Web Component system faces tradeoffs: framework interop is attractive, but form semantics, styling, SSR, hydration, design tokens, slots, a11y testing, and developer ergonomics can still be challenging.
 
-Atrium should use Web Components surgically first: official-site shell primitives that many stacks need, rather than a full component suite on day one.
+Ashlar should use Web Components surgically first: official-site shell primitives that many stacks need, rather than a full component suite on day one.
 
 ## Accessibility posture
 
@@ -130,17 +130,17 @@ Digital.gov cited an OMB fact sheet saying 80% of federal websites did not use U
 1. USWDS has not become universal despite strong values and official support.
 2. The need for a better adoption model remains urgent.
 
-This is the strongest strategic argument for Atrium: not that USWDS is bad, but that adoption at government scale requires lower friction, modern ergonomics, and better proof.
+This is the strongest strategic argument for Ashlar: not that USWDS is bad, but that adoption at government scale requires lower friction, modern ergonomics, and better proof.
 
 ## New government websites as signals
 
 Current public pages such as TrumpRx.gov and WhiteHouse.gov are useful signals, but they should be treated carefully. A parsed TrumpRx.gov page credits National Design Studio, and the page text did not expose visible `USWDS` or `usa-` markers in the research check. The parsed WhiteHouse.gov homepage also did not expose visible `USWDS` or `usa-` markers. This is not conclusive source-code proof, but it supports the broader observation that prominent modern government experiences are not necessarily presenting themselves through the recognizable USWDS surface.
 
-National Design Studio’s own site describes its mission as “Modernizing government experiences through design & engineering” and “building for an entire nation.” That is exactly the strategic terrain Atrium would enter.
+National Design Studio’s own site describes its mission as “Modernizing government experiences through design & engineering” and “building for an entire nation.” That is exactly the strategic terrain Ashlar would enter.
 
 ## Strengths to preserve
 
-Atrium should preserve:
+Ashlar should preserve:
 
 - civic values and plain-language orientation;
 - progressive enhancement;
@@ -154,7 +154,7 @@ Atrium should preserve:
 
 ## Constraints to move beyond
 
-Atrium should move beyond:
+Ashlar should move beyond:
 
 - Sass as the main configuration contract;
 - Gulp-oriented compile flows;

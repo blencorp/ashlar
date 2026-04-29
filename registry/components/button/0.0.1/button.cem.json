@@ -7,15 +7,15 @@
       "declarations": [
         {
           "kind": "class",
-          "name": "AtriumButton",
+          "name": "AshlarButton",
           "tagName": "button",
           "description": "Accessible semantic action control for forms and workflows.",
-          "_atrium": {
+          "_ashlar": {
             "version": "0.0.1",
             "tier": "primitive",
             "layer": "L0",
             "stability": "experimental",
-            "selector": ".atrium-button",
+            "selector": ".ashlar-button",
             "variants": ["primary"],
             "a11yRequirements": [
               {
@@ -34,7 +34,7 @@
             "antiPatterns": [
               {
                 "id": "icon-only-needs-label",
-                "pattern": "<button class=\"atrium-button\">$ICON</button>",
+                "pattern": "<button class=\"ashlar-button\">$ICON</button>",
                 "constraint": {
                   "has": "<svg/>",
                   "not_has": "aria-label"

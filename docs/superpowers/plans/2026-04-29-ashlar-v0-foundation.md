@@ -1,10 +1,10 @@
-# Atrium v0 Foundation Implementation Plan
+# Ashlar v0 Foundation Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the first executable slice of Atrium: public repository readiness, package workspace, CLI skeleton, capsule schema, one L0 Button capsule, validation rule generation, and CI commands.
+**Goal:** Build the first executable slice of Ashlar: public repository readiness, package workspace, CLI skeleton, capsule schema, one L0 Button capsule, validation rule generation, and CI commands.
 
-**Architecture:** Start with a TypeScript monorepo containing `@atrium/cli`, `@atrium/schemas`, and a local registry package. The first capsule is Button, installed as source with CSS, HTML, CEM, evidence, and ast-grep rules. Verification is hash-based first; Sigstore/SLSA wiring lands after the local registry flow works.
+**Architecture:** Start with a TypeScript monorepo containing `@ashlar/cli`, `@ashlar/schemas`, and a local registry package. The first capsule is Button, installed as source with CSS, HTML, CEM, evidence, and ast-grep rules. Verification is hash-based first; Sigstore/SLSA wiring lands after the local registry flow works.
 
 **Tech Stack:** Node.js 24 LTS (24.15.0 baseline), TypeScript 6, pnpm 10, Turborepo 2, Vitest 4, Playwright, axe-core, ast-grep, DTCG JSON, semantic CSS, GitHub Actions.
 
@@ -17,11 +17,11 @@
 - Create `package.json` for workspace scripts.
 - Create `pnpm-workspace.yaml` for package discovery.
 - Create `tsconfig.base.json` for shared TypeScript settings.
-- Create `packages/cli/` for `atrium` commands.
+- Create `packages/cli/` for `ashlar` commands.
 - Create `packages/schemas/` for JSON Schemas and TypeScript validators.
 - Create `registry/components/button/0.0.1/` for the first capsule.
 - Create `examples/plain-html/` for the first integration demo.
-- Create `.github/workflows/atrium.yml` for CI.
+- Create `.github/workflows/ashlar.yml` for CI.
 
 ## Task 1: Repository Metadata and Workspace
 
@@ -37,7 +37,7 @@ Add `package.json`:
 
 ```json
 {
-  "name": "atrium",
+  "name": "ashlar",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.33.2",
@@ -46,7 +46,7 @@ Add `package.json`:
     "test": "pnpm -r test",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
-    "atrium": "pnpm --filter @atrium/cli exec atrium"
+    "ashlar": "node packages/cli/dist/index.js"
   },
   "devDependencies": {
     "@types/node": "^24.12.2",
@@ -96,7 +96,7 @@ dist
 coverage
 .DS_Store
 *.log
-atrium-lock.json
+ashlar-lock.json
 ```
 
 - [ ] **Step 5: Verify workspace installs**
@@ -114,7 +114,7 @@ Expected: install succeeds; `typecheck` may report no package scripts until Task
 
 ```bash
 git add package.json pnpm-workspace.yaml tsconfig.base.json .gitignore
-git commit -m "chore: initialize atrium workspace"
+git commit -m "chore: initialize ashlar workspace"
 ```
 
 ## Task 2: CLI Skeleton
@@ -134,11 +134,11 @@ Add `packages/cli/package.json`:
 
 ```json
 {
-  "name": "@atrium/cli",
+  "name": "@ashlar/cli",
   "version": "0.0.0",
   "type": "module",
   "bin": {
-    "atrium": "./dist/index.js"
+    "ashlar": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -186,8 +186,8 @@ import { registerVerifyCommand } from "./commands/verify.js";
 const program = new Command();
 
 program
-  .name("atrium")
-  .description("Atrium component registry CLI")
+  .name("ashlar")
+  .description("Ashlar component registry CLI")
   .version("0.0.0");
 
 registerInitCommand(program);
@@ -207,16 +207,16 @@ import { writeFileSync } from "node:fs";
 import { Command } from "commander";
 
 export function registerInitCommand(program: Command) {
-  program.command("init").description("Initialize Atrium in this project").action(() => {
+  program.command("init").description("Initialize Ashlar in this project").action(() => {
     writeFileSync(
-      "atrium.config.json",
-      JSON.stringify({ registry: "./registry", componentsDir: "src/atrium" }, null, 2) + "\n"
+      "ashlar.config.json",
+      JSON.stringify({ registry: "./registry", componentsDir: "src/ashlar" }, null, 2) + "\n"
     );
     writeFileSync(
-      "atrium-lock.json",
+      "ashlar-lock.json",
       JSON.stringify({ version: "1", registry: "./registry", components: {} }, null, 2) + "\n"
     );
-    console.log("Initialized Atrium");
+    console.log("Initialized Ashlar");
   });
 }
 ```
@@ -239,7 +239,7 @@ Add `packages/cli/src/commands/audit.ts`:
 import { Command } from "commander";
 
 export function registerAuditCommand(program: Command) {
-  program.command("audit").description("Validate Atrium usage").option("--sarif", "Emit SARIF").action((options) => {
+  program.command("audit").description("Validate Ashlar usage").option("--sarif", "Emit SARIF").action((options) => {
     console.log(options.sarif ? JSON.stringify({ version: "2.1.0", runs: [] }) : "No findings");
   });
 }
@@ -253,8 +253,8 @@ import { Command } from "commander";
 
 export function registerVerifyCommand(program: Command) {
   program.command("verify").description("Verify installed capsule hashes").action(() => {
-    if (!existsSync("atrium-lock.json")) {
-      console.error("atrium-lock.json not found. Run `atrium init` first.");
+    if (!existsSync("ashlar-lock.json")) {
+      console.error("ashlar-lock.json not found. Run `ashlar init` first.");
       process.exitCode = 1;
       return;
     }
@@ -268,7 +268,7 @@ export function registerVerifyCommand(program: Command) {
 Run:
 
 ```bash
-pnpm --filter @atrium/cli build
+pnpm --filter @ashlar/cli build
 node packages/cli/dist/index.js --help
 ```
 
@@ -296,7 +296,7 @@ Add `packages/schemas/package.json`:
 
 ```json
 {
-  "name": "@atrium/schemas",
+  "name": "@ashlar/schemas",
   "version": "0.0.0",
   "type": "module",
   "exports": {
@@ -339,7 +339,7 @@ Add `packages/schemas/src/capsule.schema.json`:
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://atrium.dev/schemas/capsule.schema.json",
+  "$id": "https://ashlar.dev/schemas/capsule.schema.json",
   "type": "object",
   "required": ["name", "version", "layer", "stability", "files", "capsule_hash"],
   "properties": {
@@ -364,7 +364,7 @@ Add `packages/schemas/src/lock.schema.json`:
 ```json
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://atrium.dev/schemas/lock.schema.json",
+  "$id": "https://ashlar.dev/schemas/lock.schema.json",
   "type": "object",
   "required": ["version", "registry", "components"],
   "properties": {
@@ -392,8 +392,8 @@ Add `packages/schemas/src/lock.schema.json`:
 Add `packages/schemas/src/index.ts`:
 
 ```ts
-export const capsuleSchemaId = "https://atrium.dev/schemas/capsule.schema.json";
-export const lockSchemaId = "https://atrium.dev/schemas/lock.schema.json";
+export const capsuleSchemaId = "https://ashlar.dev/schemas/capsule.schema.json";
+export const lockSchemaId = "https://ashlar.dev/schemas/lock.schema.json";
 ```
 
 - [ ] **Step 6: Build**
@@ -401,7 +401,7 @@ export const lockSchemaId = "https://atrium.dev/schemas/lock.schema.json";
 Run:
 
 ```bash
-pnpm --filter @atrium/schemas build
+pnpm --filter @ashlar/schemas build
 ```
 
 Expected: TypeScript emits `packages/schemas/dist/index.js`.
@@ -426,11 +426,11 @@ git commit -m "feat: add capsule and lock schemas"
 Add `registry/components/button/0.0.1/button.css`:
 
 ```css
-@layer atrium.components {
-  .atrium-button {
+@layer ashlar.components {
+  .ashlar-button {
     align-items: center;
     border: 1px solid transparent;
-    border-radius: var(--atrium-radius-control, 0.375rem);
+    border-radius: var(--ashlar-radius-control, 0.375rem);
     cursor: pointer;
     display: inline-flex;
     font: inherit;
@@ -442,14 +442,14 @@ Add `registry/components/button/0.0.1/button.css`:
     padding-inline: 1rem;
   }
 
-  .atrium-button[data-variant="primary"] {
-    background: var(--atrium-color-action-primary-bg, #005ea8);
-    color: var(--atrium-color-action-primary-fg, #fff);
+  .ashlar-button[data-variant="primary"] {
+    background: var(--ashlar-color-action-primary-bg, #005ea8);
+    color: var(--ashlar-color-action-primary-fg, #fff);
   }
 
-  .atrium-button:focus-visible {
-    outline: var(--atrium-focus-ring-width, 0.25rem) solid var(--atrium-focus-ring-color, #2491ff);
-    outline-offset: var(--atrium-focus-ring-offset, 0.25rem);
+  .ashlar-button:focus-visible {
+    outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
+    outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
   }
 }
 ```
@@ -459,7 +459,7 @@ Add `registry/components/button/0.0.1/button.css`:
 Add `registry/components/button/0.0.1/button.html`:
 
 ```html
-<button class="atrium-button" data-variant="primary" type="button">
+<button class="ashlar-button" data-variant="primary" type="button">
   Apply
 </button>
 ```
@@ -478,10 +478,10 @@ Add `registry/components/button/0.0.1/button.cem.json`:
       "declarations": [
         {
           "kind": "class",
-          "name": "AtriumButton",
+          "name": "AshlarButton",
           "tagName": "button",
           "description": "Accessible action control for forms and workflows.",
-          "_atrium": {
+          "_ashlar": {
             "version": "0.0.1",
             "layer": "L0",
             "stability": "experimental",
@@ -493,7 +493,7 @@ Add `registry/components/button/0.0.1/button.cem.json`:
             "antiPatterns": [
               {
                 "id": "icon-only-needs-label",
-                "pattern": "<button class=\"atrium-button\">$ICON</button>",
+                "pattern": "<button class=\"ashlar-button\">$ICON</button>",
                 "fix": "Add visible text or aria-label.",
                 "wcag": "4.1.2",
                 "severity": "error"
@@ -561,7 +561,7 @@ import { sha256Text } from "./hash.js";
 
 describe("sha256Text", () => {
   it("returns a sha256-prefixed hash", () => {
-    expect(sha256Text("atrium")).toMatch(/^sha256:[a-f0-9]{64}$/);
+    expect(sha256Text("ashlar")).toMatch(/^sha256:[a-f0-9]{64}$/);
   });
 
   it("normalizes CRLF to LF", () => {
@@ -575,7 +575,7 @@ describe("sha256Text", () => {
 Run:
 
 ```bash
-pnpm --filter @atrium/cli test packages/cli/src/lib/hash.test.ts
+pnpm --filter @ashlar/cli test packages/cli/src/lib/hash.test.ts
 ```
 
 Expected: FAIL because `hash.ts` does not exist.
@@ -598,7 +598,7 @@ export function sha256Text(input: string): string {
 Run:
 
 ```bash
-pnpm --filter @atrium/cli test packages/cli/src/lib/hash.test.ts
+pnpm --filter @ashlar/cli test packages/cli/src/lib/hash.test.ts
 ```
 
 Expected: PASS.
@@ -623,7 +623,7 @@ import { buildCapsuleManifest } from "./capsule.js";
 
 describe("buildCapsuleManifest", () => {
   it("hashes files in deterministic order", () => {
-    const dir = join(tmpdir(), `atrium-capsule-${Date.now()}`);
+    const dir = join(tmpdir(), `ashlar-capsule-${Date.now()}`);
     mkdirSync(dir, { recursive: true });
     try {
       writeFileSync(join(dir, "b.txt"), "b\n");
@@ -649,7 +649,7 @@ describe("buildCapsuleManifest", () => {
 Run:
 
 ```bash
-pnpm --filter @atrium/cli test packages/cli/src/lib/capsule.test.ts
+pnpm --filter @ashlar/cli test packages/cli/src/lib/capsule.test.ts
 ```
 
 Expected: FAIL because `capsule.ts` does not exist.
@@ -695,7 +695,7 @@ export function buildCapsuleManifest(input: {
 Run:
 
 ```bash
-pnpm --filter @atrium/cli test packages/cli/src/lib/capsule.test.ts
+pnpm --filter @ashlar/cli test packages/cli/src/lib/capsule.test.ts
 ```
 
 Expected: PASS.
@@ -710,14 +710,14 @@ git commit -m "feat: build capsule manifests"
 ## Task 6: CI Workflow
 
 **Files:**
-- Create: `.github/workflows/atrium.yml`
+- Create: `.github/workflows/ashlar.yml`
 
 - [ ] **Step 1: Add GitHub Actions workflow**
 
-Add `.github/workflows/atrium.yml`:
+Add `.github/workflows/ashlar.yml`:
 
 ```yaml
-name: Atrium
+name: Ashlar
 
 on:
   pull_request:
@@ -740,11 +740,11 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build
-      - run: pnpm --filter @atrium/cli exec atrium audit --sarif > atrium.sarif
+      - run: pnpm --silent ashlar audit --sarif > ashlar.sarif
       - uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
-          sarif_file: atrium.sarif
+          sarif_file: ashlar.sarif
 ```
 
 - [ ] **Step 2: Verify locally**
@@ -755,16 +755,16 @@ Run:
 pnpm typecheck
 pnpm test
 pnpm build
-pnpm --filter @atrium/cli exec atrium audit --sarif > atrium.sarif
+pnpm --silent ashlar audit --sarif > ashlar.sarif
 ```
 
-Expected: all commands pass and `atrium.sarif` contains a SARIF `version` field.
+Expected: all commands pass and `ashlar.sarif` contains a SARIF `version` field.
 
 - [ ] **Step 3: Commit**
 
 ```bash
-git add .github/workflows/atrium.yml
-git commit -m "ci: add atrium validation workflow"
+git add .github/workflows/ashlar.yml
+git commit -m "ci: add ashlar validation workflow"
 ```
 
 ## Self-Review Checklist

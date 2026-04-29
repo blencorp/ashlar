@@ -1,6 +1,6 @@
 # AI-native architecture
 
-Atrium's AI integration is built on three artifacts, each with a single job:
+Ashlar's AI integration is built on three artifacts, each with a single job:
 
 1. **Extended Custom Elements Manifest (CEM)** — the structured contract.
 2. **MCP server** — the queryable interface for AI assistants.
@@ -12,7 +12,7 @@ This document specifies the extended CEM schema, the MCP tool/resource/prompt se
 
 ## Extended CEM schema
 
-Every capsule emits `*.cem.json` conforming to the W3C-CG Custom Elements Manifest schema, augmented with an `_atrium` namespace.
+Every capsule emits `*.cem.json` conforming to the W3C-CG Custom Elements Manifest schema, augmented with an `_ashlar` namespace.
 
 ```json
 {
@@ -22,7 +22,7 @@ Every capsule emits `*.cem.json` conforming to the W3C-CG Custom Elements Manife
       "path": "button.html",
     "declarations": [{
       "kind": "class",
-      "name": "AtriumButton",
+      "name": "AshlarButton",
       "tagName": "button",
       "description": "Accessible semantic action control for forms and workflows.",
       "members": [
@@ -42,7 +42,7 @@ Every capsule emits `*.cem.json` conforming to the W3C-CG Custom Elements Manife
       ],
       "events": [
         {
-          "name": "atrium-click",
+          "name": "ashlar-click",
           "type": { "text": "CustomEvent<{ originalEvent: MouseEvent }>" }
         }
       ],
@@ -52,15 +52,15 @@ Every capsule emits `*.cem.json` conforming to the W3C-CG Custom Elements Manife
         { "name": "icon-end", "description": "Optional icon after the label" }
       ],
       "cssProperties": [
-        { "name": "--atrium-button-bg", "syntax": "<color>" },
-        { "name": "--atrium-button-fg", "syntax": "<color>" }
+        { "name": "--ashlar-button-bg", "syntax": "<color>" },
+        { "name": "--ashlar-button-fg", "syntax": "<color>" }
       ],
-      "_atrium": {
+      "_ashlar": {
         "version": "1.2.3",
         "tier": "primitive",
         "layer": "L0",
         "stability": "stable",
-        "selector": ".atrium-button",
+        "selector": ".ashlar-button",
 
         "variants": ["primary", "secondary", "outline", "ghost", "destructive"],
         "sizes": ["sm", "md", "lg"],
@@ -73,14 +73,14 @@ Every capsule emits `*.cem.json` conforming to the W3C-CG Custom Elements Manife
         "antiPatterns": [
           {
             "id": "navigation-as-button",
-            "pattern": "<button class=\"atrium-button\" onClick={navigate}>",
-            "fix": "<a class=\"atrium-link\" href=...>",
+            "pattern": "<button class=\"ashlar-button\" onClick={navigate}>",
+            "fix": "<a class=\"ashlar-link\" href=...>",
             "reason": "Use Link for navigation, Button for actions",
             "severity": "warning"
           },
           {
             "id": "icon-only-needs-label",
-            "pattern": "<button class=\"atrium-button\">$ICON</button>",
+            "pattern": "<button class=\"ashlar-button\">$ICON</button>",
             "constraint": { "has": "<svg/>", "not_has": "aria-label" },
             "fix": "Add aria-label or visible text",
             "wcag": "4.1.2",
@@ -101,8 +101,8 @@ Every capsule emits `*.cem.json` conforming to the W3C-CG Custom Elements Manife
         "firefoxFallbacks": [],
 
         "examples": {
-          "basic": "<button class=\"atrium-button\" data-variant=\"primary\" type=\"button\">Apply</button>",
-          "with-icon": "<button class=\"atrium-button\" data-variant=\"primary\" type=\"button\"><svg aria-hidden=\"true\"/>Apply</button>"
+          "basic": "<button class=\"ashlar-button\" data-variant=\"primary\" type=\"button\">Apply</button>",
+          "with-icon": "<button class=\"ashlar-button\" data-variant=\"primary\" type=\"button\"><svg aria-hidden=\"true\"/>Apply</button>"
         },
 
         "doNot": [
@@ -121,15 +121,15 @@ Every capsule emits `*.cem.json` conforming to the W3C-CG Custom Elements Manife
 }
 ```
 
-The `_atrium` namespace is forward-compatible: tools that don't recognize it ignore it. Vanilla CEM consumers see a normal CEM.
+The `_ashlar` namespace is forward-compatible: tools that don't recognize it ignore it. Vanilla CEM consumers see a normal CEM.
 
 ### Schema validation
 
-`@atrium/cli` ships a JSON Schema for the `_atrium` extensions. Capsule build pipelines validate before publishing.
+`@ashlar/cli` ships a JSON Schema for the `_ashlar` extensions. Capsule build pipelines validate before publishing.
 
 ## MCP server
 
-`npx atrium mcp` starts an MCP server pointing at the consumer's installed components and tokens. AI assistants connect via stdio or SSE.
+`npx ashlar mcp` starts an MCP server pointing at the consumer's installed components and tokens. AI assistants connect via stdio or SSE.
 
 ### Tools
 
@@ -182,36 +182,36 @@ apply-agency-theme
 
 migrate-from-react-uswds
   Args: { source-glob: string }
-  → Plans migration from react-uswds patterns to Atrium
+  → Plans migration from react-uswds patterns to Ashlar
 ```
 
-The killer differentiators versus shadcn's MCP are `validate_usage` and `migrate`. Carbon MCP shipped similar tools in February 2026; Atrium's are richer because they consume the extended CEM.
+The killer differentiators versus shadcn's MCP are `validate_usage` and `migrate`. Carbon MCP shipped similar tools in February 2026; Ashlar's are richer because they consume the extended CEM.
 
 ### Security posture
 
 - Read-only by default. `add_component` and `update_component` are gated behind explicit user approval.
-- Local-by-default. `npx atrium mcp` runs in the consumer's process; no network egress except to the configured registry.
+- Local-by-default. `npx ashlar mcp` runs in the consumer's process; no network egress except to the configured registry.
 - Signed manifests. AI tools see the same signature chain humans verify.
 - No hidden prompts. Tool descriptions and resource contents are exactly the published CEM and capsule files.
 
 ## AGENTS.md
 
-Lives in the consumer's project root. Generated by `atrium init`, updated by `atrium update`. Tells coding agents how to use Atrium correctly **in this codebase**.
+Lives in the consumer's project root. Generated by `ashlar init`, updated by `ashlar update`. Tells coding agents how to use Ashlar correctly **in this codebase**.
 
 ```markdown
-# Atrium — Agent Instructions
+# Ashlar — Agent Instructions
 
-This project uses Atrium components. When generating UI code, follow these rules.
+This project uses Ashlar components. When generating UI code, follow these rules.
 
 ## Canonical imports
 
-- React: `import { Button } from "@atrium/react"`
-- Vue: `import { AtriumButton } from "@atrium/vue"`
-- HTML: `<button class="atrium-button">` for L0 components; custom elements are reserved for L1 behavior-heavy components.
+- React: `import { Button } from "@ashlar/react"`
+- Vue: `import { AshlarButton } from "@ashlar/vue"`
+- HTML: `<button class="ashlar-button">` for L0 components; custom elements are reserved for L1 behavior-heavy components.
 
 ## Available components
 
-(installed list, generated from atrium-lock.json)
+(installed list, generated from ashlar-lock.json)
 
 - Button (1.2.3)
 - FormField (0.5.0)
@@ -228,40 +228,40 @@ This project uses Atrium components. When generating UI code, follow these rules
 
 ## Token rules
 
-- Style components via Atrium CSS variables: `var(--atrium-color-action-primary-bg)`.
+- Style components via Ashlar CSS variables: `var(--ashlar-color-action-primary-bg)`.
 - Do not hard-code brand colors. If you need a new brand color, add it to the agency theme tokens.
 
 ## Validation
 
-Before declaring done, run `npx atrium audit` and resolve all errors.
+Before declaring done, run `npx ashlar audit` and resolve all errors.
 
 ## Updating components
 
-- Always run `atrium update` to upgrade; do not edit `node_modules`.
+- Always run `ashlar update` to upgrade; do not edit `node_modules`.
 - For drift conflicts, use the diff prompt and resolve in-file with `<<<<<<<` markers.
 
-## Anti-patterns (will be flagged by `atrium audit`)
+## Anti-patterns (will be flagged by `ashlar audit`)
 
-- `<atrium-button onClick={navigate}>` — use `<atrium-link href>`.
-- `<atrium-button><svg/></atrium-button>` without `aria-label`.
-- `<atrium-form-field>` wrapping non-input content.
+- `<ashlar-button onClick={navigate}>` — use `<ashlar-link href>`.
+- `<ashlar-button><svg/></ashlar-button>` without `aria-label`.
+- `<ashlar-form-field>` wrapping non-input content.
 - Custom colors like `style={{ background: "#0050d8" }}` — use tokens.
 
 ## Where to find more
 
-- Component docs: `npx atrium docs <component>`
-- Evidence packet: `npx atrium evidence <component>`
-- MCP server: `npx atrium mcp`
+- Component docs: `npx ashlar docs <component>`
+- Evidence packet: `npx ashlar evidence <component>`
+- MCP server: `npx ashlar mcp`
 ```
 
 ## Editor symlinks
 
-`atrium init` creates:
+`ashlar init` creates:
 
 ```
 AGENTS.md                        (canonical)
 CLAUDE.md             → AGENTS.md
-.cursor/rules/atrium.mdc → AGENTS.md
+.cursor/rules/ashlar.mdc → AGENTS.md
 .windsurfrules         → AGENTS.md
 .continuerules         → AGENTS.md
 .github/copilot-instructions.md → AGENTS.md
@@ -271,10 +271,10 @@ Symlinks rather than copies, so all editors see the same content. On Windows whe
 
 ## llms.txt for the docs site
 
-The Atrium docs site publishes `llms.txt` (top-level summary) and `llms-full.txt` (full content concatenated):
+The Ashlar docs site publishes `llms.txt` (top-level summary) and `llms-full.txt` (full content concatenated):
 
 ```
-# Atrium
+# Ashlar
 
 > An evidence-grade, AI-native, government-first design system.
 
@@ -283,7 +283,7 @@ The Atrium docs site publishes `llms.txt` (top-level summary) and `llms-full.txt
 - /architecture/overview.md
 
 ## Components
-- /components/button.md (atrium-button)
+- /components/button.md (ashlar-button)
 - /components/form-field.md
 ...
 

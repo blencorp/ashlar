@@ -12,13 +12,13 @@ Do **not** ship an ESLint plugin as the primary validator. Optionally ship a thi
 
 ## Rationale
 
-Atrium's audience includes federal stacks built on Drupal (Twig), Sitecore, Adobe Experience Manager, server-rendered Django/Rails/PHP, plain HTML, and modern React/Vue/Svelte/Astro frameworks. ESLint is JavaScript-only — it cannot validate component usage in Twig, plain HTML, or any non-JS template language.
+Ashlar's audience includes federal stacks built on Drupal (Twig), Sitecore, Adobe Experience Manager, server-rendered Django/Rails/PHP, plain HTML, and modern React/Vue/Svelte/Astro frameworks. ESLint is JavaScript-only — it cannot validate component usage in Twig, plain HTML, or any non-JS template language.
 
 ast-grep is a tree-sitter-based AST tool with a YAML rule DSL. Tree-sitter grammars exist for every relevant target: TSX, JSX, Vue SFCs, Svelte, Astro, plain HTML, Twig. **The same YAML rule validates all of them.** This means a rule like "Button must have aria-label or text content" is written once and applies to React JSX, Vue templates, plain HTML, and Drupal templates simultaneously.
 
 ast-grep is distributed as a single Rust binary (~3MB). No JavaScript dependency tree. No build-pipeline integration required. CI integration is one line; pre-commit hook integration is one line. It does not require installing the design system into the consumer's build.
 
-Rules are generated from extended CEM `_atrium.antiPatterns` and `_atrium.constraints`. Component authors declare anti-patterns in the manifest; the rule generator emits YAML; the validator applies.
+Rules are generated from extended CEM `_ashlar.antiPatterns` and `_ashlar.constraints`. Component authors declare anti-patterns in the manifest; the rule generator emits YAML; the validator applies.
 
 ## Consequences
 

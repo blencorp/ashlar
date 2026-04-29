@@ -6,7 +6,7 @@ import { buildCapsuleManifest } from "./capsule.js";
 
 describe("buildCapsuleManifest", () => {
   it("hashes files in deterministic order", () => {
-    const dir = join(tmpdir(), `atrium-capsule-${Date.now()}`);
+    const dir = join(tmpdir(), `ashlar-capsule-${Date.now()}`);
     mkdirSync(dir, { recursive: true });
 
     try {

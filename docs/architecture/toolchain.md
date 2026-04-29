@@ -27,11 +27,11 @@ See [`tooling-baseline.md`](./tooling-baseline.md) for the exact pinned versions
 The CLI should be a Node 24 LTS + TypeScript ESM package:
 
 ```bash
-npx atrium init
-npx atrium add button alert form-field
-npx atrium audit
-npx atrium verify
-npx atrium evidence button
+npx ashlar init
+npx ashlar add button alert form-field
+npx ashlar audit
+npx ashlar verify
+npx ashlar evidence button
 ```
 
 Reasons:
@@ -43,7 +43,7 @@ Reasons:
 
 ## Validation engine
 
-`atrium audit` should use ast-grep rules generated from extended CEM and hand-authored rule packs.
+`ashlar audit` should use ast-grep rules generated from extended CEM and hand-authored rule packs.
 
 Rule categories:
 
@@ -67,16 +67,16 @@ Tailwind v4+ should be supported deeply but not required.
 Canonical component source:
 
 ```html
-<button class="atrium-button" data-variant="primary">Apply</button>
+<button class="ashlar-button" data-variant="primary">Apply</button>
 ```
 
 Canonical component CSS:
 
 ```css
-@layer atrium.components {
-  .atrium-button {
-    background: var(--atrium-color-action-primary-bg);
-    color: var(--atrium-color-action-primary-fg);
+@layer ashlar.components {
+  .ashlar-button {
+    background: var(--ashlar-color-action-primary-bg);
+    color: var(--ashlar-color-action-primary-fg);
   }
 }
 ```
@@ -85,12 +85,12 @@ Tailwind output:
 
 ```css
 @theme {
-  --color-atrium-action-primary: var(--atrium-color-action-primary-bg);
-  --radius-atrium-control: var(--atrium-radius-control);
+  --color-ashlar-action-primary: var(--ashlar-color-action-primary-bg);
+  --radius-ashlar-control: var(--ashlar-radius-control);
 }
 ```
 
-This gives Tailwind users `bg-atrium-action-primary` while preserving zero-Tailwind operation.
+This gives Tailwind users `bg-ashlar-action-primary` while preserving zero-Tailwind operation.
 
 ## Zig posture
 
@@ -114,8 +114,8 @@ The toolchain should produce:
 - SLSA provenance for registry builds.
 - SBOMs for CLI and component packages.
 - Signed Git tags for registry mirrors.
-- Checksums in capsule manifests and `atrium-lock.json`.
-- `atrium verify` for local tamper detection.
+- Checksums in capsule manifests and `ashlar-lock.json`.
+- `ashlar verify` for local tamper detection.
 
 ## AI tooling
 
@@ -123,8 +123,8 @@ The AI tooling surface should be treated as a first-class developer API:
 
 - Extended CEM is the source of truth.
 - MCP exposes search, retrieval, validation, migration, evidence, and token tools.
-- AGENTS.md tells coding agents how to use Atrium in the local codebase.
-- `atrium audit` is the enforcement layer when generated code is wrong.
+- AGENTS.md tells coding agents how to use Ashlar in the local codebase.
+- `ashlar audit` is the enforcement layer when generated code is wrong.
 
 ## References
 

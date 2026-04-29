@@ -6,11 +6,11 @@ Proposed.
 
 ## Decision
 
-Atrium is organized as five layers, each independently usable:
+Ashlar is organized as five layers, each independently usable:
 
 - **L0** — Pure CSS and HTML capsules; exploits the modern web platform; zero or trivial JavaScript. Targets ~70% of typical components.
 - **L1** — Web Components (Lit) wrapping Zag statecharts and signals. Targets the ~30% of components that legitimately need JavaScript state.
-- **L2** — Framework adapters (`@atrium/react`, `@atrium/vue`, `@atrium/svelte`, `@atrium/solid`) auto-generated from extended Custom Elements Manifests.
+- **L2** — Framework adapters (`@ashlar/react`, `@ashlar/vue`, `@ashlar/svelte`, `@ashlar/solid`) auto-generated from extended Custom Elements Manifests.
 - **L3** — Patterns: composed service flows (eligibility check, document upload, address form, etc.).
 - **L4** — Templates: same components rendered as Nunjucks, Twig, Jinja, ERB, plain HTML.
 

@@ -2,7 +2,7 @@
 
 Synthesized from primary-source research conducted April 2026. The full source list is in [`source-map.md`](./source-map.md).
 
-This document records the state of AI-native distribution patterns, polyglot validation tools, drift management approaches, and bundle-size benchmarks that inform Atrium's CLI, MCP server, validation, and update mechanics.
+This document records the state of AI-native distribution patterns, polyglot validation tools, drift management approaches, and bundle-size benchmarks that inform Ashlar's CLI, MCP server, validation, and update mechanics.
 
 ## AI-native distribution in 2026
 
@@ -14,7 +14,7 @@ shadcn's official MCP server (`ui.shadcn.com/docs/mcp`) exposes ~15 tools across
 
 ### Other design-system MCP servers
 
-- **Carbon MCP** (IBM, February 2026, SandeepBaskaran) — the most ambitious in production. Queries tokens, components, usage guidelines. Provides "carbon-aware" code generation, validates against accessibility rules, suggests modernization. **The shape Atrium should match.**
+- **Carbon MCP** (IBM, February 2026, SandeepBaskaran) — the most ambitious in production. Queries tokens, components, usage guidelines. Provides "carbon-aware" code generation, validates against accessibility rules, suggests modernization. **The shape Ashlar should match.**
 - **southleft/design-systems-mcp** — Supabase vector search over W3C/WCAG/best-practice corpus. General reference, not design-system-specific.
 - **Spectrum, FAST, Material** — no first-party MCP server as of April 2026.
 
@@ -24,7 +24,7 @@ The emerging convergence: tools = `search` / `get` / `validate` / `migrate`; res
 
 - **AGENTS.md** (`agents.md`, ~60,000 repositories as of late 2025) — plain Markdown for **coding agents inside a repo**: build commands, conventions, do/don't.
 - **llms.txt** (Jeremy Howard, September 2024, ~600 sites) — Markdown index of **documentation pages** for retrieval.
-- **They are complementary, not competing.** Atrium ships both: `AGENTS.md` for "how to use Atrium components correctly in this codebase" and `llms.txt` (plus `llms-full.txt`) for the public docs site.
+- **They are complementary, not competing.** Ashlar ships both: `AGENTS.md` for "how to use Ashlar components correctly in this codebase" and `llms.txt` (plus `llms-full.txt`) for the public docs site.
 
 ### Component manifests
 
@@ -41,7 +41,7 @@ The emerging convergence: tools = `search` / `get` / `validate` / `migrate`; res
 - **Aider**: `CONVENTIONS.md`
 - **Copilot**: `.github/copilot-instructions.md` plus AGENTS.md
 
-**Convergence**: AGENTS.md plus MCP is the de facto cross-tool baseline. Atrium ships one MCP server and symlinks `CLAUDE.md`, `.cursor/rules/atrium.mdc`, `.windsurfrules` to a single `AGENTS.md`.
+**Convergence**: AGENTS.md plus MCP is the de facto cross-tool baseline. Ashlar ships one MCP server and symlinks `CLAUDE.md`, `.cursor/rules/ashlar.mdc`, `.windsurfrules` to a single `AGENTS.md`.
 
 ### Self-validating components
 
@@ -63,7 +63,7 @@ Pure Node + ESM, published to npm, executed via `npx`, `pnpm dlx`, `yarn dlx`, `
 
 ### Style delivery for Web Components
 
-Constructable Stylesheets plus `adoptedStyleSheets` is the modern path. Lit's `` css`` `` tagged template handles deduplication, SSR `<style>` injection, and client hand-off via `@lit-labs/ssr`. Use `@layer atrium.base, atrium.theme, atrium.components` to give consumers a predictable override surface. Theme tokens via CSS custom properties on `:root` (or shared `CSSStyleSheet`).
+Constructable Stylesheets plus `adoptedStyleSheets` is the modern path. Lit's `` css`` `` tagged template handles deduplication, SSR `<style>` injection, and client hand-off via `@lit-labs/ssr`. Use `@layer ashlar.base, ashlar.theme, ashlar.components` to give consumers a predictable override surface. Theme tokens via CSS custom properties on `:root` (or shared `CSSStyleSheet`).
 
 ### Token compilation
 
@@ -90,7 +90,7 @@ shadcn discussion **#790 ("Need easy way to update components") is the canonical
 
 ### Approaches evaluated
 
-1. **Lockfile + checksums + three-way merge** — nobody ships this for components. **Strong differentiator for Atrium.** Record `installedFromVersion` plus content hash in `atrium-lock.json`; on `atrium update`, fetch the new file, fetch the original at `installedFromVersion`, run `git merge-file --diff3 user base new`. Lightweight, proven, no jscodeshift dependency.
+1. **Lockfile + checksums + three-way merge** — nobody ships this for components. **Strong differentiator for Ashlar.** Record `installedFromVersion` plus content hash in `ashlar-lock.json`; on `ashlar update`, fetch the new file, fetch the original at `installedFromVersion`, run `git merge-file --diff3 user base new`. Lightweight, proven, no jscodeshift dependency.
 
 2. **Codemods** — Hypermod (jscodeshift plus AI-authored) and Chakra-style codemods work well for prop renames and import moves; weaker for structural changes. Ship codemods alongside the merge tool for breaking changes.
 
@@ -121,14 +121,14 @@ Approximate sizes for Button + FormField + Alert:
 - **Tailwind v4 + React 19 migration** (#6585) was painful because components had `forwardRef` plus Tailwind v3 patterns hard-coded; codemods helped but did not fully resolve.
 - **Maintainers admit**: the registry was built for install, not for governance or update. CLI 3 added namespaces and MCP but did **not** address drift.
 
-## Concrete design input for Atrium
+## Concrete design input for Ashlar
 
 1. **WC-first with framework wrappers; vanilla CSS layer baseline.**
 2. **Manifest extends CEM** with a11y, variants, anti-patterns, token consumption — the AI lever.
 3. **MCP server with `validate_usage` and `migrate` tools**, not just `add`.
 4. **AGENTS.md + llms.txt + CLAUDE.md symlink** for editor coverage.
 5. **ast-grep YAML rules ship with components** (cross-template validation).
-6. **`atrium-lock.json` + `git merge-file` three-way update** — directly fixes shadcn's #1 gap.
+6. **`ashlar-lock.json` + `git merge-file` three-way update** — directly fixes shadcn's #1 gap.
 7. **Terrazzo for tokens; DTCG 2025.10 native.**
 8. **Signed registry** (HTTP primary, Git mirror) for government provenance.
 9. **Multi-organization maintainer charter from v0** (avoid AuDS-style collapse).

@@ -24,8 +24,8 @@ The Lit element is a thin shell that:
 6. Sets ARIA attributes directly (Firefox `ElementInternals.aria*` reflection is incomplete; see below).
 
 ```ts
-@customElement("atrium-combobox")
-export class AtriumCombobox extends LitElement {
+@customElement("ashlar-combobox")
+export class AshlarCombobox extends LitElement {
   @property({ type: Array }) options: Option[] = [];
   @property({ type: String }) value: string = "";
 
@@ -68,12 +68,12 @@ Shadow DOM is opted into only when encapsulation is genuinely required:
 When Shadow DOM is used, **Declarative Shadow DOM** is the SSR strategy:
 
 ```html
-<atrium-tooltip>
+<ashlar-tooltip>
   <template shadowrootmode="open">
     <style>/* ... */</style>
     <slot></slot>
   </template>
-</atrium-tooltip>
+</ashlar-tooltip>
 ```
 
 DSD support: Chrome 111+, Firefox 123+, Safari 16.4+, Edge 111+. Global ~94.6% (April 2026); Baseline projected August 2026.
@@ -97,8 +97,8 @@ The L4 template path is preferred because:
 L1 input components (custom inputs, custom selects) participate in `<form>` via `ElementInternals`:
 
 ```ts
-@customElement("atrium-input")
-export class AtriumInput extends LitElement {
+@customElement("ashlar-input")
+export class AshlarInput extends LitElement {
   static formAssociated = true;
   private internals = this.attachInternals();
 
@@ -125,7 +125,7 @@ this.setAttribute("aria-expanded", state);
 this.internals.ariaExpanded = state;
 ```
 
-The fallback is documented per-component in the CEM `_atrium.firefoxFallbacks` field. Tests verify ARIA propagation in Firefox specifically.
+The fallback is documented per-component in the CEM `_ashlar.firefoxFallbacks` field. Tests verify ARIA propagation in Firefox specifically.
 
 ## Framework adapters
 
@@ -135,27 +135,27 @@ Adapters are auto-generated from each capsule's extended CEM. The generator read
 - Attributes and properties
 - Slots
 - Events (and event detail types)
-- `_atrium.variants`, `_atrium.sizes`, etc.
+- `_ashlar.variants`, `_ashlar.sizes`, etc.
 
 And emits framework-idiomatic wrappers.
 
 ### React adapter
 
-Generated via `@lit/labs/gen-wrapper-react`-style tooling, customized for Atrium's CEM extensions:
+Generated via `@lit/labs/gen-wrapper-react`-style tooling, customized for Ashlar's CEM extensions:
 
 ```tsx
-// @atrium/react/combobox.tsx (generated)
+// @ashlar/react/combobox.tsx (generated)
 import { createComponent } from "@lit/react";
-import { AtriumCombobox } from "@atrium/element/combobox";
+import { AshlarCombobox } from "@ashlar/element/combobox";
 
 export const ComboBox = createComponent({
-  tagName: "atrium-combobox",
-  elementClass: AtriumCombobox,
+  tagName: "ashlar-combobox",
+  elementClass: AshlarCombobox,
   react: React,
   events: {
-    onSelect: "atrium-select",
-    onOpen: "atrium-open",
-    onClose: "atrium-close"
+    onSelect: "ashlar-select",
+    onOpen: "ashlar-open",
+    onClose: "ashlar-close"
   }
 });
 
@@ -168,10 +168,10 @@ For SSR + React 19, the adapter handles `"use client"` boundaries appropriately.
 ### Vue adapter
 
 ```vue
-<!-- @atrium/vue/combobox.vue (generated) -->
+<!-- @ashlar/vue/combobox.vue (generated) -->
 <script setup lang="ts">
 import { onMounted } from "vue";
-import "@atrium/element/combobox";
+import "@ashlar/element/combobox";
 
 defineProps<{
   options?: Option[];
@@ -185,10 +185,10 @@ defineEmits<{
 </script>
 
 <template>
-  <atrium-combobox
+  <ashlar-combobox
     :options="options"
     :value="modelValue"
-    @atrium-select="$emit('select', $event.detail)"
+    @ashlar-select="$emit('select', $event.detail)"
   />
 </template>
 ```
@@ -203,10 +203,10 @@ For Drupal, Sitecore, AEM, plain HTML — the custom element itself is the deliv
 
 ```html
 <script type="module">
-  import "@atrium/element/combobox";
+  import "@ashlar/element/combobox";
 </script>
 
-<atrium-combobox></atrium-combobox>
+<ashlar-combobox></ashlar-combobox>
 ```
 
 No framework, no adapter, no build step required.
@@ -221,7 +221,7 @@ capsule.cem.json + capsule.element.ts
               │
    ┌──────────┼──────────┬──────────┬──────────┐
    ▼          ▼          ▼          ▼          ▼
-@atrium/   @atrium/   @atrium/   @atrium/   @atrium/
+@ashlar/   @ashlar/   @ashlar/   @ashlar/   @ashlar/
 react      vue        svelte     solid      element
 ```
 
@@ -243,7 +243,7 @@ For a typical L1 component (Combobox), gzipped:
 - Lit shell: ~1.5KB
 - React adapter (if used): ~1KB
 
-**Total for first L1 component**: ~13KB. Each additional L1 component on top: ~3KB (machine + shell only). Compared to shadcn's Combobox at ~30KB and Carbon WC's at ~35KB, Atrium ships materially smaller.
+**Total for first L1 component**: ~13KB. Each additional L1 component on top: ~3KB (machine + shell only). Compared to shadcn's Combobox at ~30KB and Carbon WC's at ~35KB, Ashlar ships materially smaller.
 
 ## References
 

@@ -1,6 +1,6 @@
 # Contributing
 
-Atrium is independent open-source research and implementation work. It is not affiliated with, endorsed by, or sponsored by GSA, USWDS, NDS, or the U.S. federal government.
+Ashlar is independent open-source research and implementation work. It is not affiliated with, endorsed by, or sponsored by GSA, USWDS, NDS, or the U.S. federal government.
 
 ## Current Project State
 

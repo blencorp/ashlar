@@ -24,7 +24,7 @@ A capsule's L1 implementation has two key files: `*.machine.ts` (the statechart)
 ```ts
 // combobox.machine.ts
 import { createMachine } from "@zag-js/core";
-import { signal } from "@atrium/signals";
+import { signal } from "@ashlar/signals";
 
 export interface ComboBoxContext {
   inputValue: string;
@@ -90,7 +90,7 @@ Reactive derived data uses signals (not the machine context) so that fine-graine
 
 ```ts
 // combobox.signals.ts
-import { computed, signal } from "@atrium/signals";
+import { computed, signal } from "@ashlar/signals";
 
 export function createComboBoxSignals(machine: Machine<ComboBoxContext>) {
   const inputValue = computed(() => machine.context.inputValue);
@@ -119,8 +119,8 @@ import { customElement, property } from "lit/decorators.js";
 import { comboboxMachine } from "./combobox.machine";
 import { createComboBoxSignals } from "./combobox.signals";
 
-@customElement("atrium-combobox")
-export class AtriumCombobox extends LitElement {
+@customElement("ashlar-combobox")
+export class AshlarCombobox extends LitElement {
   @property({ type: Array }) options: Option[] = [];
   @property({ type: String }) value: string = "";
 
@@ -137,7 +137,7 @@ export class AtriumCombobox extends LitElement {
 
   render() {
     return html`
-      <div class="atrium-combobox">
+      <div class="ashlar-combobox">
         <input
           type="text"
           role="combobox"
@@ -171,10 +171,10 @@ Adapters are auto-generated from the capsule's CEM. They consume the machine dir
 ### React adapter (auto-generated, simplified)
 
 ```tsx
-// @atrium/react/combobox.tsx (generated)
+// @ashlar/react/combobox.tsx (generated)
 import { useEffect, useRef, useState } from "react";
-import { comboboxMachine } from "@atrium/components-source/combobox/machine";
-import { createComboBoxSignals } from "@atrium/components-source/combobox/signals";
+import { comboboxMachine } from "@ashlar/components-source/combobox/machine";
+import { createComboBoxSignals } from "@ashlar/components-source/combobox/signals";
 
 export function ComboBox(props: ComboBoxProps) {
   const machineRef = useRef(comboboxMachine.start());
@@ -189,7 +189,7 @@ export function ComboBox(props: ComboBoxProps) {
   const s = signalsRef.current;
 
   return (
-    <div className="atrium-combobox">
+    <div className="ashlar-combobox">
       <input
         type="text"
         role="combobox"
@@ -211,7 +211,7 @@ The same machine drives both the Lit element and the React component. **No behav
 Each capsule's machine compiles to a Stately-Studio-compatible JSON representation:
 
 ```bash
-atrium inspect combobox    # opens machine in Stately Studio
+ashlar inspect combobox    # opens machine in Stately Studio
 ```
 
 The visualizer shows states, transitions, guards, actions, and ARIA implications. The machine plus its visualization is itself a form of accessibility evidence — the WCAG mapping in the evidence packet refers to specific transitions in the machine.
@@ -221,15 +221,15 @@ The visualizer shows states, transitions, guards, actions, and ARIA implications
 L1 components serialize machine state into data attributes on the rendered DOM, so a server-rendered component can be "resumed" on the client without re-running setup logic.
 
 ```html
-<atrium-combobox
-  data-atrium-state="open.idle"
-  data-atrium-context='{"inputValue":"hello","selectedValue":null}'
+<ashlar-combobox
+  data-ashlar-state="open.idle"
+  data-ashlar-context='{"inputValue":"hello","selectedValue":null}'
 >
   ...
-</atrium-combobox>
+</ashlar-combobox>
 ```
 
-On client-side connect, the machine reads `data-atrium-state` and `data-atrium-context`, jumps to that state without replaying the transition history. This is a discipline (not a runtime requirement) that keeps Atrium positioned for resumability-driven SSR architectures (Qwik-style, future frameworks).
+On client-side connect, the machine reads `data-ashlar-state` and `data-ashlar-context`, jumps to that state without replaying the transition history. This is a discipline (not a runtime requirement) that keeps Ashlar positioned for resumability-driven SSR architectures (Qwik-style, future frameworks).
 
 ## Firefox ARIA reflection fallback
 
@@ -241,7 +241,7 @@ this.setAttribute("aria-expanded", this.signals.ariaExpanded.value);
 // NOT: this.internals.ariaExpanded = ...
 ```
 
-This fallback discipline is documented per-component in the CEM `_atrium.firefoxFallbacks` field.
+This fallback discipline is documented per-component in the CEM `_ashlar.firefoxFallbacks` field.
 
 ## Testing machines
 

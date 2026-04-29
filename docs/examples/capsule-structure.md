@@ -31,23 +31,23 @@ For an L0-only capsule like Button, there is no `button.element.ts` and no `butt
 
 ## In the consumer's project
 
-When `atrium add button` runs, the CLI writes:
+When `ashlar add button` runs, the CLI writes:
 
 ```
 <consumer-project>/
-├── atrium.config.json                 # project config
-├── atrium-lock.json                   # lockfile (see atrium-lock.example.json)
+├── ashlar.config.json                 # project config
+├── ashlar-lock.json                   # lockfile (see ashlar-lock.example.json)
 ├── AGENTS.md                          # AI agent instructions (canonical)
 ├── CLAUDE.md                          # → AGENTS.md (symlink)
-├── .cursor/rules/atrium.mdc           # → AGENTS.md (symlink)
+├── .cursor/rules/ashlar.mdc           # → AGENTS.md (symlink)
 ├── llms.txt                           # for LLM crawlers
 ├── src/
 │   ├── styles/
-│   │   ├── atrium.tokens.css          # primitive + semantic + component tokens
-│   │   ├── atrium.theme.css           # active theme (default + overrides)
-│   │   └── atrium.css                 # @layer setup + base resets
+│   │   ├── ashlar.tokens.css          # primitive + semantic + component tokens
+│   │   ├── ashlar.theme.css           # active theme (default + overrides)
+│   │   └── ashlar.css                 # @layer setup + base resets
 │   └── components/
-│       └── atrium/
+│       └── ashlar/
 │           ├── button.css             # ← from registry capsule
 │           ├── button.html.njk        # ← from registry capsule (only chosen template)
 │           ├── button.cem.json        # ← from registry capsule
@@ -55,29 +55,29 @@ When `atrium add button` runs, the CLI writes:
 └── package.json
 ```
 
-The consumer chooses which templates to install (`atrium add button --templates twig,njk`); by default the canonical Nunjucks template is included.
+The consumer chooses which templates to install (`ashlar add button --templates twig,njk`); by default the canonical Nunjucks template is included.
 
 ## File contents (worked)
 
 ### `button.css`
 
 ```css
-@layer atrium.components {
-  @scope (.atrium-button) {
+@layer ashlar.components {
+  @scope (.ashlar-button) {
     :scope {
       display: inline-flex;
       align-items: center;
-      gap: var(--atrium-space-2);
+      gap: var(--ashlar-space-2);
 
-      padding-block: var(--atrium-button-padding-y, var(--atrium-space-2));
-      padding-inline: var(--atrium-button-padding-x, var(--atrium-space-4));
+      padding-block: var(--ashlar-button-padding-y, var(--ashlar-space-2));
+      padding-inline: var(--ashlar-button-padding-x, var(--ashlar-space-4));
 
       border: 1px solid transparent;
-      border-radius: var(--atrium-button-radius, var(--atrium-radius-md));
+      border-radius: var(--ashlar-button-radius, var(--ashlar-radius-md));
 
       font: inherit;
       font-weight: 600;
-      line-height: var(--atrium-line-height-tight);
+      line-height: var(--ashlar-line-height-tight);
 
       cursor: pointer;
       user-select: none;
@@ -86,18 +86,18 @@ The consumer chooses which templates to install (`atrium add button --templates 
     }
 
     :scope:focus-visible {
-      outline: var(--atrium-focus-ring-width, 2px) solid
-        var(--atrium-focus-ring-color);
-      outline-offset: var(--atrium-focus-ring-offset, 2px);
+      outline: var(--ashlar-focus-ring-width, 2px) solid
+        var(--ashlar-focus-ring-color);
+      outline-offset: var(--ashlar-focus-ring-offset, 2px);
     }
 
     :scope[data-variant="primary"] {
-      background: var(--atrium-color-action-primary-bg);
-      color: var(--atrium-color-action-primary-fg);
+      background: var(--ashlar-color-action-primary-bg);
+      color: var(--ashlar-color-action-primary-fg);
     }
 
     :scope[data-variant="primary"]:hover:not([disabled]) {
-      background: var(--atrium-color-action-primary-bg-hover);
+      background: var(--ashlar-color-action-primary-bg-hover);
     }
 
     :scope[disabled] {
@@ -112,14 +112,14 @@ The consumer chooses which templates to install (`atrium add button --templates 
 }
 
 @media (forced-colors: active) {
-  .atrium-button {
+  .ashlar-button {
     border: 1px solid ButtonText;
   }
-  .atrium-button[data-variant="primary"] {
+  .ashlar-button[data-variant="primary"] {
     background: ButtonText;
     color: ButtonFace;
   }
-  .atrium-button:focus-visible {
+  .ashlar-button:focus-visible {
     outline: 2px solid Highlight;
   }
 }
@@ -134,7 +134,7 @@ The consumer chooses which templates to install (`atrium add button --templates 
 {% set type = type|default('button') %}
 
 <button
-  class="atrium-button"
+  class="ashlar-button"
   data-variant="{{ variant }}"
   data-size="{{ size }}"
   type="{{ type }}"
@@ -143,11 +143,11 @@ The consumer chooses which templates to install (`atrium add button --templates 
   {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
 >
   {% if icon_start %}
-    <span class="atrium-button__icon-start" aria-hidden="true">{{ icon_start|safe }}</span>
+    <span class="ashlar-button__icon-start" aria-hidden="true">{{ icon_start|safe }}</span>
   {% endif %}
   {{ label|default('Submit') }}
   {% if icon_end %}
-    <span class="atrium-button__icon-end" aria-hidden="true">{{ icon_end|safe }}</span>
+    <span class="ashlar-button__icon-end" aria-hidden="true">{{ icon_end|safe }}</span>
   {% endif %}
 </button>
 ```
@@ -161,7 +161,7 @@ The consumer chooses which templates to install (`atrium add button --templates 
 {% set type = type|default('button') %}
 
 <button
-  class="atrium-button"
+  class="ashlar-button"
   data-variant="{{ variant }}"
   data-size="{{ size }}"
   type="{{ type }}"
@@ -170,11 +170,11 @@ The consumer chooses which templates to install (`atrium add button --templates 
   {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
 >
   {% if icon_start %}
-    <span class="atrium-button__icon-start" aria-hidden="true">{{ icon_start|raw }}</span>
+    <span class="ashlar-button__icon-start" aria-hidden="true">{{ icon_start|raw }}</span>
   {% endif %}
   {{ label|default('Submit') }}
   {% if icon_end %}
-    <span class="atrium-button__icon-end" aria-hidden="true">{{ icon_end|raw }}</span>
+    <span class="ashlar-button__icon-end" aria-hidden="true">{{ icon_end|raw }}</span>
   {% endif %}
 </button>
 ```
@@ -184,7 +184,7 @@ Identical DOM contract; different template syntax.
 ### `button.html` (plain reference)
 
 ```html
-<button class="atrium-button" data-variant="primary" type="button">
+<button class="ashlar-button" data-variant="primary" type="button">
   Apply
 </button>
 ```
@@ -201,8 +201,8 @@ See [`button.cem.json`](./button.cem.json) for the full extended CEM example.
   to: 1.2.x
   language: [tsx, jsx, vue, svelte, astro, html, twig, njk, jinja, erb]
   rule:
-    pattern: <atrium-button color="$VAL">
-  fix: <atrium-button variant="$VAL">
+    pattern: <ashlar-button color="$VAL">
+  fix: <ashlar-button variant="$VAL">
   message: "color prop renamed to variant in 1.2.0"
   confirm: false
 
@@ -211,9 +211,9 @@ See [`button.cem.json`](./button.cem.json) for the full extended CEM example.
   to: 1.1.x
   language: [tsx, jsx, html, twig]
   rule:
-    pattern: class="$P atrium-button--rounded $S"
+    pattern: class="$P ashlar-button--rounded $S"
   fix: class="$P $S"
-  note: "atrium-button--rounded class removed; use --atrium-button-radius CSS variable instead"
+  note: "ashlar-button--rounded class removed; use --ashlar-button-radius CSS variable instead"
   confirm: true
 ```
 
@@ -269,11 +269,11 @@ combobox/
 └── combobox.lock.json
 ```
 
-The `combobox.html.*` templates render the initial closed-state DOM. The custom element (`<atrium-combobox>`) upgrades on the client and resumes from `data-atrium-state` if SSR-resumability is in play.
+The `combobox.html.*` templates render the initial closed-state DOM. The custom element (`<ashlar-combobox>`) upgrades on the client and resumes from `data-ashlar-state` if SSR-resumability is in play.
 
 ## References
 
 - [Capsule format spec](../architecture/capsule.md)
 - [`button.cem.json`](./button.cem.json) — full extended CEM example
-- [`atrium-lock.example.json`](./atrium-lock.example.json) — lockfile example
+- [`ashlar-lock.example.json`](./ashlar-lock.example.json) — lockfile example
 - [`agency-theme.tokens.json`](./agency-theme.tokens.json) — DTCG agency theme example

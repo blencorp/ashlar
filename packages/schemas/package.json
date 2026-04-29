@@ -1,7 +1,7 @@
 {
-  "name": "@atrium/schemas",
+  "name": "@ashlar/schemas",
   "version": "0.0.0",
-  "description": "JSON Schemas and TypeScript constants for Atrium registry artifacts.",
+  "description": "JSON Schemas and TypeScript constants for Ashlar registry artifacts.",
   "license": "Apache-2.0",
   "type": "module",
   "exports": {

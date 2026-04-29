@@ -17,9 +17,9 @@ The Lit custom element shell is a thin renderer that defines the custom element,
 
 David Harel's statecharts (1987) solved the combinatorial explosion of finite-state machines for complex stateful systems. Hierarchy, orthogonality, and broadcast events let a Combobox or Date Picker be modeled tractably. Statecharts are inspectable (visualizable in Stately Studio), exhaustively enumerable, and can be mapped one-to-one to WCAG criteria — they are themselves a form of accessibility evidence.
 
-Zag is the production-ready statechart implementation for UI components: framework-agnostic, with adapters for React, Vue, Solid, Svelte, and vanilla JavaScript. It is battle-tested in Chakra v3, Ark UI, and Park UI. Years of accessibility bug reports across these consumers have been absorbed into the machines, which gives Atrium an enormous head start on ARIA correctness without re-litigating "how does Tab behave in a Listbox with multi-select."
+Zag is the production-ready statechart implementation for UI components: framework-agnostic, with adapters for React, Vue, Solid, Svelte, and vanilla JavaScript. It is battle-tested in Chakra v3, Ark UI, and Park UI. Years of accessibility bug reports across these consumers have been absorbed into the machines, which gives Ashlar an enormous head start on ARIA correctness without re-litigating "how does Tab behave in a Listbox with multi-select."
 
-Signals model **reactive data flow** — a different abstraction from state transitions. Filtered options, computed validity, derived ARIA attributes are naturally signal-shaped. TC39 Signals (Stage 1) is the emerging platform standard; Solid Signals, Preact Signals, Angular Signals, and Vue Refs all align with it. Building on signals positions Atrium for the post-React framework era without committing to any specific framework.
+Signals model **reactive data flow** — a different abstraction from state transitions. Filtered options, computed validity, derived ARIA attributes are naturally signal-shaped. TC39 Signals (Stage 1) is the emerging platform standard; Solid Signals, Preact Signals, Angular Signals, and Vue Refs all align with it. Building on signals positions Ashlar for the post-React framework era without committing to any specific framework.
 
 Statecharts and signals are complementary: statecharts define the component's discrete states and transitions; signals carry the reactive data that flows through those states.
 
@@ -30,7 +30,7 @@ Statecharts and signals are complementary: statecharts define the component's di
 - ARIA correctness inherited from a maintained, production-grade engine (Zag).
 - Multi-framework support is collapse-able — one machine, many adapters.
 - Statechart is itself accessibility evidence (mapping states to WCAG).
-- Signals position Atrium for TC39 platform-level reactivity.
+- Signals position Ashlar for TC39 platform-level reactivity.
 - L1 components are smaller than equivalent shadcn/Radix combinations because behavior amortizes across a small machine library.
 
 **Negative**

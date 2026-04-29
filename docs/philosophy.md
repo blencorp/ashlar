@@ -6,7 +6,7 @@ The thesis, the design principles, and what we will and will not build.
 
 > Build the smallest, sharpest, most accessible, most AI-readable design system possible by leaning on the modern web platform aggressively, treating component behavior as a portable contract rather than a framework choice, and making source ownership safely updateable.
 
-Atrium is not a React library, a Tailwind theme, or a USWDS clone. It is a registry of evidence-backed component capsules — versioned, signed, content-addressed bundles of HTML, CSS, behavior, accessibility evidence, AI guidance, and codemods — distributed as source into the consuming project and updateable through a lockfile and three-way merge.
+Ashlar is not a React library, a Tailwind theme, or a USWDS clone. It is a registry of evidence-backed component capsules — versioned, signed, content-addressed bundles of HTML, CSS, behavior, accessibility evidence, AI guidance, and codemods — distributed as source into the consuming project and updateable through a lockfile and three-way merge.
 
 The goal is to make the simplest thing that solves modern government UI needs better than any current alternative, without locking teams into a framework, a styling system, or an authoring layer they did not choose.
 
@@ -32,13 +32,13 @@ Default to the platform. Reach for JavaScript only where the platform genuinely 
 
 ### 2. Source ownership requires safe updates
 
-Source-distributed components without an update path become unmaintained forks. shadcn proved the distribution model and the maintenance gap simultaneously. Atrium ships a lockfile that records the original installed content hash and uses `git merge-file --diff3` to perform real three-way merges on update, with codemods for breaking changes and force-confirmation when accessibility-critical files change.
+Source-distributed components without an update path become unmaintained forks. shadcn proved the distribution model and the maintenance gap simultaneously. Ashlar ships a lockfile that records the original installed content hash and uses `git merge-file --diff3` to perform real three-way merges on update, with codemods for breaking changes and force-confirmation when accessibility-critical files change.
 
 Owning your component source should not mean signing up for a maintenance fork.
 
 ### 3. Behavior is a portable contract, not a framework choice
 
-The hard part of a ComboBox is not React rendering — it is the state machine, ARIA semantics, keyboard handling, and focus management. Those are framework-independent. Atrium expresses them as statecharts (via Zag) plus signals, so the same machine drives a custom element, a React component, a Vue component, and a vanilla DOM consumer with no behavioral drift between them.
+The hard part of a ComboBox is not React rendering — it is the state machine, ARIA semantics, keyboard handling, and focus management. Those are framework-independent. Ashlar expresses them as statecharts (via Zag) plus signals, so the same machine drives a custom element, a React component, a Vue component, and a vanilla DOM consumer with no behavioral drift between them.
 
 ### 4. Accessibility is evidence, not an assertion
 
@@ -52,7 +52,7 @@ Every component ships a Custom Elements Manifest extended with variants, anti-pa
 
 ### 6. Polyglot validation, framework-agnostic linting
 
-ESLint is a JavaScript-only tool. Federal stacks include Drupal Twig, server-rendered Jinja, plain HTML, Astro, Vue SFCs, Svelte, and TSX. Atrium uses ast-grep with tree-sitter grammars, so a single YAML rule validates component usage across all of these. The validator is a single Rust binary; it does not require installing the design system into the consumer's build pipeline.
+ESLint is a JavaScript-only tool. Federal stacks include Drupal Twig, server-rendered Jinja, plain HTML, Astro, Vue SFCs, Svelte, and TSX. Ashlar uses ast-grep with tree-sitter grammars, so a single YAML rule validates component usage across all of these. The validator is a single Rust binary; it does not require installing the design system into the consumer's build pipeline.
 
 ### 7. Standards over libraries when they overlap
 
@@ -60,7 +60,7 @@ Web Components are a web standard. DTCG is a W3C-CG token format. CEM is a W3C-C
 
 ### 8. Future-readiness over current trendiness
 
-Statecharts (1987 — Harel) plus signals (TC39 Stage 1) plus typed effects (research) plus resumability (Qwik) plus event-sourcing (financial systems) compose into the next decade of UI architecture. Atrium does not need to ship all of these in v0.0 — but the architecture must not preclude any of them. We bet on the composition, not on a specific framework.
+Statecharts (1987 — Harel) plus signals (TC39 Stage 1) plus typed effects (research) plus resumability (Qwik) plus event-sourcing (financial systems) compose into the next decade of UI architecture. Ashlar does not need to ship all of these in v0.0 — but the architecture must not preclude any of them. We bet on the composition, not on a specific framework.
 
 ### 9. Government-first, not government-only
 
@@ -70,13 +70,13 @@ The audience is "anyone shipping consequential software to real people," with go
 
 ### 10. Public-service values
 
-Plain language. Progressive enhancement. Accessibility as fundamental, not optional. Open governance. Share what we do. These are USWDS's stated values; they remain correct, and Atrium preserves them — even as it replaces the delivery model around them.
+Plain language. Progressive enhancement. Accessibility as fundamental, not optional. Open governance. Share what we do. These are USWDS's stated values; they remain correct, and Ashlar preserves them — even as it replaces the delivery model around them.
 
 ### 11. Quiet defaults, loud safety nets
 
 The CLI surface should feel like shadcn — `init`, `add`, `update`, `audit` cover 90% of usage. Sophistication is opt-in. But behind that surface, the safety nets should be uncompromising: signed manifests, three-way merges, accessibility evidence, validator rules, force-confirmations for sensitive changes. Quiet on the surface, paranoid underneath.
 
-## What Atrium is not
+## What Ashlar is not
 
 - **Not a React component library.** React is one consumer among many.
 - **Not a Tailwind theme.** Tailwind is a first-class output target, not the authoring layer.
@@ -86,7 +86,7 @@ The CLI surface should feel like shadcn — `init`, `add`, `update`, `audit` cov
 - **Not "AI-native" because it has an `llms.txt`.** AI-native means structured contracts that AI tools can query, validate against, and migrate with — not just markdown for retrieval.
 - **Not a research platform.** It will ship.
 
-## What Atrium is
+## What Ashlar is
 
 - A registry of versioned, signed, content-addressed component capsules.
 - A CLI that installs capsules as source into the consuming project, tracking provenance in a lockfile.
@@ -112,7 +112,7 @@ The CLI surface should feel like shadcn — `init`, `add`, `update`, `audit` cov
 
 - Bundle size of typical 5-component page (target: under 10KB gzipped for L0-only).
 - `update` conflict rate across 50+ real updates (target: under 10%).
-- AI tool generation accuracy when grounded by Atrium CEM (target: zero hallucinated props, anti-patterns flagged).
+- AI tool generation accuracy when grounded by Ashlar CEM (target: zero hallucinated props, anti-patterns flagged).
 - Multi-stack demo apps shipping the same component (target: one capsule, three universes — Next.js, Drupal Twig, plain HTML).
 - Time from `init` to a working accessible form (target: under 10 minutes).
 

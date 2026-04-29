@@ -1,10 +1,10 @@
 # Compliance, Security, and CI Tooling
 
-Atrium must help agencies prove that their interfaces are accessible, secure, updateable, and aligned with federal website expectations. This document defines the tool surface needed to make that real.
+Ashlar must help agencies prove that their interfaces are accessible, secure, updateable, and aligned with federal website expectations. This document defines the tool surface needed to make that real.
 
 ## Principle
 
-Compliance cannot live only in documentation. Atrium should make the correct path executable:
+Compliance cannot live only in documentation. Ashlar should make the correct path executable:
 
 - component evidence is machine-readable;
 - misuse is detectable in CI;
@@ -15,15 +15,15 @@ Compliance cannot live only in documentation. Atrium should make the correct pat
 
 ## Accessibility scope
 
-Atrium targets **WCAG 2.2 AA engineering quality** for stable components. Evidence maps back to:
+Ashlar targets **WCAG 2.2 AA engineering quality** for stable components. Evidence maps back to:
 
 - Section 508 / WCAG 2.0 A and AA;
 - ADA Title II / WCAG 2.1 AA for state and local government contexts;
 - WCAG 2.2 AA for future-facing best practice.
 
-Atrium must not claim that a component makes an application compliant. Required docs language:
+Ashlar must not claim that a component makes an application compliant. Required docs language:
 
-> Atrium components are designed and tested to support accessible implementation. Accessibility conformance for the final service depends on correct use, content, configuration, and integration.
+> Ashlar components are designed and tested to support accessible implementation. Accessibility conformance for the final service depends on correct use, content, configuration, and integration.
 
 ## Evidence artifacts
 
@@ -36,14 +36,14 @@ Each stable capsule must ship:
 - Forced-colors and high-contrast validation.
 - Reduced-motion validation where motion exists.
 - Known limitations.
-- Anti-pattern mappings that explain which errors `atrium audit` can prevent.
+- Anti-pattern mappings that explain which errors `ashlar audit` can prevent.
 
 Evidence should be queryable:
 
 ```bash
-npx atrium evidence dialog
-npx atrium evidence --format json dialog
-npx atrium evidence --report ./reports/atrium-a11y.md
+npx ashlar evidence dialog
+npx ashlar evidence --format json dialog
+npx ashlar evidence --report ./reports/ashlar-a11y.md
 ```
 
 ## CI commands
@@ -51,29 +51,29 @@ npx atrium evidence --report ./reports/atrium-a11y.md
 The first CI surface should include:
 
 ```bash
-npx atrium audit --severity error
-npx atrium audit --sarif > atrium.sarif
-npx atrium verify
-npx atrium theme validate
-npx atrium evidence --check
-npx atrium bundle --budget
+npx ashlar audit --severity error
+npx ashlar audit --sarif > ashlar.sarif
+npx ashlar verify
+npx ashlar theme validate
+npx ashlar evidence --check
+npx ashlar bundle --budget
 ```
 
-### `atrium audit`
+### `ashlar audit`
 
 Checks component usage and federal web rules across supported file types.
 
 Required v0 rule packs:
 
-- `atrium/components`: component misuse from CEM anti-patterns.
-- `atrium/accessibility`: labels, names, headings, focus, landmarks, forms.
-- `atrium/federal-website-standards`: banner, page title, meta description, identifier hooks, contact page hooks.
-- `atrium/tokens`: hard-coded colors, invalid token references, unsafe overrides.
-- `atrium/security`: unsafe HTML injection in component slots, external script patterns, dangerous inline event handlers where applicable.
+- `ashlar/components`: component misuse from CEM anti-patterns.
+- `ashlar/accessibility`: labels, names, headings, focus, landmarks, forms.
+- `ashlar/federal-website-standards`: banner, page title, meta description, identifier hooks, contact page hooks.
+- `ashlar/tokens`: hard-coded colors, invalid token references, unsafe overrides.
+- `ashlar/security`: unsafe HTML injection in component slots, external script patterns, dangerous inline event handlers where applicable.
 
-### `atrium verify`
+### `ashlar verify`
 
-Checks installed files against `atrium-lock.json` and signature data:
+Checks installed files against `ashlar-lock.json` and signature data:
 
 - capsule hash matches;
 - file hash matches or local drift is reported;
@@ -81,7 +81,7 @@ Checks installed files against `atrium-lock.json` and signature data:
 - lockfile is internally consistent;
 - registry trust root has not silently changed.
 
-### `atrium theme validate`
+### `ashlar theme validate`
 
 Checks:
 
@@ -94,7 +94,7 @@ Checks:
 - touch target and density tokens do not violate minimum sizing;
 - agency theme metadata exists.
 
-### `atrium evidence --check`
+### `ashlar evidence --check`
 
 Fails CI when a capsule claims `stable` without complete evidence:
 
@@ -104,7 +104,7 @@ Fails CI when a capsule claims `stable` without complete evidence:
 - known limitations present or explicitly empty;
 - last review date within required freshness window.
 
-### `atrium bundle --budget`
+### `ashlar bundle --budget`
 
 Fails CI when component bundles exceed declared budgets:
 
@@ -114,7 +114,7 @@ Fails CI when component bundles exceed declared budgets:
 
 ## SARIF output
 
-`atrium audit --sarif` is required for public alpha. SARIF allows findings to appear in GitHub code scanning and other security dashboards.
+`ashlar audit --sarif` is required for public alpha. SARIF allows findings to appear in GitHub code scanning and other security dashboards.
 
 Each finding should include:
 
@@ -129,7 +129,7 @@ Each finding should include:
 ## GitHub Actions example
 
 ```yaml
-name: Atrium
+name: Ashlar
 
 on:
   pull_request:
@@ -137,7 +137,7 @@ on:
     branches: [main]
 
 jobs:
-  atrium:
+  ashlar:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -145,19 +145,19 @@ jobs:
         with:
           node-version: 24.15.0
       - run: npm ci
-      - run: npx atrium verify
-      - run: npx atrium theme validate
-      - run: npx atrium evidence --check
-      - run: npx atrium audit --severity error --sarif > atrium.sarif
+      - run: npx ashlar verify
+      - run: npx ashlar theme validate
+      - run: npx ashlar evidence --check
+      - run: npx ashlar audit --severity error --sarif > ashlar.sarif
       - uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
-          sarif_file: atrium.sarif
+          sarif_file: ashlar.sarif
 ```
 
 ## Security model
 
-Threats Atrium must explicitly address:
+Threats Ashlar must explicitly address:
 
 - Compromised registry artifact.
 - Compromised package-manager dependency.
@@ -175,20 +175,20 @@ Controls:
 - SBOM generation.
 - Signed Git tags for registry mirror.
 - Air-gapped registry mirror.
-- Explicit trust roots in `atrium.config.json`.
+- Explicit trust roots in `ashlar.config.json`.
 - Read-only MCP by default.
 - User confirmation for install/update/migration through MCP.
 - Accessibility-critical file confirmation during update.
-- `atrium verify` before release.
+- `ashlar verify` before release.
 
 ## VPAT / ACR support
 
-Atrium should not generate a final VPAT for a consuming application. It can generate component-level evidence packages that help an agency or vendor prepare an Accessibility Conformance Report.
+Ashlar should not generate a final VPAT for a consuming application. It can generate component-level evidence packages that help an agency or vendor prepare an Accessibility Conformance Report.
 
 Future command:
 
 ```bash
-npx atrium evidence --acr-input --components button,dialog,form-field
+npx ashlar evidence --acr-input --components button,dialog,form-field
 ```
 
 Output should include:

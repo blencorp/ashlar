@@ -1,6 +1,6 @@
 # Tooling baseline
 
-This document records the concrete tool versions the repository is pinned to. Atrium should stay current, but only on stable release lines suitable for agency and regulated-industry adoption.
+This document records the concrete tool versions the repository is pinned to. Ashlar should stay current, but only on stable release lines suitable for agency and regulated-industry adoption.
 
 Baseline date: **April 29, 2026**.
 
@@ -11,7 +11,7 @@ Baseline date: **April 29, 2026**.
 | Node.js | 24.15.0 LTS | Use the newest Active LTS patch. Do not move to Current releases for repository tooling until they become LTS. |
 | pnpm | 10.33.2 | Use the latest stable pnpm 10 release. |
 
-Node.js 26 is Current, not LTS, on this date. Atrium stays on Node 24 LTS until the next even-numbered Current line is promoted to LTS.
+Node.js 26 is Current, not LTS, on this date. Ashlar stays on Node 24 LTS until the next even-numbered Current line is promoted to LTS.
 
 ## Workspace and Build
 

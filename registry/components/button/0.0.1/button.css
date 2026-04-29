@@ -1,8 +1,8 @@
-@layer atrium.components {
-  .atrium-button {
+@layer ashlar.components {
+  .ashlar-button {
     align-items: center;
     border: 1px solid transparent;
-    border-radius: var(--atrium-radius-control, 0.375rem);
+    border-radius: var(--ashlar-radius-control, 0.375rem);
     cursor: pointer;
     display: inline-flex;
     font: inherit;
@@ -14,28 +14,28 @@
     padding-inline: 1rem;
   }
 
-  .atrium-button[data-variant="primary"] {
-    background: var(--atrium-color-action-primary-bg, #005ea8);
-    color: var(--atrium-color-action-primary-fg, #fff);
+  .ashlar-button[data-variant="primary"] {
+    background: var(--ashlar-color-action-primary-bg, #005ea8);
+    color: var(--ashlar-color-action-primary-fg, #fff);
   }
 
-  .atrium-button:focus-visible {
-    outline: var(--atrium-focus-ring-width, 0.25rem) solid var(--atrium-focus-ring-color, #2491ff);
-    outline-offset: var(--atrium-focus-ring-offset, 0.25rem);
+  .ashlar-button:focus-visible {
+    outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
+    outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
   }
 }
 
 @media (forced-colors: active) {
-  .atrium-button {
+  .ashlar-button {
     border-color: ButtonText;
   }
 
-  .atrium-button[data-variant="primary"] {
+  .ashlar-button[data-variant="primary"] {
     background: ButtonText;
     color: ButtonFace;
   }
 
-  .atrium-button:focus-visible {
+  .ashlar-button:focus-visible {
     outline-color: Highlight;
   }
 }

@@ -1,6 +1,6 @@
 # Security Policy
 
-Atrium is pre-alpha research and implementation planning. Do not use current code or registry artifacts for production systems until a release explicitly says they are production-ready.
+Ashlar is pre-alpha research and implementation planning. Do not use current code or registry artifacts for production systems until a release explicitly says they are production-ready.
 
 ## Reporting a Vulnerability
 
@@ -33,4 +33,4 @@ Out of scope:
 
 ## Security Posture
 
-Atrium's target posture is signed, content-addressed capsules; SLSA-informed provenance; SBOMs; offline registry mirrors; and read-only MCP defaults. These controls are not complete yet and will be tracked in public milestones.
+Ashlar's target posture is signed, content-addressed capsules; SLSA-informed provenance; SBOMs; offline registry mirrors; and read-only MCP defaults. These controls are not complete yet and will be tracked in public milestones.

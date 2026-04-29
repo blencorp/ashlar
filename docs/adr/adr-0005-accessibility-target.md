@@ -40,7 +40,7 @@ WCAG 2.2 AA is the forward-looking engineering target. Federal Section 508 curre
 
 - Compliance language in docs explicitly disclaims application-level compliance.
 - Evidence packets include `knownLimitations` so consumers see gaps.
-- Audit tooling (`atrium audit`) catches common application-level misuse.
+- Audit tooling (`ashlar audit`) catches common application-level misuse.
 - Manual SR test scripts are templated and concise so they are repeatable, not labor-prohibitive.
 
 ## References

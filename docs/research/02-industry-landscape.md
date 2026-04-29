@@ -15,7 +15,7 @@ The front-end design-system landscape has moved away from monolithic installed c
 - stronger accessibility primitives;
 - cross-framework future paths through state machines and Web Components.
 
-Atrium should not copy one project. It should synthesize the strongest ideas into a government-grade model.
+Ashlar should not copy one project. It should synthesize the strongest ideas into a government-grade model.
 
 ## shadcn/ui: the pivotal model shift
 
@@ -29,7 +29,7 @@ That changes the ownership model:
 - The registry can distribute components, blocks, themes, hooks, libraries, and styles.
 - Teams can add only what they need.
 
-For Atrium, this is the most important pattern to learn from.
+For Ashlar, this is the most important pattern to learn from.
 
 ### What shadcn/ui gets right
 
@@ -48,7 +48,7 @@ For Atrium, this is the most important pattern to learn from.
 - **Agency theming consistency:** without a strict token contract, agency themes can fragment.
 - **Procurement trust:** teams may need a vetted baseline, security review, and support model.
 
-Atrium should adopt open-code distribution but add a stricter trust layer.
+Ashlar should adopt open-code distribution but add a stricter trust layer.
 
 ## Design Tokens Community Group: token standardization
 
@@ -60,7 +60,7 @@ This is directly relevant. USWDS has meaningful tokens, but a successor should s
 
 Tailwind v4 introduced CSS-first configuration through CSS rather than requiring a `tailwind.config.js` file. Its theme variables are CSS custom properties defined with `@theme`, and those variables drive utility classes.
 
-For Atrium, Tailwind should be treated as an output surface, not the whole design system. The token source should remain DTCG JSON. Outputs can include CSS variables, Tailwind v4 `@theme` variables, typed TypeScript token maps, Figma variables, and optional Sass maps for backwards compatibility.
+For Ashlar, Tailwind should be treated as an output surface, not the whole design system. The token source should remain DTCG JSON. Outputs can include CSS variables, Tailwind v4 `@theme` variables, typed TypeScript token maps, Figma variables, and optional Sass maps for backwards compatibility.
 
 This avoids forcing Tailwind while still meeting the current market where many modern teams are using it.
 
@@ -84,13 +84,13 @@ A state-machine core could reduce duplication across frameworks. The tradeoff is
 
 ## Headless UI: Tailwind-aligned unstyled components
 
-Headless UI provides unstyled accessible components for React and Vue and integrates naturally with Tailwind. It is useful but less strategically central for Atrium than React Aria, Radix, or Ark because it is tied to a narrower set of components and often to Tailwind-oriented workflows.
+Headless UI provides unstyled accessible components for React and Vue and integrates naturally with Tailwind. It is useful but less strategically central for Ashlar than React Aria, Radix, or Ark because it is tied to a narrower set of components and often to Tailwind-oriented workflows.
 
 ## Lit and Web Components: framework independence
 
 Lit positions itself as a lightweight library for building native Web Components. Lit components work in plain HTML, frameworks, CMSs, and static sites. Lit is small and useful for shareable design-system components across stacks.
 
-For Atrium, Web Components are attractive because government agencies have a wide range of tech stacks. But a full Web Component suite has risks:
+For Ashlar, Web Components are attractive because government agencies have a wide range of tech stacks. But a full Web Component suite has risks:
 
 - framework integration can be uneven;
 - server rendering and hydration models vary;
@@ -104,17 +104,17 @@ Recommended approach: use Web Components first for official government shell ele
 
 Open UI is a W3C community effort focused on understanding and standardizing controls, states, behaviors, accessibility, and extensibility so design systems can align better with web platform primitives.
 
-This should inform Atrium’s long-term research. A public design system should not reinvent controls forever. It should track Open UI and prefer platform-native improvements where possible.
+This should inform Ashlar’s long-term research. A public design system should not reinvent controls forever. It should track Open UI and prefer platform-native improvements where possible.
 
 ## Model Context Protocol and AI-native tooling
 
 AI-native design systems need more than markdown docs. The Model Context Protocol is an open standard for connecting AI applications to external data and tools. A design system can expose component docs, registry items, token schemas, examples, and audit tools as MCP resources/tools.
 
-That said, MCP introduces security and trust concerns. Any future MCP server for Atrium should be read-only by default, avoid arbitrary code execution, sign manifests, and clearly separate advisory output from automated project changes.
+That said, MCP introduces security and trust concerns. Any future MCP server for Ashlar should be read-only by default, avoid arbitrary code execution, sign manifests, and clearly separate advisory output from automated project changes.
 
 ## Strategic takeaway
 
-Atrium should be:
+Ashlar should be:
 
 - shadcn-inspired in distribution;
 - DTCG-native in tokens;

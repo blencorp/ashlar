@@ -1,5 +1,5 @@
-export const capsuleSchemaId = "https://atrium.dev/schemas/capsule.schema.json";
-export const lockSchemaId = "https://atrium.dev/schemas/lock.schema.json";
+export const capsuleSchemaId = "https://ashlar.dev/schemas/capsule.schema.json";
+export const lockSchemaId = "https://ashlar.dev/schemas/lock.schema.json";
 
 export const capsuleFormatVersion = "1.0";
 export const lockfileVersion = "1";

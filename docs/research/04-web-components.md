@@ -2,7 +2,7 @@
 
 Synthesized from primary-source research conducted April 2026. The full source list is in [`source-map.md`](./source-map.md).
 
-This document records the state of Web Components in 2026, the architectures used by peer government design systems, and the empirical pain points reported by USWDS users. It is the foundation for Atrium's L1 (Web Components) and L4 (templates) decisions, and for the framework-adapter strategy in L2.
+This document records the state of Web Components in 2026, the architectures used by peer government design systems, and the empirical pain points reported by USWDS users. It is the foundation for Ashlar's L1 (Web Components) and L4 (templates) decisions, and for the framework-adapter strategy in L2.
 
 ## Web Components state in 2026
 
@@ -22,7 +22,7 @@ This document records the state of Web Components in 2026, the architectures use
 ### Form-associated custom elements (ElementInternals / FACE)
 
 - **Browser support**: Chrome 77+, Edge 79+, Firefox 98+, Safari 16.4+. Global ~94.92%.
-- **Real gap**: Firefox has implemented form participation and validation but **partial coverage of ARIA reflection / role internals**. If a custom `<atrium-input>` relies on `internals.ariaLabel` for a11y, an explicit ARIA fallback is required for Firefox.
+- **Real gap**: Firefox has implemented form participation and validation but **partial coverage of ARIA reflection / role internals**. If a custom `<ashlar-input>` relies on `internals.ariaLabel` for a11y, an explicit ARIA fallback is required for Firefox.
 - **Verdict**: production-viable for form submission and validation; do not assume ARIA reflection works everywhere.
 
 ### Framework adapters
@@ -42,7 +42,7 @@ This document records the state of Web Components in 2026, the architectures use
 | **FAST / Fluent UI WC v3** (Microsoft) | v3 still in RC mid-2025; long delayed | FAST → rewritten on internal stack | Cautionary tale: framework-of-the-framework risk; Microsoft itself wavered. |
 | **Material Web** (Google) | **Maintenance mode since June 2024** | Lit | Engineers reassigned to Wiz. Do not depend on it. |
 
-**AI manifests in production WC libraries**: none ship a distinct "AI manifest" format. The de-facto standard is **Custom Elements Manifest** (CEM, W3C Community Group). Storybook MCP, Carbon-MCP, and design-system commentators (Dave Rupert, Codrops) all converge on CEM as the LLM source. **Atrium emits CEM from day one and extends it with the constraint surface (variants, anti-patterns, accessibility rules, token consumption).**
+**AI manifests in production WC libraries**: none ship a distinct "AI manifest" format. The de-facto standard is **Custom Elements Manifest** (CEM, W3C Community Group). Storybook MCP, Carbon-MCP, and design-system commentators (Dave Rupert, Codrops) all converge on CEM as the LLM source. **Ashlar emits CEM from day one and extends it with the constraint surface (variants, anti-patterns, accessibility rules, token consumption).**
 
 ## Peer government design systems
 
@@ -53,7 +53,7 @@ This document records the state of Web Components in 2026, the architectures use
 - **Accessibility evidence**: issues are prioritized as "Evidenced" — must include user research showing real barriers. Theoretical issues wait. New accessibility strategy published January 2023; tested to WCAG 2.1, updating toward 2.2. Brand refresh and Frontend updates June 2025.
 - **Versioning**: semver, monthly-ish releases of `govuk-frontend` on npm.
 
-**Lesson for Atrium**: government uses many template languages, not one framework. L4 (templates) is the empirical answer to this — ship Nunjucks, Twig, Jinja, ERB, plain HTML renderings of the same component.
+**Lesson for Ashlar**: government uses many template languages, not one framework. L4 (templates) is the empirical answer to this — ship Nunjucks, Twig, Jinja, ERB, plain HTML renderings of the same component.
 
 ### GC Design System (Canada) — the closest peer
 
@@ -62,7 +62,7 @@ This document records the state of Web Components in 2026, the architectures use
 - **Key lesson**: "alpha" status was an explicit adoption blocker per Canadian Digital Service post-mortem. Plan for stable v1.0 brand from early.
 - **Stencil vs Lit choice**: Stencil compiles components, ships smaller per-component runtime, generates framework wrappers automatically. Lit has a larger community, simpler model, lighter shared runtime. GC chose Stencil; USWDS Elements chose Lit.
 
-**Lesson for Atrium**: WC + adapter is proven at federal scale. Choose Lit (alignment with USWDS Elements direction and larger community) over Stencil; the adapter generation cost is small either way.
+**Lesson for Ashlar**: WC + adapter is proven at federal scale. Choose Lit (alignment with USWDS Elements direction and larger community) over Stencil; the adapter generation cost is small either way.
 
 ### Australia — AuDS → GOLD
 
@@ -70,7 +70,7 @@ This document records the state of Web Components in 2026, the architectures use
 - **Community fork → GOLD / Design System AU.** Now lives at `gold.designsystemau.org`, community-maintained.
 - **Lessons**: single-agency ownership is single point of failure. The Department of Health subsequently built its own fork (`designsystem.health.gov.au`), demonstrating the fragmentation cost of central-system collapse.
 
-**Lesson for Atrium**: community charter and a multi-organization maintainer group from day one. Avoid the AuDS trap.
+**Lesson for Ashlar**: community charter and a multi-organization maintainer group from day one. Avoid the AuDS trap.
 
 ### Other peers
 
@@ -78,7 +78,7 @@ This document records the state of Web Components in 2026, the architectures use
 - **NL Design System** — most architecturally interesting peer. Multi-municipality (Utrecht, Den Haag, Rotterdam, Rijkshuisstijl) sharing one component spec via design tokens (JSON, multi-format output). CSS components are the base; optional React/WC/Twig wrappers per consumer. **Token-first, multi-tenant pattern.**
 - **EU Component Library (ECL)** — currently v5.0.0-alpha.22 (December 2025); Drupal-first, Twig-templated, distributed via CDN. Not generally applicable.
 
-**Lesson for Atrium**: NL Design System validates the token-first, components-as-rendering-layer architecture. Tokens are the universal contract; components are wrappers.
+**Lesson for Ashlar**: NL Design System validates the token-first, components-as-rendering-layer architecture. Tokens are the universal contract; components are wrappers.
 
 ## USWDS empirical pain points
 
@@ -95,7 +95,7 @@ Verified top complaints:
 7. **Missing components**: Data Grid (35 votes), Tabs, Drawer, Skeleton, Charts.
 8. **USWDS team's own roadmap creates uncertainty**: Elements (Lit-based WC), Tokens (Style Dictionary), and Core 4.0 announced for Spring 2025; the team is sticking with Lit but **not accepting external code contributions** during the architecture transition. Developers who built Lit components for clients are blocked from upstreaming.
 
-**Implication for Atrium**: every one of the above is addressable. The framework gap is the L2 adapters; opaque JavaScript is the explicit CEM with rendering classification; missing components are L1 priorities; the "not accepting contributions" status means we cannot rely on convergence with USWDS in the near term — but we can ship explicit USWDS interop and contribute upstream when the door reopens.
+**Implication for Ashlar**: every one of the above is addressable. The framework gap is the L2 adapters; opaque JavaScript is the explicit CEM with rendering classification; missing components are L1 priorities; the "not accepting contributions" status means we cannot rely on convergence with USWDS in the near term — but we can ship explicit USWDS interop and contribute upstream when the door reopens.
 
 ## Architectural recommendation
 
@@ -112,7 +112,7 @@ The data points one direction: **Web-Component-first with auto-generated framewo
 - **Library**: Lit 3.x (not "4"). Stencil is a defensible alternative if auto-generated framework wrappers outweigh community size.
 - **SSR**: rely on framework SSR plus DSD where consumed by frameworks. Lit SSR is labs — treat as escape hatch for a CSS-only "shell" SSR mode. Ship Nunjucks, Twig, Jinja partials for non-JS environments alongside.
 - **Tokens**: DTCG source, multi-format output via Terrazzo. Steal NL Design System's token-as-universal-layer pattern.
-- **AI**: emit CEM from day one; extend it with `_atrium` namespace for variants, anti-patterns, a11y rules, token consumption.
+- **AI**: emit CEM from day one; extend it with `_ashlar` namespace for variants, anti-patterns, a11y rules, token consumption.
 - **Governance**: avoid the AuDS trap — community maintainer group with charter from v0.
 
 **Open risks**:

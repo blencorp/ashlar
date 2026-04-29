@@ -1,6 +1,6 @@
 # Distribution and registry
 
-Atrium is distributed as content-addressed, signed capsules through a registry. This document specifies the registry shape, distribution channels (HTTP and Git), provenance via Sigstore, custom registries, and air-gapped operation.
+Ashlar is distributed as content-addressed, signed capsules through a registry. This document specifies the registry shape, distribution channels (HTTP and Git), provenance via Sigstore, custom registries, and air-gapped operation.
 
 ## Registry shape
 
@@ -29,9 +29,9 @@ registry/
 
 ```json
 {
-  "$schema": "https://atrium.dev/schemas/registry-index.schema.json",
-  "registry": "https://registry.atrium.dev",
-  "name": "atrium-canonical",
+  "$schema": "https://ashlar.dev/schemas/registry-index.schema.json",
+  "registry": "https://registry.ashlar.dev",
+  "name": "ashlar-canonical",
   "version": "0.1.0",
   "publishedAt": "2026-04-27T10:00:00Z",
   "components": {
@@ -45,7 +45,7 @@ registry/
     "combobox": { /* ... */ }
   },
   "patterns": { /* ... */ },
-  "themes": ["atrium/default", "atrium/high-contrast"],
+  "themes": ["ashlar/default", "ashlar/high-contrast"],
   "signingKey": "sigstore-public-key:..."
 }
 ```
@@ -57,10 +57,10 @@ registry/
 The shadcn pattern. Published to a CDN-fronted endpoint:
 
 ```
-https://registry.atrium.dev/index.json
-https://registry.atrium.dev/components/button/1.2.4/manifest.json
-https://registry.atrium.dev/components/button/1.2.4/button.tar.gz
-https://registry.atrium.dev/components/button/1.2.4/signature.bundle
+https://registry.ashlar.dev/index.json
+https://registry.ashlar.dev/components/button/1.2.4/manifest.json
+https://registry.ashlar.dev/components/button/1.2.4/button.tar.gz
+https://registry.ashlar.dev/components/button/1.2.4/signature.bundle
 ```
 
 Pros: easy consumption from any environment; CDN-cacheable; no Git tooling required.
@@ -70,7 +70,7 @@ Pros: easy consumption from any environment; CDN-cacheable; no Git tooling requi
 The entire registry is also a Git repository with signed tags:
 
 ```
-https://github.com/atrium/registry
+https://github.com/blencorp/ashlar-registry
   tags:
     button-1.2.4
     form-field-0.5.0
@@ -79,13 +79,13 @@ https://github.com/atrium/registry
 
 Pros: air-gapped-friendly (clone once, use offline); Git already trusted in many federal IT environments; signatures embedded in tag objects for verification.
 
-The CLI auto-detects which channel to use based on `atrium.config.json`:
+The CLI auto-detects which channel to use based on `ashlar.config.json`:
 
 ```json
 {
   "registry": {
-    "primary": "https://registry.atrium.dev",
-    "fallback": "git+https://github.com/atrium/registry.git",
+    "primary": "https://registry.ashlar.dev",
+    "fallback": "git+https://github.com/blencorp/ashlar-registry.git",
     "trustRoots": [
       "sigstore-public-key:..."
     ]
@@ -103,13 +103,13 @@ Every capsule is signed via **Sigstore/cosign**. The build pipeline:
 4. Embeds the signature bundle in the capsule artifact.
 5. Records the signing certificate chain in the registry index.
 
-Consumers verify on every install and on `atrium verify`:
+Consumers verify on every install and on `ashlar verify`:
 
 ```bash
-$ atrium verify
+$ ashlar verify
 
 Components:
-  ✓ button         (1.2.3) — signature valid (Sigstore, atrium/registry@main)
+  ✓ button         (1.2.3) — signature valid (Sigstore, ashlar/registry@main)
   ✓ form-field    (0.5.0) — signature valid
   ✗ dialog        (1.1.0) — signature INVALID (registry tampered or trust root drift)
 
@@ -123,7 +123,7 @@ Agencies and regulated-industry consumers can run their own registries:
 ```json
 {
   "registry": {
-    "primary": "https://registry.dod.mil/atrium-mirror",
+    "primary": "https://registry.dod.mil/ashlar-mirror",
     "trustRoots": [
       "sigstore-public-key:dod-internal-signing-key"
     ]
@@ -138,12 +138,12 @@ Custom registries:
 - Inherit the same content addressing, manifest format, and verification flow.
 - Can be air-gapped.
 
-The registry build tool (`@atrium/registry-build`) is open-source so any organization can publish.
+The registry build tool (`@ashlar/registry-build`) is open-source so any organization can publish.
 
 ## Air-gapped operation
 
 ```bash
-$ atrium registry mirror --output ./atrium-mirror.tar.gz
+$ ashlar registry mirror --output ./ashlar-mirror.tar.gz
 ```
 
 Produces a tarball containing:
@@ -156,12 +156,12 @@ Produces a tarball containing:
 Consumers:
 
 ```bash
-$ tar xzf atrium-mirror.tar.gz
-$ atrium init --registry ./atrium-mirror
-$ atrium update --registry ./atrium-mirror
+$ tar xzf ashlar-mirror.tar.gz
+$ ashlar init --registry ./ashlar-mirror
+$ ashlar update --registry ./ashlar-mirror
 ```
 
-All operations work offline. `atrium verify` checks signatures against the bundled keyring.
+All operations work offline. `ashlar verify` checks signatures against the bundled keyring.
 
 ## Versioning
 
@@ -183,13 +183,13 @@ Stability tiers (from [`capsule.md`](./capsule.md)):
 - `stable` — recommended.
 - `deprecated` — visible; CLI suggests migration.
 
-`atrium add` defaults to `stable+`. `--allow-experimental` opts in.
+`ashlar add` defaults to `stable+`. `--allow-experimental` opts in.
 
 ## Publication workflow
 
-Atrium itself uses a two-stage publication:
+Ashlar itself uses a two-stage publication:
 
-1. **PR merge** to the registry repo triggers `atrium-registry-build` GitHub Action.
+1. **PR merge** to the registry repo triggers `ashlar-registry-build` GitHub Action.
 2. **Build action**:
    - Validates capsule manifests.
    - Runs accessibility evidence checks (refuses to publish stable without complete evidence).
@@ -206,7 +206,7 @@ Registry index format is versioned via `version` field (currently `0.1.0`). Form
 
 ## Bandwidth considerations
 
-A typical capsule is 5–50KB compressed. A full Atrium install (foundation + 20 components + 1 theme) is under 2MB total. The CLI streams downloads and caches via standard HTTP cache headers.
+A typical capsule is 5–50KB compressed. A full Ashlar install (foundation + 20 components + 1 theme) is under 2MB total. The CLI streams downloads and caches via standard HTTP cache headers.
 
 ## References
 

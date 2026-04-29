@@ -1,6 +1,6 @@
 # Accessibility
 
-Accessibility in Atrium is **structured evidence**, not a marketing claim. Every stable component ships an evidence packet — machine-readable WCAG mapping, automated test results, manual screen-reader notes, and known limitations — that auditors, AI tools, and consumers can query.
+Accessibility in Ashlar is **structured evidence**, not a marketing claim. Every stable component ships an evidence packet — machine-readable WCAG mapping, automated test results, manual screen-reader notes, and known limitations — that auditors, AI tools, and consumers can query.
 
 This document specifies the engineering target, the evidence packet schema, the test matrix, and the stable-component gates.
 
@@ -20,12 +20,12 @@ Targeting 2.2 future-proofs the system without overpromising compliance for any 
 
 Required language in component docs:
 
-> Atrium components are designed and tested to support accessible implementation. Accessibility conformance for the final service depends on correct use, content, configuration, and integration.
+> Ashlar components are designed and tested to support accessible implementation. Accessibility conformance for the final service depends on correct use, content, configuration, and integration.
 
 Forbidden language:
 
 > This component makes your application 508 compliant.
-> Atrium guarantees WCAG 2.2 AA compliance.
+> Ashlar guarantees WCAG 2.2 AA compliance.
 
 ## Evidence packet schema
 
@@ -33,7 +33,7 @@ Every stable component ships `*.evidence.json`:
 
 ```json
 {
-  "$schema": "https://atrium.dev/schemas/evidence.schema.json",
+  "$schema": "https://ashlar.dev/schemas/evidence.schema.json",
   "component": "dialog",
   "version": "1.0.0",
   "stability": "stable",
@@ -47,7 +47,7 @@ Every stable component ships `*.evidence.json`:
       "title": "Contrast (Minimum)",
       "status": "pass",
       "evidence": "tests/contrast.spec.ts",
-      "notes": "All text/background pairs meet 4.5:1 against default theme; agency themes validated by `atrium theme validate`."
+      "notes": "All text/background pairs meet 4.5:1 against default theme; agency themes validated by `ashlar theme validate`."
     },
     {
       "criterion": "2.1.1",
@@ -127,7 +127,7 @@ Every stable component ships `*.evidence.json`:
       "impact": "minor",
       "workaround": "Use sticky-positioned trigger or document this behavior in pattern docs.",
       "wcag": null,
-      "trackingIssue": "https://github.com/atrium/atrium/issues/142"
+      "trackingIssue": "https://github.com/blencorp/ashlar/issues/142"
     }
   ],
 
@@ -148,7 +148,7 @@ Required for every component (proposal/experimental status onwards):
 - axe-core integration.
 - Playwright keyboard tests.
 - Playwright focus snapshots (visual regression).
-- Token contrast validation (`atrium theme validate` against defaults).
+- Token contrast validation (`ashlar theme validate` against defaults).
 - Forced-colors render checks.
 - Reduced-motion render checks where animation is used.
 
@@ -225,11 +225,11 @@ A component cannot be marked `stable` without:
 4. Playwright keyboard tests passing.
 5. Forced-colors render check passing.
 6. Token contrast validation against the default theme.
-7. CEM `_atrium.antiPatterns` populated for known misuse vectors.
+7. CEM `_ashlar.antiPatterns` populated for known misuse vectors.
 8. ast-grep rules generated and tested.
 9. Documentation includes "do not" examples and known limitations.
 
-`atrium audit registry` checks all of the above before a component graduates to stable.
+`ashlar audit registry` checks all of the above before a component graduates to stable.
 
 ## Accessibility status labels
 
@@ -241,7 +241,7 @@ Every component declares its current accessibility status in the evidence packet
 - `stable-evidence` — full evidence packet, suitable for stable graduation.
 - `known-issue` — has open WCAG-impacting issue; avoid for affected use cases.
 
-The status is visible in the registry, in component docs, and queryable via `atrium evidence <component>`.
+The status is visible in the registry, in component docs, and queryable via `ashlar evidence <component>`.
 
 ## References
 

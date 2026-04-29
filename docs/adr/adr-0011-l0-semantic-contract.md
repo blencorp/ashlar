@@ -6,12 +6,12 @@ Accepted.
 
 ## Decision
 
-Atrium L0 capsules use semantic platform HTML plus Atrium classes and data attributes as the canonical DOM contract.
+Ashlar L0 capsules use semantic platform HTML plus Ashlar classes and data attributes as the canonical DOM contract.
 
 For example, Button is:
 
 ```html
-<button class="atrium-button" data-variant="primary" type="button">
+<button class="ashlar-button" data-variant="primary" type="button">
   Apply
 </button>
 ```
@@ -19,7 +19,7 @@ For example, Button is:
 It is not:
 
 ```html
-<atrium-button variant="primary">Apply</atrium-button>
+<ashlar-button variant="primary">Apply</ashlar-button>
 ```
 
 L1 components may use custom elements when JavaScript behavior is genuinely required.
@@ -32,11 +32,11 @@ Custom elements remain appropriate for L1 stateful components such as ComboBox, 
 
 ## Consequences
 
-- L0 CEM files may set `tagName` to the native element and include `_atrium.selector`.
+- L0 CEM files may set `tagName` to the native element and include `_ashlar.selector`.
 - L0 validation rules target semantic markup, classes, data attributes, and native attributes.
 - AI examples for L0 must generate native HTML.
 - Framework adapters for L0 should render native elements, not custom elements.
-- L1 examples continue to use `atrium-*` custom-element names where appropriate.
+- L1 examples continue to use `ashlar-*` custom-element names where appropriate.
 
 ## References
 

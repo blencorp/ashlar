@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://atrium.dev/schemas/extended-cem.schema.json",
-  "title": "Atrium Extended Custom Elements Manifest",
-  "description": "JSON Schema for the _atrium namespace extension to W3C-CG Custom Elements Manifest.",
+  "$id": "https://ashlar.dev/schemas/extended-cem.schema.json",
+  "title": "Ashlar Extended Custom Elements Manifest",
+  "description": "JSON Schema for the _ashlar namespace extension to W3C-CG Custom Elements Manifest.",
   "type": "object",
   "properties": {
     "schemaVersion": { "type": "string" },
@@ -31,12 +31,12 @@
         "name": { "type": "string" },
         "tagName": { "type": "string" },
         "description": { "type": "string" },
-        "_atrium": { "$ref": "#/$defs/atriumExtension" }
+        "_ashlar": { "$ref": "#/$defs/ashlarExtension" }
       }
     },
-    "atriumExtension": {
+    "ashlarExtension": {
       "type": "object",
-      "description": "Atrium-specific metadata namespaced under `_atrium`. Forward-compatible: vanilla CEM consumers ignore.",
+      "description": "Ashlar-specific metadata namespaced under `_ashlar`. Forward-compatible: vanilla CEM consumers ignore.",
       "properties": {
         "version": {
           "type": "string",
@@ -71,7 +71,7 @@
         "tokensConsumed": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "Atrium semantic token names consumed by this component."
+          "description": "Ashlar semantic token names consumed by this component."
         },
         "rendering": {
           "enum": ["server-safe", "client-only", "hybrid"],

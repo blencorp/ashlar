@@ -6,17 +6,17 @@ Proposed.
 
 ## Decision
 
-Distribute Atrium components as content-addressed, signed **capsules** through a registry. Capsules are installed as source code into the consuming project. The registry is served primarily over HTTP JSON (CDN), with signed Git tags as a secondary mirror for air-gapped environments. The CLI tracks installation in a lockfile that records capsule hashes, file hashes, and signatures.
+Distribute Ashlar components as content-addressed, signed **capsules** through a registry. Capsules are installed as source code into the consuming project. The registry is served primarily over HTTP JSON (CDN), with signed Git tags as a secondary mirror for air-gapped environments. The CLI tracks installation in a lockfile that records capsule hashes, file hashes, and signatures.
 
 ## Rationale
 
 The shadcn-style open-code distribution model has clear advantages: source ownership, customizability, AI-readability, no opaque package internals. Production users have validated this model.
 
-The most-cited unsolved problem with shadcn (discussion #790, open since 2023) is drift after install: copied source becomes unmaintainable because there is no safe upgrade path. Atrium addresses this directly by combining open-code distribution with:
+The most-cited unsolved problem with shadcn (discussion #790, open since 2023) is drift after install: copied source becomes unmaintainable because there is no safe upgrade path. Ashlar addresses this directly by combining open-code distribution with:
 
 - **Content addressing** — every capsule is identified by SHA-256 of its contents.
 - **Signing** — every capsule is signed via Sigstore/cosign, and the lockfile records signatures.
-- **Lockfile** — `atrium-lock.json` records the original capsule hash, per-file hashes at install, and provenance.
+- **Lockfile** — `ashlar-lock.json` records the original capsule hash, per-file hashes at install, and provenance.
 - **Three-way merge on update** — `git merge-file --diff3` performs real merges; codemods ship as ast-grep YAML rules.
 
 For government contexts, the same machinery delivers FedRAMP-relevant supply-chain provenance and air-gapped-mirror operation.
@@ -35,12 +35,12 @@ For government contexts, the same machinery delivers FedRAMP-relevant supply-cha
 **Negative**
 
 - Update mechanics are more complex than `npm update`; tooling must be excellent.
-- Local forks can still drift if teams ignore `atrium update`.
+- Local forks can still drift if teams ignore `ashlar update`.
 - Signing infrastructure must be operated reliably.
 
 **Mitigations**
 
-- Lockfile + signatures + `atrium verify` make tampering visible.
+- Lockfile + signatures + `ashlar verify` make tampering visible.
 - CLI prompts on every update; accessibility-critical changes force confirmation.
 - Codemods ship with capsules for breaking changes.
 

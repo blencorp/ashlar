@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://atrium.dev/schemas/capsule.schema.json",
-  "title": "Atrium Capsule Manifest",
+  "$id": "https://ashlar.dev/schemas/capsule.schema.json",
+  "title": "Ashlar Capsule Manifest",
   "type": "object",
   "required": ["schemaVersion", "name", "version", "layer", "stability", "files", "capsule_hash"],
   "properties": {

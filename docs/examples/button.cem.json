@@ -1,5 +1,5 @@
 {
-  "$schema": "https://atrium.dev/schemas/extended-cem.schema.json",
+  "$schema": "https://ashlar.dev/schemas/extended-cem.schema.json",
   "schemaVersion": "2.1.0",
   "modules": [
     {
@@ -8,7 +8,7 @@
       "declarations": [
         {
           "kind": "class",
-          "name": "AtriumButton",
+          "name": "AshlarButton",
           "tagName": "button",
           "description": "Accessible semantic action control for forms and workflows.",
           "summary": "Use Button for actions that change state or submit a form. Use Link for navigation.",
@@ -70,7 +70,7 @@
           ],
           "events": [
             {
-              "name": "atrium-click",
+              "name": "ashlar-click",
               "type": {
                 "text": "CustomEvent<{ originalEvent: MouseEvent | KeyboardEvent }>"
               },
@@ -89,18 +89,18 @@
             }
           ],
           "cssProperties": [
-            { "name": "--atrium-button-bg", "syntax": "<color>" },
-            { "name": "--atrium-button-fg", "syntax": "<color>" },
-            { "name": "--atrium-button-radius", "syntax": "<length>" },
-            { "name": "--atrium-button-padding-x", "syntax": "<length>" },
-            { "name": "--atrium-button-padding-y", "syntax": "<length>" }
+            { "name": "--ashlar-button-bg", "syntax": "<color>" },
+            { "name": "--ashlar-button-fg", "syntax": "<color>" },
+            { "name": "--ashlar-button-radius", "syntax": "<length>" },
+            { "name": "--ashlar-button-padding-x", "syntax": "<length>" },
+            { "name": "--ashlar-button-padding-y", "syntax": "<length>" }
           ],
-          "_atrium": {
+          "_ashlar": {
             "version": "1.2.3",
             "tier": "primitive",
             "layer": "L0",
             "stability": "stable",
-            "selector": ".atrium-button",
+            "selector": ".ashlar-button",
             "variants": ["primary", "secondary", "outline", "ghost", "destructive"],
             "sizes": ["sm", "md", "lg"],
             "a11yRequirements": [
@@ -126,14 +126,14 @@
             "antiPatterns": [
               {
                 "id": "navigation-as-button",
-                "pattern": "<button class=\"atrium-button\" onClick={navigate}>",
-                "fix": "<a class=\"atrium-link\" href=\"...\">",
+                "pattern": "<button class=\"ashlar-button\" onClick={navigate}>",
+                "fix": "<a class=\"ashlar-link\" href=\"...\">",
                 "reason": "Use Link for navigation, Button for actions",
                 "severity": "warning"
               },
               {
                 "id": "icon-only-needs-label",
-                "pattern": "<button class=\"atrium-button\">$ICON</button>",
+                "pattern": "<button class=\"ashlar-button\">$ICON</button>",
                 "constraint": {
                   "has": "<svg/>",
                   "not_has": "aria-label"
@@ -164,12 +164,12 @@
             "criticalForA11y": true,
             "firefoxFallbacks": [],
             "examples": {
-              "basic": "<button class=\"atrium-button\" data-variant=\"primary\" type=\"button\">Apply</button>",
-              "secondary": "<button class=\"atrium-button\" data-variant=\"secondary\" type=\"button\">Save draft</button>",
-              "destructive": "<button class=\"atrium-button\" data-variant=\"destructive\" type=\"button\">Delete application</button>",
-              "with-icon": "<button class=\"atrium-button\" data-variant=\"primary\" type=\"button\"><svg aria-hidden=\"true\"></svg>Apply</button>",
-              "icon-only": "<button class=\"atrium-button\" data-variant=\"ghost\" type=\"button\" aria-label=\"Close\">×</button>",
-              "loading": "<button class=\"atrium-button\" data-variant=\"primary\" type=\"button\" aria-busy=\"true\">Submitting…</button>"
+              "basic": "<button class=\"ashlar-button\" data-variant=\"primary\" type=\"button\">Apply</button>",
+              "secondary": "<button class=\"ashlar-button\" data-variant=\"secondary\" type=\"button\">Save draft</button>",
+              "destructive": "<button class=\"ashlar-button\" data-variant=\"destructive\" type=\"button\">Delete application</button>",
+              "with-icon": "<button class=\"ashlar-button\" data-variant=\"primary\" type=\"button\"><svg aria-hidden=\"true\"></svg>Apply</button>",
+              "icon-only": "<button class=\"ashlar-button\" data-variant=\"ghost\" type=\"button\" aria-label=\"Close\">×</button>",
+              "loading": "<button class=\"ashlar-button\" data-variant=\"primary\" type=\"button\" aria-busy=\"true\">Submitting…</button>"
             },
             "doNot": [
               "Do not use Button for navigation — use Link.",
