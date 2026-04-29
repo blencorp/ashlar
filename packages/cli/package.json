@@ -20,6 +20,10 @@
     "lint": "biome lint src"
   },
   "dependencies": {
+    "@ashlar/schemas": "workspace:*",
+    "@ast-grep/napi": "catalog:",
+    "ajv": "catalog:",
+    "ajv-formats": "catalog:",
     "commander": "catalog:",
     "fast-glob": "catalog:",
     "parse5": "catalog:"

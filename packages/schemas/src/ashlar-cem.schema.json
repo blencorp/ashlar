@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ashlar.dev/schemas/ashlar-cem.schema.json",
+  "title": "Ashlar Extended Custom Elements Manifest",
+  "description": "Validates the Ashlar `_ashlar` namespace inside a Custom Elements Manifest 2.1.0 document. Only the structural surface required by Ashlar tooling is enforced; vanilla CEM fields (members, attributes, events, slots, cssProperties) pass through.",
+  "type": "object",
+  "required": ["schemaVersion", "modules"],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "readme": {
+      "type": "string"
+    },
+    "deprecated": {
+      "type": ["string", "boolean"]
+    },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind"],
+        "properties": {
+          "kind": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "declarations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["kind", "name"],
+              "properties": {
+                "kind": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "tagName": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "_ashlar": {
+                  "$ref": "#/$defs/ashlarMetadata"
+                }
+              }
+            }
+          },
+          "exports": {
+            "type": "array"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "ashlarMetadata": {
+      "type": "object",
+      "required": ["version", "layer", "stability"],
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "tier": {
+          "enum": ["foundation", "primitive", "composite", "pattern", "block"]
+        },
+        "layer": {
+          "enum": ["L0", "L1", "L2", "L3", "L4"]
+        },
+        "stability": {
+          "enum": ["proposal", "experimental", "beta", "stable", "deprecated"]
+        },
+        "selector": {
+          "type": "string",
+          "description": "CSS selector used by validator rules to anchor anti-pattern checks. For L0 components per ADR-0011, this is a class selector (e.g. `.ashlar-button`); for L1, it is a custom-element tag (e.g. `ashlar-combobox`)."
+        },
+        "variants": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "sizes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "a11yRequirements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "wcag", "severity"],
+            "properties": {
+              "id": { "type": "string" },
+              "wcag": { "type": "string" },
+              "severity": { "enum": ["error", "warning", "note"] },
+              "description": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "antiPatterns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "pattern", "languages"],
+            "properties": {
+              "id": { "type": "string" },
+              "pattern": {
+                "type": "string",
+                "description": "ast-grep pattern string. Use $$$ for variadic captures, $NAME for named captures. See https://ast-grep.github.io/reference/yaml.html"
+              },
+              "regex": {
+                "type": "string",
+                "description": "Optional Rust regular expression that must additionally match the node's text."
+              },
+              "has": {
+                "type": "object",
+                "description": "Optional descendant rule. The matched node must contain a sub-node satisfying this rule.",
+                "required": ["pattern"],
+                "properties": {
+                  "pattern": { "type": "string" },
+                  "stopBy": { "enum": ["neighbor", "end"] }
+                },
+                "additionalProperties": false
+              },
+              "inside": {
+                "type": "object",
+                "description": "Optional ancestor rule. The matched node must be inside a node satisfying this rule.",
+                "required": ["pattern"],
+                "properties": {
+                  "pattern": { "type": "string" },
+                  "stopBy": { "enum": ["neighbor", "end"] }
+                },
+                "additionalProperties": false
+              },
+              "not": {
+                "type": "object",
+                "description": "Optional negative rule. The matched node must NOT satisfy this rule.",
+                "properties": {
+                  "pattern": { "type": "string" },
+                  "regex": { "type": "string" },
+                  "has": {
+                    "type": "object",
+                    "required": ["pattern"],
+                    "properties": {
+                      "pattern": { "type": "string" },
+                      "stopBy": { "enum": ["neighbor", "end"] }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              "message": {
+                "type": "string",
+                "description": "Human-readable message emitted when the rule fires. Defaults to a generated message based on id."
+              },
+              "fix": {
+                "type": "string",
+                "description": "Suggested fix text. Free-form for v0.0; auto-apply lands in slice 3 (drift management)."
+              },
+              "wcag": {
+                "type": "string",
+                "description": "WCAG criterion citation (e.g. \"4.1.2\")."
+              },
+              "severity": { "enum": ["error", "warning", "note"] },
+              "languages": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 1,
+                "description": "Target languages from the supported set in policy/languages.ts. Required so authors must pick a target language explicitly rather than inheriting an implicit default."
+              },
+              "reason": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "tokensConsumed": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "platformFeatures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["feature", "status", "fallback"],
+            "properties": {
+              "feature": { "type": "string" },
+              "status": { "enum": ["required", "progressive", "not-used"] },
+              "fallback": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "policyMappings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["source", "requirement"],
+            "properties": {
+              "source": { "type": "string" },
+              "requirement": { "type": "string" },
+              "url": { "type": "string", "format": "uri" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "rendering": {
+          "enum": ["server-safe", "client-only", "hybrid"]
+        },
+        "hydrationCost": {
+          "enum": ["none", "low", "medium", "high"]
+        },
+        "criticalForA11y": {
+          "type": "boolean"
+        },
+        "examples": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "doNot": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

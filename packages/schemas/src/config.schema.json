@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ashlar.dev/schemas/config.schema.json",
+  "title": "Ashlar Project Configuration",
+  "description": "Configuration written by `ashlar init` and consumed by all CLI commands.",
+  "type": "object",
+  "required": ["registry", "componentsDir"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "registry": {
+      "type": "string",
+      "description": "Path or URL to the component registry. Filesystem path (relative or absolute) for local prototypes; HTTP(S) URL when the public registry ships."
+    },
+    "componentsDir": {
+      "type": "string",
+      "description": "Directory where installed component source is written, relative to project root."
+    },
+    "indexesDir": {
+      "type": "string",
+      "description": "Directory where the CLI writes generated component and evidence indexes for runtime consumption."
+    },
+    "styles": {
+      "type": "object",
+      "required": ["entrypoint", "theme"],
+      "properties": {
+        "entrypoint": {
+          "type": "string",
+          "description": "Path to the generated stylesheet that aggregates token + base + component CSS."
+        },
+        "theme": {
+          "type": "string",
+          "description": "Path to the generated theme stylesheet."
+        }
+      },
+      "additionalProperties": false
+    },
+    "audit": {
+      "type": "object",
+      "description": "Audit-time configuration including per-language grammar registration for opt-in languages.",
+      "properties": {
+        "languages": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["grammar"],
+            "properties": {
+              "grammar": {
+                "type": "string",
+                "description": "Grammar identifier (npm package or path) for ast-grep custom-language registration."
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "rules": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Paths to project-specific ast-grep YAML rule files."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

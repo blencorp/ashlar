@@ -12,7 +12,9 @@
     "./capsule.schema.json": "./src/capsule.schema.json",
     "./evidence.schema.json": "./src/evidence.schema.json",
     "./registry-index.schema.json": "./src/registry-index.schema.json",
-    "./lock.schema.json": "./src/lock.schema.json"
+    "./lock.schema.json": "./src/lock.schema.json",
+    "./ashlar-cem.schema.json": "./src/ashlar-cem.schema.json",
+    "./config.schema.json": "./src/config.schema.json"
   },
   "files": [
     "dist",
