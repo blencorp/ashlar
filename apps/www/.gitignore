@@ -22,12 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# Ashlar-generated artifacts ARE committed in this app so clones can build
-# without first invoking init/add. The repo root .gitignore excludes these by
-# default; the bangs below re-include them here.
-!ashlar-lock.json
-!ashlar.config.json
-!AGENTS.md
-!DESIGN.md
-!src/ashlar/

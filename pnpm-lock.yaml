@@ -71,9 +71,6 @@ importers:
 
   apps/www:
     devDependencies:
-      '@ashlar/cli':
-        specifier: workspace:*
-        version: link:../../packages/cli
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
