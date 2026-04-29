@@ -1,17 +1,10 @@
-import { copyFileSync, existsSync, mkdirSync, readdirSync } from "node:fs";
+import { copyFileSync, mkdirSync } from "node:fs";
 import { basename, join } from "node:path";
 import type { Command } from "commander";
 import { buildCapsuleManifest } from "../lib/capsule.js";
 import { sha256File } from "../lib/hash.js";
 import { readConfig, readLockfile, writeJson } from "../lib/project.js";
-
-function latestVersion(componentRoot: string): string | undefined {
-  return readdirSync(componentRoot, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .sort()
-    .at(-1);
-}
+import { getComponent } from "../lib/registry.js";
 
 export function registerAddCommand(program: Command) {
   program
@@ -23,27 +16,21 @@ export function registerAddCommand(program: Command) {
       const lockfile = readLockfile();
 
       for (const component of components) {
-        const componentRoot = join(config.registry, "components", component);
-        if (!existsSync(componentRoot)) {
-          console.error(`Component not found in local registry: ${component}`);
+        let detail: ReturnType<typeof getComponent>;
+        try {
+          detail = getComponent(process.cwd(), component, config.registry);
+        } catch (error) {
+          console.error(error instanceof Error ? error.message : String(error));
           process.exitCode = 1;
           return;
         }
 
-        const version = latestVersion(componentRoot);
-        if (!version) {
-          console.error(`No versions found for component: ${component}`);
-          process.exitCode = 1;
-          return;
-        }
-
-        const capsuleDir = join(componentRoot, version);
         const manifest = buildCapsuleManifest({
-          directory: capsuleDir,
+          directory: detail.directory,
           name: component,
-          version,
-          layer: "L0",
-          stability: "experimental",
+          version: detail.version,
+          layer: detail.layer,
+          stability: detail.stability,
         });
 
         const installedFiles: Record<
@@ -54,7 +41,7 @@ export function registerAddCommand(program: Command) {
         mkdirSync(config.componentsDir, { recursive: true });
 
         for (const file of Object.keys(manifest.files)) {
-          const source = join(capsuleDir, file);
+          const source = join(detail.directory, file);
           const target = join(config.componentsDir, basename(file));
           copyFileSync(source, target);
           const hash = sha256File(target);
@@ -66,7 +53,7 @@ export function registerAddCommand(program: Command) {
         }
 
         lockfile.components[component] = {
-          version,
+          version: detail.version,
           capsule_hash: manifest.capsule_hash,
           stability: manifest.stability,
           installed_at: new Date().toISOString(),
@@ -74,7 +61,7 @@ export function registerAddCommand(program: Command) {
           files: installedFiles,
         };
 
-        console.log(`Added ${component}@${version}`);
+        console.log(`Added ${component}@${detail.version}`);
       }
 
       writeJson("ashlar-lock.json", lockfile);

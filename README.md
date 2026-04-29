@@ -46,8 +46,11 @@ The goal is a shadcn-like developer experience with government-grade safety rail
 
 ```bash
 npx ashlar init
+npx ashlar search button
+npx ashlar view button
 npx ashlar add button alert form-field
-npx ashlar audit
+npx ashlar audit --policy federal --explain
+npx ashlar design sync
 npx ashlar verify
 npx ashlar evidence button
 ```
@@ -72,9 +75,12 @@ The current prototype includes:
 - local registry format;
 - capsule schema and hashing;
 - first L0 Button capsule;
-- initial audit / verify commands;
+- registry search and view commands;
+- initial federal policy audit with SARIF output;
+- DESIGN.md export for coding agents;
+- initial verify and evidence commands;
 - CI workflow with SARIF;
-- plain HTML and Next.js demos.
+- plain HTML demo.
 
 ## Roadmap
 
@@ -101,7 +107,8 @@ See [docs/roadmap/00-roadmap.md](docs/roadmap/00-roadmap.md) and [docs/roadmap/g
 - [DESIGN.md research note](docs/research/09-design-md-2026-04-29.md)
 - [Governance model](docs/governance/00-governance-model.md)
 - [v0 foundation implementation plan](docs/superpowers/plans/2026-04-29-ashlar-v0-foundation.md)
-- [v0 standards and evidence slice plan](docs/superpowers/plans/2026-04-29-v0-0-standards-evidence-slice.md)
+- [v0 standards and evidence slice spec](docs/superpowers/specs/2026-04-29-v0-0-standards-evidence-slice-spec.md)
+- [v0 standards and evidence slice plan](docs/superpowers/plans/2026-04-29-v0-0-standards-evidence-slice-revised.md)
 
 ## License
 

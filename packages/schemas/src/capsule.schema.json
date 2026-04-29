@@ -24,6 +24,48 @@
     "stability": {
       "enum": ["proposal", "experimental", "beta", "stable", "deprecated"]
     },
+    "policyMappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "requirement"],
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "requirement": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "platformFeatures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["feature", "status", "fallback"],
+        "properties": {
+          "feature": {
+            "type": "string"
+          },
+          "status": {
+            "enum": ["required", "progressive", "not-used"]
+          },
+          "fallback": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence": {
+      "type": "string"
+    },
     "files": {
       "type": "object",
       "additionalProperties": {

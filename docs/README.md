@@ -25,9 +25,10 @@ The work is led by engineers at [Blen](https://blencorp.com) with the intent to 
 11. [`research/`](./research/) — the body of research informing design decisions, including the final April 29, 2026 current-source pass.
 12. [`research/08-gap-analysis-2026-04-29.md`](./research/08-gap-analysis-2026-04-29.md) — gap analysis and next roadmap correction.
 13. [`research/09-design-md-2026-04-29.md`](./research/09-design-md-2026-04-29.md) — DESIGN.md adoption recommendation.
-14. [`superpowers/plans/2026-04-29-v0-0-standards-evidence-slice.md`](./superpowers/plans/2026-04-29-v0-0-standards-evidence-slice.md) — next implementation slice.
-15. [`governance/`](./governance/) — community model and contribution rules.
-16. [`examples/`](./examples/) — concrete schema examples.
+14. [`superpowers/specs/2026-04-29-v0-0-standards-evidence-slice-spec.md`](./superpowers/specs/2026-04-29-v0-0-standards-evidence-slice-spec.md) — behavior contract for the standards/evidence slice.
+15. [`superpowers/plans/2026-04-29-v0-0-standards-evidence-slice-revised.md`](./superpowers/plans/2026-04-29-v0-0-standards-evidence-slice-revised.md) — implementation plan for the standards/evidence slice.
+16. [`governance/`](./governance/) — community model and contribution rules.
+17. [`examples/`](./examples/) — concrete schema examples.
 
 ## What problem this solves
 
@@ -62,7 +63,22 @@ Zig remains a future experiment, not a v0/v1 foundation, because Zig 0.16 still 
 | Final current-source research pass | Complete | April 29, 2026 |
 | Public strategy and GitHub launch docs | Complete | April 29, 2026 |
 | Roadmap and v0.0 specification | Drafted | April 2026 |
-| v0.0 prototype | First foundation slice implemented | April 29, 2026 |
+| v0.0 prototype | Standards/evidence slice in progress | April 29, 2026 |
+
+## Current CLI Surface
+
+The local prototype currently demonstrates the source-owned registry flow:
+
+```bash
+npx ashlar init
+npx ashlar search button
+npx ashlar view button
+npx ashlar add button
+npx ashlar evidence button
+npx ashlar audit --policy federal --explain examples/plain-html/index.html
+npx ashlar design sync
+npx ashlar verify
+```
 
 ## License
 

@@ -1,4 +1,5 @@
 import type { Command } from "commander";
+import { writeDesignContext } from "../lib/design-context.js";
 import { writeFileIfMissing, writeJson } from "../lib/project.js";
 
 const agentsTemplate = `# Ashlar - Agent Instructions
@@ -35,6 +36,7 @@ export function registerInitCommand(program: Command) {
       });
 
       writeFileIfMissing("AGENTS.md", agentsTemplate, force);
+      writeDesignContext("DESIGN.md", force);
       console.log("Initialized Ashlar");
     });
 }

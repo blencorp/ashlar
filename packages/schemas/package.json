@@ -10,6 +10,8 @@
       "default": "./dist/index.js"
     },
     "./capsule.schema.json": "./src/capsule.schema.json",
+    "./evidence.schema.json": "./src/evidence.schema.json",
+    "./registry-index.schema.json": "./src/registry-index.schema.json",
     "./lock.schema.json": "./src/lock.schema.json"
   },
   "files": [

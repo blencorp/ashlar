@@ -50,6 +50,20 @@
               "focus.ring.color",
               "radius.control"
             ],
+            "platformFeatures": [
+              {
+                "feature": "forced-colors",
+                "status": "progressive",
+                "fallback": "Uses system colors for border, background, foreground, and focus outline."
+              }
+            ],
+            "policyMappings": [
+              {
+                "source": "Section 508",
+                "requirement": "Supports keyboard operation and accessible name when used correctly; maps to WCAG 2.0/2.2 Name, Role, Value and Focus Visible expectations.",
+                "url": "https://www.section508.gov/"
+              }
+            ],
             "rendering": "server-safe",
             "hydrationCost": "none",
             "criticalForA11y": true

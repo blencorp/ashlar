@@ -17,6 +17,20 @@
       "status": "planned"
     }
   ],
+  "baselineTests": [
+    {
+      "source": "Section 508 ICT Testing Baseline for Web",
+      "test": "Keyboard Accessible",
+      "status": "planned",
+      "evidence": "Planned keyboard tests will verify Enter and Space activation and focus visibility."
+    },
+    {
+      "source": "Section 508 ICT Testing Baseline for Web",
+      "test": "Name, Role, Value",
+      "status": "planned",
+      "evidence": "Planned accessible-name tests will verify visible text and aria-label support for icon-only usage."
+    }
+  ],
   "manualTests": [],
   "automatedResults": {},
   "knownLimitations": []

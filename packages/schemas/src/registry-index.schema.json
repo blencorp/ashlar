@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ashlar.dev/schemas/registry-index.schema.json",
+  "title": "Ashlar Registry Index",
+  "type": "object",
+  "required": ["schemaVersion", "registry", "name", "version", "components"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "registry": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "publishedAt": {
+      "type": "string"
+    },
+    "components": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["latest", "versions", "tier", "layer", "stability", "description"],
+        "properties": {
+          "latest": {
+            "type": "string"
+          },
+          "versions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tier": {
+            "enum": ["foundation", "primitive", "composite", "pattern", "block"]
+          },
+          "layer": {
+            "enum": ["L0", "L1", "L2", "L3", "L4"]
+          },
+          "stability": {
+            "enum": ["proposal", "experimental", "beta", "stable", "deprecated"]
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
