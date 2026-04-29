@@ -1,15 +1,44 @@
 import { parse } from "parse5";
 
+export type HtmlSourceLocation = {
+  startLine: number;
+  startCol: number;
+  startOffset: number;
+  endLine: number;
+  endCol: number;
+  endOffset: number;
+};
+
 export type HtmlNode = {
   nodeName?: string;
   tagName?: string;
   attrs?: Array<{ name: string; value: string }>;
   childNodes?: HtmlNode[];
   value?: string;
+  sourceCodeLocation?: HtmlSourceLocation & {
+    startTag?: HtmlSourceLocation;
+    endTag?: HtmlSourceLocation;
+  };
 };
 
 export function parseHtml(source: string): HtmlNode {
-  return parse(source) as HtmlNode;
+  return parse(source, { sourceCodeLocationInfo: true }) as HtmlNode;
+}
+
+export function getRegion(node: HtmlNode | undefined): HtmlSourceLocation | undefined {
+  if (!node?.sourceCodeLocation) {
+    return undefined;
+  }
+
+  const location = node.sourceCodeLocation;
+  return {
+    startLine: location.startLine,
+    startCol: location.startCol,
+    startOffset: location.startOffset,
+    endLine: location.endLine,
+    endCol: location.endCol,
+    endOffset: location.endOffset,
+  };
 }
 
 export function getAttribute(node: HtmlNode, name: string): string | undefined {

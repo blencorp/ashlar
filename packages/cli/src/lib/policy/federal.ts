@@ -2,12 +2,21 @@ import {
   findElements,
   findFirstElement,
   getAttribute,
+  getRegion,
   getTextContent,
   hasClassToken,
   hasDataComponent,
   parseHtml,
   type HtmlNode,
+  type HtmlSourceLocation,
 } from "../html.js";
+
+export type PolicyRegion = {
+  startLine: number;
+  startColumn: number;
+  endLine: number;
+  endColumn: number;
+};
 
 export type PolicyFinding = {
   ruleId: string;
@@ -17,29 +26,56 @@ export type PolicyFinding = {
   standardStatus: "research" | "draft" | "pending" | "required" | "guidance";
   helpUri: string;
   evidence?: string;
+  tags?: string[];
+  fullDescription?: string;
+  region?: PolicyRegion;
 };
+
+function regionFromLocation(location: HtmlSourceLocation): PolicyRegion {
+  return {
+    startLine: location.startLine,
+    startColumn: location.startCol,
+    endLine: location.endLine,
+    endColumn: location.endCol,
+  };
+}
+
+function regionForNode(node: HtmlNode | undefined): PolicyRegion | undefined {
+  const location = getRegion(node);
+  return location ? regionFromLocation(location) : undefined;
+}
 
 const titleHelpUri = "https://standards.digital.gov/standards/html-page-title/";
 const metaDescriptionHelpUri = "https://standards.digital.gov/standards/meta-page-description/";
 const bannerHelpUri = "https://standards.digital.gov/standards/banner/";
 const identifierHelpUri = "https://designsystem.digital.gov/components/identifier/";
 
+type WarningOptions = {
+  evidence?: string;
+  standardStatus?: PolicyFinding["standardStatus"];
+  tags?: string[];
+  fullDescription?: string;
+  region?: PolicyRegion;
+};
+
 function warning(
   file: string,
   ruleId: string,
   message: string,
   helpUri: string,
-  evidence?: string,
-  standardStatus: PolicyFinding["standardStatus"] = "pending",
+  options: WarningOptions = {},
 ): PolicyFinding {
   return {
     ruleId,
     message,
     file,
     level: "warning",
-    standardStatus,
+    standardStatus: options.standardStatus ?? "pending",
     helpUri,
-    evidence,
+    evidence: options.evidence,
+    tags: options.tags,
+    fullDescription: options.fullDescription,
+    region: options.region,
   };
 }
 
@@ -123,6 +159,11 @@ export function auditFederalHtml(source: string, file: string): PolicyFinding[] 
         "federal/page-title-required",
         "Federal public-service pages need a descriptive HTML title.",
         titleHelpUri,
+        {
+          tags: ["federal-standard", "metadata"],
+          fullDescription:
+            "The HTML <title> element is required by the pending Federal Web Standard on HTML page titles.",
+        },
       ),
     );
   } else if (titleText.length < 20) {
@@ -132,7 +173,13 @@ export function auditFederalHtml(source: string, file: string): PolicyFinding[] 
         "federal/page-title-min-length",
         "Federal Website Standards acceptance criteria call for HTML page titles of at least 20 characters.",
         titleHelpUri,
-        `Found ${titleText.length} characters.`,
+        {
+          evidence: `Found ${titleText.length} characters.`,
+          tags: ["federal-standard", "metadata"],
+          fullDescription:
+            "Short page titles are flagged by the pending Federal Web Standard's acceptance criterion.",
+          region: regionForNode(title),
+        },
       ),
     );
   }
@@ -149,6 +196,11 @@ export function auditFederalHtml(source: string, file: string): PolicyFinding[] 
         "federal/meta-description-required",
         "Federal public-service pages need a descriptive meta description.",
         metaDescriptionHelpUri,
+        {
+          tags: ["federal-standard", "metadata"],
+          fullDescription:
+            "The meta description element is required by the pending Federal Web Standard on meta page description.",
+        },
       ),
     );
   } else if (metaDescriptionContent.length < 50) {
@@ -158,7 +210,13 @@ export function auditFederalHtml(source: string, file: string): PolicyFinding[] 
         "federal/meta-description-min-length",
         "Federal Website Standards acceptance criteria call for meta descriptions of at least 50 characters.",
         metaDescriptionHelpUri,
-        `Found ${metaDescriptionContent.length} characters.`,
+        {
+          evidence: `Found ${metaDescriptionContent.length} characters.`,
+          tags: ["federal-standard", "metadata"],
+          fullDescription:
+            "Short meta descriptions are flagged by the pending Federal Web Standard's acceptance criterion.",
+          region: regionForNode(metaDescription),
+        },
       ),
     );
   }
@@ -170,6 +228,11 @@ export function auditFederalHtml(source: string, file: string): PolicyFinding[] 
         "federal/banner-required",
         "Federal public-service pages should include the federal government banner at the top of every page.",
         bannerHelpUri,
+        {
+          tags: ["federal-standard", "trust-marker"],
+          fullDescription:
+            'The federal government banner is required by the pending Federal Web Standard on the federal banner. Acceptable markers include <usa-banner>, class names containing usa-banner or ashlar-banner, and data-ashlar-component="banner".',
+        },
       ),
     );
   }
@@ -182,8 +245,12 @@ export function auditFederalHtml(source: string, file: string): PolicyFinding[] 
         "federal/identifier-required",
         "Federal public-service pages should include an identifier with required links.",
         identifierHelpUri,
-        undefined,
-        "guidance",
+        {
+          standardStatus: "guidance",
+          tags: ["uswds-guidance", "trust-marker"],
+          fullDescription:
+            "USWDS Identifier guidance and M-23-22 require trust-marker links (About, Accessibility, FOIA, No FEAR Act, OIG, Performance, Privacy). Identifier is not on standards.digital.gov; it is sourced from USWDS components and M-23-22.",
+        },
       ),
     );
     return findings;
@@ -198,8 +265,14 @@ export function auditFederalHtml(source: string, file: string): PolicyFinding[] 
           "federal/identifier-required-link-missing",
           `Identifier is missing recognizable required-link coverage for ${requiredLink.label}.`,
           identifierHelpUri,
-          "Prototype detection checks normalized link text and href fragments.",
-          "guidance",
+          {
+            evidence: "Prototype detection checks normalized link text and href fragments.",
+            standardStatus: "guidance",
+            tags: ["uswds-guidance", "trust-marker"],
+            fullDescription:
+              "USWDS Identifier components require seven trust-marker links. Detection in this prototype is text and href substring; rich detection (parsed identifier metadata) lands in slice 2.",
+            region: regionForNode(identifier),
+          },
         ),
       );
     }
