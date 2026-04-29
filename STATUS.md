@@ -25,7 +25,8 @@ These are wired up, tested, and run as documented.
 - `registry/components/button/0.0.1/` — one capsule with `button.css`, `button.html`, `button.cem.json`, `button.evidence.json`. Status: `experimental`, evidence `not-reviewed`. CEM `_ashlar.antiPatterns` are now ast-grep-native (pattern + regex + has + not + languages).
 - CI workflow — runs `pnpm check`, `pnpm build`, and `ashlar audit --policy federal --sarif examples/plain-html/index.html`, uploading SARIF as an artifact and to GitHub Code Scanning.
 - `examples/plain-html/` — federal-compliant reference page shell (banner, identifier with required links, page title, meta description) demonstrating the Button capsule. Used as the CI audit target; passes `audit --policy federal` with zero findings.
-- `examples/vite/` — theme switching *workbench* across Federal, VA, and USDA themes with light/dark/system modes; consumes the generated `ashlar.css` entrypoint and `components.json` index. Not a federal page shell and not subject to federal audit in CI.
+- `examples/vite/` — federal-compliant Vite reference app with a live agency theme picker (Default, VA, USDA), light/dark/system mode, and live token introspection. Auto-discovers themes from `src/ashlar/themes/*.tokens.json` via `import.meta.glob`. Passes `audit --policy all` with zero findings.
+- `apps/www/` — marketing landing page. Vite + TypeScript scaffold with Ashlar tokens and a real Button capsule for CTAs. Hero, three-pillars, standards alignment, USWDS posture, status note. Hosted on `127.0.0.1:4174` in dev. Not subject to federal audit (it is OSS marketing copy, not a federal-page demo).
 
 ## Experimental (in code, not stable)
 

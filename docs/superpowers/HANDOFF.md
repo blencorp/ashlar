@@ -1,16 +1,32 @@
-# HANDOFF — 2026-04-29 (updated)
+# HANDOFF — 2026-04-29 (updated, second pass)
 
 For the next session picking up Ashlar work. Read this first; it should orient you in under five minutes. After this, read [STATUS.md](../../STATUS.md) (the canonical truth table) and scan the recent commits.
 
 ## Where we are
 
-- **Branch**: `codex/standards-evidence-slice` (pushed to `origin`).
+- **Branch**: `codex/standards-evidence-slice` (pushed to `origin`; PR pending).
 - **Phase**: v0.0 prototype.
 - **Slices complete**: 1 (Standards & Evidence), 2 (Validator Wedge).
-- **Slice in flight**: none. Slice 3 (Drift Management) is next, awaiting user green light.
+- **Slice in flight**: none. Slice 3 (Drift Management) is the substrate next-step, awaiting user green light.
+- **Apps surface**: `examples/plain-html/` (CI audit target), `examples/vite/` (theme picker reference), `apps/www/` (marketing landing).
 - **Tests**: 48 passing under Node 24.15.0. `pnpm check` runs lint + typecheck + tests + build clean.
 
 The repo and the docs are coherent. Every claim in `README.md`, `docs/strategy.md`, and `docs/philosophy.md` defers to [STATUS.md](../../STATUS.md). When a doc and STATUS disagree, STATUS wins.
+
+## Decision: docs framework is Astro Starlight (planned for next session)
+
+After surveying 16 OSS projects' doc setups in 2026, the recommendation for `apps/docs` is **Astro Starlight**. Starlight ships `~12 kB JS per content page`, supports air-gapped static search via Pagefind, has a component override system that accommodates the federal-shell furniture (banner + identifier), and is run in production by Cloudflare Docs, Netlify Docs, Effect-TS, Biome, Font Awesome, and freeCodeCamp. Cloudflare acquired Astro in 2025, which gives the project an enterprise-tier maintenance floor.
+
+Runner-up: **Fumadocs** (Next.js, used by shadcn/ui). Easier path to live-React previews and shadcn-style component embedding, but at ~85 kB JS per page, mandatory Next.js coupling, and a "vibes-coded modern" default look that reads as startup-y rather than infrastructural to a federal procurement audience. For Ashlar's audience the tradeoffs go the wrong way.
+
+What we'll get out of Starlight directly:
+- **Component pages auto-generated from registry data** via Astro Content Collections + a dynamic `src/pages/components/[name].astro` that walks `registry/components/*/{cem,evidence}.json`.
+- **Pagefind static search** built from the rendered HTML at build time. No network calls; works on air-gapped GovCloud.
+- **Component overrides** for `Header.astro`, `Footer.astro`, `PageFrame.astro` so we can drop in a federal banner and an identifier with the seven required links.
+- **Built-in tabs / code blocks / dark mode / i18n / edit-this-page** without writing them.
+- **Live theme picker** as a deliberate `client:visible` island (one well-built component, reused across pages — not a React-everywhere site).
+
+Open question for next session: do we add `@astrojs/react` or use vanilla JS islands for the theme picker? Vanilla aligns better with the philosophy; React would be slightly more ergonomic for the in-progress `/components/<name>` pages. Decide on day one and stay consistent.
 
 ## What was committed this session
 
@@ -40,18 +56,17 @@ ea5ba9f docs: sharpen positioning and add STATUS.md as honest claims index
 
 **Train C — example rebuild (3 commits, `fb55810` → `1253135`)**: landed the previously-uncommitted CLI infrastructure (`styles.ts`, component-subdir install layout, ResolvedAshlarConfig types); refactored the theme system so themes live in per-file DTCG JSON under `packages/cli/themes/`, validated by a new `agency-theme.schema.json`; rebuilt `examples/vite/` from a fresh `pnpm create vite@latest --template vanilla-ts` scaffold into a federal-compliant data-driven theme picker. The "Federal" stock theme was renamed to "Default" everywhere.
 
-## What is on the working tree (still uncommitted, unrelated to vite)
+**Train D — marketing site (1 commit, current pass)**: deleted stale `output/` PNG screenshots, gitignored the directory; rebuilt `apps/www/` from `pnpm create vite@latest` into a marketing landing page. Hero with verb-led "Audit. Sign. Verify. Update." headline, three pillars, standards-alignment list, install snippet, USWDS posture, status callout, federal-style footer with disclaimers. Dogfoods Ashlar tokens and the L0 Button capsule. Bundle: ~7 kB gzipped (3.3 HTML + 3.0 CSS + 0.9 JS). The marketing site is OSS landing copy and is not subject to federal audit (the federal audit is for consumer apps, not OSS marketing pages).
 
-These predate any session work and remain unauthorized to commit:
+## What is on the working tree
 
-```
-?? apps/        — apps/www marketing scaffold, never committed
-?? output/      — old vite screenshots, never committed
-```
+The tree should be clean after this session's commits. If `git status` shows anything unexpected, surface it before doing substantive work.
 
-`packages/cli/src/lib/styles.ts`, `theme.ts`, related modifications, and `registry/components/button/0.0.1/button.css` polish are now all committed (Train C).
+## What is next
 
-## What is next: Slice 3 — Drift Management
+Two parallel tracks; user picks the order.
+
+### Track A — Slice 3 (Drift Management) on the substrate
 
 Spec: `docs/roadmap/01-v0.0-foundation.md` under "Slice 3 — Drift Management". The shadcn-killer differentiator and the load-bearing premise of the architecture (R1).
 
@@ -64,7 +79,29 @@ Scope:
 - ≥10 instrumented test scenarios.
 - Document failure modes textual merge doesn't handle (already in `docs/architecture/drift-and-updates.md`).
 
-Wait for user green light before starting.
+### Track B — `apps/docs` Astro Starlight scaffold
+
+Stand up the docs site so the project has a public-facing surface beyond `apps/www`.
+
+Scope (proposed for one session):
+1. `cd apps && pnpm create astro@latest docs -- --template starlight` (or the modern equivalent — verify against `https://starlight.astro.build/`).
+2. Workspace-ify the package (`@ashlar/docs`, devDeps via catalog where possible, dev port 4175 to avoid clashing with vite=4173 and www=4174).
+3. Customize:
+   - Override `Header.astro` to inject the federal banner above content.
+   - Override `Footer.astro` to add the identifier-style links.
+   - Apply Ashlar tokens to the Starlight theme (CSS custom-property override).
+4. Author content:
+   - Landing page (`/`) — short hero pointing to `apps/www` for marketing; immediate "Get started" CTA.
+   - `/docs/install` — the canonical install + first audit + first add walk-through.
+   - `/docs/audit` — federal policy + component policy explained.
+   - `/docs/themes` — how to add an agency theme JSON file.
+   - `/docs/standards` — Section 508 / ADA / Federal Web Standards posture.
+5. Component pages auto-generated from `registry/components/*/{cem,evidence}.json` via Astro Content Collections + `getStaticPaths` walking the registry.
+6. Live theme picker as a `client:visible` island; reuse the patterns from `examples/vite/src/main.ts`.
+7. Pagefind search (Starlight default).
+8. Verify: `pnpm --filter @ashlar/docs build` produces static HTML in `dist/`.
+
+Wait for user green light before starting either track.
 
 ## Quick verification (run these first)
 
