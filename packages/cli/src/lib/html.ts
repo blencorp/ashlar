@@ -39,9 +39,7 @@ export function findFirstElement(node: HtmlNode, tagName: string): HtmlNode | un
 }
 
 export function hasClassToken(node: HtmlNode, token: string): boolean {
-  return (getAttribute(node, "class") ?? "")
-    .split(/\s+/)
-    .some((className) => className === token || className.includes(token));
+  return (getAttribute(node, "class") ?? "").split(/\s+/).some((className) => className === token);
 }
 
 export function hasDataComponent(node: HtmlNode, component: string): boolean {

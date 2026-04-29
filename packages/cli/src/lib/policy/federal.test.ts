@@ -95,4 +95,33 @@ describe("federal policy audit", () => {
 
     expect(findings.map((finding) => finding.ruleId)).toContain("federal/banner-required");
   });
+
+  it("does not match class tokens by substring (regression: hasClassToken whole-token equality)", () => {
+    // class="ashlar-banner-secondary" must NOT satisfy the banner check.
+    // class="usa-identifier-extra"   must NOT satisfy the identifier check.
+    const findings = auditFederalHtml(
+      `<html>
+        <head>
+          <title>Apply for federal benefits | Example Agency</title>
+          <meta name="description" content="Apply for federal benefits online through this example public-service flow.">
+        </head>
+        <body>
+          <section class="ashlar-banner-secondary"></section>
+          <footer class="usa-identifier-extra">
+            <a href="/about">About</a>
+            <a href="/accessibility">Accessibility</a>
+            <a href="/foia">FOIA</a>
+            <a href="/no-fear">No FEAR Act</a>
+            <a href="/oig">OIG</a>
+            <a href="/performance">Performance</a>
+            <a href="/privacy">Privacy</a>
+          </footer>
+        </body>
+      </html>`,
+      "index.html",
+    );
+
+    expect(findings.map((finding) => finding.ruleId)).toContain("federal/banner-required");
+    expect(findings.map((finding) => finding.ruleId)).toContain("federal/identifier-required");
+  });
 });
