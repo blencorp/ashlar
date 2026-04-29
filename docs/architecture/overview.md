@@ -188,24 +188,26 @@ shadcn's most-cited unfixed problem is that copied components drift after instal
 
 See [`drift-and-updates.md`](./drift-and-updates.md) for the full update protocol, conflict resolution UX, and codemod specification.
 
-## Validation — polyglot, framework-agnostic
+## Validation — polyglot, scoped honestly
 
-`ashlar audit` runs ast-grep rules generated from each component's CEM. ast-grep is a tree-sitter-based AST tool with a YAML rule DSL that handles TSX, JSX, Vue SFCs, Svelte, Astro, plain HTML, and Drupal Twig from the same rule.
+`ashlar audit` runs ast-grep rules generated from each component's CEM. ast-grep is a tree-sitter-based AST tool with a YAML rule DSL. **First-party language coverage is HTML, TSX, JSX, and CSS.** Vue, Svelte, Astro, and ERB require maintained third-party tree-sitter grammars and opt-in via `ashlar.config.json`. Twig, Jinja, and Nunjucks have no maintained tree-sitter parsers as of April 2026; the validator returns `language-unsupported` for these targets rather than pretending coverage. See [validation](./validation.md) for the live support matrix and [STATUS.md](../../STATUS.md) for current shipping state.
 
 ```yaml
-# Generated from button.cem.json _ashlar.anti_patterns
-id: ashlar/button-icon-only-needs-label
-language: [tsx, jsx, vue, svelte, astro, html, twig]
+# Generated from button.cem.json _ashlar.antiPatterns
+id: ashlar/button/icon-only-needs-label
+language: [html, tsx, jsx]
 rule:
-  pattern: <ashlar-button>$ICON</ashlar-button>
+  pattern: <button class="ashlar-button">$ICON</button>
   has:
     pattern: <svg/>
   not:
     has:
       pattern: aria-label="$_"
 message: "Icon-only Button requires aria-label (WCAG 4.1.2)"
-fix: '<ashlar-button aria-label="TODO">$ICON</ashlar-button>'
+fix: '<button class="ashlar-button" aria-label="TODO">$ICON</button>'
 ```
+
+L0 components use the semantic `<button class="ashlar-button">` form per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md); the `<ashlar-button>` custom-element form is reserved for L1 components.
 
 ast-grep is distributed as a single Rust binary (~3MB). No JS dependency tree, no framework coupling, no build-pipeline integration required. CI integration is one line; pre-commit hook integration is one line.
 
@@ -228,15 +230,15 @@ Three artifacts, each does one thing:
    - `get_evidence(name)` — accessibility evidence packet
    - Resources: `capsule://`, `token://`, `pattern://`, `evidence://`
 
-The killer differentiators versus shadcn's MCP are `validate_usage` and `migrate`. Carbon shipped its MCP with similar tools in February 2026; this is the right shape.
+The durable differentiators versus shadcn's install-and-discovery MCP are `validate_usage` and `migrate`, grounded in extended CEM and evidence packets. A community proposal `carbon-mcp` (awaiting Carbon-team feedback) explores similar validate/codemod tools — the convergence is real even though Carbon Design System has not officially shipped or endorsed an MCP. See [STATUS.md](../../STATUS.md) for Ashlar's MCP shipping plan (v0.0 slice 5, read-only-plus-validate).
 
 See [`ai-native.md`](./ai-native.md) for the extended CEM schema, MCP tool specifications, and AGENTS.md template.
 
 ## Tokens
 
-Source format: DTCG 2025.10 (the Design Tokens Community Group format reached first stable in October 2025).
+Source format: DTCG 2025.10 (Design Tokens Community Group [Final Report](https://www.w3.org/community/reports/design-tokens/CG-FINAL-format-20251028/) published October 2025; *not* a W3C Recommendation, but stable enough to anchor on with a swappable compiler boundary).
 
-Compiler: Terrazzo (most complete DTCG support in 2026; Style Dictionary is the fallback).
+Compiler: Terrazzo (most complete DTCG support in 2026; Style Dictionary v4 as a fallback). The current prototype's `theme.ts` ships hardcoded TypeScript theme objects rather than a DTCG-as-source pipeline; inverting this is v0.0 slice 6.
 
 Outputs:
 

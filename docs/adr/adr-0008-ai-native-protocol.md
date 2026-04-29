@@ -16,9 +16,9 @@ A separate `llms.txt` (and `llms-full.txt`) is published for the docs site for L
 
 ## Rationale
 
-CEM is the W3C-CG standard for Web Component metadata, already emitted by Spectrum, FAST, Carbon, and many others. Storybook MCP, Carbon MCP, and design-system commentators (Dave Rupert, Codrops) all converge on CEM as the LLM contract. **Inventing a new schema would fragment; extending CEM in a namespaced field reuses ecosystem tooling.**
+CEM is the W3C-CG standard for Web Component metadata, already emitted by Spectrum, FAST, Carbon, and many others. Storybook MCP and design-system commentators (Dave Rupert, Codrops) converge on CEM as the LLM contract. **Inventing a new schema would fragment; extending CEM in a namespaced field reuses ecosystem tooling.**
 
-shadcn's MCP (CLI 3.0, August 2025) is install-and-discovery only — no usage validation, no migration, no anti-patterns. Carbon MCP (February 2026) showed the right shape: tools include `validate_usage` and `migrate`. Ashlar follows Carbon's lead and adds `get_evidence` for accessibility grounding.
+shadcn's MCP (CLI 3.0, August 2025) is install-and-discovery only — no usage validation, no migration, no anti-patterns. A community proposal `SandeepBaskaran/carbon-mcp` (awaiting maintainer feedback against [carbon issue #20855](https://github.com/carbon-design-system/carbon/issues/20855)) explores `validateComponent` and `codemodReplace` — the design convergence on validate/migrate is real, even though Carbon Design System has not officially shipped or endorsed an MCP as of April 2026. Ashlar's MCP adds `get_evidence` for accessibility grounding and gates write tools behind a separate threat model ADR (per [gap analysis](../research/08-gap-analysis-2026-04-29.md) item 8).
 
 AGENTS.md (`agents.md`, ~60,000 repos as of late 2025) and `llms.txt` (Jeremy Howard, September 2024) serve different purposes — AGENTS.md is for **coding agents inside a repo** (build commands, conventions, do/don't); `llms.txt` is for **LLM retrieval over public docs**. Ashlar ships both. Editor fragmentation (Cursor `.cursor/rules`, Windsurf `.windsurfrules`, Claude Code `CLAUDE.md`, Copilot `copilot-instructions.md`) is handled by symlinking all of them to AGENTS.md.
 
@@ -49,7 +49,8 @@ AGENTS.md (`agents.md`, ~60,000 repos as of late 2025) and `llms.txt` (Jeremy Ho
 - [AI-native architecture](../architecture/ai-native.md)
 - [research/05-ai-tooling-and-drift.md](../research/05-ai-tooling-and-drift.md)
 - Custom Elements Manifest: https://github.com/webcomponents/custom-elements-manifest
-- Carbon MCP overview: https://carbondesignsystem.com/developing/carbon-mcp/overview/
+- carbon-mcp community proposal: https://github.com/carbon-design-system/carbon/issues/20855
+- AGENTS.md (Linux Foundation Agentic AI Foundation, donated December 2025): https://agents.md/
 - shadcn MCP: https://ui.shadcn.com/docs/mcp
 - AGENTS.md: https://agents.md/
 - MCP specification: https://modelcontextprotocol.io/specification/2025-11-25

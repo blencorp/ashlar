@@ -24,11 +24,13 @@ button/
 └── button.lock.json          # capsule manifest + content hashes
 ```
 
-Files are optional except for `*.cem.json`, `*.docs.md`, `*.lock.json`, and at least one renderable target (`*.css` for L0, `*.element.ts` for L1).
+Files are optional except for `*.cem.json`, `*.docs.md`, `*.capsule.json` (the per-capsule manifest with content hash and signature), and at least one renderable target (`*.css` for L0, `*.element.ts` for L1).
 
-## Capsule manifest (`*.lock.json`)
+> **Status (2026-04-29)**: the current Button capsule ships `*.css`, `*.html`, `*.cem.json`, and `*.evidence.json`. The `*.capsule.json` per-capsule manifest, codemods, multi-template renderings, and Lit machine files are planned per the [v0.0 slice graph](../roadmap/01-v0.0-foundation.md). Today, the capsule manifest is computed dynamically at install time inside `add`; v0.0 slice 4 (supply-chain hardening) writes it as a real, signed registry artifact.
 
-The capsule's own manifest, distinct from the consumer's `ashlar-lock.json`. Records the capsule's identity, version, content hashes, dependencies, and signature.
+## Capsule manifest (`*.capsule.json`)
+
+The capsule's own manifest, distinct from the consumer's `ashlar-lock.json`. Records the capsule's identity, version, content hashes, dependencies, and signature. Published as a real file in the registry by v0.0 slice 4.
 
 ```json
 {
@@ -156,20 +158,23 @@ See [`accessibility.md`](./accessibility.md) for the full schema; structurally:
 
 ## Codemods (`*.codemods.yaml`)
 
-ast-grep YAML rules that transform consumer code from the previous version of the capsule to the current one. Run by `ashlar update` when version skip detected.
+ast-grep YAML rules that transform consumer code from the previous version of the capsule to the current one. Run by `ashlar update` when version skip detected. Codemod application lands in v0.0 slice 3; until then, codemods can be authored in capsules but are not executed.
+
+L0 codemods target the semantic markup form (`<button class="ashlar-button">`) per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md). L1 codemods target the custom-element form (`<ashlar-combobox>`).
 
 ```yaml
-- id: button-rename-color-prop
+# L0 example: Button (semantic markup)
+- id: button-rename-color-attr
   from: 1.1.x
   to: 1.2.x
-  language: [tsx, vue, html, twig]
+  language: [html, tsx, jsx]
   rule:
-    pattern: <ashlar-button color="$VAL">
-  fix: <ashlar-button variant="$VAL">
-  message: "color prop renamed to variant in 1.2.0"
+    pattern: <button class="ashlar-button" color="$VAL">
+  fix: <button class="ashlar-button" data-variant="$VAL">
+  message: "color attribute renamed to data-variant in 1.2.0"
 ```
 
-See [`drift-and-updates.md`](./drift-and-updates.md) for the full codemod application protocol.
+See [`drift-and-updates.md`](./drift-and-updates.md) for the full codemod application protocol and the explicit list of failure modes textual three-way merge does not handle.
 
 ## Content addressing
 

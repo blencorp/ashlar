@@ -1,8 +1,10 @@
 # Drift management and updates
 
-shadcn's most-cited unfixed problem is that copied components drift after install with no safe upgrade path. Ashlar's lockfile and three-way merge protocol is the direct, mechanical fix.
+shadcn's most-cited unfixed problem is that copied components drift after install with no safe upgrade path. Ashlar addresses this with a lockfile + three-way merge + codemods. The textual three-way merge fixes the cases where line-stable file formats let `git merge-file` reach a clean result; codemods are the escape hatch for cases where line-based merge cannot reason about the change.
 
-This document specifies the lockfile format, the update protocol, conflict resolution UX, and codemod application.
+> **Status (2026-04-29)**: the lockfile substrate exists today (per-file `original_hash` + `current_hash`). The `update` command, three-way merge runner, codemod application, and accessibility-critical confirmation prompt land in [v0.0 slice 3](../roadmap/01-v0.0-foundation.md). See [STATUS.md](../../STATUS.md).
+
+This document specifies the lockfile format, the update protocol, conflict resolution UX, codemod application, and the **explicit list of failure modes textual merge does not handle safely**.
 
 ## The lockfile (`ashlar-lock.json`)
 
@@ -80,18 +82,18 @@ For each installed capsule:
 
 ### Codemod application
 
-Codemods ship in the capsule as ast-grep YAML rules:
+Codemods ship in the capsule as ast-grep YAML rules. L0 codemods target the semantic markup form (`<button class="ashlar-button">`) per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md); L1 codemods target the custom-element form (`<ashlar-combobox>`).
 
 ```yaml
-# button.codemods.yaml
-- id: button-rename-color-prop
+# button.codemods.yaml — L0 example
+- id: button-rename-color-attr
   from: 1.1.x
   to: 1.2.x
-  language: [tsx, jsx, vue, svelte, astro, html, twig]
+  language: [html, tsx, jsx]
   rule:
-    pattern: <ashlar-button color="$VAL">
-  fix: <ashlar-button variant="$VAL">
-  message: "color prop renamed to variant in 1.2.0"
+    pattern: <button class="ashlar-button" color="$VAL">
+  fix: <button class="ashlar-button" data-variant="$VAL">
+  message: "color attribute renamed to data-variant in 1.2.0"
   confirm: false
 ```
 
@@ -115,7 +117,7 @@ $ ashlar update button
 Updating button: 1.1.5 → 1.2.0
 
 Running codemods (1.1.x → 1.2.x):
-  ✓ button-rename-color-prop applied to 3 files
+  ✓ button-rename-color-attr applied to 3 files
   ✓ button-deprecate-rounded-class applied to 1 file
 
 Merging files:
@@ -135,6 +137,21 @@ Conflict in src/components/ashlar/button.html.njk:
 
 Resolve the conflict and run `ashlar update --resolved button` to finalize.
 ```
+
+## Failure modes textual three-way merge does not handle
+
+`git merge-file --diff3` is line-based. It produces *textually* clean results in cases where the file format is line-stable. It produces silently-wrong results, or unresolvable noise, in several cases that Ashlar capsule files routinely encounter. The architecture is honest about these limits rather than pretending textual merge is sufficient:
+
+1. **CSS custom-property renames**. A consumer renames `--ashlar-color-action-primary-bg` to `--brand-button-bg` for theming, and upstream changes the value. Textual merge produces a file that no longer tracks the upstream rename. *Mitigation*: codemod ships with the version that rolls out a custom-property rename; codemod runs before merge.
+2. **Cascade-layer reordering**. A consumer moves a rule from `@layer ashlar.components` into `@layer my-app.overrides` to take precedence; upstream adds a new rule into the original layer. Textual merge accepts both; cascade order produces unintended specificity. *Mitigation*: layer order is documented as part of the capsule contract; `ashlar audit` flags components touching layers outside the capsule's declared set.
+3. **Selector specificity changes via `@scope`**. Consumer wraps capsule rules in a custom `@scope`; upstream changes a selector. Textual merge applies the upstream selector but the scope wrapper still applies; specificity drift can be silent. *Mitigation*: codemod for any version that changes scope or selector identity.
+4. **TypeScript state-machine refactors (L1)**. A Zag (or successor) state-machine version renames states, transitions, or actors. Textual merge applies the rename but consumer code that referenced the old state names breaks at runtime. *Mitigation*: codemod is the only safe path; force-confirmation on `criticalForA11y` files prompts the user to read the changelog.
+5. **JSON formatting drift in CEM**. `button.cem.json` reformats (indentation, key order). Textual merge produces a noisy diff that is mechanically clean but human-unreadable. *Mitigation*: capsule build pipeline canonicalizes JSON (sorted keys, two-space indent) so reformatting drift does not happen.
+6. **HTML attribute order**. Consumer reorders `class` and `data-variant`; upstream rewrites the same attributes in a different order. Textual merge sees a diff where there is no semantic change. *Mitigation*: HTML files are canonicalized during build (attribute alphabetical order) so attribute-order drift does not happen on the upstream side; consumer drift is tolerated as a clean merge.
+
+Categories 1, 3, and 4 are **safety-critical** — silently-wrong merges can introduce accessibility regressions. Codemods are the architectural answer; v0.0 slice 3 (drift management) ships the codemod runner, and breaking changes that affect these categories ship a codemod or are not breaking changes.
+
+When `_ashlar.criticalForA11y: true` is set on a file, even a textually-clean merge prompts the user to confirm — the safety net is loud rather than quiet because textual cleanliness is not semantic correctness.
 
 `ashlar update --resolved button`:
 

@@ -130,25 +130,20 @@ The `_ashlar` namespace is forward-compatible: tools that don't recognize it ign
 
 ## MCP server
 
-`npx ashlar mcp` starts an MCP server pointing at the consumer's installed components and tokens. AI assistants connect via stdio or SSE.
+> **Status (2026-04-29)**: planned for v0.0 slice 5. The implementation, threat model ADR, and JSON Schema for the `_ashlar` namespace land together. Until then, the schema below is design intent — it is not yet wired up. See [STATUS.md](../../STATUS.md).
+
+`npx ashlar mcp` starts an MCP server pointing at the consumer's installed components and tokens. AI assistants connect via stdio (local) or, in v0.1+, SSE/HTTP (gated behind an additional threat model). MCP governance moved to the Linux Foundation Agentic AI Foundation in December 2025; the server tracks the [2025-11-25 spec](https://modelcontextprotocol.io/specification/2025-11-25/basic).
 
 ### Tools
 
 ```
+// Read-only tools (v0.0 slice 5):
 search_components(query: string, limit?: number)
-  → Capsule[]                      // semantic search over installed CEMs
+  → Capsule[]                      // substring search over name + description
+                                   // (semantic/embedding search is v0.1+)
 
 get_component(name: string)
   → ExtendedCEM                    // full extended CEM for one capsule
-
-validate_usage(file_or_glob: string)
-  → ValidationResult[]             // runs ast-grep rules, returns violations
-
-suggest_for_task(description: string)
-  → CapsuleRecommendation[]        // intent-driven recommendations
-
-migrate(component: string, from?: string, to?: string)
-  → MigrationPlan                  // codemods + diff preview
 
 get_evidence(name: string)
   → EvidencePacket                 // a11y evidence for component
@@ -158,6 +153,17 @@ list_tokens(category?: string)
 
 get_token(name: string)
   → Token                          // single token with resolved value
+
+validate_usage(file_or_glob: string)
+  → ValidationResult[]             // runs ast-grep rules, returns SARIF-shaped
+                                   // violations (built on slice 2)
+
+// Read+plan tools (v0.0 slice 5; explicit user approval flow):
+migrate_plan(component: string, from?: string, to?: string)
+  → MigrationPlan                  // codemods + diff preview, no apply
+
+// Write tools (v0.1+, gated behind threat model ADR):
+// add_component, update_component, migrate_apply, suggest_for_task
 ```
 
 ### Resources
@@ -186,7 +192,7 @@ migrate-from-react-uswds
   → Plans migration from react-uswds patterns to Ashlar
 ```
 
-The killer differentiators versus shadcn's MCP are `validate_usage` and `migrate`. Carbon MCP shipped similar tools in February 2026; Ashlar's are richer because they consume the extended CEM.
+The durable differentiators versus shadcn's install-and-discovery MCP are `validate_usage` (executable component anti-patterns) and `migrate` (codemod-driven version transitions), grounded in the extended CEM and evidence packets. A community proposal `SandeepBaskaran/carbon-mcp` (awaiting Carbon-team feedback against [carbon issue #20855](https://github.com/carbon-design-system/carbon/issues/20855)) explores `validateComponent` and `codemodReplace` for Carbon — the convergence is real, but Carbon Design System has not officially shipped or endorsed an MCP as of April 2026. Ashlar's MCP, when it ships in v0.0 slice 5, is read-only-plus-validate; write tools (`add_component`, `update_component`, hosted operation) are gated behind a separate threat model ADR per [research/08 gap analysis](../research/08-gap-analysis-2026-04-29.md) item 8.
 
 ### Security posture
 

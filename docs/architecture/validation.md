@@ -1,8 +1,10 @@
 # Validation
 
-Ashlar uses **ast-grep** with **tree-sitter** grammars as the polyglot validator engine. The same YAML rule validates component usage in TSX, JSX, Vue SFCs, Svelte, Astro, plain HTML, and Drupal Twig.
+Ashlar uses **ast-grep** with **tree-sitter** grammars as the validator engine. The same YAML rule validates component usage across the languages where ast-grep has real coverage today.
 
-This document specifies the rule format, rule generation from CEM, integration patterns, and the polyglot support matrix.
+> **Status (2026-04-29)**: only the federal HTML policy pack (parser-backed via parse5) ships in slice 1. ast-grep integration and component-anti-pattern checks land in [v0.0 slice 2 — the validator wedge](../superpowers/specs/2026-04-29-v0-0-validator-wedge-spec.md). The support matrix below is the *target* state at v0.0 GATE, not what ships today. See [STATUS.md](../../STATUS.md).
+
+This document specifies the rule format, rule generation from CEM, integration patterns, and the **honest** support matrix — what works first-party, what is opt-in via custom-language registration, and what is currently unsupported.
 
 ## Why not ESLint
 
@@ -12,11 +14,11 @@ ast-grep is built on tree-sitter, which has grammars for every relevant target. 
 
 ## Rule format
 
-ast-grep rules are YAML. Each rule has an `id`, a target `language` list, a `rule` matcher, an optional `fix`, and human-readable metadata.
+ast-grep rules are YAML. Each rule has an `id`, a target `language` list, a `rule` matcher, an optional `fix`, and human-readable metadata. Targets must come from the supported set in the matrix below; the validator returns `language-unsupported` (not silent pass) when asked to scan an unsupported language.
 
 ```yaml
-id: ashlar/button-icon-only-needs-label
-language: [tsx, jsx, vue, svelte, astro, html, twig]
+id: ashlar/button/icon-only-needs-label
+language: [html, tsx, jsx]
 severity: error
 message: "Icon-only Button requires aria-label (WCAG 4.1.2)"
 note: "Buttons with only icon content must have an accessible name."
@@ -30,6 +32,8 @@ rule:
 fix: |
   <button class="ashlar-button" aria-label="TODO">$ICON</button>
 ```
+
+L0 components use the semantic markup (`<button class="ashlar-button">`) per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md). The custom-element form (`<ashlar-button>`) is reserved for L1 components and never used in L0 anti-pattern rules.
 
 ## Generating rules from CEM
 
@@ -74,21 +78,27 @@ fix: |
 
 Most rules are auto-generated. Hand-authored rules live alongside in the registry's `rules/` folder.
 
-## Polyglot support matrix
+## Honest support matrix
 
-| Language | Tree-sitter grammar | Ashlar rule support |
-|---|---|---|
-| TSX, JSX | tree-sitter-typescript | Full |
-| Vue SFC | tree-sitter-vue | Template + script blocks |
-| Svelte | tree-sitter-svelte | Full |
-| Astro | tree-sitter-astro (virchau13) | Full |
-| Plain HTML | tree-sitter-html | Full |
-| Twig (Drupal/Symfony) | tree-sitter-twig (community) | Full for Ashlar component usage |
-| Jinja (Python) | tree-sitter-jinja (community) | Full |
-| ERB (Rails) | tree-sitter-embedded-template | Full |
-| Nunjucks | tree-sitter-jinja (compatible) | Full |
+The validator declares what it can do and refuses to silently scan languages it cannot.
 
-When a rule targets `language: [html, twig, jinja, erb, njk]`, ast-grep applies the same pattern across all five.
+| Language | ast-grep support | Status in Ashlar | Notes |
+|---|---|---|---|
+| HTML | first-party (built-in) | **shipping** at v0.0 GATE | Used today via parse5 for federal policy; ast-grep takes over in slice 2. |
+| TSX | first-party (built-in) | **shipping** at v0.0 GATE | Slice 2. |
+| JSX | first-party (built-in) | **shipping** at v0.0 GATE | Slice 2. |
+| CSS | first-party (built-in) | **shipping** at v0.0 GATE | Slice 2; for token-enforcement rules. |
+| Vue SFC | third-party grammar (`tree-sitter-vue`) | opt-in via `ashlar.config.json` | User registers grammar path; grammar quality varies. |
+| Svelte | third-party grammar (`tree-sitter-svelte`) | opt-in via `ashlar.config.json` | User registers grammar path. |
+| Astro | third-party grammar (`tree-sitter-astro`) | opt-in via `ashlar.config.json` | virchau13/tree-sitter-astro; user registers grammar. |
+| ERB | official tree-sitter grammar (`tree-sitter-embedded-template`) | opt-in via `ashlar.config.json` | Documented; not bundled. |
+| Twig | **no maintained tree-sitter grammar** | **unsupported** | Validator returns `language-unsupported`. |
+| Jinja | grammar is documented as incomplete | **unsupported** | Validator returns `language-unsupported`. |
+| Nunjucks | no maintained tree-sitter grammar | **unsupported** | Validator returns `language-unsupported`. |
+
+When a rule targets `language: [html, tsx, jsx]`, ast-grep applies the same pattern across the three first-party languages with no extra configuration. When a rule targets opt-in languages, the consumer must register the grammar in `ashlar.config.json`. Unsupported languages emit a clear, actionable finding rather than failing silently.
+
+Twig, Jinja, and Nunjucks coverage will arrive when maintained tree-sitter grammars exist. Contributing a grammar upstream is one path; another is building rule expressiveness through alternative parsers (an HTML pre-pass for the Twig/Jinja templates that resolve to HTML at render time). Ashlar tracks this honestly rather than overpromising.
 
 ## Categories of rules
 
