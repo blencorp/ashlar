@@ -115,7 +115,7 @@ The `uswds-elements` repository is described as a Web Component version of USWDS
 
 This is a signal that the USWDS community recognizes the framework-independence problem. But a full Web Component system faces tradeoffs: framework interop is attractive, but form semantics, styling, SSR, hydration, design tokens, slots, a11y testing, and developer ergonomics can still be challenging.
 
-Ashlar should use Web Components surgically first: official-site shell primitives that many stacks need, rather than a full component suite on day one.
+Ashlar should use Web Components surgically first: official-site shell primitives that many stacks need, rather than a full component suite in the first implementation slice.
 
 ## Accessibility posture
 

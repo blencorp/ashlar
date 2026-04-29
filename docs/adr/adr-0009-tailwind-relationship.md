@@ -43,7 +43,7 @@ The semantic class delivers the component; Tailwind utilities decorate. Both eco
 - Maximum reach — Ashlar works in any stack, with or without Tailwind.
 - Real "lightweight" claim with bundle math to back it.
 - Tailwind users get full integration via `@theme` output and the `@ashlar/tailwind` preset.
-- Decoupled from Tailwind's release cadence and breaking changes.
+- Decoupled from Tailwind's release rhythm and breaking changes.
 - Static HTML deployments are first-class.
 
 **Negative**

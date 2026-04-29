@@ -191,9 +191,9 @@ $ ashlar update --registry ./ashlar-mirror
 
 ## What this means in practice
 
-**Day-1**: install components, lockfile records original hashes.
-**Day-30**: customize a button to add an icon slot. Lockfile sees the drift but does nothing.
-**Day-60**: registry releases button 1.3.0 with a focus-handling fix. Run `ashlar update`. CLI runs codemods (none for this version), three-way merges your local icon-slot edit with the upstream focus fix, presents one minor conflict in the click handler, you resolve it, run `ashlar update --resolved button`, and you have the upstream a11y fix plus your local feature, with both diffed cleanly.
+**Initial install**: install components, lockfile records original hashes.
+**After customization**: customize a button to add an icon slot. Lockfile sees the drift but does nothing.
+**After upstream release**: registry releases button 1.3.0 with a focus-handling fix. Run `ashlar update`. CLI runs codemods (none for this version), three-way merges your local icon-slot edit with the upstream focus fix, presents one minor conflict in the click handler, you resolve it, run `ashlar update --resolved button`, and you have the upstream a11y fix plus your local feature, with both diffed cleanly.
 
 shadcn cannot do this. Ashlar can.
 

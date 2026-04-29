@@ -37,7 +37,7 @@ Lit is preferred over Stencil because of larger community, simpler model, alignm
 - Framework-agnostic by construction. New framework adapter = new generator template.
 - WC delivery (`@ashlar/element`) covers Drupal, Sitecore, AEM, plain HTML directly.
 - Aligns with USWDS Elements direction, preserving future upstream-contribution potential.
-- React not privileged means we are not held hostage to React's release cadence or design choices.
+- React not privileged means we are not held hostage to React's release rhythm or design choices.
 
 **Negative**
 

@@ -35,7 +35,7 @@ Statecharts and signals are complementary: statecharts define the component's di
 
 **Negative**
 
-- Zag is a dependency; tied to its release cadence and design choices.
+- Zag is a dependency; tied to its release rhythm and design choices.
 - Statechart authoring has a learning curve for engineers unfamiliar with the model.
 - Vanilla adapter (for Drupal/HTML) is less mature than framework adapters.
 - TC39 Signals is Stage 1; the proposal could change before standardization.

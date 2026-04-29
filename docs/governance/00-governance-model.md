@@ -40,15 +40,15 @@ Ashlar is maintained by a **community maintainer team** with at least three cont
 - **Token / theme maintainer** — owns DTCG schema, theme validation, agency-theme submissions.
 - **Docs / content maintainer** — owns the docs site, plain-language guidance, AGENTS.md, llms.txt.
 - **Security maintainer** — owns Sigstore signing, supply-chain audit, CVE response.
-- **Community / RFC steward** — runs the RFC process, monthly community calls, and contributor onboarding.
+- **Community / RFC steward** — runs the RFC process, event-driven community calls, and contributor onboarding.
 
 A single person may hold more than one role; some roles can be shared. **No single role can be held exclusively by a single organization.**
 
 ### Decision authority
 
-- **Day-to-day code review**: any maintainer can approve.
+- **Routine code review**: any maintainer can approve.
 - **Architectural changes** (ADR-worthy): requires architecture maintainer + at least one other organization's maintainer.
-- **Breaking changes**: requires public RFC + 2-week comment period + architecture maintainer approval.
+- **Breaking changes**: requires public RFC + explicit comment window + architecture maintainer approval.
 - **Releases**: requires engineering maintainer + security maintainer.
 - **Stable graduation of a component**: requires accessibility maintainer.
 - **License or governance changes**: requires unanimous maintainer approval.
@@ -75,7 +75,7 @@ A single person may hold more than one role; some roles can be shared. **No sing
 4. **Token impact review** — new tokens? semantic implications?
 5. **Accessibility plan** — WCAG criteria, keyboard map, ARIA roles.
 6. **Prototype** in `experimental` status.
-7. **Public feedback period** (minimum 4 weeks; longer for L3 patterns).
+7. **Public feedback gate** (long enough for meaningful community and expert review; longer for L3 patterns).
 8. **Beta release** with automated tests + initial evidence.
 9. **Evidence completion** — manual SR tests, contrast validation, anti-pattern registration.
 10. **Stable release** — full evidence packet, codemods documented.
@@ -103,7 +103,7 @@ Status is declared in the capsule manifest and visible in the registry index.
 - `stable` — recommended.
 - `lts` — long-term support for components in critical government use.
 
-LTS components receive security and accessibility patches for 24 months after a `stable` graduation.
+LTS components receive security and accessibility patches for a published support window after `stable` graduation.
 
 ## Security and trust
 
@@ -112,7 +112,7 @@ LTS components receive security and accessibility patches for 24 months after a 
 - **SHA-256 content hashes** in registry index and lockfile.
 - **Dependency review** via GitHub Dependabot / equivalent.
 - **SLSA-aware build practices** where feasible.
-- **Vulnerability disclosure policy** with 90-day coordinated disclosure.
+- **Vulnerability disclosure policy** with a coordinated disclosure window.
 - **Changelogs flag accessibility and security changes** explicitly.
 - **Capsule manifest header comments** record version + checksum (machine-readable provenance).
 
@@ -159,8 +159,8 @@ This enables federal agencies to maintain agency-internal mirrors with FedRAMP-a
 ## Community channels
 
 - **GitHub Issues / Discussions** — primary contribution channel.
-- **Public RFCs** — significant changes go through RFC; 2-week comment period.
-- **Monthly community call** — open to contributors and consumers; recorded.
+- **Public RFCs** — significant changes go through RFC with an explicit comment window.
+- **Community calls** — open to contributors and consumers, convened around RFCs, releases, and adoption questions; recorded.
 - **Public roadmap** — `docs/roadmap/` plus a public Trello/GitHub-projects view.
 - **Public changelog** — every release has a public changelog with categorized changes (accessibility / security / performance / API).
 - **Accessibility review board** — accessibility maintainer plus contributing-organization a11y reps.

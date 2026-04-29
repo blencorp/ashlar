@@ -86,9 +86,9 @@ Roadmap change: add `_ashlar.platformFeatures` to CEM and fail publishing when r
 
 ### 10. Governance and evidence labor are under-specified
 
-Manual screen-reader evidence, independent audits, and content research are labor-intensive. The roadmap names a consultant budget but does not yet make evidence ownership and review cadence concrete.
+Manual screen-reader evidence, independent audits, and content research are labor-intensive. The roadmap names a consultant budget but does not yet make evidence ownership and review rhythm concrete.
 
-Roadmap change: add an evidence ownership map, review schedule, and component-stability board before public alpha.
+Roadmap change: add an evidence ownership map, review rhythm, and component-stability board before public alpha.
 
 ## Better DX principles
 

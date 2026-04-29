@@ -38,7 +38,7 @@ Reasons:
 
 - npm and `npx` are familiar in federal web teams.
 - Package-manager alternatives (`pnpm dlx`, `yarn dlx`, `bunx`, `deno run npm:`) can be supported without changing the package shape.
-- Pure Node avoids binary-whitelisting friction for day-one installs.
+- Pure Node avoids binary-whitelisting friction for first installs.
 - Native tools such as ast-grep can be bundled as optional platform packages or downloaded in a controlled postinstall flow.
 
 ## Validation engine

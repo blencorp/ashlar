@@ -11,7 +11,7 @@ This document records the state of Web Components in 2026, the architectures use
 - **Current production version: Lit 3.3.1** (July 2025). There is no Lit 4. Articles citing Lit 4.0 appear to be SEO speculation, not project roadmap.
 - **Bundle**: ~5KB minified+gzipped runtime; a Button-class component adds ~1–3KB on top.
 - **SSR**: `@lit-labs/ssr` is still labs/experimental as of April 2026. It renders to Declarative Shadow DOM and is production-usable, but consumers own the integration glue. Not promised as streaming SSR.
-- **DX**: decorators, reactive properties, lit-html templates. ~2–3 day learning curve for a React developer; type-safe with TypeScript.
+- **DX**: decorators, reactive properties, lit-html templates. Short learning curve for a React developer; type-safe with TypeScript.
 
 ### Declarative Shadow DOM
 
@@ -42,7 +42,7 @@ This document records the state of Web Components in 2026, the architectures use
 | **FAST / Fluent UI WC v3** (Microsoft) | v3 still in RC mid-2025; long delayed | FAST → rewritten on internal stack | Cautionary tale: framework-of-the-framework risk; Microsoft itself wavered. |
 | **Material Web** (Google) | **Maintenance mode since June 2024** | Lit | Engineers reassigned to Wiz. Do not depend on it. |
 
-**AI manifests in production WC libraries**: none ship a distinct "AI manifest" format. The de-facto standard is **Custom Elements Manifest** (CEM, W3C Community Group). Storybook MCP, Carbon-MCP, and design-system commentators (Dave Rupert, Codrops) all converge on CEM as the LLM source. **Ashlar emits CEM from day one and extends it with the constraint surface (variants, anti-patterns, accessibility rules, token consumption).**
+**AI manifests in production WC libraries**: none ship a distinct "AI manifest" format. The de-facto standard is **Custom Elements Manifest** (CEM, W3C Community Group). Storybook MCP, Carbon-MCP, and design-system commentators (Dave Rupert, Codrops) all converge on CEM as the LLM source. **Ashlar emits CEM from the first implementation slice and extends it with the constraint surface (variants, anti-patterns, accessibility rules, token consumption).**
 
 ## Peer government design systems
 
@@ -51,7 +51,7 @@ This document records the state of Web Components in 2026, the architectures use
 - **Stack confirmed**: HTML + Sass (ITCSS + BEM) + Nunjucks templates + plain JavaScript modules. No framework.
 - **Why no React/WC**: a 2019 cross-government survey found **24 templating languages in active use** across UK government departments (Mustache, Jinja, ERB families dominant); 40% of teams had no CSS architecture. Choosing one framework would have stranded most departments.
 - **Accessibility evidence**: issues are prioritized as "Evidenced" — must include user research showing real barriers. Theoretical issues wait. New accessibility strategy published January 2023; tested to WCAG 2.1, updating toward 2.2. Brand refresh and Frontend updates June 2025.
-- **Versioning**: semver, monthly-ish releases of `govuk-frontend` on npm.
+- **Versioning**: semver, regular releases of `govuk-frontend` on npm.
 
 **Lesson for Ashlar**: government uses many template languages, not one framework. L4 (templates) is the empirical answer to this — ship Nunjucks, Twig, Jinja, ERB, plain HTML renderings of the same component.
 
@@ -70,7 +70,7 @@ This document records the state of Web Components in 2026, the architectures use
 - **Community fork → GOLD / Design System AU.** Now lives at `gold.designsystemau.org`, community-maintained.
 - **Lessons**: single-agency ownership is single point of failure. The Department of Health subsequently built its own fork (`designsystem.health.gov.au`), demonstrating the fragmentation cost of central-system collapse.
 
-**Lesson for Ashlar**: community charter and a multi-organization maintainer group from day one. Avoid the AuDS trap.
+**Lesson for Ashlar**: community charter and a multi-organization maintainer group from the first public alpha. Avoid the AuDS trap.
 
 ### Other peers
 
@@ -82,7 +82,7 @@ This document records the state of Web Components in 2026, the architectures use
 
 ## USWDS empirical pain points
 
-Reddit and HackerNews searches returned essentially no first-person USWDS threads. Evidence is GitHub Discussions, Trussworks blog, GSA monthly call Q&A, and ADRs.
+Reddit and HackerNews searches returned essentially no first-person USWDS threads. Evidence is GitHub Discussions, Trussworks blog, GSA public call Q&A, and ADRs.
 
 Verified top complaints:
 
@@ -112,7 +112,7 @@ The data points one direction: **Web-Component-first with auto-generated framewo
 - **Library**: Lit 3.x (not "4"). Stencil is a defensible alternative if auto-generated framework wrappers outweigh community size.
 - **SSR**: rely on framework SSR plus DSD where consumed by frameworks. Lit SSR is labs — treat as escape hatch for a CSS-only "shell" SSR mode. Ship Nunjucks, Twig, Jinja partials for non-JS environments alongside.
 - **Tokens**: DTCG source, multi-format output via Terrazzo. Steal NL Design System's token-as-universal-layer pattern.
-- **AI**: emit CEM from day one; extend it with `_ashlar` namespace for variants, anti-patterns, a11y rules, token consumption.
+- **AI**: emit CEM from the first implementation slice; extend it with `_ashlar` namespace for variants, anti-patterns, a11y rules, token consumption.
 - **Governance**: avoid the AuDS trap — community maintainer group with charter from v0.
 
 **Open risks**:

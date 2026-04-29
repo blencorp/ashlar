@@ -78,7 +78,7 @@ The current prototype includes:
 
 ## Roadmap
 
-The roadmap is gate-based, not date-promise-based:
+The roadmap is gate-based, not calendar-estimate-based:
 
 1. **GitHub launch readiness**: license, governance, security policy, contribution model, public roadmap, disclaimers.
 2. **v0.0 Foundation**: prove registry, capsule, lockfile, audit, verify, token, and evidence mechanics.

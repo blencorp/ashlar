@@ -4,7 +4,7 @@ Ashlar is delivered in phased releases. Each phase has clear deliverables, succe
 
 ## Public roadmap posture
 
-When this repository is published on GitHub, this roadmap should be treated as the public contract for priorities. It is not a promise of exact dates. It is a sequence of gates: a phase only advances when its quality criteria are met.
+When this repository is published on GitHub, this roadmap should be treated as the public contract for priorities. It is not a calendar forecast. It is a sequence of gates: a phase only advances when its quality criteria are met.
 
 The central rule is:
 
@@ -12,14 +12,14 @@ The central rule is:
 
 ## Phases at a glance
 
-| Phase | Duration | Audience | Theme |
+| Phase | Gate | Audience | Theme |
 |---|---|---|---|
-| **GitHub launch readiness** | 1-2 weeks | Public readers, design partners | Make the repository credible before code lands. |
-| **v0.0 — Foundation** | 8 weeks | Internal alpha + 2–3 design partners | Prove capsules, evidence, policy packs, and drift with the smallest viable service slice. |
-| **v0.1 — Public alpha** | 12 weeks (cumulative 20) | Public alpha; ~10 design-partner teams | Expand component coverage; validate AI integration; harden drift. |
-| **v0.2 — Multi-framework + patterns** | 24 weeks (cumulative 44) | Public beta; broader gov-tech adoption | Vue / Svelte / Solid adapters; L3 patterns; codemods; templates. |
-| **v0.3+ — Research frontier** | ongoing | Selective | Resumability, CRDT-aware patterns, typed accessibility research. |
-| **v1.0 — Stable** | after v0.2 gates | Production evaluators | Evidence-backed stable component and pattern set. |
+| **GitHub launch readiness** | Public repo credibility gate | Public readers, design partners | Make the repository credible before code lands. |
+| **v0.0 — Foundation** | Architecture proof gate | Internal alpha + 2–3 design partners | Prove capsules, evidence, policy packs, and drift with the smallest viable service slice. |
+| **v0.1 — Public alpha** | Public evaluation gate | Public alpha; ~10 design-partner teams | Expand component coverage; validate AI integration; harden drift. |
+| **v0.2 — Multi-framework + patterns** | Cross-stack adoption gate | Public beta; broader gov-tech adoption | Vue / Svelte / Solid adapters; L3 patterns; codemods; templates. |
+| **v0.3+ — Research frontier** | Validated-demand gate | Selective | Resumability, CRDT-aware patterns, typed accessibility research. |
+| **v1.0 — Stable** | Production-evaluation gate | Production evaluators | Evidence-backed stable component and pattern set. |
 
 Each phase below has a dedicated document with detailed scope.
 
@@ -44,7 +44,7 @@ If Ashlar does these, it succeeds. If it cannot, we redesign before scaling.
 - **Drift solved**: `ashlar update` works on 50+ real updates with under 10% conflict rate.
 - **AI integration meaningful**: Cursor/Claude/Copilot generate Ashlar code with zero hallucinated props when grounded by extended CEM and AGENTS.md; `ashlar audit` catches violations.
 - **Cross-stack proven**: same component capsule renders in Next.js, Drupal Twig, plain HTML, and a Vite SPA — all with passing accessibility evidence.
-- **Time-to-first-component**: under 10 minutes from `ashlar init` to a working accessible form.
+- **Fast first useful slice**: `ashlar init` to a working accessible form is a short, deterministic path with no bespoke setup.
 - **Stable accessibility evidence**: at least 12 components reach `stable` with full evidence packets (axe, keyboard, NVDA, VoiceOver, JAWS).
 - **CI usable by agencies**: `audit`, `verify`, `theme validate`, `evidence --check`, and SARIF output run in GitHub Actions.
 - **Federal standards coverage**: Ashlar can audit page title, meta description, banner, identifier, required links, and accessibility/privacy statement placement as policy-pack rules.
@@ -58,7 +58,7 @@ Use these as GitHub milestones:
 | Milestone | Exit gate |
 |---|---|
 | Repository readiness | License, governance, security policy, contribution model, roadmap, and disclaimers are public. |
-| v0.0 foundation prototype | Fresh project can install and verify a small accessible form in under 10 minutes, with evidence and policy-pack rules installed. |
+| v0.0 foundation prototype | Fresh project can install and verify a small accessible form through a deterministic path, with evidence and policy-pack rules installed. |
 | v0.0 update and CI gate | `ashlar update` works across drift scenarios and `ashlar audit --sarif` produces a CI artifact; code-scanning upload works when repository Code Security is enabled. |
 | v0.1 public alpha | Public registry, MCP, docs site, 20+ components, first pattern, and 12 evidence-complete components. |
 | v0.2 beta | Multi-framework adapters, complex components, USWDS migration tooling, third-party a11y audit. |
@@ -104,7 +104,7 @@ Every release — v0.0 through v0.3+ — ships:
 | Bundle size | `ashlar audit --bundle` | <10KB L0-only, <15KB with one L1 |
 | Drift conflict rate | `ashlar update` telemetry (opt-in) | <10% |
 | AI generation accuracy | Eval suite against Cursor/Claude/Copilot | 0 hallucinated props |
-| Time-to-first-component | Onboarding video timing | <10 min |
+| First useful slice | Fresh-project smoke test | Deterministic init/add/audit flow |
 | Accessibility evidence | `ashlar evidence --report` | All `stable` components have full packet |
 | Federal standards coverage | `ashlar audit --policy federal` | Page shell and service metadata rules pass |
 | Cross-stack parity | Snapshot tests in 4 demo apps | 100% pass |
@@ -112,13 +112,13 @@ Every release — v0.0 through v0.3+ — ships:
 | Registry trust | `ashlar verify` | Tampered capsule detected |
 | Theme safety | `ashlar theme validate` | Critical contrast failures block |
 
-## Cadence
+## Release Posture
 
 After v0.0:
 
-- **Patch releases** (bug fixes, accessibility fixes): as needed, weekly cadence preferred.
-- **Minor releases** (new components, additive changes): monthly during v0.1–v0.2.
-- **Major releases** (breaking changes): announced 3 months in advance, with codemods.
+- **Patch releases** (bug fixes, accessibility fixes): ship whenever quality gates pass.
+- **Minor releases** (new components, additive changes): batch by evidence and compatibility readiness, not by calendar slots.
+- **Major releases** (breaking changes): require published migration guidance, codemods, and a clear adoption window.
 
 ## Where this roadmap ends
 

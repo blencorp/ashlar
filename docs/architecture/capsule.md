@@ -64,7 +64,7 @@ The capsule's own manifest, distinct from the consumer's `ashlar-lock.json`. Rec
 - **`experimental`** — implementation exists; not for production. API may change without warning.
 - **`beta`** — API mostly stable; automated tests in place; manual a11y evidence may be incomplete.
 - **`stable`** — production recommended. **Requires complete evidence packet, codemods for known migrations, multi-template renderings, and signed manifest.**
-- **`deprecated`** — still available; scheduled for removal. Codemods to the replacement ship in the capsule.
+- **`deprecated`** — still available; marked for future removal after migration support is ready. Codemods to the replacement ship in the capsule.
 
 The CLI warns when adding non-stable capsules.
 

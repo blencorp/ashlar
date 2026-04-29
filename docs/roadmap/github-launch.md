@@ -73,7 +73,7 @@ Issues:
 
 Exit gate:
 
-- Fresh project can install and verify a small accessible form in under 10 minutes.
+- Fresh project can install and verify a small accessible form through a deterministic path.
 
 ### Milestone 2 — v0.0 update and CI gate
 

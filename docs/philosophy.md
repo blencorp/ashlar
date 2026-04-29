@@ -114,6 +114,6 @@ The CLI surface should feel like shadcn — `init`, `add`, `update`, `audit` cov
 - `update` conflict rate across 50+ real updates (target: under 10%).
 - AI tool generation accuracy when grounded by Ashlar CEM (target: zero hallucinated props, anti-patterns flagged).
 - Multi-stack demo apps shipping the same component (target: one capsule, three universes — Next.js, Drupal Twig, plain HTML).
-- Time from `init` to a working accessible form (target: under 10 minutes).
+- Friction from `init` to a working accessible form (target: deterministic path with no bespoke setup).
 
 If the architecture cannot meet these targets, we redesign before we scale.

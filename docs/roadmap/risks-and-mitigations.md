@@ -46,7 +46,7 @@ Government accessibility is legally consequential. "Accessible by default" witho
 The Australian Government Design System died because a single agency owned it. Ashlar must avoid this.
 
 **Mitigations**:
-- Multi-organization maintainer charter from day 1.
+- Multi-organization maintainer charter from the first public alpha.
 - Minimum 3 contributing organizations before v0.2 release.
 - Public RFC process for major decisions; not Blen-internal.
 - Open governance documentation.
@@ -99,7 +99,7 @@ Trying to ship USWDS feature parity at any phase will fail. Ashlar succeeds by s
 - Defer ruthlessly. Choose quality over scope when forced.
 - Risk register reviewed at phase transitions; scope cuts are normal, not exceptional.
 
-**Kill criterion**: if a phase is more than 50% over schedule and quality gates are unmet, cut scope before extending timeline.
+**Kill criterion**: if scope keeps expanding while quality gates remain unmet, cut scope before broadening claims or adding features.
 
 ### R16 — Compliance tooling is too shallow to convince agencies
 
@@ -223,7 +223,7 @@ Ashlar does not ship if:
 - Maintainer base is too narrow (R3).
 - Core SSR pattern doesn't work (R4).
 - Security incidents go unresolved (R5).
-- Quality gates remain unmet under schedule pressure (R6).
+- Quality gates remain unmet while scope keeps expanding (R6).
 - Compliance and CI tooling cannot run credibly in real partner projects (R16).
 
 Each of these is a stop-the-line condition. The team explicitly acknowledges them rather than discovering them at release.

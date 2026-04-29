@@ -135,17 +135,17 @@ The registry is the catalog of capsules. It is served two ways:
 The CLI is a pure Node + ESM tool, distributed via npm and runnable via `npx`, `pnpm dlx`, `yarn dlx`, `bunx`, or `deno run`. Package manager detection uses `nypm`. We do not ship Bun-compiled binaries; some federal IT environments cannot whitelist arbitrary binaries.
 
 ```bash
-# Day 1
+# Initial install
 npx ashlar init                       # writes ashlar.config.json + tokens + lockfile
 npx ashlar add button alert dialog    # adds L0 capsules — pure CSS, zero JS
 npx ashlar add combobox               # adds an L1 capsule (Lit + Zag)
 
-# Day 30
+# After local customization
 npx ashlar update                     # safe 3-way merge for any drift
 npx ashlar audit                      # ast-grep validation across the project
 npx ashlar evidence button            # show me the a11y evidence
 
-# Day 90
+# When adopting a theme or AI tooling
 npx ashlar theme new my-agency        # scaffold custom DTCG theme
 npx ashlar verify                     # signature/supply-chain check
 npx ashlar mcp                        # start MCP server for Cursor/Claude/etc.
