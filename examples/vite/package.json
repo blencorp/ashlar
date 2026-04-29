@@ -2,16 +2,18 @@
   "name": "@ashlar/example-vite",
   "version": "0.0.0",
   "private": true,
+  "description": "Federal page-shell Vite reference app for Ashlar. Demonstrates live agency theme switching driven by DTCG tokens.",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
-    "dev:local": "vite --host 127.0.0.1 --port 4173 --strictPort",
+    "dev": "vite --host 127.0.0.1 --port 4173 --strictPort",
     "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4173 --strictPort",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --passWithNoTests",
     "lint": "biome lint src"
   },
   "devDependencies": {
+    "@ashlar/cli": "workspace:*",
     "typescript": "catalog:",
     "vite": "catalog:",
     "vitest": "catalog:"
