@@ -7,3 +7,4 @@ coverage
 *.log
 ashlar.sarif
 ashlar-lock.json
+output/
