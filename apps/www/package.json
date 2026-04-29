@@ -1,0 +1,21 @@
+{
+  "name": "@ashlar/www",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Ashlar marketing landing page. Federal-shell compliant; consumes the L0 Button capsule for civic CTAs.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4174 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4174 --strictPort",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "lint": "biome lint src"
+  },
+  "devDependencies": {
+    "@ashlar/cli": "workspace:*",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,5 +1,4 @@
 ---
-
 name: Ashlar Default
 description: Government-first, evidence-backed public-service UI system.
 colors:
@@ -12,8 +11,8 @@ typography:
 spacing:
   md: 16px
 rounded:
-
-##   control: 6px
+  control: 6px
+---
 
 ## Source
 
