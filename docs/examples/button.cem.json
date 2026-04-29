@@ -1,0 +1,190 @@
+{
+  "$schema": "https://atrium.dev/schemas/extended-cem.schema.json",
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "button.html",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "AtriumButton",
+          "tagName": "button",
+          "description": "Accessible semantic action control for forms and workflows.",
+          "summary": "Use Button for actions that change state or submit a form. Use Link for navigation.",
+          "members": [
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive'"
+              },
+              "default": "'primary'",
+              "attribute": "variant",
+              "description": "Visual style of the button."
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": { "text": "'sm' | 'md' | 'lg'" },
+              "default": "'md'",
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": { "text": "boolean" },
+              "default": "false",
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "loading",
+              "type": { "text": "boolean" },
+              "default": "false",
+              "attribute": "loading",
+              "description": "Indicates a pending operation. Sets aria-busy=true; preserves accessible name."
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "type": { "text": "'button' | 'submit' | 'reset'" },
+              "default": "'button'",
+              "attribute": "type"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "variant",
+              "type": {
+                "text": "'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive'"
+              }
+            },
+            { "name": "size", "type": { "text": "'sm' | 'md' | 'lg'" } },
+            { "name": "disabled", "type": { "text": "boolean" } },
+            { "name": "loading", "type": { "text": "boolean" } },
+            {
+              "name": "type",
+              "type": { "text": "'button' | 'submit' | 'reset'" }
+            }
+          ],
+          "events": [
+            {
+              "name": "atrium-click",
+              "type": {
+                "text": "CustomEvent<{ originalEvent: MouseEvent | KeyboardEvent }>"
+              },
+              "description": "Fired when the button is activated by mouse or keyboard."
+            }
+          ],
+          "slots": [
+            { "name": "default", "description": "Button label content." },
+            {
+              "name": "icon-start",
+              "description": "Optional icon rendered before the label."
+            },
+            {
+              "name": "icon-end",
+              "description": "Optional icon rendered after the label."
+            }
+          ],
+          "cssProperties": [
+            { "name": "--atrium-button-bg", "syntax": "<color>" },
+            { "name": "--atrium-button-fg", "syntax": "<color>" },
+            { "name": "--atrium-button-radius", "syntax": "<length>" },
+            { "name": "--atrium-button-padding-x", "syntax": "<length>" },
+            { "name": "--atrium-button-padding-y", "syntax": "<length>" }
+          ],
+          "_atrium": {
+            "version": "1.2.3",
+            "tier": "primitive",
+            "layer": "L0",
+            "stability": "stable",
+            "selector": ".atrium-button",
+            "variants": ["primary", "secondary", "outline", "ghost", "destructive"],
+            "sizes": ["sm", "md", "lg"],
+            "a11yRequirements": [
+              {
+                "id": "accessible_name_required",
+                "wcag": "4.1.2",
+                "severity": "error",
+                "description": "Button must have visible text content or aria-label."
+              },
+              {
+                "id": "focus_visible_required",
+                "wcag": "2.4.7",
+                "severity": "error",
+                "description": "Focus must be visually distinct."
+              },
+              {
+                "id": "keyboard_activation",
+                "wcag": "2.1.1",
+                "severity": "error",
+                "description": "Must be activatable with Enter and Space."
+              }
+            ],
+            "antiPatterns": [
+              {
+                "id": "navigation-as-button",
+                "pattern": "<button class=\"atrium-button\" onClick={navigate}>",
+                "fix": "<a class=\"atrium-link\" href=\"...\">",
+                "reason": "Use Link for navigation, Button for actions",
+                "severity": "warning"
+              },
+              {
+                "id": "icon-only-needs-label",
+                "pattern": "<button class=\"atrium-button\">$ICON</button>",
+                "constraint": {
+                  "has": "<svg/>",
+                  "not_has": "aria-label"
+                },
+                "fix": "Add aria-label or visible text",
+                "wcag": "4.1.2",
+                "severity": "error"
+              },
+              {
+                "id": "remove-focus-outline",
+                "pattern": "outline: none",
+                "fix": "Provide :focus-visible alternative",
+                "wcag": "2.4.7",
+                "severity": "error"
+              }
+            ],
+            "tokensConsumed": [
+              "color.action.primary.bg",
+              "color.action.primary.fg",
+              "color.action.primary.bg-hover",
+              "color.focus.ring",
+              "button.radius",
+              "button.padding-x",
+              "button.padding-y"
+            ],
+            "rendering": "server-safe",
+            "hydrationCost": "low",
+            "criticalForA11y": true,
+            "firefoxFallbacks": [],
+            "examples": {
+              "basic": "<button class=\"atrium-button\" data-variant=\"primary\" type=\"button\">Apply</button>",
+              "secondary": "<button class=\"atrium-button\" data-variant=\"secondary\" type=\"button\">Save draft</button>",
+              "destructive": "<button class=\"atrium-button\" data-variant=\"destructive\" type=\"button\">Delete application</button>",
+              "with-icon": "<button class=\"atrium-button\" data-variant=\"primary\" type=\"button\"><svg aria-hidden=\"true\"></svg>Apply</button>",
+              "icon-only": "<button class=\"atrium-button\" data-variant=\"ghost\" type=\"button\" aria-label=\"Close\">×</button>",
+              "loading": "<button class=\"atrium-button\" data-variant=\"primary\" type=\"button\" aria-busy=\"true\">Submitting…</button>"
+            },
+            "doNot": [
+              "Do not use Button for navigation — use Link.",
+              "Do not remove focus styles.",
+              "Do not create icon-only buttons without aria-label.",
+              "Do not use disabled buttons as the only explanation of unavailable actions; provide context."
+            ],
+            "policyMapping": [
+              { "policy": "M-23-22", "section": "Accessibility" },
+              { "policy": "Section 508", "section": "WCAG 2.0 AA" },
+              { "policy": "WCAG 2.2 AA", "criteria": ["1.4.3", "2.1.1", "2.4.7", "4.1.2"] }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

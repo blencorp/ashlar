@@ -1,0 +1,63 @@
+# Atrium
+
+Atrium is a government-first, web-platform-native, AI-readable design system distributed as a registry of versioned, signed, evidence-backed component capsules.
+
+## What this repository is
+
+This repository is a research and design package for an upcoming open-source design system. No code has been written yet. The contents here describe the philosophy, architecture, research base, and roadmap that will guide the implementation.
+
+The work is led by engineers at [Blen](https://blencorp.com) with the intent to release as community-governed open source. It is not affiliated with the official U.S. Web Design System (USWDS) or with the National Design Studio.
+
+## Reading order
+
+1. [`strategy.md`](./strategy.md) — the public case for Atrium and how to position it.
+2. [`philosophy.md`](./philosophy.md) — the thesis and design principles.
+3. [`architecture/overview.md`](./architecture/overview.md) — the layered architecture and how the pieces fit.
+4. [`architecture/toolchain.md`](./architecture/toolchain.md) — the recommended v0/v1 technical foundation.
+5. [`architecture/compliance-security-ci.md`](./architecture/compliance-security-ci.md) — accessibility, security, provenance, and CI tooling scope.
+6. [`architecture/`](./architecture/) — detailed architecture documents (capsule format, drift management, AI-native strategy, validation, tokens, accessibility evidence, future architecture).
+7. [`adr/`](./adr/) — architecture decision records.
+8. [`roadmap/00-roadmap.md`](./roadmap/00-roadmap.md) — phased delivery plan and success gates.
+9. [`roadmap/github-launch.md`](./roadmap/github-launch.md) — public GitHub launch checklist, milestones, and labels.
+10. [`research/`](./research/) — the body of research informing design decisions, including the final April 29, 2026 current-source pass.
+11. [`governance/`](./governance/) — community model and contribution rules.
+12. [`examples/`](./examples/) — concrete schema examples.
+
+## What problem this solves
+
+USWDS, the official U.S. federal design system, remains active and valuable. Its public values, accessibility posture, and civic design principles should be preserved. The gap is the delivery model: no official framework support, no source-code registry, Sass/Gulp-era tooling, limited machine-readable metadata, and no built-in update path for teams that wrap or fork components. As of the August 2025 America by Design fact sheet, fewer than 20% of federal websites used USWDS code.
+
+shadcn/ui demonstrated that source-code distribution beats package-based distribution for modern teams, but its production users continue to report unsolved problems: components drift after install, accessibility evidence is absent, theming is shallow, framework coupling is real, and the registry is built for installation rather than governance.
+
+Atrium is the response. It assumes a 2026 web platform that delivers most UI without JavaScript, treats statecharts as the right abstraction for the components that genuinely need state, ships extended Custom Elements Manifests as the AI contract, and uses lockfiles plus three-way merges to make source ownership safely updateable.
+
+## Technical foundation
+
+Atrium's v0/v1 foundation is intentionally conservative where agency adoption depends on trust:
+
+- Node + TypeScript CLI, distributed through npm and runnable with `npx`.
+- DTCG 2025.10 tokens compiled to CSS variables, Tailwind v4 `@theme`, TypeScript, and design-tool outputs.
+- Semantic CSS components using modern platform features, not Tailwind as the authoring layer.
+- Tailwind v4 as a first-class output and integration target.
+- Lit Web Components only for behavior-heavy components.
+- ast-grep + tree-sitter for polyglot validation.
+- Sigstore, SLSA-informed provenance, SBOMs, signed Git tags, and offline registry mirrors.
+- Extended CEM + MCP + AGENTS.md for AI-native use.
+
+Zig remains a future experiment, not a v0/v1 foundation, because Zig 0.16 still documents known bugs and regressions.
+
+## Status
+
+| Phase | Status | Date |
+|---|---|---|
+| Initial research and strategy | Complete | April 2026 |
+| Architecture redesign post-research | Complete | April 2026 |
+| Detailed architecture & ADRs | Complete enough for v0.0 planning | April 2026 |
+| Final current-source research pass | Complete | April 29, 2026 |
+| Public strategy and GitHub launch docs | Complete | April 29, 2026 |
+| Roadmap and v0.0 specification | Drafted | April 2026 |
+| v0.0 prototype | Not started | — |
+
+## License
+
+Apache-2.0. The explicit patent grant is useful for federal procurement and regulated-industry adoption.

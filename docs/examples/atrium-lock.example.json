@@ -1,0 +1,85 @@
+{
+  "$schema": "https://atrium.dev/schemas/lock.schema.json",
+  "version": "1",
+  "registry": "https://registry.atrium.dev",
+  "trustRoots": ["sigstore-public-key:atrium-canonical"],
+  "tokens": {
+    "version": "0.5.2",
+    "capsule_hash": "sha256:1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+    "signature": "sigstore:MEUCIDxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "files": {
+      "src/styles/atrium.tokens.css": {
+        "original_hash": "sha256:2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c",
+        "current_hash": "sha256:2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c"
+      },
+      "src/styles/atrium.theme.css": {
+        "original_hash": "sha256:3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d",
+        "current_hash": "sha256:3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d"
+      }
+    }
+  },
+  "themes": ["atrium/default"],
+  "components": {
+    "button": {
+      "version": "1.2.3",
+      "capsule_hash": "sha256:abc4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cab",
+      "signature": "sigstore:MEUCIAyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+      "installed_at": "2026-04-27T10:00:00Z",
+      "installed_via": "atrium-cli@0.1.0",
+      "stability": "stable",
+      "files": {
+        "src/components/atrium/button.css": {
+          "original_hash": "sha256:def4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cde",
+          "current_hash": "sha256:def4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cde",
+          "critical_for_a11y": true
+        },
+        "src/components/atrium/button.html.njk": {
+          "original_hash": "sha256:ghi4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cgh",
+          "current_hash": "sha256:ghi4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cgh",
+          "critical_for_a11y": false
+        },
+        "src/components/atrium/button.cem.json": {
+          "original_hash": "sha256:jkl4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cjk",
+          "current_hash": "sha256:jkl4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cjk",
+          "critical_for_a11y": false
+        }
+      }
+    },
+    "form-field": {
+      "version": "0.5.0",
+      "capsule_hash": "sha256:fff4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cfa",
+      "signature": "sigstore:MEUCIDxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "installed_at": "2026-04-27T10:00:15Z",
+      "installed_via": "atrium-cli@0.1.0",
+      "stability": "beta",
+      "files": {
+        "src/components/atrium/form-field.css": {
+          "original_hash": "sha256:aaa4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3caa",
+          "current_hash": "sha256:bbb4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cbb",
+          "critical_for_a11y": true,
+          "_note": "current_hash differs from original_hash → consumer has local edits"
+        },
+        "src/components/atrium/form-field.html.njk": {
+          "original_hash": "sha256:ccc4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3ccc",
+          "current_hash": "sha256:ccc4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3ccc",
+          "critical_for_a11y": false
+        }
+      }
+    },
+    "alert": {
+      "version": "1.0.1",
+      "capsule_hash": "sha256:eee4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cee",
+      "signature": "sigstore:MEUCIDzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+      "installed_at": "2026-04-27T10:00:30Z",
+      "installed_via": "atrium-cli@0.1.0",
+      "stability": "stable",
+      "files": {
+        "src/components/atrium/alert.css": {
+          "original_hash": "sha256:ddd4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cdd",
+          "current_hash": "sha256:ddd4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cdd",
+          "critical_for_a11y": true
+        }
+      }
+    }
+  }
+}

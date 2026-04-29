@@ -1,0 +1,258 @@
+# Web Components architecture
+
+L1 components are delivered as **Lit-based Web Components** that wrap Zag statecharts (see [`state-management.md`](./state-management.md)). This document covers the Lit shell architecture, Light DOM versus Shadow DOM choices, SSR via Declarative Shadow DOM, form-associated custom elements, and the framework-adapter generation pipeline.
+
+## Why Lit
+
+- **Mature** — Lit 3.x is production-grade, used by Spectrum, Carbon, Web Awesome.
+- **Small** — ~5KB minified+gzipped runtime.
+- **Standards-aligned** — produces native custom elements; no Lit-specific runtime in the consumer's app beyond Lit itself.
+- **Aligned with USWDS Elements direction** — preserves future upstream-contribution potential.
+- **Rich SSR story** — `@lit-labs/ssr` renders to Declarative Shadow DOM.
+
+Stencil was considered as an alternative (auto-generated framework wrappers, smaller per-component runtime). Lit was chosen for ecosystem alignment and community size.
+
+## Shell pattern
+
+The Lit element is a thin shell that:
+
+1. Defines the custom element via `@customElement`.
+2. Declares observable properties and attributes.
+3. Subscribes to the Zag machine; calls `requestUpdate()` on transitions.
+4. Renders DOM via `lit-html` templates.
+5. Forwards DOM events into the machine.
+6. Sets ARIA attributes directly (Firefox `ElementInternals.aria*` reflection is incomplete; see below).
+
+```ts
+@customElement("atrium-combobox")
+export class AtriumCombobox extends LitElement {
+  @property({ type: Array }) options: Option[] = [];
+  @property({ type: String }) value: string = "";
+
+  private machine = comboboxMachine.start();
+  private signals = createComboBoxSignals(this.machine);
+
+  createRenderRoot() {
+    return this;  // Light DOM by default
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.unsubscribe = this.machine.subscribe(() => this.requestUpdate());
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.unsubscribe?.();
+    this.machine.stop();
+  }
+
+  render() { /* ... */ }
+}
+```
+
+## Light DOM by default
+
+Light DOM is the default render root. Reasons:
+
+- **Theming compatibility.** CSS variables flow naturally; consumer styles cascade in.
+- **Forms.** Inputs inside light DOM participate in `<form>` natively without ElementInternals gymnastics.
+- **SSR simplicity.** No DSD strategy required.
+- **Drupal/CMS friendliness.** Server-rendered HTML is just HTML; no shadow boundaries to reason about.
+
+Shadow DOM is opted into only when encapsulation is genuinely required:
+
+- The component renders user-supplied content that must not be styled by the consumer (rare).
+- The component's internal styles use selectors that cannot be safely scoped via `@scope` or class-prefix conventions.
+
+When Shadow DOM is used, **Declarative Shadow DOM** is the SSR strategy:
+
+```html
+<atrium-tooltip>
+  <template shadowrootmode="open">
+    <style>/* ... */</style>
+    <slot></slot>
+  </template>
+</atrium-tooltip>
+```
+
+DSD support: Chrome 111+, Firefox 123+, Safari 16.4+, Edge 111+. Global ~94.6% (April 2026); Baseline projected August 2026.
+
+## SSR strategy
+
+L1 components render server-side via two paths:
+
+1. **L4 templates (preferred)** — Nunjucks/Twig/Jinja/ERB partials emit the same HTML the WC would emit, including ARIA attributes resolved from initial machine state. The custom element upgrades to behavior on the client.
+
+2. **Lit SSR (escape hatch)** — `@lit-labs/ssr` renders Lit components to HTML strings (with DSD where used). This is **labs/experimental** and not promised as streaming SSR. Use for Node-rendered apps that need component-level SSR.
+
+The L4 template path is preferred because:
+
+- It works without Lit installed on the server.
+- Drupal/Sitecore/AEM/Rails/Django integrators get the rendering they expect.
+- It is more performant (no Lit runtime on the server).
+
+## Form-associated custom elements
+
+L1 input components (custom inputs, custom selects) participate in `<form>` via `ElementInternals`:
+
+```ts
+@customElement("atrium-input")
+export class AtriumInput extends LitElement {
+  static formAssociated = true;
+  private internals = this.attachInternals();
+
+  setValue(v: string) {
+    this.internals.setFormValue(v);
+    this.internals.setValidity(/* ValidityState */);
+  }
+}
+```
+
+Browser support: Chrome 77+, Edge 79+, Firefox 98+, Safari 16.4+. Global ~94.92%.
+
+### Firefox ARIA reflection fallback
+
+Firefox's `ElementInternals` implementation has **partial coverage of ARIA reflection** as of April 2026. Setting `internals.ariaLabel`, `internals.ariaExpanded`, etc. does not propagate to assistive tech reliably.
+
+**Mitigation**: set ARIA attributes directly on the host or inner element rather than via `internals.aria*`:
+
+```ts
+// Reliable across browsers:
+this.setAttribute("aria-expanded", state);
+
+// Unreliable in Firefox (do not use as the only path):
+this.internals.ariaExpanded = state;
+```
+
+The fallback is documented per-component in the CEM `_atrium.firefoxFallbacks` field. Tests verify ARIA propagation in Firefox specifically.
+
+## Framework adapters
+
+Adapters are auto-generated from each capsule's extended CEM. The generator reads:
+
+- Tag name and class
+- Attributes and properties
+- Slots
+- Events (and event detail types)
+- `_atrium.variants`, `_atrium.sizes`, etc.
+
+And emits framework-idiomatic wrappers.
+
+### React adapter
+
+Generated via `@lit/labs/gen-wrapper-react`-style tooling, customized for Atrium's CEM extensions:
+
+```tsx
+// @atrium/react/combobox.tsx (generated)
+import { createComponent } from "@lit/react";
+import { AtriumCombobox } from "@atrium/element/combobox";
+
+export const ComboBox = createComponent({
+  tagName: "atrium-combobox",
+  elementClass: AtriumCombobox,
+  react: React,
+  events: {
+    onSelect: "atrium-select",
+    onOpen: "atrium-open",
+    onClose: "atrium-close"
+  }
+});
+
+// Plus typed props derived from CEM
+export type ComboBoxProps = React.ComponentProps<typeof ComboBox>;
+```
+
+For SSR + React 19, the adapter handles `"use client"` boundaries appropriately.
+
+### Vue adapter
+
+```vue
+<!-- @atrium/vue/combobox.vue (generated) -->
+<script setup lang="ts">
+import { onMounted } from "vue";
+import "@atrium/element/combobox";
+
+defineProps<{
+  options?: Option[];
+  modelValue?: string;
+}>();
+
+defineEmits<{
+  "update:modelValue": [value: string];
+  select: [value: string];
+}>();
+</script>
+
+<template>
+  <atrium-combobox
+    :options="options"
+    :value="modelValue"
+    @atrium-select="$emit('select', $event.detail)"
+  />
+</template>
+```
+
+### Svelte / Solid adapters
+
+Analogous patterns. Generated from the same CEM.
+
+### Vanilla / Element delivery
+
+For Drupal, Sitecore, AEM, plain HTML — the custom element itself is the delivery:
+
+```html
+<script type="module">
+  import "@atrium/element/combobox";
+</script>
+
+<atrium-combobox></atrium-combobox>
+```
+
+No framework, no adapter, no build step required.
+
+## Adapter generation pipeline
+
+```
+capsule.cem.json + capsule.element.ts
+              │
+              ▼
+       adapter generator
+              │
+   ┌──────────┼──────────┬──────────┬──────────┐
+   ▼          ▼          ▼          ▼          ▼
+@atrium/   @atrium/   @atrium/   @atrium/   @atrium/
+react      vue        svelte     solid      element
+```
+
+When a capsule's machine or shell changes:
+
+1. Capsule rebuild updates `capsule.cem.json`.
+2. Adapter generator detects changes; regenerates adapters.
+3. Adapter packages are republished as part of the registry release.
+
+Adapters never drift from the canonical implementation because they are not hand-maintained.
+
+## Bundle math
+
+For a typical L1 component (Combobox), gzipped:
+
+- Lit runtime (shared): ~5KB
+- Zag core (shared): ~4KB
+- Combobox machine: ~2KB
+- Lit shell: ~1.5KB
+- React adapter (if used): ~1KB
+
+**Total for first L1 component**: ~13KB. Each additional L1 component on top: ~3KB (machine + shell only). Compared to shadcn's Combobox at ~30KB and Carbon WC's at ~35KB, Atrium ships materially smaller.
+
+## References
+
+- [ADR 0010 — Framework strategy](../adr/adr-0010-framework-strategy.md)
+- [State management](./state-management.md)
+- [Capsule format](./capsule.md)
+- [research/04-web-components.md](../research/04-web-components.md)
+- Lit 3.x: https://lit.dev/
+- `@lit-labs/ssr`: https://github.com/lit/lit/tree/main/packages/labs/ssr
+- `@lit/react`: https://www.npmjs.com/package/@lit/react
+- Custom Elements Manifest: https://github.com/webcomponents/custom-elements-manifest
+- Declarative Shadow DOM: https://web.dev/articles/declarative-shadow-dom

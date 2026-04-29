@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atrium.dev/schemas/extended-cem.schema.json",
+  "title": "Atrium Extended Custom Elements Manifest",
+  "description": "JSON Schema for the _atrium namespace extension to W3C-CG Custom Elements Manifest.",
+  "type": "object",
+  "properties": {
+    "schemaVersion": { "type": "string" },
+    "modules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/module" }
+    }
+  },
+  "required": ["schemaVersion", "modules"],
+  "$defs": {
+    "module": {
+      "type": "object",
+      "properties": {
+        "kind": { "type": "string" },
+        "path": { "type": "string" },
+        "declarations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/declaration" }
+        }
+      }
+    },
+    "declaration": {
+      "type": "object",
+      "properties": {
+        "kind": { "type": "string" },
+        "name": { "type": "string" },
+        "tagName": { "type": "string" },
+        "description": { "type": "string" },
+        "_atrium": { "$ref": "#/$defs/atriumExtension" }
+      }
+    },
+    "atriumExtension": {
+      "type": "object",
+      "description": "Atrium-specific metadata namespaced under `_atrium`. Forward-compatible: vanilla CEM consumers ignore.",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Capsule version (semver)."
+        },
+        "tier": {
+          "enum": ["foundation", "primitive", "composite", "pattern", "block"]
+        },
+        "layer": {
+          "enum": ["L0", "L1", "L2", "L3", "L4"]
+        },
+        "stability": {
+          "enum": ["proposal", "experimental", "beta", "stable", "deprecated"]
+        },
+        "variants": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Allowed values for the variant prop (or equivalent)."
+        },
+        "sizes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "a11yRequirements": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/a11yRequirement" }
+        },
+        "antiPatterns": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/antiPattern" }
+        },
+        "tokensConsumed": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Atrium semantic token names consumed by this component."
+        },
+        "rendering": {
+          "enum": ["server-safe", "client-only", "hybrid"],
+          "description": "Server rendering classification."
+        },
+        "hydrationCost": {
+          "enum": ["none", "low", "medium", "high"]
+        },
+        "criticalForA11y": {
+          "type": "boolean",
+          "description": "If true, drift management forces user confirmation on update."
+        },
+        "firefoxFallbacks": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Documented Firefox-specific ARIA fallbacks for ElementInternals gaps."
+        },
+        "examples": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "description": "Canonical example markup."
+          }
+        },
+        "doNot": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "policyMapping": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/policyMapping" }
+        }
+      },
+      "required": ["version", "tier", "layer", "stability"]
+    },
+    "a11yRequirement": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "wcag": { "type": "string", "description": "WCAG 2.x criterion id (e.g., 4.1.2)." },
+        "severity": { "enum": ["error", "warning", "info"] },
+        "description": { "type": "string" }
+      },
+      "required": ["id", "severity"]
+    },
+    "antiPattern": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "pattern": {
+          "type": "string",
+          "description": "ast-grep-compatible pattern used to generate validation rules."
+        },
+        "constraint": {
+          "type": "object",
+          "description": "Additional ast-grep constraints (has, not_has, inside, etc.)."
+        },
+        "fix": {
+          "type": "string",
+          "description": "Suggested fix or replacement pattern."
+        },
+        "reason": {
+          "type": "string"
+        },
+        "wcag": { "type": "string" },
+        "severity": { "enum": ["error", "warning", "info"] }
+      },
+      "required": ["id", "pattern", "severity"]
+    },
+    "policyMapping": {
+      "type": "object",
+      "properties": {
+        "policy": {
+          "type": "string",
+          "description": "Policy reference (e.g., M-23-22, Section 508, WCAG 2.2 AA)."
+        },
+        "section": {
+          "type": "string",
+          "description": "Section or subsection of the policy."
+        },
+        "criteria": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["policy"]
+    }
+  }
+}
