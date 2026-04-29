@@ -206,6 +206,71 @@ Zig is promising for small native binaries and cross-compilation, but Zig 0.16 s
 
 Because Ashlar is government-first and informed by USWDS, readers may infer official GSA, NDS, or USWDS endorsement. Mitigation: every public README, docs site, package page, and launch announcement includes the independence disclaimer. Avoid any public naming that implies official USWDS continuity.
 
+## High-severity risks added 2026-04-29
+
+### R19 — GSA absorption rather than rejection
+
+**Severity**: High.
+**Phase exposure**: v0.1 onwards.
+
+The most likely failure mode for a useful federal-adjacent OSS project is not being ignored or attacked — it is being absorbed. If Ashlar's registry, evidence schema, validator, or MCP work proves useful, NDS or a future USWDS modernization may want to upstream it. Both outcomes (indifference + absorption) end the independent project; absorption ends it while every individual decision looks positive.
+
+**Mitigations**:
+- Written posture on what gets contributed upstream (validator rules, evidence schema patterns) vs. what is retained as Ashlar-specific (the verification, signing, AI-contract substrate).
+- Foundation home (Linux Foundation Public Health, OpenJS, Sloan civic-tech, or equivalent) as structural protection — Ashlar's neutral host survives any single component contribution.
+- Contributor License Agreement clarity that allows good-faith upstreaming without ceding the substrate.
+- Public RFC for any major upstream contribution.
+
+**Kill criterion**: if absorption pressure forces give-up of the verification substrate (signing, lockfile, audit, evidence schema), the project is no longer Ashlar; it has become a USWDS contributor track.
+
+### R20 — npm supply-chain compromise of the Ashlar package
+
+**Severity**: High.
+**Phase exposure**: v0.1 onwards (when Ashlar is publicly publishable).
+
+CISA-flagged contemporary threats: the September 2025 Shai-Hulud worm (~500 npm packages compromised) and the April 2026 Axios npm package compromise attributed to UNC1069 (North Korean threat actor). A federal-grade tool that recommends or installs code is a high-value target. The current `npm install ashlar` or `npx ashlar` path is exposed to the same threat surface. R14 covers Sigstore service availability; this risk covers what happens when Ashlar itself is compromised.
+
+**Mitigations**:
+- Hardware-key signing on the maintainer publisher account.
+- npm trusted publishing with OIDC; SLSA L3 provenance attestations on every release.
+- Lockfile-recorded signatures so consumers can detect a hijacked version against an embedded chain of trust.
+- SBOM published with every release.
+- Documented incident-response playbook: detection (SIEM-friendly indicators), rotation/revocation process, `verify` failure mode and remediation guidance, public disclosure timeline, key compromise recovery.
+- No transitive dependencies on suspect packages; runtime dependencies kept minimal.
+
+**Kill criterion**: any post-v0.1 supply-chain incident where consumers cannot detect the compromise or recover safely triggers immediate freeze and public review of distribution model.
+
+### R21 — Lit + Zag has no production prior art
+
+**Severity**: High.
+**Phase exposure**: v0.1 (first L1 component).
+
+The L1 substrate is currently designed around Lit components driven by Zag statecharts. Zag has no `@zag-js/vanilla` package; the maintainer's discussion #2309 confirms vanilla support is proof-of-concept only. There is no published production Lit + Zag combination at scale. R4 covers WC-with-framework-SSR friction; this risk covers the more fundamental question of whether the proposed L1 architecture itself works.
+
+**Mitigations**:
+- L1 ComboBox is deferred from v0.0 to v0.1; substrate decisions are not made on Button alone.
+- ADR-0010 explicitly marks Lit + Zag as a research bet.
+- One iteration on a real L1 component before scaling beyond Button; if it doesn't feel right, ADR-0010 is revisited (alternatives: Lit + custom statechart wrapper, Stencil, a different combination).
+- Keep behavior contracts (statechart + signals) framework-neutral so the underlying library can swap without component-author changes.
+
+**Kill criterion**: if the first real L1 component takes more than two iterations to feel production-stable, pause v0.1 component scaling and revisit the substrate.
+
+### R22 — Evidence labor budget gap at v0.1+
+
+**Severity**: High.
+**Phase exposure**: v0.1, v1.0.
+
+Manual screen-reader testing on NVDA + JAWS + VoiceOver across Firefox/Safari/Chrome runs 8-16 hours per component per release at industry pricing. The roadmap's tiered evidence (stable = axe + keyboard + 1 SR; LTS = full matrix) helps, but the v1.0 target of 10-12 stable components × 2-4 releases/year is still ~500-1500 hours/year of accessibility-specialist labor before third-party audits, codemod authoring, USWDS interop testing, agency theming, and content review. Governance commits to "at least one funded maintainer line" before v0.1 — that is roughly 5-15% of v1.0 needs.
+
+**Mitigations**:
+- Tiered evidence: stable bar is achievable with 1 SR transcript; LTS bar requires the full matrix.
+- v1.0 stable component count cut from 25-30 to 10-12 + LTS-aspiring set; the previous target was unfunded.
+- Foundation grant pipeline is a v0.1 pre-requisite, not a v1.0 nice-to-have. Target hosts: Sloan civic-tech, Mozilla MOSS, Linux Foundation Public Health.
+- Specific federal contractor relationships where accessibility evidence is funded as a deliverable.
+- Component-stability board (R3 cross-org) reviews evidence at each release.
+
+**Kill criterion**: if at v0.1 there is no funded grant pipeline and no contractor sponsorship of evidence labor, do not advance v1.0 component-count target without revisiting the evidence-tier definition or funding model. Evidence-incomplete components must not ship as `stable`.
+
 ### R14 — Sigstore / cosign service availability
 
 If Sigstore signing infrastructure goes down, registry publication blocks. Mitigation: signing is async; we can buffer releases. Sigstore has good uptime; not a primary concern.
@@ -225,6 +290,10 @@ Ashlar does not ship if:
 - Security incidents go unresolved (R5).
 - Quality gates remain unmet while scope keeps expanding (R6).
 - Compliance and CI tooling cannot run credibly in real partner projects (R16).
+- Absorption pressure forces give-up of the verification substrate (R19).
+- Supply-chain compromise leaves consumers unable to detect or recover (R20).
+- L1 substrate (Lit + Zag or alternative) needs more than two iterations to feel stable (R21).
+- Evidence labor is unfunded against the stable-component target (R22).
 
 Each of these is a stop-the-line condition. The team explicitly acknowledges them rather than discovering them at release.
 
