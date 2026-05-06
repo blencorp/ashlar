@@ -6,7 +6,7 @@ For the current prompt-to-artifact gap map against the broader "gov shadcn" obje
 
 Date: 2026-05-06
 Phase: v0.0 prototype
-Branch: active foundation PR stack through `codex/npx-ashlar-entrypoint`
+Branch: main after the foundation PR stack merge (#42-#54)
 Proof tracking: [Replacement-grade proof gates](https://github.com/blencorp/ashlar/milestone/1) milestone, issues [#22](https://github.com/blencorp/ashlar/issues/22), [#23](https://github.com/blencorp/ashlar/issues/23), and [#24](https://github.com/blencorp/ashlar/issues/24)
 Strict readiness: still failing by design on `stable-l0-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`
 
@@ -14,7 +14,7 @@ Strict readiness: still failing by design on `stable-l0-evidence`, `external-rev
 
 These are wired up, tested, and run as documented.
 
-- `ashlar init` — writes `ashlar.config.json`, an empty `ashlar-lock.json`, three default agency themes (Federal, VA, USDA) as DTCG-shaped JSON files plus generated `theme.css`, `tailwind-theme.css`, and `tokens.ts` files, an `AGENTS.md` template with editor instruction fanout, a generated `DESIGN.md`, and a generated `src/ashlar/ashlar.css` entrypoint.
+- `ashlar init` — writes `ashlar.config.json`, an empty `ashlar-lock.json`, three default agency themes (Default, VA, USDA) as DTCG-shaped JSON files plus generated `theme.css`, `tailwind-theme.css`, and `tokens.ts` files, an `AGENTS.md` template with editor instruction fanout, a generated `DESIGN.md`, and a generated `src/ashlar/ashlar.css` entrypoint.
 - `ashlar status [--registry <path>] [--json]` — read-only adoption status for a project or checkout. It reports whether Ashlar is initialized, which capsules are installed, whether the registry is readable, current L0 and stable-evidence coverage, external-review proof state, and concrete next commands. It is a DX/status surface only; strict replacement-grade claims still require `ashlar release readiness`.
 - `ashlar add <component>` — resolves a component from the local registry, verifies the registry-authored `*.capsule.json` manifest against the `registry/index.json` capsule hash, copies the manifest-listed source files into the consumer project, computes per-file SHA-256, writes the lockfile entry, regenerates the consumer's bundled CSS and indexes.
 - `ashlar audit --policy federal [files...]` — parses HTML with parse5, runs seven federal page-shell rules (page title presence and length, meta description presence and length, federal banner near the top of body, identifier presence, identifier required-link coverage). SARIF carries line/column from parse5 source offsets. Rule entries include `fullDescription`, `help`, and `properties.tags`. **Standalone-friendly**: works in a fresh project without `ashlar.config.json` or `ashlar-lock.json`; `examples/legacy-federal-project/` proves useful findings on a non-Ashlar legacy page.

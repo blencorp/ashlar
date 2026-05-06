@@ -1,6 +1,6 @@
 # Ashlar Vite Example
 
-Federal-compliant Vite reference app for Ashlar. Demonstrates:
+Public-service Vite reference app for Ashlar. Demonstrates:
 
 - L0 Button capsule (`<button class="ashlar-button">`) installed via `ashlar add`.
 - Federal page-shell compliance (banner, identifier with required links, ≥20-char page title, ≥50-char meta description).

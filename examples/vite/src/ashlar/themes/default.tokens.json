@@ -2,7 +2,7 @@
   "$schema": "https://ashlar.dev/schemas/agency-theme.schema.json",
   "name": "default",
   "title": "Default",
-  "description": "Neutral baseline using USWDS-oriented semantic roles. Selected when no agency theme is applied.",
+  "description": "Default public-service baseline grounded in USWDS design-token conventions. Selected when no agency theme is applied.",
   "order": 0,
   "tokens": {
     "color": {
@@ -10,11 +10,18 @@
       "surface": { "$type": "color", "$value": "#ffffff" },
       "surfaceRaised": { "$type": "color", "$value": "#ffffff" },
       "surfaceSubtle": { "$type": "color", "$value": "#eef3f7" },
+      "surfaceMuted": { "$type": "color", "$value": "{color.surfaceSubtle}" },
       "border": { "$type": "color", "$value": "#c9d4df" },
+      "borderSubtle": { "$type": "color", "$value": "{color.border}" },
+      "inputBorder": { "$type": "color", "$value": "{color.border}" },
       "text": {
         "default": { "$type": "color", "$value": "#1b1b1b" },
         "muted": { "$type": "color", "$value": "#4d5965" },
-        "inverse": { "$type": "color", "$value": "#ffffff" }
+        "inverse": { "$type": "color", "$value": "#ffffff" },
+        "inverseMuted": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, var(--ashlar-color-text-inverse), transparent 24%)"
+        }
       },
       "action": {
         "primary": {
@@ -28,13 +35,18 @@
           "border": { "$type": "color", "$value": "#005ea8" }
         }
       },
+      "link": { "$type": "color", "$value": "{color.action.secondary.fg}" },
+      "linkInverse": { "$type": "color", "$value": "{color.text.inverse}" },
       "focus": { "$type": "color", "$value": "#2491ff" },
       "status": {
         "infoBg": { "$type": "color", "$value": "#e7f6f8" },
         "infoFg": { "$type": "color", "$value": "#1b1b1b" },
+        "infoBorder": { "$type": "color", "$value": "{color.action.primary.bg}" },
         "successBg": { "$type": "color", "$value": "#ecf3ec" },
         "warningBg": { "$type": "color", "$value": "#faf3d1" },
-        "errorBg": { "$type": "color", "$value": "#f4e3db" }
+        "errorBg": { "$type": "color", "$value": "#f4e3db" },
+        "errorBorder": { "$type": "color", "$value": "#d54309" },
+        "errorFg": { "$type": "color", "$value": "#b50909" }
       }
     },
     "font": {
@@ -81,7 +93,7 @@
         "text": {
           "default": { "$type": "color", "$value": "#f8fafc" },
           "muted": { "$type": "color", "$value": "#cbd5e1" },
-          "inverse": { "$type": "color", "$value": "#111827" }
+          "inverse": { "$type": "color", "$value": "#ffffff" }
         },
         "action": {
           "primary": {
@@ -95,7 +107,16 @@
             "border": { "$type": "color", "$value": "#58b4ff" }
           }
         },
-        "focus": { "$type": "color", "$value": "#face00" }
+        "focus": { "$type": "color", "$value": "#face00" },
+        "status": {
+          "infoBg": { "$type": "color", "$value": "#1f2a37" },
+          "infoFg": { "$type": "color", "$value": "#f8fafc" },
+          "successBg": { "$type": "color", "$value": "#1f3329" },
+          "warningBg": { "$type": "color", "$value": "#3d2f12" },
+          "errorBg": { "$type": "color", "$value": "#3f241f" },
+          "errorBorder": { "$type": "color", "$value": "#ff8d7b" },
+          "errorFg": { "$type": "color", "$value": "#fdb8ae" }
+        }
       }
     }
   }
