@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
+import { describeErrors, validate } from "./schema-validate.js";
 
 export type AshlarConfig = {
   $schema?: string;
@@ -87,7 +88,13 @@ export function readLockfile(): AshlarLockfile {
     return { version: "1", registry: "./registry", components: {} };
   }
 
-  return JSON.parse(readFileSync("ashlar-lock.json", "utf8")) as AshlarLockfile;
+  const lockfile = JSON.parse(readFileSync("ashlar-lock.json", "utf8")) as AshlarLockfile;
+  const result = validate("lock", lockfile);
+  if (!result.ok) {
+    throw new Error(`Invalid Ashlar lockfile at ashlar-lock.json:\n${describeErrors(result)}`);
+  }
+
+  return lockfile;
 }
 
 export function writeJson(path: string, value: unknown): void {

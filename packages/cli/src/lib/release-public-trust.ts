@@ -52,6 +52,10 @@ export function verifyPublicCapsuleTrust(
     errors.push('registry trust root must set sigstore.bundleVerification to "cosign"');
   }
 
+  if (errors.length > 0) {
+    return { capsules, errors };
+  }
+
   let components: RegistryComponent[];
   try {
     components = selectedComponents(input);

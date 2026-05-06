@@ -1,10 +1,11 @@
 import { spawnSync } from "node:child_process";
+import { generateKeyPairSync } from "node:crypto";
 import { cpSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { buildCapsuleManifest } from "../lib/capsule.js";
+import { buildCapsuleManifest, signCapsuleManifest, type CapsuleManifest } from "../lib/capsule.js";
 import { writeJson } from "../lib/project.js";
 
 const here = fileURLToPath(new URL(".", import.meta.url));
@@ -22,6 +23,40 @@ function runCli(args: string[]): { stdout: string; status: number } {
     stdout: `${result.stdout ?? ""}${result.stderr ?? ""}`,
     status: result.status ?? 1,
   };
+}
+
+function writeTestTrustRoot(registry: string): {
+  keyId: string;
+  privateKey: string;
+} {
+  const { privateKey, publicKey } = generateKeyPairSync("ed25519");
+  const keyId = "ashlar-bundle-budget-test-key";
+  const privateKeyPem = privateKey.export({ format: "pem", type: "pkcs8" }).toString();
+
+  writeJson(join(registry, "trust-root.json"), {
+    $schema: "https://ashlar.dev/schemas/trust-root.schema.json",
+    schemaVersion: "1.0",
+    keys: [
+      {
+        keyId,
+        algorithm: "ed25519",
+        publicKey: publicKey.export({ format: "der", type: "spki" }).toString("base64"),
+      },
+    ],
+  });
+
+  return { keyId, privateKey: privateKeyPem };
+}
+
+function signManifest(
+  manifest: CapsuleManifest,
+  signing: { keyId: string; privateKey: string },
+): CapsuleManifest {
+  return signCapsuleManifest({
+    manifest,
+    keyId: signing.keyId,
+    privateKey: signing.privateKey,
+  });
 }
 
 describe("bundle command", () => {
@@ -152,7 +187,7 @@ describe("bundle command", () => {
 
     try {
       cpSync(join(repoRoot, "registry"), registry, { recursive: true });
-      rmSync(join(registry, "trust-root.json"), { force: true });
+      const signing = writeTestTrustRoot(registry);
 
       const componentDirectory = join(registry, "components", "button", "0.0.1");
       writeFileSync(
@@ -168,7 +203,7 @@ describe("bundle command", () => {
         layer: "L0",
         stability: "experimental",
       });
-      writeJson(join(componentDirectory, "button.capsule.json"), manifest);
+      writeJson(join(componentDirectory, "button.capsule.json"), signManifest(manifest, signing));
 
       const indexPath = join(registry, "index.json");
       const index = JSON.parse(readFileSync(indexPath, "utf8")) as {

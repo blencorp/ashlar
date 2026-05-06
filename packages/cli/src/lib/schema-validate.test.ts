@@ -230,6 +230,49 @@ describe("schema-validate", () => {
     expect(result.ok).toBe(true);
   });
 
+  it("validates lockfiles against lock.schema.json", () => {
+    const valid = validate("lock", {
+      $schema: "https://ashlar.dev/schemas/lock.schema.json",
+      version: "1",
+      registry: "./registry",
+      components: {
+        button: {
+          version: "0.0.1",
+          capsule_hash: `sha256:${"a".repeat(64)}`,
+          files: {
+            "src/ashlar/components/button/button.css": {
+              original_hash: `sha256:${"b".repeat(64)}`,
+              current_hash: `sha256:${"b".repeat(64)}`,
+              critical_for_a11y: true,
+            },
+          },
+        },
+      },
+    });
+    const invalid = validate("lock", {
+      version: "1",
+      registry: "./registry",
+      components: {
+        button: {
+          version: "0.0.1",
+          capsule_hash: `sha256:${"a".repeat(64)}`,
+          files: {
+            "src/ashlar/components/button/button.css": {
+              current_hash: `sha256:${"b".repeat(64)}`,
+            },
+          },
+        },
+      },
+    });
+
+    if (!valid.ok) {
+      throw new Error(`Expected lockfile to be valid:\n${describeErrors(valid)}`);
+    }
+    expect(valid.ok).toBe(true);
+    expect(invalid.ok).toBe(false);
+    expect(describeErrors(invalid)).toContain("original_hash");
+  });
+
   it("validates capsule codemods against codemod.schema.json", () => {
     const result = validate("codemod", {
       schemaVersion: "1.0",

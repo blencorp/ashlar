@@ -16,7 +16,15 @@ export function registerVerifyCommand(program: Command) {
         return;
       }
 
-      const lockfile = readLockfile();
+      let lockfile: ReturnType<typeof readLockfile>;
+      try {
+        lockfile = readLockfile();
+      } catch (error) {
+        console.error(error instanceof Error ? error.message : String(error));
+        process.exitCode = 1;
+        return;
+      }
+
       const config = readConfig();
       const componentEntries = Object.entries(lockfile.components);
 
@@ -59,24 +67,18 @@ export function registerVerifyCommand(program: Command) {
           }
         } catch (error) {
           const message = error instanceof Error ? error.message : String(error);
-          if (
-            message.includes("signature verification failed") ||
-            message.includes("manifest integrity failed")
-          ) {
-            console.error(`x ${name}: ${message}`);
+          console.error(`x ${name}: ${message}`);
+          errors += 1;
+          continue;
+        }
+
+        for (const [file, hashes] of Object.entries(component.files)) {
+          if (!hashes.original_hash || !hashes.current_hash) {
+            console.error(`x ${name}: invalid lockfile hashes for ${file}`);
             errors += 1;
             continue;
           }
 
-          console.warn(
-            `! ${name}: registry provenance not checked (${
-              error instanceof Error ? error.message : String(error)
-            })`,
-          );
-          warnings += 1;
-        }
-
-        for (const [file, hashes] of Object.entries(component.files)) {
           if (!existsSync(file)) {
             console.error(`x ${name}: missing ${file}`);
             errors += 1;
@@ -96,7 +98,6 @@ export function registerVerifyCommand(program: Command) {
       }
 
       if (errors > 0) {
-        writeJson("ashlar-lock.json", lockfile);
         process.exitCode = 1;
         return;
       }

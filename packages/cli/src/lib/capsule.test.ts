@@ -51,7 +51,7 @@ describe("buildCapsuleManifest", () => {
     }
   });
 
-  it("reads and verifies a registry-authored manifest", () => {
+  it("requires a trust root before treating a capsule manifest as verified", () => {
     const dir = join(tmpdir(), `ashlar-capsule-${Date.now()}`);
     mkdirSync(dir, { recursive: true });
 
@@ -66,7 +66,7 @@ describe("buildCapsuleManifest", () => {
       });
       writeJson(join(dir, "button.capsule.json"), manifest);
 
-      expect(
+      expect(() =>
         readVerifiedCapsuleManifest({
           directory: dir,
           name: "button",
@@ -74,7 +74,7 @@ describe("buildCapsuleManifest", () => {
           layer: "L0",
           stability: "experimental",
         }),
-      ).toEqual(manifest);
+      ).toThrow(/capsule trust root is required/i);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
@@ -183,7 +183,7 @@ describe("buildCapsuleManifest", () => {
     }
   });
 
-  it("verifies Sigstore capsule bundle metadata against a registry trust policy", () => {
+  it("rejects Sigstore capsule bundles unless the trust policy requires cosign", () => {
     const dir = join(tmpdir(), `ashlar-capsule-${Date.now()}`);
     mkdirSync(dir, { recursive: true });
 
@@ -197,6 +197,7 @@ describe("buildCapsuleManifest", () => {
         sigstore: {
           certificateIdentities: [certificateIdentity],
           certificateOidcIssuers: [certificateOidcIssuer],
+          bundleVerification: "metadata" as const,
         },
       };
 
@@ -226,32 +227,6 @@ describe("buildCapsuleManifest", () => {
       };
       writeJson(join(dir, "button.capsule.json"), { ...manifest, sigstore });
 
-      expect(
-        readVerifiedCapsuleManifest({
-          directory: dir,
-          name: "button",
-          version: "0.0.1",
-          layer: "L0",
-          stability: "experimental",
-          trustRoot,
-        }),
-      ).toMatchObject({
-        name: "button",
-        sigstore: {
-          bundle: "button.sigstore.json",
-          certificateIdentity,
-          certificateOidcIssuer,
-        },
-      });
-
-      writeJson(join(dir, "button.capsule.json"), {
-        ...manifest,
-        sigstore: {
-          ...sigstore,
-          certificateIdentity: "https://github.com/evil/repo/.github/workflows/sigstore.yml@refs/heads/main",
-        },
-      });
-
       expect(() =>
         readVerifiedCapsuleManifest({
           directory: dir,
@@ -261,7 +236,7 @@ describe("buildCapsuleManifest", () => {
           stability: "experimental",
           trustRoot,
         }),
-      ).toThrow(/Sigstore certificate identity is not trusted/i);
+      ).toThrow(/Sigstore bundle verification must use cosign/i);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }

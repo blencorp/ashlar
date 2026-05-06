@@ -223,7 +223,7 @@ export function verifyCapsuleSignature(
   options: { cosignPath?: string; directory?: string } = {},
 ): string[] {
   if (!trustRoot) {
-    return [];
+    return ["capsule trust root is required"];
   }
 
   if (!manifest.signature && !manifest.sigstore) {
@@ -300,6 +300,9 @@ function verifySigstoreCapsuleBundle(
   if (!trustRoot.sigstore) {
     errors.push("Sigstore trust policy is not configured in the registry trust root");
   } else {
+    if (trustRoot.sigstore.bundleVerification !== "cosign") {
+      errors.push('Sigstore bundle verification must use cosign for capsule Sigstore bundles');
+    }
     if (!trustRoot.sigstore.certificateIdentities.includes(sigstore.certificateIdentity)) {
       errors.push(`Sigstore certificate identity is not trusted: ${sigstore.certificateIdentity}`);
     }

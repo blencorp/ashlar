@@ -299,8 +299,8 @@ function decodedPayloads(value: unknown): unknown[] {
     });
 }
 
-function normalizedPackageEvidence(value: unknown, decoded: unknown[]): string {
-  return JSON.stringify([value, ...decoded]).toLowerCase();
+function normalizedPackageEvidence(decoded: unknown[]): string {
+  return JSON.stringify(decoded).toLowerCase();
 }
 
 function packageMentioned(evidence: string, pkg: { name: string; version: string }): boolean {
@@ -383,7 +383,7 @@ export function verifyPublicNpmProvenance(
       );
     }
 
-    const evidence = normalizedPackageEvidence(auditJson, decoded);
+    const evidence = normalizedPackageEvidence(decoded);
     if (!evidence.includes("github.com/blencorp/ashlar")) {
       errors.push("npm provenance output does not reference github.com/blencorp/ashlar.");
     }

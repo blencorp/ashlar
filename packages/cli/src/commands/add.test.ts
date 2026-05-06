@@ -248,4 +248,157 @@ describe("add command", () => {
       rmSync(localScratch, { recursive: true, force: true });
     }
   });
+
+  it("verify rejects a missing registry capsule manifest after install", () => {
+    const localScratch = mkdtempSync(join(tmpdir(), "ashlar-verify-missing-manifest-test-"));
+    const registry = join(localScratch, "registry");
+
+    try {
+      cpSync(join(repoRoot, "registry"), registry, { recursive: true });
+      expect(runCli(["init", "--registry", registry], localScratch).status).toBe(0);
+      expect(runCli(["add", "button"], localScratch).status).toBe(0);
+
+      rmSync(join(registry, "components", "button", "0.0.1", "button.capsule.json"), {
+        force: true,
+      });
+
+      const verify = runCli(["verify"], localScratch);
+
+      expect(verify.status).toBe(1);
+      expect(verify.stdout).toContain("Ashlar capsule manifest not found");
+    } finally {
+      rmSync(localScratch, { recursive: true, force: true });
+    }
+  });
+
+  it("verify rejects an invalid registry capsule manifest after install", () => {
+    const localScratch = mkdtempSync(join(tmpdir(), "ashlar-verify-invalid-manifest-test-"));
+    const registry = join(localScratch, "registry");
+
+    try {
+      cpSync(join(repoRoot, "registry"), registry, { recursive: true });
+      expect(runCli(["init", "--registry", registry], localScratch).status).toBe(0);
+      expect(runCli(["add", "button"], localScratch).status).toBe(0);
+
+      writeFileSync(
+        join(registry, "components", "button", "0.0.1", "button.capsule.json"),
+        "{}\n",
+      );
+
+      const verify = runCli(["verify"], localScratch);
+
+      expect(verify.status).toBe(1);
+      expect(verify.stdout).toContain("Invalid Ashlar capsule manifest");
+    } finally {
+      rmSync(localScratch, { recursive: true, force: true });
+    }
+  });
+
+  it("verify rejects a missing registry index entry after install", () => {
+    const localScratch = mkdtempSync(join(tmpdir(), "ashlar-verify-missing-index-test-"));
+    const registry = join(localScratch, "registry");
+
+    try {
+      cpSync(join(repoRoot, "registry"), registry, { recursive: true });
+      expect(runCli(["init", "--registry", registry], localScratch).status).toBe(0);
+      expect(runCli(["add", "button"], localScratch).status).toBe(0);
+
+      const indexPath = join(registry, "index.json");
+      const index = JSON.parse(readFileSync(indexPath, "utf8")) as {
+        components: Record<string, unknown>;
+      };
+      delete index.components.button;
+      writeFileSync(indexPath, `${JSON.stringify(index, null, 2)}\n`);
+
+      const verify = runCli(["verify"], localScratch);
+
+      expect(verify.status).toBe(1);
+      expect(verify.stdout).toContain("Unknown Ashlar component: button");
+    } finally {
+      rmSync(localScratch, { recursive: true, force: true });
+    }
+  });
+
+  it("verify rejects lockfiles with missing file hashes", () => {
+    const localScratch = mkdtempSync(join(tmpdir(), "ashlar-verify-invalid-lockfile-test-"));
+    const registry = join(localScratch, "registry");
+
+    try {
+      cpSync(join(repoRoot, "registry"), registry, { recursive: true });
+      expect(runCli(["init", "--registry", registry], localScratch).status).toBe(0);
+      expect(runCli(["add", "button"], localScratch).status).toBe(0);
+
+      const lockfilePath = join(localScratch, "ashlar-lock.json");
+      const lockfile = JSON.parse(readFileSync(lockfilePath, "utf8")) as {
+        components: {
+          button: {
+            files: Record<string, { original_hash?: string }>;
+          };
+        };
+      };
+      const installedFile = Object.keys(lockfile.components.button.files)[0];
+      if (!installedFile) {
+        throw new Error("Expected button to install at least one file");
+      }
+      delete lockfile.components.button.files[installedFile]?.original_hash;
+      writeFileSync(lockfilePath, `${JSON.stringify(lockfile, null, 2)}\n`);
+
+      const verify = runCli(["verify"], localScratch);
+
+      expect(verify.status).toBe(1);
+      expect(verify.stdout).toContain("Invalid Ashlar lockfile");
+      expect(verify.stdout).toContain("original_hash");
+    } finally {
+      rmSync(localScratch, { recursive: true, force: true });
+    }
+  });
+
+  it("verify does not persist current hashes when verification fails", () => {
+    const localScratch = mkdtempSync(join(tmpdir(), "ashlar-verify-no-failed-write-test-"));
+    const registry = join(localScratch, "registry");
+
+    try {
+      cpSync(join(repoRoot, "registry"), registry, { recursive: true });
+      expect(runCli(["init", "--registry", registry], localScratch).status).toBe(0);
+      expect(runCli(["add", "button"], localScratch).status).toBe(0);
+
+      const lockfilePath = join(localScratch, "ashlar-lock.json");
+      const before = JSON.parse(readFileSync(lockfilePath, "utf8")) as {
+        components: {
+          button: {
+            files: Record<string, { current_hash: string }>;
+          };
+        };
+      };
+      const installedFile = Object.keys(before.components.button.files)[0];
+      if (!installedFile) {
+        throw new Error("Expected button to install at least one file");
+      }
+      const beforeCurrentHash = before.components.button.files[installedFile]?.current_hash;
+
+      writeFileSync(join(localScratch, installedFile), "\n/* local tamper */\n", { flag: "a" });
+
+      const indexPath = join(registry, "index.json");
+      const index = JSON.parse(readFileSync(indexPath, "utf8")) as {
+        components: { button: { capsuleHashes: Record<string, string> } };
+      };
+      index.components.button.capsuleHashes["0.0.1"] =
+        "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+      writeFileSync(indexPath, `${JSON.stringify(index, null, 2)}\n`);
+
+      const verify = runCli(["verify"], localScratch);
+      const after = JSON.parse(readFileSync(lockfilePath, "utf8")) as {
+        components: {
+          button: {
+            files: Record<string, { current_hash: string }>;
+          };
+        };
+      };
+
+      expect(verify.status).toBe(1);
+      expect(after.components.button.files[installedFile]?.current_hash).toBe(beforeCurrentHash);
+    } finally {
+      rmSync(localScratch, { recursive: true, force: true });
+    }
+  });
 });

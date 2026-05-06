@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import { generateKeyPairSync } from "node:crypto";
 import {
   cpSync,
   mkdtempSync,
@@ -12,13 +13,23 @@ import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { buildCapsuleManifest } from "../lib/capsule.js";
+import {
+  buildCapsuleManifest,
+  signCapsuleManifest,
+  type CapsuleManifest,
+} from "../lib/capsule.js";
 
 const here = fileURLToPath(new URL(".", import.meta.url));
 const cliEntry = join(here, "..", "..", "dist", "index.js");
 const repoRoot = resolve(here, "..", "..", "..", "..");
 const sourceButton = join(repoRoot, "registry", "components", "button", "0.0.1");
 const sourceViteExample = join(repoRoot, "examples", "vite");
+const registrySigningKeyId = "ashlar-update-survival-test-key";
+const registrySigningKey = generateKeyPairSync("ed25519");
+const registrySigningPrivateKey = registrySigningKey.privateKey.export({
+  format: "pem",
+  type: "pkcs8",
+});
 
 type UpdateReport = {
   totals: {
@@ -55,13 +66,43 @@ function writeJson(path: string, value: unknown): void {
   writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`);
 }
 
+function writeTrustRoot(registry: string): void {
+  writeJson(join(registry, "trust-root.json"), {
+    $schema: "https://ashlar.dev/schemas/trust-root.schema.json",
+    schemaVersion: "1.0",
+    keys: [
+      {
+        keyId: registrySigningKeyId,
+        algorithm: "ed25519",
+        publicKey: registrySigningKey.publicKey
+          .export({ format: "der", type: "spki" })
+          .toString("base64"),
+      },
+    ],
+  });
+}
+
+function signManifest(manifest: CapsuleManifest): CapsuleManifest {
+  return signCapsuleManifest({
+    manifest,
+    keyId: registrySigningKeyId,
+    privateKey: registrySigningPrivateKey,
+  });
+}
+
+function writeSignedManifest(directory: string, component: string, manifest: CapsuleManifest): void {
+  writeJson(join(directory, `${component}.capsule.json`), signManifest(manifest));
+}
+
 function seedRegistry(root: string): string {
   const registry = join(root, "registry");
   const buttonV1 = join(registry, "components", "button", "0.0.1");
   cpSync(sourceButton, buttonV1, { recursive: true });
+  writeTrustRoot(registry);
   const manifest = JSON.parse(
     readFileSync(join(buttonV1, "button.capsule.json"), "utf8"),
-  ) as { capsule_hash: string };
+  ) as CapsuleManifest;
+  writeSignedManifest(buttonV1, "button", manifest);
 
   writeJson(join(registry, "index.json"), {
     $schema: "https://ashlar.dev/schemas/registry-index.schema.json",
@@ -169,7 +210,7 @@ function publishButtonVersion(
     stability: "experimental",
     ...(input.codemod ? { codemods: ["button.codemods.json"] } : {}),
   });
-  writeJson(join(directory, "button.capsule.json"), manifest);
+  writeSignedManifest(directory, "button", manifest);
 
   const indexPath = join(fixture.registry, "index.json");
   const index = JSON.parse(readFileSync(indexPath, "utf8")) as {

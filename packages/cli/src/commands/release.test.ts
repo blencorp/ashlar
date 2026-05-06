@@ -720,7 +720,9 @@ function installDefaultFakeCosign(): void {
   process.env.PATH = `${binDir}:${originalPath ?? ""}`;
 }
 
-function writeFakeNpm(mode: "pass" | "missing-provenance" | "install-fail" = "pass"): string {
+function writeFakeNpm(
+  mode: "pass" | "missing-provenance" | "install-fail" | "untrusted-metadata" = "pass",
+): string {
   const npmPath = join(scratch, `fake-npm-${mode}.mjs`);
   writeFileSync(
     npmPath,
@@ -737,7 +739,22 @@ if (args[0] === "install") {
 if (args[0] === "audit" && args[1] === "signatures") {
   const manifest = JSON.parse(readFileSync("package.json", "utf8"));
   const dependencies = Object.entries(manifest.dependencies ?? {});
-  const payload = {
+  const payload = ${JSON.stringify(mode)} === "untrusted-metadata" ? {
+    _type: "https://in-toto.io/Statement/v1",
+    predicateType: "https://slsa.dev/provenance/v1",
+    subject: [],
+    predicate: {
+      builder: {
+        id: "https://github.com/other/repo/.github/workflows/untrusted.yml@refs/heads/main"
+      },
+      buildDefinition: {
+        externalParameters: {
+          workflow: "untrusted.yml",
+          repository: "https://github.com/other/repo"
+        }
+      }
+    }
+  } : {
     _type: "https://in-toto.io/Statement/v1",
     predicateType: "https://slsa.dev/provenance/v1",
     subject: (${JSON.stringify(mode)} === "missing-provenance"
@@ -759,6 +776,11 @@ if (args[0] === "audit" && args[1] === "signatures") {
     }
   };
   console.log(JSON.stringify({
+    untrustedMetadata: {
+      repository: "https://github.com/blencorp/ashlar",
+      workflow: "publish.yml",
+      packages: dependencies.map(([name, version]) => name + "@" + version)
+    },
     verified: [
       {
         name: "@ashlar/cli",
@@ -864,6 +886,33 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(result.status, result.stdout).toBe(0);
     expect(result.stdout).toContain("Public capsule Sigstore trust verified");
     expect(result.stdout).toContain("button@0.0.1 button.sigstore.json sha256:");
+  });
+
+  it("does not report verified capsules when the trust policy cannot require cosign", () => {
+    const registry = copyRegistry();
+    const trustRootPath = join(registry, "trust-root.json");
+    const trustRoot = JSON.parse(readFileSync(trustRootPath, "utf8")) as {
+      sigstore?: { bundleVerification?: string };
+    };
+    if (!trustRoot.sigstore) {
+      throw new Error("Expected test registry to include a Sigstore trust policy");
+    }
+    trustRoot.sigstore.bundleVerification = "metadata";
+    writeFileSync(trustRootPath, `${JSON.stringify(trustRoot, null, 2)}\n`);
+
+    const result = runCli([
+      "release",
+      "public-trust-verify",
+      "button",
+      "--registry",
+      registry,
+      "--json",
+    ]);
+    const report = JSON.parse(result.stdout) as { capsules: unknown[]; errors: string[] };
+
+    expect(result.status).toBe(1);
+    expect(report.capsules).toEqual([]);
+    expect(report.errors).toContain('registry trust root must set sigstore.bundleVerification to "cosign"');
   });
 
   it("fails public capsule Sigstore trust when a capsule has not been signed", () => {
@@ -1080,6 +1129,28 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(result.status).toBe(1);
     expect(result.stdout).toContain("Public npm provenance verification failed");
     expect(result.stdout).toContain("npm provenance output does not include @ashlar/schemas@0.0.0");
+  });
+
+  it("ignores untrusted npm audit metadata when checking public provenance", () => {
+    const npmPath = writeFakeNpm("untrusted-metadata");
+
+    const result = runCli([
+      "release",
+      "provenance-verify-public",
+      "--npm",
+      npmPath,
+      "--package",
+      "@ashlar/cli@0.0.0",
+      "@ashlar/schemas@0.0.0",
+    ]);
+
+    expect(result.status).toBe(1);
+    expect(result.stdout).toContain("Public npm provenance verification failed");
+    expect(result.stdout).toContain(
+      "npm provenance output does not reference github.com/blencorp/ashlar.",
+    );
+    expect(result.stdout).toContain("npm provenance output does not reference the publish.yml workflow.");
+    expect(result.stdout).toContain("npm provenance output does not include @ashlar/cli@0.0.0.");
   });
 
   it("reports replacement-grade readiness blockers for the current prototype", () => {
