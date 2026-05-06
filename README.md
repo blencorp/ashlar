@@ -212,6 +212,18 @@ node /path/to/ashlar/packages/cli/dist/index.js release trust-bundle --registry 
 node /path/to/ashlar/packages/cli/dist/index.js release verify-trust-bundle --registry ./registry --bundle ./reports/ashlar-trust-bundle.json --sbom ./reports/ashlar-sbom.spdx.json --attestation ./reports/ashlar-sbom.attestation.json
 ```
 
+## First-run docs app
+
+The first-run documentation app lives in [`apps/docs`](apps/docs). It gives new
+adopters a compact path through install, first audit, first capsule add,
+verify/update, themes, AI/MCP, and trust/evidence posture without weakening the
+claim boundaries in `STATUS.md`.
+
+```bash
+pnpm --filter @ashlar/docs dev
+pnpm --filter @ashlar/docs build
+```
+
 ## Roadmap
 
 The roadmap is gate-based, not calendar-based, and v0.0 is staged as a slice graph rather than a single release block.
@@ -227,6 +239,7 @@ See [docs/roadmap/00-roadmap.md](docs/roadmap/00-roadmap.md), [docs/roadmap/01-v
 ## Start here
 
 - [STATUS.md](STATUS.md) — live truth for what's implemented vs. planned
+- [First-run docs app](apps/docs)
 - [Product doctrine](docs/product-doctrine.md)
 - [Strategy](docs/strategy.md)
 - [Philosophy](docs/philosophy.md)
