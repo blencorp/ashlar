@@ -7,6 +7,19 @@ const here = fileURLToPath(new URL(".", import.meta.url));
 const repoRoot = resolve(here, "..", "..", "..", "..");
 
 describe("CI workflow", () => {
+  it("keeps no-emit typechecks from sharing emitted build info", () => {
+    for (const packagePath of ["packages/cli", "packages/schemas"]) {
+      const manifest = JSON.parse(
+        readFileSync(resolve(repoRoot, packagePath, "package.json"), "utf8"),
+      );
+      const typecheck = manifest.scripts.typecheck;
+
+      expect(typecheck).toContain("--noEmit");
+      expect(typecheck).toContain("--tsBuildInfoFile dist/tsconfig.typecheck.tsbuildinfo");
+      expect(typecheck).not.toContain("--tsBuildInfoFile dist/tsconfig.tsbuildinfo");
+    }
+  });
+
   it("runs the registry evidence gate before publishing SARIF", () => {
     const workflow = readFileSync(resolve(repoRoot, ".github", "workflows", "ci.yml"), "utf8");
     const evidenceCheck = "node packages/cli/dist/index.js evidence --check --registry ./registry";
