@@ -23,17 +23,18 @@ The work is led by engineers at [Blen](https://blencorp.com) with the intent to 
 9. [`adr/`](./adr/) — architecture decision records.
 10. [`roadmap/00-roadmap.md`](./roadmap/00-roadmap.md) — phased delivery plan and success gates.
 11. [`roadmap/replacement-grade-audit.md`](./roadmap/replacement-grade-audit.md) — prompt-to-artifact audit for the USWDS replacement / shadcn-for-gov ambition.
-12. [`roadmap/external-review-plan.md`](./roadmap/external-review-plan.md) — review tracks for stable evidence, public trust, and design partner validation.
-13. [`roadmap/github-launch.md`](./roadmap/github-launch.md) — public GitHub launch checklist, milestones, and labels.
-14. [`security/supply-chain-incident-playbook.md`](./security/supply-chain-incident-playbook.md) — package, registry, signing, and evidence compromise response plan.
-15. [`research/`](./research/) — the body of research informing design decisions, including the final April 29, 2026 current-source pass.
-16. [`research/08-gap-analysis-2026-04-29.md`](./research/08-gap-analysis-2026-04-29.md) — gap analysis and next roadmap correction.
-17. [`research/09-design-md-2026-04-29.md`](./research/09-design-md-2026-04-29.md) — DESIGN.md adoption recommendation.
-18. [`superpowers/specs/2026-04-29-v0-0-standards-evidence-slice-spec.md`](./superpowers/specs/2026-04-29-v0-0-standards-evidence-slice-spec.md) — behavior contract for the standards/evidence slice.
-19. [`superpowers/plans/2026-04-29-v0-0-standards-evidence-slice-revised.md`](./superpowers/plans/2026-04-29-v0-0-standards-evidence-slice-revised.md) — implementation plan for the standards/evidence slice.
-20. [`superpowers/specs/2026-05-05-first-service-flow-proof-spec.md`](./superpowers/specs/2026-05-05-first-service-flow-proof-spec.md) — first proof that capsules can power a small public-service flow.
-21. [`governance/`](./governance/) — community model and contribution rules.
-22. [`examples/`](./examples/) — concrete schema examples.
+12. [`roadmap/uswds-coverage-matrix.md`](./roadmap/uswds-coverage-matrix.md) — coverage matrix that turns "replace USWDS" into explicit component, pattern, and claim-boundary gaps.
+13. [`roadmap/external-review-plan.md`](./roadmap/external-review-plan.md) — review tracks for stable evidence, public trust, and design partner validation.
+14. [`roadmap/github-launch.md`](./roadmap/github-launch.md) — public GitHub launch checklist, milestones, and labels.
+15. [`security/supply-chain-incident-playbook.md`](./security/supply-chain-incident-playbook.md) — package, registry, signing, and evidence compromise response plan.
+16. [`research/`](./research/) — the body of research informing design decisions, including the final April 29, 2026 current-source pass.
+17. [`research/08-gap-analysis-2026-04-29.md`](./research/08-gap-analysis-2026-04-29.md) — gap analysis and next roadmap correction.
+18. [`research/09-design-md-2026-04-29.md`](./research/09-design-md-2026-04-29.md) — DESIGN.md adoption recommendation.
+19. [`superpowers/specs/2026-04-29-v0-0-standards-evidence-slice-spec.md`](./superpowers/specs/2026-04-29-v0-0-standards-evidence-slice-spec.md) — behavior contract for the standards/evidence slice.
+20. [`superpowers/plans/2026-04-29-v0-0-standards-evidence-slice-revised.md`](./superpowers/plans/2026-04-29-v0-0-standards-evidence-slice-revised.md) — implementation plan for the standards/evidence slice.
+21. [`superpowers/specs/2026-05-05-first-service-flow-proof-spec.md`](./superpowers/specs/2026-05-05-first-service-flow-proof-spec.md) — first proof that capsules can power a small public-service flow.
+22. [`governance/`](./governance/) — community model and contribution rules.
+23. [`examples/`](./examples/) — concrete schema examples.
 
 ## What problem this solves
 
