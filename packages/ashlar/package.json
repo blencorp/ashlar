@@ -1,0 +1,31 @@
+{
+  "name": "ashlar",
+  "version": "0.0.0",
+  "description": "Memorable npx entrypoint for the Ashlar CLI.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blencorp/ashlar.git",
+    "directory": "packages/ashlar"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "type": "module",
+  "bin": {
+    "ashlar": "./bin/ashlar.js"
+  },
+  "files": [
+    "bin"
+  ],
+  "scripts": {
+    "build": "node --check bin/ashlar.js",
+    "typecheck": "node --check bin/ashlar.js",
+    "test": "node bin/ashlar.js --version",
+    "lint": "node --check bin/ashlar.js"
+  },
+  "dependencies": {
+    "@ashlar/cli": "workspace:*"
+  }
+}

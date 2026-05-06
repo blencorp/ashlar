@@ -11,10 +11,16 @@ function writeJson(path: string, value: unknown) {
 }
 
 function writeValidFixture() {
-  for (const directory of ["packages/schemas", "packages/cli"]) {
+  const packages = new Map([
+    ["packages/schemas", "@ashlar/schemas"],
+    ["packages/cli", "@ashlar/cli"],
+    ["packages/ashlar", "ashlar"],
+  ]);
+
+  for (const [directory, name] of packages) {
     mkdirSync(join(scratch, directory), { recursive: true });
     writeJson(join(scratch, directory, "package.json"), {
-      name: directory === "packages/cli" ? "@ashlar/cli" : "@ashlar/schemas",
+      name,
       version: "0.0.0",
       type: "module",
       publishConfig: {
@@ -91,6 +97,7 @@ describe("checkReleaseProvenanceReadiness", () => {
     expect(result.packages).toEqual([
       { directory: "packages/schemas", name: "@ashlar/schemas", version: "0.0.0" },
       { directory: "packages/cli", name: "@ashlar/cli", version: "0.0.0" },
+      { directory: "packages/ashlar", name: "ashlar", version: "0.0.0" },
     ]);
   });
 

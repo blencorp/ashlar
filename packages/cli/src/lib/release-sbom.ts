@@ -46,7 +46,7 @@ type ReleasePackage = {
   manifest: PackageJson;
 };
 
-const releasePackageDirs = ["packages/schemas", "packages/cli"];
+const releasePackageDirs = ["packages/schemas", "packages/cli", "packages/ashlar"];
 
 function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;

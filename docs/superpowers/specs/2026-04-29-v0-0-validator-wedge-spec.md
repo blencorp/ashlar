@@ -51,7 +51,7 @@ Important gaps this slice closes:
 8. `_ashlar` JSON Schema published in `@ashlar/schemas/src/ashlar-cem.schema.json`. Validates `antiPatterns`, `a11yRequirements`, `tokensConsumed`, `platformFeatures`, `policyMappings`, `criticalForA11y`, `rendering`, `hydrationCost`, `selector`, `variants`. CI validates every capsule's CEM against it.
 9. CI workflow runs `audit --policy federal --sarif examples/plain-html/index.html` and `audit --policy federal --sarif examples/vite/index.html` and uploads non-empty SARIF.
 10. Vite example annotated: a top-of-file comment in `examples/vite/index.html` explains that the example is the audit's *punching bag* and lists which rules it deliberately fails (or, alternatively, the example becomes compliant by adding a banner and identifier — the spec leaves this choice to the implementation plan).
-11. Standalone audit distribution: `npx @ashlar/cli audit --policy federal --sarif <file>` works in a fresh empty project with no `ashlar.config.json` or `ashlar-lock.json`.
+11. Standalone audit distribution: `npx ashlar audit --policy federal --sarif <file>` works in a fresh empty project with no `ashlar.config.json` or `ashlar-lock.json`.
 12. `hasClassToken` substring bug fixed (`packages/cli/src/lib/html.ts:44`): use whole-token equality.
 13. `ashlar.config.json` schema (`packages/schemas/src/config.schema.json`) published; the `$schema` URL in generated configs becomes a real pointer.
 
@@ -168,7 +168,7 @@ The federal audit must work without an `ashlar.config.json` or `ashlar-lock.json
 ```bash
 mkdir scratch && cd scratch
 echo "<html><body></body></html>" > index.html
-npx @ashlar/cli audit --policy federal --sarif index.html
+npx ashlar audit --policy federal --sarif index.html
 ```
 
 This is the federal contractor adoption path. The CLI must not assume the consumer ran `init` first; it must not crash on missing config; it must use safe defaults. This behavior is unit-tested.
@@ -221,7 +221,7 @@ ashlar audit --policy components --explain --sarif <files...>
 ashlar audit --policy all --explain --sarif <files...>
 
 # Standalone, no install required
-npx @ashlar/cli audit --policy federal --sarif <files...>
+npx ashlar audit --policy federal --sarif <files...>
 
 # Languages opt-in via config (only docs change here; runtime support is wired)
 { "audit": { "languages": { "vue": { "grammar": "tree-sitter-vue" } } } }

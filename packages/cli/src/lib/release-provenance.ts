@@ -41,7 +41,7 @@ type VerifyPublicProvenanceInput = {
   registryUrl?: string;
 };
 
-const releasePackageDirs = ["packages/schemas", "packages/cli"];
+const releasePackageDirs = ["packages/schemas", "packages/cli", "packages/ashlar"];
 const expectedRepositoryUrl = "https://github.com/blencorp/ashlar.git";
 const ciWorkflowPath = ".github/workflows/ci.yml";
 const publishWorkflowPath = ".github/workflows/publish.yml";
@@ -210,7 +210,7 @@ export function checkReleaseProvenanceReadiness(cwd: string): ReleaseProvenanceR
     errors,
     packages,
     warnings: [
-      "npmjs.com trusted publisher settings are manual: configure @ashlar/cli and @ashlar/schemas with workflow filename publish.yml before release.",
+      "npmjs.com trusted publisher settings are manual: configure ashlar, @ashlar/cli, and @ashlar/schemas with workflow filename publish.yml before release.",
     ],
   };
 }
