@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { Command } from "commander";
+import { readFileSync } from "node:fs";
 import { registerAddCommand } from "./commands/add.js";
 import { registerAiEvalCommand } from "./commands/ai-eval.js";
 import { registerAuditCommand } from "./commands/audit.js";
@@ -21,7 +22,20 @@ import { registerViewCommand } from "./commands/view.js";
 
 const program = new Command();
 
-program.name("ashlar").description("Ashlar component registry CLI").version("0.0.0");
+function readCliVersion(): string {
+  try {
+    const manifest = JSON.parse(
+      readFileSync(new URL("../package.json", import.meta.url), "utf8"),
+    ) as {
+      version?: string;
+    };
+    return manifest.version ?? "0.0.0";
+  } catch {
+    return "0.0.0";
+  }
+}
+
+program.name("ashlar").description("Ashlar component registry CLI").version(readCliVersion());
 
 registerInitCommand(program);
 registerAddCommand(program);

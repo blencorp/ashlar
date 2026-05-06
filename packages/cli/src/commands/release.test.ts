@@ -57,6 +57,13 @@ function runCli(args: string[]): { stdout: string; status: number } {
   };
 }
 
+function readPackageVersion(packageDir: string): string {
+  const manifest = JSON.parse(readFileSync(join(repoRoot, packageDir, "package.json"), "utf8")) as {
+    version?: string;
+  };
+  return manifest.version ?? "0.0.0";
+}
+
 function copyRegistry(): string {
   const registry = join(scratch, "registry");
   cpSync(join(repoRoot, "registry"), registry, { recursive: true });
@@ -385,9 +392,7 @@ function writeReadyReleaseTrustArtifacts(): {
   ]);
   expect(publicTrust.status, publicTrust.stdout).toBe(0);
   expect(runCli(["release", "sbom", "--output", sbom]).status).toBe(0);
-  expect(runCli(["release", "attest", "--subject", sbom, "--output", attestation]).status).toBe(
-    0,
-  );
+  expect(runCli(["release", "attest", "--subject", sbom, "--output", attestation]).status).toBe(0);
   expect(
     runCli([
       "release",
@@ -823,6 +828,13 @@ afterEach(() => {
 });
 
 describe("release command", { timeout: slowReleaseTestTimeout }, () => {
+  it("reports the current CLI package version", () => {
+    const result = runCli(["--version"]);
+
+    expect(result.status, result.stdout).toBe(0);
+    expect(result.stdout.trim()).toBe(readPackageVersion("packages/cli"));
+  });
+
   it("signs registry capsules with Sigstore bundle metadata and verifies the bundle path", () => {
     const registry = copyRegistry();
     const cosignPath = writeFakeCosign();
@@ -914,7 +926,9 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
 
     expect(result.status).toBe(1);
     expect(report.capsules).toEqual([]);
-    expect(report.errors).toContain('registry trust root must set sigstore.bundleVerification to "cosign"');
+    expect(report.errors).toContain(
+      'registry trust root must set sigstore.bundleVerification to "cosign"',
+    );
   });
 
   it("fails public capsule Sigstore trust when a capsule has not been signed", () => {
@@ -962,6 +976,9 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
 
   it("writes an SPDX SBOM for the release packages and dependencies", () => {
     const outputPath = join(scratch, "ashlar-sbom.spdx.json");
+    const ashlarVersion = readPackageVersion("packages/ashlar");
+    const cliVersion = readPackageVersion("packages/cli");
+    const schemasVersion = readPackageVersion("packages/schemas");
 
     const result = runCli(["release", "sbom", "--output", outputPath]);
 
@@ -1004,18 +1021,18 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
           SPDXID: "SPDXRef-Package-ashlar",
           name: "ashlar",
           supplier: "Organization: BLEN",
-          versionInfo: "0.0.0",
+          versionInfo: ashlarVersion,
         }),
         expect.objectContaining({
           SPDXID: "SPDXRef-Package-ashlar-cli",
           name: "@ashlar/cli",
           supplier: "Organization: BLEN",
-          versionInfo: "0.0.0",
+          versionInfo: cliVersion,
         }),
         expect.objectContaining({
           SPDXID: "SPDXRef-Package-ashlar-schemas",
           name: "@ashlar/schemas",
-          versionInfo: "0.0.0",
+          versionInfo: schemasVersion,
         }),
         expect.objectContaining({
           name: "commander",
@@ -1161,7 +1178,9 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(result.stdout).toContain(
       "npm provenance output does not reference github.com/blencorp/ashlar.",
     );
-    expect(result.stdout).toContain("npm provenance output does not reference the publish.yml workflow.");
+    expect(result.stdout).toContain(
+      "npm provenance output does not reference the publish.yml workflow.",
+    );
     expect(result.stdout).toContain("npm provenance output does not include @ashlar/cli@0.0.0.");
   });
 
@@ -1278,7 +1297,14 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
   it("writes a release review pack without creating completed proof records", () => {
     const output = join(scratch, "review-pack");
 
-    const result = runCli(["release", "review-pack", "--registry", "./registry", "--output", output]);
+    const result = runCli([
+      "release",
+      "review-pack",
+      "--registry",
+      "./registry",
+      "--output",
+      output,
+    ]);
 
     expect(result.status, result.stdout).toBe(0);
     expect(result.stdout).toContain(`Wrote release review pack to ${output}`);
@@ -1557,7 +1583,12 @@ Rationale: Reviewer artifacts describe observed behavior and the review-status c
 `,
     );
 
-    const result = runCli(["release", "review-record-check", join("docs", "reviews", file), "--json"]);
+    const result = runCli([
+      "release",
+      "review-record-check",
+      join("docs", "reviews", file),
+      "--json",
+    ]);
 
     expect(result.status).toBe(1);
     const report = JSON.parse(result.stdout) as {
@@ -1638,7 +1669,12 @@ Rationale: Reviewer artifacts describe observed behavior, the review-status comm
 `,
     );
 
-    const result = runCli(["release", "review-record-check", join("docs", "reviews", file), "--json"]);
+    const result = runCli([
+      "release",
+      "review-record-check",
+      join("docs", "reviews", file),
+      "--json",
+    ]);
 
     expect(result.status).toBe(1);
     const report = JSON.parse(result.stdout) as {
@@ -1711,7 +1747,12 @@ Rationale: Public provenance, capsule signing, and trust-bundle verification all
     );
     writeFileSync(artifacts.sbom, `${readFileSync(artifacts.sbom, "utf8")}\n`);
 
-    const result = runCli(["release", "review-record-check", join("docs", "reviews", file), "--json"]);
+    const result = runCli([
+      "release",
+      "review-record-check",
+      join("docs", "reviews", file),
+      "--json",
+    ]);
 
     expect(result.status).toBe(1);
     const report = JSON.parse(result.stdout) as {
@@ -1793,7 +1834,12 @@ Rationale: Public provenance, capsule signing, and trust-bundle verification all
 `,
     );
 
-    const result = runCli(["release", "review-record-check", join("docs", "reviews", file), "--json"]);
+    const result = runCli([
+      "release",
+      "review-record-check",
+      join("docs", "reviews", file),
+      "--json",
+    ]);
 
     expect(result.status).toBe(1);
     const check = JSON.parse(result.stdout) as {
@@ -1876,7 +1922,12 @@ Rationale: Public provenance, capsule signing, and trust-bundle verification all
 `,
     );
 
-    const result = runCli(["release", "review-record-check", join("docs", "reviews", file), "--json"]);
+    const result = runCli([
+      "release",
+      "review-record-check",
+      join("docs", "reviews", file),
+      "--json",
+    ]);
 
     expect(result.status).toBe(1);
     const check = JSON.parse(result.stdout) as {
@@ -1947,7 +1998,12 @@ Rationale: The reviewer found the wedge credible for a public-service pilot afte
 `,
     );
 
-    const result = runCli(["release", "review-record-check", join("docs", "reviews", file), "--json"]);
+    const result = runCli([
+      "release",
+      "review-record-check",
+      join("docs", "reviews", file),
+      "--json",
+    ]);
 
     expect(result.status).toBe(1);
     const report = JSON.parse(result.stdout) as {
@@ -2129,7 +2185,9 @@ Rationale: The reviewer found the wedge credible for a public-service pilot afte
     const record = readFileSync(output, "utf8");
     expect(record).toContain("Record status: completed external review only");
     expect(record).toContain("## Adoption Assessment");
-    expect(record).toContain(`- Design partner reviewer checklist: ${designArtifacts.reviewChecklist}`);
+    expect(record).toContain(
+      `- Design partner reviewer checklist: ${designArtifacts.reviewChecklist}`,
+    );
     expect(record).toContain(
       "- Would replace USWDS directly: yes for a pilot after stable evidence is published",
     );

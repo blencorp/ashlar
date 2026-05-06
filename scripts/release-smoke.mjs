@@ -1,13 +1,6 @@
 #!/usr/bin/env node
 import { spawnSync } from "node:child_process";
-import {
-  mkdirSync,
-  mkdtempSync,
-  readdirSync,
-  readFileSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
+import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -25,9 +18,7 @@ function run(args, options = {}) {
 
   if (result.status !== 0) {
     const output = `${result.stdout ?? ""}${result.stderr ?? ""}`.trim();
-    throw new Error(
-      `Command failed: pnpm ${args.join(" ")}${output ? `\n${output}` : ""}`,
-    );
+    throw new Error(`Command failed: pnpm ${args.join(" ")}${output ? `\n${output}` : ""}`);
   }
 
   return `${result.stdout ?? ""}${result.stderr ?? ""}`;
@@ -43,6 +34,11 @@ function newestTarball(packDir, prefix) {
   }
 
   return join(packDir, file);
+}
+
+function readPackageVersion(packageDir) {
+  const manifest = JSON.parse(readFileSync(join(repoRoot, packageDir, "package.json"), "utf8"));
+  return manifest.version ?? "0.0.0";
 }
 
 function assertPublicTarball(tarball) {
@@ -118,9 +114,12 @@ try {
   run(["--dir", join(repoRoot, "packages", "cli"), "pack", "--pack-destination", packDir]);
   run(["--dir", join(repoRoot, "packages", "ashlar"), "pack", "--pack-destination", packDir]);
 
-  const schemasTarball = newestTarball(packDir, "ashlar-schemas-");
-  const cliTarball = newestTarball(packDir, "ashlar-cli-");
-  const ashlarTarball = newestTarball(packDir, "ashlar-0.0.0");
+  const schemasVersion = readPackageVersion(join("packages", "schemas"));
+  const cliVersion = readPackageVersion(join("packages", "cli"));
+  const ashlarVersion = readPackageVersion(join("packages", "ashlar"));
+  const schemasTarball = newestTarball(packDir, `ashlar-schemas-${schemasVersion}`);
+  const cliTarball = newestTarball(packDir, `ashlar-cli-${cliVersion}`);
+  const ashlarTarball = newestTarball(packDir, `ashlar-${ashlarVersion}`);
   assertPublicTarball(schemasTarball);
   assertPublicTarball(cliTarball);
   assertPublicTarball(ashlarTarball);
@@ -162,6 +161,11 @@ try {
   run(["--dir", appDir, "fetch"]);
   run(["--dir", appDir, "install", "--offline", "--frozen-lockfile"]);
   const version = run(["--dir", appDir, "exec", "ashlar", "--version"], { capture: true }).trim();
+  if (version !== cliVersion) {
+    throw new Error(
+      `Expected packaged CLI to report version ${cliVersion}, but ashlar --version returned ${version}.`,
+    );
+  }
   const audit = run(
     ["--dir", appDir, "exec", "ashlar", "audit", "--policy", "federal", "page.html"],
     { capture: true },
