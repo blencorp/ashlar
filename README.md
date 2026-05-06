@@ -43,7 +43,7 @@ The current prototype implements:
 - Guarded manual `publish.yml` and `sigstore.yml` workflows that emit review-record JSON for npm provenance and public capsule trust, then keylessly sign and verify release SBOM, SBOM attestation, and release trust bundle artifacts with cosign bundles;
 - A Vite theme workbench across Federal, VA, and USDA themes with light/dark/system modes, plus a Tailwind v4 build proof that consumes the generated `@theme` output;
 - A plain HTML demo;
-- CI that runs checks, build, release smoke, provenance readiness, strict replacement-readiness reporting, stable-evidence reviewer bundles and blocker reports, evidence reports, bundle budgets, AI evals, and SARIF artifact upload.
+- CI that runs checks, build, release smoke, provenance readiness, strict replacement-readiness reporting, stable-evidence reviewer bundles and blocker reports, a portable release review-pack artifact, evidence reports, bundle budgets, AI evals, and SARIF artifact upload.
 
 ## Why this exists
 
