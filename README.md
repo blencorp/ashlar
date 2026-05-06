@@ -240,7 +240,7 @@ See [docs/roadmap/00-roadmap.md](docs/roadmap/00-roadmap.md), [docs/roadmap/01-v
 - [Governance model](docs/governance/00-governance-model.md)
 - [v0.0 Foundation roadmap](docs/roadmap/01-v0.0-foundation.md)
 - [v0.0 Standards and Evidence Slice spec](docs/superpowers/specs/2026-04-29-v0-0-standards-evidence-slice-spec.md)
-- [v0.0 Validator Wedge spec (next slice)](docs/superpowers/specs/2026-04-29-v0-0-validator-wedge-spec.md)
+- [v0.0 Validator Wedge spec](docs/superpowers/specs/2026-04-29-v0-0-validator-wedge-spec.md)
 
 ## License
 

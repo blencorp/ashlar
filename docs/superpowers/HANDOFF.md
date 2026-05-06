@@ -4,12 +4,12 @@ For the next session picking up Ashlar work. Read this first; it should orient y
 
 ## Where we are
 
-- **Branch**: `codex/standards-evidence-slice` (pushed to `origin`; PR pending).
+- **Branch**: active foundation PR stack ending at `codex/npx-ashlar-entrypoint`.
 - **Phase**: v0.0 prototype.
-- **Slices complete**: 1 (Standards & Evidence), 2 (Validator Wedge).
-- **Slice in flight**: none. Slice 3 (Drift Management) is the substrate next-step, awaiting user green light.
+- **Slices shipped/prototyped**: 1 (Standards & Evidence), 2 (Validator Wedge), 3 (Drift Management prototype), plus started substrate for 4 (Supply-chain Hardening), 5 (AI Contracts), and 6 (Token Pipeline).
+- **Slice in flight**: foundation stack review/merge and remaining public-proof gates: stable Button evidence, public npm provenance, public capsule Sigstore trust, and external review records.
 - **Apps surface**: `examples/plain-html/` (CI audit target), `examples/vite/` (theme picker reference), `apps/www/` (marketing landing).
-- **Tests**: 48 passing under Node 24.15.0. `pnpm check` runs lint + typecheck + tests + build clean.
+- **Tests**: use Node 24.15.0. The current PR stack has green CI; `pnpm check`, `pnpm build`, `pnpm release:smoke`, provenance readiness, SBOM/trust-bundle generation, evidence checks, AI eval, migration report, bundle budgets, and audits run in CI.
 
 The repo and the docs are coherent. Every claim in `README.md`, `docs/strategy.md`, and `docs/philosophy.md` defers to [STATUS.md](../../STATUS.md). When a doc and STATUS disagree, STATUS wins.
 
@@ -66,20 +66,18 @@ The tree should be clean after this session's commits. If `git status` shows any
 
 ## What is next
 
-Two parallel tracks; user picks the order.
+Two useful tracks remain; user picks the order.
 
-### Track A — Slice 3 (Drift Management) on the substrate
+### Track A — land the foundation stack and close public-proof gates
 
-Spec: `docs/roadmap/01-v0.0-foundation.md` under "Slice 3 — Drift Management". The shadcn-killer differentiator and the load-bearing premise of the architecture (R1).
+The active PR stack is the product substrate. Get it reviewed/merged before opening more broad implementation surfaces, then close the gates that make the "replacement-grade" language true.
 
 Scope:
-- `ashlar update` command with per-file three-way merge using `git merge-file --diff3`.
-- Codemod runner via `ast-grep` apply (the wrapper in `packages/cli/src/lib/astgrep.ts` is in place).
-- Lockfile `current_hash` refreshed on every CLI invocation (currently seeded equal to `original_hash` and never updated).
-- Accessibility-critical force-confirmation when a touched file has `_ashlar.criticalForA11y: true`.
-- Conflict resolution UX with `<<<<<<<` markers and `update --resolved <component>` finalization.
-- ≥10 instrumented test scenarios.
-- Document failure modes textual merge doesn't handle (already in `docs/architecture/drift-and-updates.md`).
+- Keep the current PR stack green and mergeable: foundation, review-pack docs, release-trust path portability/typecheck isolation, and the unscoped `ashlar` npx entrypoint.
+- Collect and publish one real Button stable-evidence packet: automated run, keyboard transcript, screen-reader transcript, reviewed packet, graduated packet, local publication receipt, and `docs/reviews/stable-evidence-*.md`.
+- Run the first real npm trusted-publishing release for `ashlar`, `@ashlar/cli`, and `@ashlar/schemas`, then attach `ashlar-npm-provenance.json`.
+- Run the Sigstore workflow on release artifacts and attach `ashlar-public-trust.json`.
+- Create the completed release-trust and design-partner review records, then require strict `ashlar release readiness` without local escape hatches.
 
 ### Track B — `apps/docs` Astro Starlight scaffold
 
