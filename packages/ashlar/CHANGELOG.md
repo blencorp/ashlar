@@ -1,5 +1,12 @@
 # ashlar
 
+## 0.1.1
+
+### Patch Changes
+
+- Updated dependencies [[`51c247f`](https://github.com/blencorp/ashlar/commit/51c247ffe367ff491a0f02d9c6f6f9a39a8ec00a)]:
+  - @ashlar/cli@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
