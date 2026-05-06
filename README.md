@@ -231,6 +231,7 @@ See [docs/roadmap/00-roadmap.md](docs/roadmap/00-roadmap.md), [docs/roadmap/01-v
 - [Strategy](docs/strategy.md)
 - [Philosophy](docs/philosophy.md)
 - [Replacement-grade audit](docs/roadmap/replacement-grade-audit.md)
+- [Objective completion audit](docs/roadmap/objective-completion-audit.md)
 - [External review plan](docs/roadmap/external-review-plan.md)
 - [Architecture overview](docs/architecture/overview.md)
 - [Toolchain decision](docs/architecture/toolchain.md)
