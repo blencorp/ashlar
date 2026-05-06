@@ -1,6 +1,6 @@
 {
   "name": "@ashlar/example-react-spa",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "description": "React SPA Ashlar reference app.",
   "type": "module",
