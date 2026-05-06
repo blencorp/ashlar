@@ -51,9 +51,9 @@ export type ReleaseReviewPackResult = {
   };
 };
 
-function cwdRelative(cwd: string, path: string): string {
-  const value = relative(cwd, path).replaceAll("\\", "/");
-  return value.startsWith("../") ? path : value;
+function packRelative(packRoot: string, path: string): string {
+  const value = relative(packRoot, path).replaceAll("\\", "/");
+  return value.length === 0 ? "." : value;
 }
 
 function writeJson(path: string, value: unknown): void {
@@ -62,13 +62,12 @@ function writeJson(path: string, value: unknown): void {
 }
 
 function reviewPackReadme(input: {
-  cwd: string;
   result: ReleaseReviewPackResult;
   registryPath: string;
 }): string {
   const { result } = input;
   const files = Object.entries(result.files)
-    .map(([name, path]) => `- ${name}: \`${cwdRelative(input.cwd, path)}\``)
+    .map(([name, path]) => `- ${name}: \`${packRelative(result.outputDir, path)}\``)
     .join("\n");
 
   return `# Ashlar Release Review Pack
@@ -87,9 +86,9 @@ ${files}
 
 ## Reviewer Tracks
 
-1. Stable evidence reviewer: start with \`${cwdRelative(input.cwd, result.files.stableEvidenceIndex)}\`, complete the target bundle from real keyboard and screen-reader observations, then run the review-status command in the bundle README.
-2. Release trust reviewer: start with \`${cwdRelative(input.cwd, result.files.releaseTrustChecklist)}\`; public npm provenance and public capsule Sigstore trust still require GitHub Actions and npm artifacts.
-3. Design partner reviewer: start with \`${cwdRelative(input.cwd, result.files.designPartnerChecklist)}\` and record actual adoption blockers, not maintainer intent.
+1. Stable evidence reviewer: start with \`${packRelative(result.outputDir, result.files.stableEvidenceIndex)}\`, complete the target bundle from real keyboard and screen-reader observations, then run the review-status command in the bundle README.
+2. Release trust reviewer: start with \`${packRelative(result.outputDir, result.files.releaseTrustChecklist)}\`; public npm provenance and public capsule Sigstore trust still require GitHub Actions and npm artifacts.
+3. Design partner reviewer: start with \`${packRelative(result.outputDir, result.files.designPartnerChecklist)}\` and record actual adoption blockers, not maintainer intent.
 
 ## Claim Boundary
 
@@ -241,7 +240,7 @@ export function writeReleaseReviewPack(input: ReleaseReviewPackInput): ReleaseRe
     },
   };
 
-  writeFileSync(readme, reviewPackReadme({ cwd: input.cwd, registryPath: input.registryPath, result }));
+  writeFileSync(readme, reviewPackReadme({ registryPath: input.registryPath, result }));
 
   return result;
 }
