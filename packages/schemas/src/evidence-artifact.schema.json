@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ashlar.dev/schemas/evidence-artifact.schema.json",
+  "title": "Ashlar Generated Evidence Artifact",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "component",
+    "version",
+    "generatedAt",
+    "fixture",
+    "status",
+    "automatedResults"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://ashlar.dev/schemas/evidence-artifact.schema.json"
+    },
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "component": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "version": {
+      "type": "string"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "fixture": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": ["pass", "fail"]
+    },
+    "automatedResults": {
+      "type": "object",
+      "required": ["ashlarAudit"],
+      "properties": {
+        "ashlarAudit": {
+          "type": "object",
+          "required": ["tool", "policy", "status", "findings"],
+          "properties": {
+            "tool": {
+              "const": "ashlar audit"
+            },
+            "policy": {
+              "enum": ["federal", "components", "all"]
+            },
+            "status": {
+              "enum": ["pass", "fail"]
+            },
+            "findings": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/policyFinding"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "policyFinding": {
+      "type": "object",
+      "required": ["ruleId", "message", "file", "level", "standardStatus", "helpUri"],
+      "properties": {
+        "ruleId": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "level": {
+          "enum": ["error", "warning"]
+        },
+        "standardStatus": {
+          "enum": ["research", "draft", "pending", "required", "guidance"]
+        },
+        "helpUri": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fullDescription": {
+          "type": "string"
+        },
+        "region": {
+          "type": "object",
+          "required": ["startLine", "startColumn", "endLine", "endColumn"],
+          "properties": {
+            "startLine": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "startColumn": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "endLine": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "endColumn": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

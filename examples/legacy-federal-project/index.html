@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Permit Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <header class="contractor-header">
+      <a href="/">Example Agency Services</a>
+      <nav aria-label="Primary">
+        <a href="/permits">Permits</a>
+        <a href="/status">Status</a>
+        <a href="/help">Help</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>Apply for a facilities permit</h1>
+      <p>
+        Use this legacy application to request a federal facilities permit.
+      </p>
+      <form action="/permits" method="post">
+        <label for="agency-id">Agency ID</label>
+        <input id="agency-id" name="agency-id" type="text">
+        <button type="submit">Continue</button>
+      </form>
+    </main>
+
+    <footer class="contractor-footer">
+      <a href="/about">About</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/contact">Contact</a>
+    </footer>
+  </body>
+</html>

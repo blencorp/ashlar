@@ -1,0 +1,20 @@
+{
+  "generatedBy": "ashlar-cli@0.0.0",
+  "components": [
+    {
+      "name": "button",
+      "version": "0.0.1",
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Accessible semantic action control for forms and workflows.",
+      "accessibilityStatus": "not-reviewed",
+      "sourceFiles": [
+        "src/ashlar/components/button/button.cem.json",
+        "src/ashlar/components/button/button.css",
+        "src/ashlar/components/button/button.evidence.json",
+        "src/ashlar/components/button/button.html"
+      ]
+    }
+  ]
+}

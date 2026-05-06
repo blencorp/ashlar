@@ -1,0 +1,31 @@
+{
+  "$schema": "https://ashlar.dev/schemas/ai-eval.schema.json",
+  "schemaVersion": "1.0",
+  "cases": [
+    {
+      "id": "service-flow-no-findings",
+      "prompt": "Generate a simple benefit application form with Ashlar capsules.",
+      "components": ["form-field", "text-input", "button"],
+      "outputFile": "generated/benefit-application.pass.html",
+      "policy": "all",
+      "expect": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "id": "service-flow-anti-patterns-detected",
+      "prompt": "Generate a broken benefit application form so the eval harness proves Ashlar catches unsafe output.",
+      "components": ["text-input", "button"],
+      "outputFile": "generated/benefit-application.fail.html",
+      "policy": "all",
+      "expect": {
+        "includesRuleIds": [
+          "ashlar/text-input/invalid-input-needs-describedby",
+          "ashlar/button/icon-only-needs-label"
+        ],
+        "minErrors": 2
+      }
+    }
+  ]
+}

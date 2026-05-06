@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ashlar.dev/schemas/evidence.schema.json",
+  "title": "Ashlar Evidence Packet",
+  "type": "object",
+  "required": [
+    "component",
+    "version",
+    "stability",
+    "accessibilityStatus",
+    "wcag",
+    "manualTests",
+    "automatedResults",
+    "knownLimitations"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "component": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "version": {
+      "type": "string"
+    },
+    "stability": {
+      "enum": ["proposal", "experimental", "beta", "stable", "deprecated"]
+    },
+    "accessibilityStatus": {
+      "enum": [
+        "not-reviewed",
+        "automated-tested",
+        "manual-tested",
+        "stable-evidence",
+        "known-issue"
+      ]
+    },
+    "wcag": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["criterion", "level", "title", "status"],
+        "properties": {
+          "criterion": {
+            "type": "string"
+          },
+          "level": {
+            "enum": ["A", "AA", "AAA"]
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "enum": ["planned", "pass", "fail", "not-applicable", "known-issue"]
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "baselineTests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "test", "status", "evidence"],
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "test": {
+            "type": "string"
+          },
+          "status": {
+            "enum": ["planned", "pass", "fail", "not-applicable", "known-issue"]
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "manualTests": {
+      "type": "array"
+    },
+    "automatedResults": {
+      "type": "object"
+    },
+    "knownLimitations": {
+      "type": "array"
+    },
+    "antiPatternMappings": {
+      "type": "array"
+    },
+    "lastReviewed": {
+      "type": "string"
+    },
+    "reviewer": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

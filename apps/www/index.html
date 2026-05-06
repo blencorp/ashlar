@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-palette="slate">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ashlar — Source-owned, signed, accessible component system for U.S. government teams</title>
+    <meta
+      name="description"
+      content="Ashlar is an open-source component system for U.S. government teams. Source you own, Sigstore-signed releases, accessibility evidence shipped with every component. Apache-2.0, WCAG 2.2 AA, audit-ready by default."
+    />
+    <meta property="og:title" content="Ashlar — Open-source component system for U.S. government" />
+    <meta
+      property="og:description"
+      content="Source you own. Sigstore-signed. Accessibility evidence with every component."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%230A2240'/%3E%3Crect x='14' y='44' width='36' height='6' fill='%23FAFAFA'/%3E%3Crect x='18' y='34' width='28' height='6' fill='%23FAFAFA'/%3E%3Crect x='22' y='24' width='20' height='6' fill='%23FAFAFA'/%3E%3Crect x='28' y='14' width='8' height='6' fill='%23B22234'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Nav -->
+      <nav class="al-nav">
+        <div class="al-nav-inner">
+          <div class="l">
+            <span class="al-brand">
+              Ashlar<span class="dot" aria-hidden="true"></span>
+            </span>
+            <span class="links">
+              <a href="#components">Components</a>
+              <a href="#spec">Spec</a>
+              <a href="#docs">Docs</a>
+            </span>
+          </div>
+          <div class="r">
+            <button
+              type="button"
+              class="al-ghost"
+              data-action="open-github"
+              aria-label="Open the Ashlar repo on GitHub"
+            >
+              <span data-icon="github" aria-hidden="true"></span>
+              <span>GitHub</span>
+            </button>
+            <button type="button" class="al-primary">Get started</button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Hero -->
+      <div class="al-hero-wrap al-grid-bg">
+        <div class="v2-ashlar-host" aria-hidden="true" data-hero-pattern></div>
+        <section class="al-hero">
+          <h1 class="al-mark">Ashlar</h1>
+          <p class="al-tagline">
+            A modern component system for U.S. government teams.
+            <strong>Open source</strong>, signed end to end, accessible by default.
+          </p>
+          <div class="al-cta">
+            <button type="button" class="al-cta-cmd" data-action="copy-init">
+              <span class="d">$</span>npx ashlar init
+            </button>
+            <button type="button" class="al-cta-primary">Read the spec →</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- Federal disclosure strip -->
+      <div class="al-fedstrip">
+        <div class="inner">
+          <span class="flagline">
+            <span data-icon="us-flag" aria-hidden="true"></span>
+            <span>An open source initiative for U.S. government teams</span>
+          </span>
+          <span class="meta-links">
+            <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a>
+            <span class="sep" aria-hidden="true"></span>
+            <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2 AA</a>
+            <span class="sep" aria-hidden="true"></span>
+            <a href="https://www.sigstore.dev/">Sigstore-signed</a>
+          </span>
+        </div>
+      </div>
+
+      <!-- Compare -->
+      <section class="al-section">
+        <div class="al-section-head">
+          <span class="al-eyebrow">Why teams move to Ashlar</span>
+          <h2>
+            The vocabulary government already trusts,
+            <em>without the parts that slow you down.</em>
+          </h2>
+        </div>
+        <div class="al-cmp-grid">
+          <div class="al-cmp-col before">
+            <div class="lbl"><span class="tk"></span>The federal stack today</div>
+            <h3>USWDS gave us a vocabulary, then left teams holding the bag.</h3>
+            <ul class="al-list">
+              <li>
+                <span class="gl"></span>
+                <span>A vendored stylesheet you can't audit, can't extend, can't sign.</span>
+              </li>
+              <li>
+                <span class="gl"></span>
+                <span>Accessibility evidence buried in someone's sprint review notes.</span>
+              </li>
+              <li>
+                <span class="gl"></span>
+                <span>Drupal and React forks that drift the second nobody's looking.</span>
+              </li>
+              <li>
+                <span class="gl"></span>
+                <span>No way to prove what's on disk matches what was published.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="al-cmp-col after">
+            <div class="lbl"><span class="tk"></span>With Ashlar</div>
+            <h3>Source you own, with the receipts a reviewer will accept.</h3>
+            <ul class="al-list">
+              <li>
+                <span class="gl"></span>
+                <span>
+                  Components copied into your repo as real source.
+                  <span class="meta">.tsx · .twig · .css · diff in PRs</span>
+                </span>
+              </li>
+              <li>
+                <span class="gl"></span>
+                <span>
+                  Accessibility evidence travels with every component.
+                  <span class="meta">axe results · keyboard map · SR transcript</span>
+                </span>
+              </li>
+              <li>
+                <span class="gl"></span>
+                <span>
+                  One spec renders to React and Twig. No fork.
+                  <span class="meta">single source · shared tokens</span>
+                </span>
+              </li>
+              <li>
+                <span class="gl"></span>
+                <span>
+                  Sigstore-signed releases, hashes you can verify on disk.
+                  <span class="meta">ashlar verify ✓</span>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Terminal -->
+      <section class="al-section">
+        <div class="al-section-head">
+          <span class="al-eyebrow">Install · sign · verify</span>
+          <h2>One command. <em>Audit ready by default.</em></h2>
+        </div>
+        <div class="al-term" aria-hidden="true">
+          <div class="bar">
+            <span>~/projects/benefits-portal · ashlar</span>
+            <span class="right">
+              <span>signed</span>
+              <span class="stripes"><i></i><i></i><i></i></span>
+            </span>
+          </div>
+          <div class="body" data-terminal-body></div>
+        </div>
+      </section>
+
+      <!-- Pillars -->
+      <section class="al-section">
+        <div class="al-section-head">
+          <span class="al-eyebrow">What government design systems should be</span>
+          <h2>Open, owned, signed, accessible.</h2>
+        </div>
+        <div class="al-pillars">
+          <article class="al-pillar">
+            <svg
+              class="ic"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M16 18l6-6-6-6" />
+              <path d="M8 6l-6 6 6 6" />
+            </svg>
+            <h3>In your repo, not your node_modules.</h3>
+            <p>
+              Real <em>.tsx</em>, <em>.twig</em>, <em>.css</em> files you can edit, diff, and ship
+              on your release train.
+            </p>
+          </article>
+          <article class="al-pillar">
+            <svg
+              class="ic"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" />
+              <path d="M9 12l2 2 4-4" />
+            </svg>
+            <h3>Signed end to end.</h3>
+            <p>
+              Sigstore signatures, build provenance, hashes you can verify on disk.
+              <em>ashlar verify</em> is the trust contract.
+            </p>
+          </article>
+          <article class="al-pillar">
+            <svg
+              class="ic"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="6" cy="6" r="3" />
+              <circle cx="18" cy="18" r="3" />
+              <path d="M9 6h6a3 3 0 0 1 3 3v6" />
+              <path d="M15 18H9a3 3 0 0 1-3-3V9" />
+            </svg>
+            <h3>One spec, two render targets.</h3>
+            <p>
+              React for the modern stack, Twig for Drupal. Same tokens, same a11y contract, no
+              drift.
+            </p>
+          </article>
+          <article class="al-pillar">
+            <svg
+              class="ic"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="4" y="3" width="16" height="18" />
+              <path d="M8 8h8" />
+              <path d="M8 12h8" />
+              <path d="M8 16h5" />
+            </svg>
+            <h3>Receipts, not promises.</h3>
+            <p>
+              Axe results, keyboard map, screen reader transcript shipped with each component.
+              Hand the folder over.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <div class="al-foot-wrap">
+        <div class="al-foot-rule" aria-hidden="true"></div>
+        <footer class="al-foot">
+          <div class="col brandcol">
+            <div class="mark">
+              Ashlar<span class="dot" aria-hidden="true"></span>
+            </div>
+            <p>
+              The next-generation U.S. government component system. Source you own; receipts you
+              can hand the auditor.
+            </p>
+            <a
+              class="gh"
+              href="https://github.com/blencorp/ashlar"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <span data-icon="github" aria-hidden="true"></span>
+              <span>github.com/blencorp/ashlar</span>
+            </a>
+          </div>
+          <div class="col">
+            <h4>Library</h4>
+            <a href="#components">Components</a>
+            <a href="#tokens">Tokens</a>
+            <a href="#patterns">Patterns</a>
+            <a href="#changelog">Changelog</a>
+          </div>
+          <div class="col">
+            <h4>Spec</h4>
+            <a href="#manifest">Manifest</a>
+            <a href="#signing">Signing</a>
+            <a href="#accessibility">Accessibility</a>
+          </div>
+          <div class="col">
+            <h4>Community</h4>
+            <a href="https://github.com/blencorp/ashlar/discussions">Discussions</a>
+            <a href="https://github.com/blencorp/ashlar/issues">Issues</a>
+            <a href="https://github.com/blencorp/ashlar/releases">Releases</a>
+          </div>
+        </footer>
+        <div class="al-footbar">
+          <span>Apache-2.0 · Independent · not affiliated with the U.S. government</span>
+          <span class="al-built">
+            Built with
+            <span class="heart" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 21s-7-4.35-9.5-8.5C.5 8.5 3 4.5 7 4.5c2 0 3.5 1 5 3 1.5-2 3-3 5-3 4 0 6.5 4 4.5 8C19 16.65 12 21 12 21z"
+                />
+              </svg>
+            </span>
+            by folks at <span class="blen">BLEN</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

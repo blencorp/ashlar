@@ -8,7 +8,7 @@ Proposed.
 
 **Tailwind v4 is a first-class output and integration target.** Ashlar's token compiler emits a Tailwind v4 `@theme` block; teams using Tailwind get full token integration and can mix utility classes alongside Ashlar components.
 
-**Tailwind is not the component authoring layer.** L0 component CSS is written in semantic class names referencing CSS custom properties (`.ashlar-button { background: var(--ashlar-action-primary-bg); … }`), not Tailwind utility classes hard-coded into component source.
+**Tailwind is not the component authoring layer.** L0 component CSS is written in semantic class names referencing CSS custom properties (`.ashlar-button { background: var(--ashlar-color-action-primary-bg); … }`), not Tailwind utility classes hard-coded into component source.
 
 A separate companion package, `@ashlar/tailwind`, may ship later for shadcn-style copy-paste teams who specifically want utility-class component source. This is not v0.0 scope.
 
@@ -20,7 +20,7 @@ For Ashlar's audience, the answer must be semantic CSS in source:
 
 1. **Reach.** Federal stacks include Drupal (Twig), Sitecore, Adobe Experience Manager, plain HTML, and server-rendered Django/Rails/PHP. These stacks typically do not have Tailwind in their build pipelines. Embedding Tailwind classes in component source forces those teams to either (a) install Tailwind into their CMS build, (b) ship orphan utility classes everywhere, or (c) skip Ashlar entirely.
 
-2. **Bundle.** Tailwind utilities at the design-system layer add ~10–15KB after purge. Pure CSS components are ~2–3KB per component. For a typical 5-component page, this is the difference between ~6–8KB (semantic CSS) and ~25–35KB (Tailwind-authored). The "lightweight" claim in [philosophy.md](../philosophy.md) depends on this.
+2. **Bundle.** Tailwind utilities at the design-system layer add ~10–15KB after purge. Pure CSS components are smaller and can be budgeted per capsule. For a typical L0 public-service page, Ashlar's target is under 12KB gzipped versus ~25–35KB for Tailwind-authored component source. The "lightweight" claim in [philosophy.md](../philosophy.md) depends on this.
 
 3. **Coupling.** Tightly coupling components to Tailwind classes makes the design system fragile to Tailwind changes. shadcn's Tailwind v3-to-v4 migration (issue #6585) was painful because components had v3 patterns hard-coded. Semantic CSS authoring decouples Ashlar from Tailwind's internal evolution.
 

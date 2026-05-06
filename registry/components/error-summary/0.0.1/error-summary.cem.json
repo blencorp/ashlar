@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "error-summary.html",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "AshlarErrorSummary",
+          "tagName": "section",
+          "description": "Linked validation summary that moves people directly to fields needing attention.",
+          "_ashlar": {
+            "version": "0.0.1",
+            "tier": "composite",
+            "layer": "L0",
+            "stability": "experimental",
+            "selector": ".ashlar-error-summary",
+            "a11yRequirements": [
+              {
+                "id": "summary-links-target-fields",
+                "wcag": "3.3.1",
+                "severity": "error",
+                "description": "Each error summary link should move focus to the field that needs correction."
+              }
+            ],
+            "antiPatterns": [
+              {
+                "id": "summary-link-missing-target",
+                "pattern": "<a href=\"#\">$$$TEXT</a>",
+                "inside": {
+                  "pattern": "<section $$$ATTRS>$$$CHILDREN</section>",
+                  "stopBy": "end"
+                },
+                "regex": "href=\"#\"",
+                "message": "Ashlar Error Summary links must target the field id that needs correction.",
+                "fix": "Change href=\"#\" to the id of the invalid field, such as href=\"#full-name\".",
+                "wcag": "3.3.1",
+                "severity": "error",
+                "languages": ["html"]
+              }
+            ],
+            "tokensConsumed": [
+              "color.status.error.border",
+              "color.text",
+              "color.link",
+              "focus.ring.color"
+            ],
+            "platformFeatures": [
+              {
+                "feature": "fragment-navigation",
+                "status": "required",
+                "fallback": "Uses native anchor links to move to invalid fields."
+              },
+              {
+                "feature": "forced-colors",
+                "status": "progressive",
+                "fallback": "Uses system border and focus colors."
+              }
+            ],
+            "policyMappings": [
+              {
+                "source": "WCAG",
+                "requirement": "Supports error identification and correction by linking summaries to fields.",
+                "url": "https://www.w3.org/TR/WCAG22/"
+              }
+            ],
+            "rendering": "server-safe",
+            "hydrationCost": "none",
+            "criticalForA11y": true
+          }
+        }
+      ]
+    }
+  ]
+}

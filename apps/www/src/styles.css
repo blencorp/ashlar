@@ -1,0 +1,1099 @@
+/* ────────────────────────────────────────────────────────────────────────
+   Ashlar marketing site — pixel-perfect port of "Ashlar Landing v2"
+   Theme tokens drive every color decision. Light is the default; dark
+   palettes (slate, warm, navy, mono) are switched via data attributes
+   on <html>.
+   ──────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --page: #ffffff;
+  --paper: #f7f8fa;
+  --ink: #0a0a0a;
+  --ink-2: #2a2a2a;
+  --ink-3: #6e6e6e;
+  --rule: rgba(10, 10, 10, 0.08);
+  --rule-2: rgba(10, 10, 10, 0.18);
+  --navy: #0a2240;
+  --band-deep: #0a2240;
+  --red: #b22234;
+
+  /* Hero pattern */
+  --line-rgb: 10, 34, 64;
+  --line-op: 0.09;
+  --line-op-pk: 0.1;
+  --veil: rgba(247, 248, 250, 1);
+  --veil-mid: rgba(247, 248, 250, 0.55);
+  --veil-edge: rgba(247, 248, 250, 0);
+}
+
+[data-theme="dark"][data-palette="slate"] {
+  --page: #101216;
+  --paper: #15181e;
+  --ink: #f2f4f7;
+  --ink-2: #c8ceda;
+  --ink-3: #878e9b;
+  --rule: rgba(255, 255, 255, 0.1);
+  --rule-2: rgba(255, 255, 255, 0.2);
+  --navy: #0a2240;
+  --band-deep: #081a33;
+  --red: #e54b5b;
+  --line-rgb: 220, 230, 245;
+  --line-op: 0.18;
+  --line-op-pk: 0.22;
+  --veil: rgba(21, 24, 30, 0.92);
+  --veil-mid: rgba(21, 24, 30, 0.55);
+  --veil-edge: rgba(21, 24, 30, 0);
+}
+
+[data-theme="dark"][data-palette="warm"] {
+  --page: #161412;
+  --paper: #1b1814;
+  --ink: #f5f1ea;
+  --ink-2: #d6cfc2;
+  --ink-3: #8c8579;
+  --rule: rgba(245, 232, 210, 0.1);
+  --rule-2: rgba(245, 232, 210, 0.2);
+  --navy: #231f19;
+  --band-deep: #1a1713;
+  --red: #e66b57;
+  --line-rgb: 230, 215, 188;
+  --line-op: 0.16;
+  --line-op-pk: 0.2;
+  --veil: rgba(27, 24, 20, 0.92);
+  --veil-mid: rgba(27, 24, 20, 0.55);
+  --veil-edge: rgba(27, 24, 20, 0);
+}
+
+[data-theme="dark"][data-palette="navy"] {
+  --page: #0b1220;
+  --paper: #0f1626;
+  --ink: #f2f4f7;
+  --ink-2: #c8ceda;
+  --ink-3: #8892a6;
+  --rule: rgba(255, 255, 255, 0.1);
+  --rule-2: rgba(255, 255, 255, 0.2);
+  --navy: #060b17;
+  --band-deep: rgba(4, 8, 16, 0.6);
+  --red: #e54b5b;
+  --line-rgb: 190, 210, 240;
+  --line-op: 0.18;
+  --line-op-pk: 0.22;
+  --veil: rgba(15, 22, 38, 0.92);
+  --veil-mid: rgba(15, 22, 38, 0.55);
+  --veil-edge: rgba(15, 22, 38, 0);
+}
+
+[data-theme="dark"][data-palette="mono"] {
+  --page: #0a0a0a;
+  --paper: #0e0e0e;
+  --ink: #f5f5f5;
+  --ink-2: #bfbfbf;
+  --ink-3: #7a7a7a;
+  --rule: rgba(255, 255, 255, 0.09);
+  --rule-2: rgba(255, 255, 255, 0.18);
+  --navy: #000000;
+  --band-deep: #000000;
+  --red: #e54b5b;
+  --line-rgb: 230, 230, 230;
+  --line-op: 0.16;
+  --line-op-pk: 0.2;
+  --veil: rgba(14, 14, 14, 0.92);
+  --veil-mid: rgba(14, 14, 14, 0.55);
+  --veil-edge: rgba(14, 14, 14, 0);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--page);
+  color: var(--ink);
+  font-family: "Geist", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: 0;
+  background: none;
+  color: inherit;
+  padding: 0;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--page);
+}
+
+em {
+  font-style: normal;
+}
+
+/* ─────────────── Hero grid background ─────────────── */
+.al-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(10, 34, 64, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10, 34, 64, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: -1px -1px;
+}
+
+.al-usflag {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ─────────────── Nav ─────────────── */
+.al-nav {
+  background: var(--page);
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  z-index: 5;
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease;
+}
+.al-nav-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 18px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.al-nav-inner .l {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+}
+.al-brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+.al-brand .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--red);
+  transform: translateY(-2px);
+}
+.al-nav-inner .links {
+  display: flex;
+  gap: 26px;
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--ink-3);
+  letter-spacing: -0.01em;
+}
+.al-nav-inner .links a {
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.al-nav-inner .links a:hover {
+  color: var(--ink);
+}
+.al-nav-inner .r {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.al-ghost {
+  font-size: 13.5px;
+  padding: 9px 14px;
+  color: var(--ink-2);
+  font-family: "Geist Mono", ui-monospace, monospace;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.15s ease;
+}
+.al-ghost:hover {
+  color: var(--ink);
+}
+.al-ghost svg {
+  color: var(--ink);
+}
+
+.al-primary {
+  font-size: 13.5px;
+  padding: 10px 18px;
+  background: var(--navy);
+  color: #ffffff;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+.al-primary:hover {
+  background: var(--ink);
+}
+
+[data-theme="dark"] .al-primary {
+  background: #ffffff;
+  color: #0b1220;
+}
+[data-theme="dark"] .al-primary:hover {
+  background: var(--ink-2);
+  color: #0b1220;
+}
+
+/* ─────────────── Theme toggle (v2) ─────────────── */
+.v2-themewrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 4px;
+}
+.v2-themetog {
+  font-size: 13.5px;
+  padding: 9px 12px;
+  color: var(--ink-2);
+  font-family: "Geist Mono", ui-monospace, monospace;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.15s ease;
+}
+.v2-themetog:hover {
+  color: var(--ink);
+}
+.v2-themetog svg {
+  color: var(--ink);
+}
+
+.v2-palette {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 6px;
+  border-left: 1px solid var(--rule-2);
+  margin-left: 4px;
+  height: 28px;
+}
+.v2-swatch {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 1.5px solid transparent;
+  background: #000;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease;
+}
+.v2-swatch:hover {
+  transform: translateY(-1px);
+}
+.v2-swatch.on {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+.v2-swatch > span {
+  display: block;
+  flex: 1;
+}
+.v2-swatch > span:first-child {
+  flex: 0 0 4px;
+}
+
+/* ─────────────── Hero ─────────────── */
+.al-hero-wrap {
+  background-color: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease;
+}
+.al-hero-wrap.al-grid-bg {
+  /* The SVG ashlar pattern is the only hero texture — the .al-grid-bg
+     utility's CSS grid would clash with it, so we explicitly clear it here. */
+  background-image: none;
+}
+
+.al-hero-wrap > .v2-ashlar-host {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.al-hero-wrap > .v2-ashlar-host::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 60% 65% at 50% 48%,
+    var(--veil) 0%,
+    var(--veil-mid) 42%,
+    var(--veil-edge) 75%
+  );
+  pointer-events: none;
+  opacity: 0;
+  animation: v2-veil 2.4s ease-out 4s forwards;
+}
+.al-hero-wrap > .al-hero {
+  position: relative;
+  z-index: 1;
+}
+
+.v2-ashlar-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  color: rgb(var(--line-rgb));
+  transition: color 0.4s ease;
+}
+.v2-ashlar-svg line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+  opacity: 0;
+  vector-effect: non-scaling-stroke;
+}
+
+@keyframes v2-sweep {
+  0% {
+    stroke-dashoffset: 1600;
+    opacity: 0;
+  }
+  8% {
+    opacity: var(--line-op-pk);
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: var(--line-op);
+  }
+}
+@keyframes v2-rise {
+  0% {
+    stroke-dashoffset: 56;
+    opacity: 0;
+  }
+  20% {
+    opacity: var(--line-op-pk);
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: var(--line-op);
+  }
+}
+@keyframes v2-veil {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.al-hero {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 110px 32px 120px;
+  text-align: center;
+  position: relative;
+}
+.al-mark {
+  margin: 0 0 32px;
+  font-weight: 600;
+  font-size: clamp(112px, 17vw, 232px);
+  line-height: 0.86;
+  letter-spacing: -0.065em;
+  color: var(--ink);
+}
+.al-tagline {
+  margin: 0 auto;
+  max-width: 640px;
+  font-size: 21px;
+  line-height: 1.4;
+  color: var(--ink-2);
+  letter-spacing: -0.012em;
+}
+.al-tagline strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+.al-cta {
+  margin-top: 40px;
+  display: inline-flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.al-cta-primary {
+  padding: 13px 22px;
+  background: var(--navy);
+  color: #ffffff;
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+.al-cta-primary:hover {
+  background: var(--ink);
+}
+[data-theme="dark"] .al-cta-primary {
+  background: #ffffff;
+  color: #0b1220;
+}
+[data-theme="dark"] .al-cta-primary:hover {
+  background: var(--ink-2);
+  color: #0b1220;
+}
+
+.al-cta-cmd {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 13.5px;
+  padding: 13px 18px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+.al-cta-cmd:hover {
+  background: var(--ink);
+  color: var(--page);
+}
+.al-cta-cmd .d {
+  color: var(--ink-3);
+  margin-right: 6px;
+}
+.al-cta-cmd:hover .d {
+  color: rgba(255, 255, 255, 0.55);
+}
+[data-theme="dark"] .al-cta-cmd:hover .d {
+  color: rgba(0, 0, 0, 0.45);
+}
+
+/* ─────────────── Federal disclosure strip ─────────────── */
+.al-fedstrip {
+  background: var(--navy);
+  color: rgba(255, 255, 255, 0.82);
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 12.5px;
+  letter-spacing: -0.005em;
+  border-top: 4px solid var(--red);
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease;
+}
+.al-fedstrip .inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 14px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.al-fedstrip .flagline {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.al-fedstrip .flagline .al-usflag {
+  width: 28px;
+  height: auto;
+}
+.al-fedstrip a {
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.al-fedstrip a:hover {
+  color: #ffffff;
+}
+.al-fedstrip .sep {
+  display: inline-block;
+  width: 1px;
+  height: 11px;
+  background: rgba(255, 255, 255, 0.22);
+  margin: 0 14px;
+  vertical-align: middle;
+}
+
+/* ─────────────── Section heads ─────────────── */
+.al-section {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 96px 32px 0;
+}
+.al-section-head {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 64px;
+  align-items: start;
+  margin-bottom: 48px;
+}
+.al-eyebrow {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11.5px;
+  color: var(--ink-2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding-top: 14px;
+  border-top: 2px solid var(--red);
+  display: inline-block;
+  line-height: 1;
+}
+.al-section-head h2 {
+  margin: 0;
+  font-size: clamp(34px, 4.2vw, 52px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.al-section-head h2 em {
+  color: var(--ink-3);
+}
+
+/* ─────────────── Compare grid ─────────────── */
+.al-cmp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.al-cmp-col {
+  padding: 32px 0 36px;
+}
+.al-cmp-col + .al-cmp-col {
+  border-left: 1px solid var(--rule-2);
+  padding-left: 40px;
+}
+.al-cmp-col:first-child {
+  padding-right: 40px;
+}
+.al-cmp-col .lbl {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.al-cmp-col .lbl .tk {
+  width: 24px;
+  height: 2px;
+}
+.al-cmp-col.before .lbl {
+  color: var(--ink-3);
+}
+.al-cmp-col.before .lbl .tk {
+  background: var(--red);
+  opacity: 0.7;
+}
+.al-cmp-col.after .lbl {
+  color: var(--navy);
+}
+.al-cmp-col.after .lbl .tk {
+  background: var(--navy);
+}
+[data-theme="dark"] .al-cmp-col.after .lbl {
+  color: var(--ink);
+}
+[data-theme="dark"] .al-cmp-col.after .lbl .tk {
+  background: var(--ink);
+}
+
+.al-cmp-col h3 {
+  margin: 0 0 24px;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  line-height: 1.25;
+  max-width: 22ch;
+}
+.al-cmp-col.before h3 {
+  color: var(--ink-2);
+}
+.al-cmp-col.after h3 {
+  color: var(--ink);
+}
+
+.al-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.al-list li {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  gap: 14px;
+  padding: 16px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.al-list li:first-child {
+  border-top: 0;
+  padding-top: 4px;
+}
+.al-cmp-col.before .al-list li {
+  color: var(--ink-2);
+}
+.al-cmp-col.after .al-list li {
+  color: var(--ink);
+}
+.al-cmp-col.before .gl {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  margin-top: 4px;
+  display: inline-block;
+}
+.al-cmp-col.before .gl::before,
+.al-cmp-col.before .gl::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 14px;
+  height: 1.4px;
+  background: var(--red);
+}
+.al-cmp-col.before .gl::before {
+  transform: rotate(45deg);
+}
+.al-cmp-col.before .gl::after {
+  transform: rotate(-45deg);
+}
+[data-theme="dark"] .al-cmp-col.before .gl::before,
+[data-theme="dark"] .al-cmp-col.before .gl::after {
+  background: var(--red);
+}
+
+.al-cmp-col.after .gl {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  margin-top: 4px;
+  display: inline-block;
+}
+.al-cmp-col.after .gl::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 5px;
+  height: 1.6px;
+  background: var(--navy);
+  transform: rotate(45deg);
+  transform-origin: left center;
+}
+.al-cmp-col.after .gl::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 9px;
+  width: 11px;
+  height: 1.6px;
+  background: var(--navy);
+  transform: rotate(-45deg);
+  transform-origin: left center;
+}
+[data-theme="dark"] .al-cmp-col.after .gl::before,
+[data-theme="dark"] .al-cmp-col.after .gl::after {
+  background: var(--ink);
+}
+
+.al-cmp-col.after .meta {
+  display: block;
+  margin-top: 4px;
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11.5px;
+  color: var(--ink-3);
+  letter-spacing: -0.005em;
+}
+
+/* ─────────────── Terminal ─────────────── */
+.al-term {
+  background: var(--band-deep);
+  color: #ededed;
+  font-family: "Geist Mono", ui-monospace, monospace;
+  transition: background-color 0.4s ease;
+}
+.al-term .bar {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: -0.005em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.al-term .bar .right {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.al-term .bar .right .stripes {
+  display: inline-flex;
+  gap: 3px;
+}
+.al-term .bar .right .stripes i {
+  display: block;
+  width: 14px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.35);
+}
+.al-term .bar .right .stripes i:nth-child(1),
+.al-term .bar .right .stripes i:nth-child(3) {
+  background: var(--red);
+}
+.al-term .body {
+  padding: 26px 28px 32px;
+  min-height: 320px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.al-term .line {
+  white-space: pre;
+}
+.al-term .cmd {
+  color: #fafafa;
+}
+.al-term .cmd .d {
+  color: rgba(255, 255, 255, 0.45);
+  margin-right: 10px;
+}
+.al-term .out {
+  color: rgba(255, 255, 255, 0.78);
+}
+.al-term .out::before {
+  content: "✓ ";
+  color: #86efac;
+}
+.al-term .out.plain::before {
+  content: "";
+}
+.al-term .cur {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  background: #fafafa;
+  vertical-align: -3px;
+  margin-left: 2px;
+  animation: al-blink 1.05s steps(2, end) infinite;
+}
+@keyframes al-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ─────────────── Pillars ─────────────── */
+.al-pillars {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+.al-pillar {
+  padding: 32px 28px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.al-pillar + .al-pillar {
+  border-left: 1px solid var(--rule-2);
+}
+.al-pillar .ic {
+  width: 28px;
+  height: 28px;
+  color: var(--navy);
+}
+[data-theme="dark"] .al-pillar .ic {
+  color: var(--ink);
+}
+.al-pillar h3 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.022em;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.al-pillar p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.al-pillar em {
+  color: var(--ink);
+}
+
+/* ─────────────── Footer ─────────────── */
+.al-foot-wrap {
+  margin-top: 120px;
+  background: var(--band-deep);
+  color: rgba(255, 255, 255, 0.82);
+  transition: background-color 0.4s ease;
+}
+.al-foot-rule {
+  height: 4px;
+  background: var(--red);
+}
+.al-foot {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 56px 32px 32px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 64px;
+}
+.al-foot .col h4 {
+  margin: 0 0 16px;
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.al-foot .col a {
+  display: block;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.78);
+  margin-bottom: 9px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.al-foot .col a:hover {
+  color: #ffffff;
+}
+.al-foot .brandcol .mark {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  color: #ffffff;
+  margin-bottom: 14px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.al-foot .brandcol .mark .dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--red);
+  transform: translateY(-2px);
+}
+.al-foot .brandcol p {
+  margin: 0 0 22px;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.62);
+  line-height: 1.55;
+  max-width: 36ch;
+}
+.al-foot .brandcol .gh {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  font-size: 13px;
+  color: #ffffff;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+.al-foot .brandcol .gh:hover {
+  background: #ffffff;
+  color: var(--navy);
+  border-color: #ffffff;
+}
+
+.al-footbar {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 18px 32px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.55);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.al-built {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.78);
+}
+.al-built .heart {
+  color: var(--red);
+  display: inline-flex;
+  transform-origin: center;
+  animation: al-beat 1.4s ease-in-out infinite;
+}
+.al-built .heart svg {
+  width: 13px;
+  height: 13px;
+  display: block;
+}
+.al-built .blen {
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+@keyframes al-beat {
+  0%,
+  28%,
+  70%,
+  100% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.22);
+  }
+  42% {
+    transform: scale(1.12);
+  }
+}
+
+/* ─────────────── Reduced motion ─────────────── */
+@media (prefers-reduced-motion: reduce) {
+  body,
+  .al-nav,
+  .al-hero-wrap,
+  .al-fedstrip,
+  .al-term,
+  .al-foot-wrap,
+  .al-primary,
+  .al-cta-primary,
+  .al-cta-cmd,
+  .al-ghost,
+  .v2-themetog,
+  .v2-swatch,
+  .al-list a,
+  .al-foot .col a,
+  .al-foot .brandcol .gh {
+    transition: none;
+  }
+  .v2-ashlar-svg line {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+    opacity: var(--line-op) !important;
+  }
+  .al-hero-wrap > .v2-ashlar-host::after {
+    animation: none;
+    opacity: 1;
+  }
+  .al-built .heart {
+    animation: none;
+  }
+  .al-term .cur {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* ─────────────── Responsive (compact) ─────────────── */
+@media (max-width: 880px) {
+  .al-nav-inner .links {
+    display: none;
+  }
+  .al-section-head {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .al-cmp-grid {
+    grid-template-columns: 1fr;
+  }
+  .al-cmp-col + .al-cmp-col {
+    border-left: 0;
+    border-top: 1px solid var(--rule-2);
+    padding-left: 0;
+    padding-top: 32px;
+  }
+  .al-cmp-col:first-child {
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+  .al-pillars {
+    grid-template-columns: 1fr 1fr;
+  }
+  .al-pillar + .al-pillar {
+    border-left: 0;
+  }
+  .al-pillar:nth-child(2) {
+    border-left: 1px solid var(--rule-2);
+  }
+  .al-pillar:nth-child(3),
+  .al-pillar:nth-child(4) {
+    border-top: 1px solid var(--rule-2);
+  }
+  .al-pillar:nth-child(4) {
+    border-left: 1px solid var(--rule-2);
+  }
+  .al-foot {
+    grid-template-columns: 1fr 1fr;
+  }
+  .al-foot .brandcol {
+    grid-column: span 2;
+  }
+}
+@media (max-width: 540px) {
+  .al-pillars {
+    grid-template-columns: 1fr;
+  }
+  .al-pillar + .al-pillar {
+    border-left: 0;
+    border-top: 1px solid var(--rule-2);
+  }
+  .al-foot {
+    grid-template-columns: 1fr;
+  }
+  .al-foot .brandcol {
+    grid-column: auto;
+  }
+}

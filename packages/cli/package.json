@@ -3,6 +3,15 @@
   "version": "0.0.0",
   "description": "Ashlar component registry CLI.",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blencorp/ashlar.git",
+    "directory": "packages/cli"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "type": "module",
   "bin": {
     "ashlar": "./dist/index.js"
@@ -11,16 +20,30 @@
     ".": "./dist/index.js"
   },
   "files": [
-    "dist"
+    "dist/**/*.d.ts",
+    "dist/**/*.d.ts.map",
+    "dist/**/*.js",
+    "dist/**/*.js.map",
+    "!dist/**/*.test.*",
+    "!dist/**/tsconfig.tsbuildinfo",
+    "themes"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run --exclude \"dist/**\"",
+    "test": "pnpm build && vitest run --exclude \"dist/**\"",
     "lint": "biome lint src"
   },
   "dependencies": {
-    "commander": "catalog:"
+    "@ashlar/schemas": "workspace:*",
+    "@ast-grep/napi": "catalog:",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "ajv": "catalog:",
+    "ajv-formats": "catalog:",
+    "commander": "catalog:",
+    "fast-glob": "catalog:",
+    "parse5": "catalog:",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "catalog:",

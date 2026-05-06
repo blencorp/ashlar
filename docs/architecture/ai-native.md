@@ -9,7 +9,7 @@ Ashlar's AI integration is built on three artifacts, each with a single job:
 
 A separate `llms.txt` is published for the docs site for retrieval purposes.
 
-This document specifies the extended CEM schema, the MCP tool/resource/prompt set, AGENTS.md template, and DESIGN.md export posture.
+This document specifies the extended CEM schema, the MCP tool/resource/prompt set, AI eval harness, AGENTS.md template, and DESIGN.md export posture.
 
 ## Extended CEM schema
 
@@ -130,25 +130,34 @@ The `_ashlar` namespace is forward-compatible: tools that don't recognize it ign
 
 ## MCP server
 
-`npx ashlar mcp` starts an MCP server pointing at the consumer's installed components and tokens. AI assistants connect via stdio or SSE.
+> **Status (2026-05-05)**: started for v0.0 slice 5. `ashlar mcp` ships a local read-only stdio server with policy/feature/token/evidence-aware registry search, deterministic task-to-capsule suggestions, missing-capability warnings, capsule metadata, evidence, token lookup, and `validate_usage`; `_ashlar` JSON Schema validation is wired in the CLI; `ashlar ai-eval` ships a deterministic saved-output harness; ADR 0012 covers the v0.0 local read-only MCP/eval threat model. Write tools, hosted transport, embedding search, and live model benchmarks remain planned. See [STATUS.md](../../STATUS.md).
+
+`npx ashlar mcp` starts an MCP server pointing at the consumer's installed components and tokens. AI assistants connect via stdio (local) or, in v0.1+, SSE/HTTP (gated behind an additional threat model). MCP governance moved to the Linux Foundation Agentic AI Foundation in December 2025; the server tracks the [2025-11-25 spec](https://modelcontextprotocol.io/specification/2025-11-25/basic).
 
 ### Tools
 
 ```
-search_components(query: string, limit?: number)
-  → Capsule[]                      // semantic search over installed CEMs
+// Read-only tools (v0.0 slice 5):
+search_components({
+  query?: string,
+  layer?: "L0" | "L1" | "L2" | "L3" | "L4",
+  tier?: "foundation" | "primitive" | "composite" | "pattern" | "block",
+  stability?: string,
+  evidence?: string,
+  policy?: string,
+  feature?: string,
+  token?: string,
+  limit?: number
+})
+  → RankedCapsule[]                // ranked CEM/index/evidence metadata search
+                                   // (embedding search is v0.1+)
 
 get_component(name: string)
   → ExtendedCEM                    // full extended CEM for one capsule
 
-validate_usage(file_or_glob: string)
-  → ValidationResult[]             // runs ast-grep rules, returns violations
-
-suggest_for_task(description: string)
-  → CapsuleRecommendation[]        // intent-driven recommendations
-
-migrate(component: string, from?: string, to?: string)
-  → MigrationPlan                  // codemods + diff preview
+suggest_for_task({ task: string, limit?: number })
+  → SuggestionPlan                 // deterministic suggestions plus unavailable-capability gaps
+                                   // and an install command, no writes
 
 get_evidence(name: string)
   → EvidencePacket                 // a11y evidence for component
@@ -158,6 +167,17 @@ list_tokens(category?: string)
 
 get_token(name: string)
   → Token                          // single token with resolved value
+
+validate_usage(file_or_glob: string)
+  → ValidationResult[]             // runs ast-grep rules, returns SARIF-shaped
+                                   // violations (built on slice 2)
+
+// Planned read+plan tools (future slice; explicit user approval flow):
+migrate_plan(component: string, from?: string, to?: string)
+  → MigrationPlan                  // codemods + diff preview, no apply
+
+// Write tools (v0.1+, gated behind threat model ADR):
+// add_component, update_component, migrate_apply
 ```
 
 ### Resources
@@ -186,74 +206,80 @@ migrate-from-react-uswds
   → Plans migration from react-uswds patterns to Ashlar
 ```
 
-The killer differentiators versus shadcn's MCP are `validate_usage` and `migrate`. Carbon MCP shipped similar tools in February 2026; Ashlar's are richer because they consume the extended CEM.
+The durable differentiators versus shadcn's install-and-discovery MCP are policy-aware discovery, deterministic task suggestions, `validate_usage` (executable component anti-patterns), `ai-eval` (repeatable generated-output checks), and planned migration tooling (codemod-driven version transitions), grounded in the extended CEM and evidence packets. A community proposal `SandeepBaskaran/carbon-mcp` (awaiting Carbon-team feedback against [carbon issue #20855](https://github.com/carbon-design-system/carbon/issues/20855)) explores `validateComponent` and `codemodReplace` for Carbon — the convergence is real, but Carbon Design System has not officially shipped or endorsed an MCP as of April 2026. Ashlar's current MCP is read-only-plus-validate; write tools (`add_component`, `update_component`, hosted operation) are gated behind additional threat modeling per [ADR 0012](../adr/adr-0012-mcp-threat-model.md) and [research/08 gap analysis](../research/08-gap-analysis-2026-04-29.md) item 8.
+
+## AI Eval Harness
+
+`ashlar ai-eval --suite <path> [--registry <path>] [--json]` runs deterministic generated-output fixtures through the same audit runner used by `ashlar audit` and MCP `validate_usage`.
+
+The suite format is schema-backed by `ai-eval.schema.json`:
+
+```json
+{
+  "$schema": "https://ashlar.dev/schemas/ai-eval.schema.json",
+  "schemaVersion": "1.0",
+  "cases": [
+    {
+      "id": "service-flow-no-findings",
+      "prompt": "Generate a simple benefit application form with Ashlar capsules.",
+      "components": ["form-field", "text-input", "button"],
+      "outputFile": "generated/benefit-application.pass.html",
+      "policy": "all",
+      "expect": { "errors": 0, "warnings": 0 }
+    }
+  ]
+}
+```
+
+The harness does not call a model. It records the prompt and checks a saved generated artifact so failures are deterministic in CI. JSON reports include each case's actual findings plus grounding metadata: component versions, evidence status, and `_ashlar.antiPatterns` rule ids.
 
 ### Security posture
 
 - Read-only by default. `add_component` and `update_component` are gated behind explicit user approval.
 - Local-by-default. `npx ashlar mcp` runs in the consumer's process; no network egress except to the configured registry.
-- Signed manifests. AI tools see the same signature chain humans verify.
+- Manifest hashes today; signed manifests after slice 4. AI tools see the same capsule metadata humans verify.
 - No hidden prompts. Tool descriptions and resource contents are exactly the published CEM and capsule files.
+- Threat model: [ADR 0012 — MCP and AI eval threat model](../adr/adr-0012-mcp-threat-model.md).
 
 ## AGENTS.md
 
-Lives in the consumer's project root. Generated by `ashlar init`, updated by `ashlar update`. Tells coding agents how to use Ashlar correctly **in this codebase**.
+Lives in the consumer's project root. Generated by `ashlar init`, updated by `ashlar add` and `ashlar update`. Tells coding agents how to use Ashlar correctly **in this codebase**.
 
 ```markdown
-# Ashlar — Agent Instructions
+# Ashlar - Agent Instructions
 
-This project uses Ashlar components. When generating UI code, follow these rules.
+This project uses Ashlar capsules: source-owned public-service UI with evidence, policy mappings, and validator rules.
 
-## Canonical imports
+## Installed Capsules
 
-- React: `import { Button } from "@ashlar/react"`
-- Vue: `import { AshlarButton } from "@ashlar/vue"`
-- HTML: `<button class="ashlar-button">` for L0 components; custom elements are reserved for L1 behavior-heavy components.
+(installed list, generated from `ashlar-lock.json`)
 
-## Available components
-
-(installed list, generated from ashlar-lock.json)
-
-- Button (1.2.3)
-- FormField (0.5.0)
-- Alert (1.0.1)
+- button@0.0.1 (experimental)
+- form-field@0.0.1 (experimental)
 - ...
 
-## Accessibility rules — required
+## Discovery Workflow
 
-- Use visible labels for form controls; never placeholder-only.
-- Icon-only buttons require `aria-label`.
-- Preserve focus styles. Never `outline: none` without an alternative.
-- Use Button for actions, Link for navigation.
-- For AI-generated answers in public-service contexts, include disclosure and citation regions.
+- Start an unfamiliar project with `ashlar status --json` so the agent can see initialization state, installed capsules, registry coverage, stable-evidence blockers, external-review proof state, and next commands without writing files.
+- For a new public-service UI task, start with `ashlar suggest "<task>"`.
+- Use `ashlar search --policy <text>`, `ashlar search --feature <text>`, or `ashlar search --token <text>` when the task is tied to a standard, platform capability, or token.
+- Before installing or using a capsule, inspect it with `ashlar view <component>` and `ashlar evidence <component>`.
+- In MCP-capable agents, prefer read-only `suggest_for_task`, `search_components`, `get_component`, `get_evidence`, `list_tokens`, `get_token`, and `validate_usage`.
+- Treat `status` and `suggest` as planning aids only. They never install components, write files, or prove accessibility conformance.
+- If `suggest` reports a capability gap, do not invent an Ashlar capsule name. Use the native HTML recommendation or wait for the signed capsule.
 
-## Token rules
+## Rules For AI Coding Agents
 
-- Style components via Ashlar CSS variables: `var(--ashlar-color-action-primary-bg)`.
-- Do not hard-code brand colors. If you need a new brand color, add it to the agency theme tokens.
-
-## Validation
-
-Before declaring done, run `npx ashlar audit` and resolve all errors.
-
-## Updating components
-
-- Always run `ashlar update` to upgrade; do not edit `node_modules`.
-- For drift conflicts, use the diff prompt and resolve in-file with `<<<<<<<` markers.
-
-## Anti-patterns (will be flagged by `ashlar audit`)
-
-- `<ashlar-button onClick={navigate}>` — use `<ashlar-link href>`.
-- `<ashlar-button><svg/></ashlar-button>` without `aria-label`.
-- `<ashlar-form-field>` wrapping non-input content.
-- Custom colors like `style={{ background: "#0050d8" }}` — use tokens.
-
-## Where to find more
-
-- Component docs: `npx ashlar docs <component>`
-- Evidence packet: `npx ashlar evidence <component>`
-- MCP server: `npx ashlar mcp`
+- Use only installed Ashlar capsules unless the user explicitly asks to add a new capsule.
+- Do not invent props, variants, classes, or behaviors that are absent from installed CEM files.
+- Preserve semantic HTML, accessible names, label associations, focus-visible styles, and forced-colors behavior.
+- For L0 components, use semantic platform markup such as `<button class="ashlar-button" data-variant="primary">`, not custom elements.
+- Use Ashlar CSS variables for styling; do not hard-code agency colors into capsule source.
+- After editing Ashlar markup, run `ashlar audit --policy all`.
+- Before claiming installed capsule integrity, run `ashlar verify`.
 ```
+
+The generated file intentionally avoids framework import examples until framework adapters exist. L0 capsules are source-owned HTML/CSS primitives, not React/Vue packages.
 
 ## Editor symlinks
 
@@ -268,11 +294,11 @@ CLAUDE.md             → AGENTS.md
 .github/copilot-instructions.md → AGENTS.md
 ```
 
-Symlinks rather than copies, so all editors see the same content. On Windows where symlinks require elevated permissions, the CLI offers a copy fallback with a `Last synced:` header.
+Symlinks rather than copies when the platform allows it, so all editors see the same content. When symlinks are unavailable, the CLI writes Ashlar-managed copies and refreshes those managed copies on the next `init`, `add`, or `update`. Existing project-owned instruction files are preserved.
 
 ## DESIGN.md
 
-`DESIGN.md` lives in the consumer's project root. Generated by `ashlar init`, updated by `ashlar design sync`, and intended for coding agents that look for a root-level design-system file.
+`DESIGN.md` lives in the consumer's project root. Generated by `ashlar init`, updated by `ashlar add`, `ashlar update`, and `ashlar design sync`, and intended for coding agents that look for a root-level design-system file.
 
 Ashlar treats DESIGN.md as an **export layer**, not the source of truth:
 
@@ -305,16 +331,24 @@ rounded:
 
 Use a restrained, trustworthy civic interface. Prioritize clarity, plain language, visible focus, and resilient layouts over novelty.
 
+## Component Discovery
+
+- Start new public-service UI tasks with `ashlar suggest "<task>"` or MCP `suggest_for_task`.
+- Use `ashlar search` or MCP `search_components` with policy, feature, token, layer, stability, or evidence filters when choosing capsules.
+- Inspect candidate capsules with `ashlar view <component>`, `ashlar evidence <component>`, MCP `get_component`, and MCP `get_evidence` before using them.
+- Suggestions are deterministic metadata matches. They do not install components, modify files, or prove accessibility conformance.
+
 ## Do's and Don'ts
 
 - Do use Ashlar tokens and installed components.
+- Do not invent component APIs outside installed CEM files.
 - Do preserve focus indicators and forced-colors behavior.
 - Do keep forms dense enough for repeat use but readable at 200% zoom.
 - Do not invent brand colors outside the agency theme.
 - Do not use decorative gradients or oversized marketing layouts for operational government flows.
 ```
 
-`ashlar design lint` can delegate to `@google/design.md lint` when available, then add Ashlar-specific checks for token provenance, contrast, forced-colors coverage, and policy-pack conflicts.
+A future `ashlar design lint` could delegate to `@google/design.md lint` when available, then add Ashlar-specific checks for token provenance, contrast, forced-colors coverage, and policy-pack conflicts. It is not implemented in v0.0.
 
 ## llms.txt for the docs site
 

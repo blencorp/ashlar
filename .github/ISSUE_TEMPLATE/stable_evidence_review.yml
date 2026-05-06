@@ -1,0 +1,64 @@
+name: Stable evidence review
+description: Request human accessibility evidence for capsule stable graduation.
+title: "[Evidence]: "
+labels: ["area: accessibility", "status: blocked"]
+body:
+  - type: input
+    id: capsule
+    attributes:
+      label: Capsule
+      description: Component and version, for example button@0.0.1.
+    validations:
+      required: true
+  - type: textarea
+    id: review-bundle
+    attributes:
+      label: Review bundle
+      description: Link to or attach the output of evidence prepare-stable.
+      value: |
+        Generated with:
+
+        ```bash
+        ashlar evidence prepare-stable <component> --registry ./registry --fixture <fixture> --output <review-dir>
+        ashlar evidence review-status <component> --registry ./registry --review-dir <review-dir>
+        ```
+    validations:
+      required: true
+  - type: textarea
+    id: keyboard
+    attributes:
+      label: Keyboard transcript
+      description: Summarize keyboard environment, observed focus order, activation behavior, unavailable states, and remaining blockers.
+    validations:
+      required: true
+  - type: textarea
+    id: screen-reader
+    attributes:
+      label: Screen-reader transcript
+      description: Include screen reader, browser, OS, version, name/role/state output, activation behavior, surrounding context, and blockers.
+    validations:
+      required: true
+  - type: textarea
+    id: criteria
+    attributes:
+      label: WCAG and ICT Baseline mapping
+      description: List criteria reviewed, pass/not-applicable/fail status, and evidence references.
+    validations:
+      required: true
+  - type: textarea
+    id: limitations
+    attributes:
+      label: Known limitations
+      description: List known limitations or explicitly state none observed.
+    validations:
+      required: true
+  - type: checkboxes
+    id: gates
+    attributes:
+      label: Graduation gates
+      options:
+        - label: Manual review artifacts contain no TODO, TBD, placeholder, or blocked result.
+        - label: "`ashlar evidence transcript-validate` passes for each local transcript reference."
+        - label: "`ashlar evidence review-status` reports ready before graduation."
+        - label: "`ashlar evidence graduate` passes before any registry publication."
+        - label: No application-level compliance claim is added.

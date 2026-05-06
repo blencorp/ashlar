@@ -24,6 +24,63 @@
     "stability": {
       "enum": ["proposal", "experimental", "beta", "stable", "deprecated"]
     },
+    "policyMappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "requirement"],
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "requirement": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "platformFeatures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["feature", "status", "fallback"],
+        "properties": {
+          "feature": {
+            "type": "string"
+          },
+          "status": {
+            "enum": ["required", "progressive", "not-used"]
+          },
+          "fallback": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence": {
+      "type": "string"
+    },
+    "bundleBudget": {
+      "type": "object",
+      "properties": {
+        "cssGzipBytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "jsGzipBytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
     "files": {
       "type": "object",
       "additionalProperties": {
@@ -36,7 +93,70 @@
       "pattern": "^sha256:[a-f0-9]{64}$"
     },
     "signature": {
-      "type": "string"
+      "type": "object",
+      "required": ["keyId", "algorithm", "value"],
+      "properties": {
+        "keyId": {
+          "type": "string"
+        },
+        "algorithm": {
+          "const": "ed25519"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "sigstore": {
+      "type": "object",
+      "required": [
+        "bundle",
+        "bundleHash",
+        "signedPayloadHash",
+        "certificateIdentity",
+        "certificateOidcIssuer"
+      ],
+      "properties": {
+        "bundle": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+\\.sigstore\\.json$"
+        },
+        "bundleHash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "signedPayloadHash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "certificateIdentity": {
+          "type": "string"
+        },
+        "certificateOidcIssuer": {
+          "type": "string",
+          "format": "uri"
+        },
+        "transparencyLog": {
+          "type": "object",
+          "properties": {
+            "logId": {
+              "type": "string"
+            },
+            "logIndex": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "integratedTime": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "additionalProperties": false,
+          "minProperties": 1
+        }
+      },
+      "additionalProperties": false
     },
     "dependencies": {
       "type": "object"
@@ -51,6 +171,13 @@
       "type": "array",
       "items": {
         "type": "string"
+      }
+    },
+    "codemods": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[A-Za-z0-9._/-]+\\.codemods\\.json$"
       }
     }
   },

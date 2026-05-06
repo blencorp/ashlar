@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ashlar.dev/schemas/trust-root.schema.json",
+  "title": "Ashlar Registry Trust Root",
+  "type": "object",
+  "required": ["schemaVersion", "keys"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "keys": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["keyId", "algorithm", "publicKey"],
+        "properties": {
+          "keyId": {
+            "type": "string"
+          },
+          "algorithm": {
+            "const": "ed25519"
+          },
+          "publicKey": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "sigstore": {
+      "type": "object",
+      "required": ["certificateIdentities", "certificateOidcIssuers"],
+      "properties": {
+        "certificateIdentities": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "certificateOidcIssuers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "uniqueItems": true
+        },
+        "bundleVerification": {
+          "enum": ["metadata", "cosign"]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

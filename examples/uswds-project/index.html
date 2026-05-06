@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>USWDS benefits application</title>
+    <meta name="description" content="A small USWDS fixture used to prove Ashlar migration planning.">
+  </head>
+  <body>
+    <section class="usa-banner" aria-label="Official government website">
+      <div class="usa-banner__inner">An official website of the United States government</div>
+    </section>
+
+    <main id="main-content">
+      <div class="usa-alert usa-alert--info">
+        <div class="usa-alert__body">
+          <p class="usa-alert__text">Applications are reviewed within 30 days.</p>
+        </div>
+      </div>
+
+      <form class="usa-form" action="/benefits" method="post">
+        <div class="usa-form-group">
+          <label class="usa-label" for="full-name">Full name</label>
+          <input class="usa-input" id="full-name" name="full-name" type="text">
+          <span class="usa-error-message" id="full-name-error">Enter your full name.</span>
+        </div>
+
+        <div class="usa-form-group">
+          <label class="usa-label" for="state">State</label>
+          <select class="usa-select" id="state" name="state">
+            <option value="">Select a state</option>
+            <option value="dc">District of Columbia</option>
+            <option value="md">Maryland</option>
+            <option value="va">Virginia</option>
+          </select>
+        </div>
+
+        <div class="usa-form-group">
+          <label class="usa-label" for="household-notes">Household notes</label>
+          <textarea class="usa-textarea" id="household-notes" name="household-notes"></textarea>
+        </div>
+
+        <div class="usa-form-group">
+          <label class="usa-label" for="birth-date">Date of birth</label>
+          <div class="usa-date-picker">
+            <input class="usa-input" id="birth-date" name="birth-date" type="text">
+          </div>
+        </div>
+
+        <fieldset class="usa-fieldset">
+          <legend class="usa-legend">Are you currently enrolled?</legend>
+          <div class="usa-radio">
+            <input class="usa-radio__input" id="enrolled-yes" type="radio" name="enrolled">
+            <label class="usa-radio__label" for="enrolled-yes">Yes</label>
+          </div>
+          <div class="usa-radio">
+            <input class="usa-radio__input" id="enrolled-no" type="radio" name="enrolled">
+            <label class="usa-radio__label" for="enrolled-no">No</label>
+          </div>
+        </fieldset>
+
+        <button class="usa-button" type="submit">Continue</button>
+      </form>
+
+      <footer class="usa-identifier">
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+      </footer>
+    </main>
+  </body>
+</html>

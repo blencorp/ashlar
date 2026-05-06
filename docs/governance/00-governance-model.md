@@ -1,8 +1,8 @@
 # Governance model
 
-Ashlar is community-governed open source. This document describes the governance model: license, maintainer roles, contribution process, component lifecycle, release channels, security posture, and the rules for agency themes and custom registries.
+Ashlar is intended to become community-governed open source. This document describes the governance model the project must satisfy before beta-scale or replacement-grade claims: license, maintainer roles, contribution process, component lifecycle, release channels, security posture, and the rules for agency themes and custom registries.
 
-The governance is designed to avoid the AuDS trap (single-organization ownership, single point of failure). Multi-organization maintenance is a hard requirement, not a nice-to-have.
+The governance is designed to avoid the AuDS trap (single-organization ownership, single point of failure). Multi-organization maintenance is a hard requirement, not a current achievement. Until that maintainer group exists, Ashlar should describe itself as a pre-alpha foundation prototype with a published governance target.
 
 ## License
 
@@ -30,7 +30,7 @@ If a trademark or package-namespace review later finds a blocking conflict, the 
 
 ## Maintainer model
 
-Ashlar is maintained by a **community maintainer team** with at least three contributing organizations represented (avoiding bus-factor=1).
+Ashlar's target maintainer model is a **community maintainer team** with at least three contributing organizations represented (avoiding bus-factor=1). In the pre-alpha phase, maintainership can be provisional and founder-led, but stronger public adoption claims require named maintainers outside the originating organization.
 
 ### Roles
 
@@ -42,9 +42,11 @@ Ashlar is maintained by a **community maintainer team** with at least three cont
 - **Security maintainer** — owns Sigstore signing, supply-chain audit, CVE response.
 - **Community / RFC steward** — runs the RFC process, event-driven community calls, and contributor onboarding.
 
-A single person may hold more than one role; some roles can be shared. **No single role can be held exclusively by a single organization.**
+A single person may hold more than one role; some roles can be shared. Before beta-scale claims, no single role should be held exclusively by one organization.
 
 ### Decision authority
+
+Until the multi-organization maintainer team exists, decisions are provisional and should be recorded in ADRs or roadmap docs so external contributors can challenge them later. Once the target maintainer model is active:
 
 - **Routine code review**: any maintainer can approve.
 - **Architectural changes** (ADR-worthy): requires architecture maintainer + at least one other organization's maintainer.
@@ -107,7 +109,7 @@ LTS components receive security and accessibility patches for a published suppor
 
 ## Security and trust
 
-- **Signed releases via Sigstore.** All capsules signed in CI via keyless OIDC.
+- **Signed releases via Sigstore.** Public release capsules must be signed in CI via keyless OIDC.
 - **Signed Git tags** as secondary mirror.
 - **SHA-256 content hashes** in registry index and lockfile.
 - **Dependency review** via GitHub Dependabot / equivalent.
@@ -116,7 +118,7 @@ LTS components receive security and accessibility patches for a published suppor
 - **Changelogs flag accessibility and security changes** explicitly.
 - **Capsule manifest header comments** record version + checksum (machine-readable provenance).
 
-Security maintainer coordinates disclosure and patches.
+The security maintainer coordinates disclosure and patches once the target maintainer model exists. In pre-alpha, the originating maintainers are responsible for disclosure and for keeping release readiness honest about any missing public trust material.
 
 ## Registry governance
 
@@ -182,13 +184,13 @@ If a future USWDS or NDS-led modernization wants to adopt Ashlar components or p
 
 A community OSS project still costs real money to maintain at federal-credible quality (manual a11y testing, security audits, infrastructure). Funding paths under consideration:
 
-- **Founding-organization sponsorship** — Blen and other contributing organizations sponsor maintainer time as part of normal employment.
+- **Founding-organization sponsorship** — Blen or other contributing organizations may sponsor maintainer time as part of normal employment.
 - **Open Collective / GitHub Sponsors** — small-scale community funding.
 - **Foundation grants** — Sloan Foundation, Mozilla Foundation, civic-tech philanthropies have funded similar work.
 - **Vendor sponsorship** — Vercel, Cloudflare, Anthropic have sponsored OSS in adjacent spaces.
 - **Federal contract carve-outs** — agencies adopting Ashlar for production systems may fund accessibility evidence work as a deliverable.
 
-Funding model is documented and updated as it firms up. **Ashlar does not start from a "if we build it, the money will come" assumption**; before v0.1 public alpha, at least one funded maintainer line is required.
+Funding model is documented and updated as it firms up. **Ashlar does not start from a "if we build it, the money will come" assumption**; before v0.1 public alpha, the project should identify at least one funded maintainer line or explicitly narrow the component/evidence scope to match unfunded capacity.
 
 ## How this changes
 

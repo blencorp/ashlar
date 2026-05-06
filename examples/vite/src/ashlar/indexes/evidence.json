@@ -1,0 +1,10 @@
+{
+  "generatedBy": "ashlar-cli@0.0.0",
+  "components": [
+    {
+      "name": "button",
+      "version": "0.0.1",
+      "accessibilityStatus": "not-reviewed"
+    }
+  ]
+}

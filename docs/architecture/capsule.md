@@ -1,6 +1,6 @@
 # Capsule format
 
-The capsule is Ashlar's atomic unit. It bundles every artifact needed to use, verify, update, and reason about a component into a content-addressed, signed archive that the registry distributes and the CLI installs.
+The capsule is Ashlar's atomic unit. It bundles every artifact needed to use, verify, update, and reason about a component into a content-addressed archive that the registry distributes and the CLI installs. The current prototype verifies hashes plus local Ed25519 registry signatures, and `release sign-capsules` can attach Sigstore bundles that consumer reads verify with `cosign verify-blob` when the trust root requires it.
 
 ## Directory layout
 
@@ -18,17 +18,19 @@ button/
 ├── button.machine.ts         # Zag statechart (L1 only)
 ├── button.cem.json           # Custom Elements Manifest (extended)
 ├── button.evidence.json      # accessibility evidence packet
-├── button.codemods.yaml      # ast-grep migration rules
+├── button.codemods.json      # ast-grep migration rules
 ├── button.test.ts            # Playwright + axe tests
 ├── button.docs.md            # human + AI documentation
-└── button.lock.json          # capsule manifest + content hashes
+└── button.capsule.json       # capsule manifest + content hashes
 ```
 
-Files are optional except for `*.cem.json`, `*.docs.md`, `*.lock.json`, and at least one renderable target (`*.css` for L0, `*.element.ts` for L1).
+Files are optional except for `*.cem.json`, `*.evidence.json`, `*.capsule.json` (the per-capsule manifest with content hashes), and at least one renderable target (`*.css` for L0, `*.element.ts` for L1). Human docs and multi-template renderings become mandatory at higher stability tiers.
 
-## Capsule manifest (`*.lock.json`)
+> **Status (2026-05-05)**: the current Button and first service-flow capsules ship `*.css`, `*.html`, `*.cem.json`, `*.evidence.json`, and signed `*.capsule.json` manifests. `registry/index.json` pins each manifest's `capsule_hash`, `registry/trust-root.json` publishes the local Ed25519 verification key plus expected Sigstore identity/issuer policy and `bundleVerification: "cosign"`, and `ashlar add` / `ashlar update` / `ashlar verify` validate hashes, local signatures, declared Sigstore bundle metadata, and trust-root-required `cosign verify-blob` before trusting registry source. `ashlar update` can also run prototype JSON codemods listed from `manifest.codemods`; that list is covered by capsule integrity when present, codemod files validate against `codemod.schema.json`, and skipped-version updates run intermediate codemods in registry version order. Multi-template renderings, Lit machine files, and real public Sigstore bundles remain planned per the [v0.0 slice graph](../roadmap/01-v0.0-foundation.md).
 
-The capsule's own manifest, distinct from the consumer's `ashlar-lock.json`. Records the capsule's identity, version, content hashes, dependencies, and signature.
+## Capsule manifest (`*.capsule.json`)
+
+The capsule's own manifest, distinct from the consumer's `ashlar-lock.json`. Records the capsule's identity, version, stability, layer, file hashes, capsule hash, local registry signature, and optional Sigstore bundle metadata. It is published as a real file in the registry today, pinned from `registry/index.json`, and verified against `registry/trust-root.json`.
 
 ```json
 {
@@ -44,19 +46,35 @@ The capsule's own manifest, distinct from the consumer's `ashlar-lock.json`. Rec
     "button.evidence.json": "sha256:jkl..."
   },
   "capsule_hash": "sha256:mno...",
-  "signature": "sigstore:...",
+  "signature": {
+    "keyId": "ashlar-local-dev-2026-05-05",
+    "algorithm": "ed25519",
+    "value": "base64-signature"
+  },
+  "sigstore": {
+    "bundle": "button.sigstore.json",
+    "bundleHash": "sha256:pqr...",
+    "signedPayloadHash": "sha256:stu...",
+    "certificateIdentity": "https://github.com/blencorp/ashlar/.github/workflows/sigstore.yml@refs/heads/main",
+    "certificateOidcIssuer": "https://token.actions.githubusercontent.com"
+  },
   "dependencies": {
     "tokens": ["color.action.primary.bg", "color.action.primary.fg", "focus.ring"],
     "capsules": []
   },
+  "bundleBudget": {
+    "cssGzipBytes": 4096,
+    "jsGzipBytes": 0
+  },
+  "codemods": ["button.codemods.json"],
   "templates": ["html", "njk", "twig", "jinja", "erb"],
   "frameworks": ["react", "vue", "svelte", "solid", "element"]
 }
 ```
 
-`capsule_hash` is the SHA-256 of a deterministic serialization of all file hashes plus metadata. It uniquely identifies the capsule contents at this version.
+`capsule_hash` is the SHA-256 of a deterministic serialization of the capsule name, version, file hashes, and integrity-covered manifest metadata such as `codemods` and `bundleBudget`. It uniquely identifies the capsule contents and runtime budget contract at this version.
 
-`signature` is a Sigstore signature over `capsule_hash`. Verifiable offline with the capsule's public key chain.
+`signature` is currently an Ed25519 signature over the deterministic manifest payload, verified against the registry trust root. `sigstore`, when present, records the capsule-relative cosign bundle path, bundle hash, signed payload hash, certificate identity, and OIDC issuer; registry reads validate those fields against the trust root before install, update, verify, or mirror. If the trust root sets `sigstore.bundleVerification` to `cosign`, the same read path runs `cosign verify-blob` with the pinned identity and issuer. Current capsules still need real public bundle files before this becomes public Sigstore trust.
 
 ## Stability tiers
 
@@ -154,22 +172,32 @@ See [`accessibility.md`](./accessibility.md) for the full schema; structurally:
 }
 ```
 
-## Codemods (`*.codemods.yaml`)
+## Codemods (`*.codemods.json`)
 
-ast-grep YAML rules that transform consumer code from the previous version of the capsule to the current one. Run by `ashlar update` when version skip detected.
+Prototype ast-grep JSON rules transform installed consumer capsule files from the previous version of the capsule to the current one. `ashlar update` loads files listed in `manifest.codemods` when `component`, `from`, and `to` match the current update step; skipped-version updates walk the registry `versions` list and apply intermediate codemods in order. `manifest.codemods` participates in the capsule hash/signature payload when present, codemod files must be listed in `manifest.files`, codemod files validate against `codemod.schema.json`, and rule targets must stay inside the installed component directory. The current runner supports a narrow one-file `pattern` / fixed `rewrite` subset before three-way merge; `confirm: true` rules require explicit `--yes` approval and report the rule ids plus targets before applying. `ashlar update --survival-report <path>` can record file-level update outcomes and codemod counts for scenario harnesses.
 
-```yaml
-- id: button-rename-color-prop
-  from: 1.1.x
-  to: 1.2.x
-  language: [tsx, vue, html, twig]
-  rule:
-    pattern: <ashlar-button color="$VAL">
-  fix: <ashlar-button variant="$VAL">
-  message: "color prop renamed to variant in 1.2.0"
+L0 codemods target the semantic markup form (`<button class="ashlar-button">`) per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md). L1 codemods target the custom-element form (`<ashlar-combobox>`).
+
+```json
+{
+  "schemaVersion": "1.0",
+  "component": "button",
+  "from": "1.1.0",
+  "to": "1.2.0",
+  "rules": [
+    {
+      "id": "button-rename-color-token",
+      "target": "button.css",
+      "language": "css",
+      "pattern": "color: var(--ashlar-color-action-primary-bg);",
+      "rewrite": "color: var(--ashlar-color-action-primary-surface);",
+      "confirm": false
+    }
+  ]
+}
 ```
 
-See [`drift-and-updates.md`](./drift-and-updates.md) for the full codemod application protocol.
+See [`drift-and-updates.md`](./drift-and-updates.md) for the full codemod application protocol and the explicit list of failure modes textual three-way merge does not handle.
 
 ## Content addressing
 
@@ -181,6 +209,11 @@ See [`drift-and-updates.md`](./drift-and-updates.md) for the full codemod applic
   "version": "1.2.3",
   "files": {
     // sorted alphabetically, file hashes only
+  },
+  "codemods": ["button.codemods.json"],
+  "bundleBudget": {
+    "cssGzipBytes": 4096,
+    "jsGzipBytes": 0
   }
 }
 ```
@@ -189,7 +222,7 @@ Determinism rules: keys sorted, no whitespace, line endings normalized to `\n`, 
 
 ## Signing
 
-Ashlar uses **Sigstore** with cosign for capsule signatures:
+Ashlar plans to use **Sigstore** with cosign for capsule signatures:
 
 1. Registry build pipeline produces capsule contents and `capsule_hash`.
 2. Pipeline signs `capsule_hash` via Sigstore (keyless, with OIDC identity tied to the registry's GitHub Actions workflow).

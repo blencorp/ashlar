@@ -1,0 +1,77 @@
+name: Design partner review
+description: Capture external feedback on the public-service flow, DX, and category direction.
+title: "[Partner Review]: "
+labels: ["type: research", "area: governance", "status: blocked"]
+body:
+  - type: input
+    id: reviewer
+    attributes:
+      label: Reviewer or organization
+      description: Name, role, and organization if public.
+    validations:
+      required: true
+  - type: dropdown
+    id: review-scope
+    attributes:
+      label: Review scope
+      options:
+        - Validator-only adoption
+        - First service-flow proof
+        - Capsule install/update DX
+        - AI/MCP workflow
+        - USWDS interop or migration
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: scenario
+    attributes:
+      label: Scenario reviewed
+      description: What stack, app type, or public-service workflow did the reviewer evaluate?
+    validations:
+      required: true
+  - type: textarea
+    id: commands
+    attributes:
+      label: Commands or screens reviewed
+      value: |
+        ```bash
+        ashlar release design-partner-checklist --output reports/ashlar-design-partner-checklist.md
+        ashlar audit --policy federal --explain <files>
+        ashlar search <task>
+        ashlar view <capsule>
+        ashlar add <capsule>
+        ashlar verify
+        ashlar update <capsule> --yes
+        ashlar mcp
+        ```
+  - type: textarea
+    id: checklist
+    attributes:
+      label: Generated reviewer checklist
+      description: Link or attach the generated ashlar-design-partner-checklist.md used during the review.
+    validations:
+      required: true
+  - type: textarea
+    id: feedback
+    attributes:
+      label: Feedback
+      description: What felt credible, confusing, unnecessary, or missing?
+    validations:
+      required: true
+  - type: textarea
+    id: adoption
+    attributes:
+      label: Adoption blockers
+      description: Procurement, security, accessibility, DX, policy, migration, governance, or documentation blockers.
+    validations:
+      required: true
+  - type: checkboxes
+    id: positioning
+    attributes:
+      label: Positioning checks
+      options:
+        - label: The reviewer understood Ashlar as evidence-backed source UI, not another component gallery.
+        - label: The reviewer did not interpret Ashlar as official USWDS, GSA, NDS, or federal guidance.
+        - label: The reviewer could identify a first adoption path without replacing their whole UI stack.
+        - label: The reviewer found at least one blocker that must be resolved before stronger replacement claims.

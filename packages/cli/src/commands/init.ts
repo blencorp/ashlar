@@ -1,40 +1,62 @@
 import type { Command } from "commander";
-import { writeFileIfMissing, writeJson } from "../lib/project.js";
-
-const agentsTemplate = `# Ashlar - Agent Instructions
-
-This project uses Ashlar components. When generating UI code:
-
-- Use installed Ashlar capsules from ashlar-lock.json.
-- Preserve semantic HTML and accessible names.
-- Use Button for actions and Link for navigation.
-- Do not remove focus-visible styles.
-- Use Ashlar CSS variables for styling.
-- Run ashlar audit before considering generated UI complete.
-`;
+import { writeAgentsContext } from "../lib/agents.js";
+import { writeDesignContext } from "../lib/design-context.js";
+import { defaultConfig, writeJson } from "../lib/project.js";
+import { syncAshlarProject } from "../lib/styles.js";
+import { writeThemeFiles } from "../lib/theme.js";
 
 export function registerInitCommand(program: Command) {
   program
     .command("init")
     .description("Initialize Ashlar in this project")
     .option("--force", "Overwrite existing Ashlar config files")
-    .action((options: { force?: boolean }) => {
-      const force = Boolean(options.force);
+    .option("--registry <path>", "Registry path or URL", "./registry")
+    .option(
+      "--components-dir <path>",
+      "Installed component source directory",
+      "src/ashlar/components",
+    )
+    .option(
+      "--entrypoint <path>",
+      "Generated Ashlar stylesheet entrypoint",
+      "src/ashlar/ashlar.css",
+    )
+    .action(
+      (options: {
+        componentsDir: string;
+        entrypoint: string;
+        force?: boolean;
+        registry: string;
+      }) => {
+        const force = Boolean(options.force);
+        const config = defaultConfig({
+          registry: options.registry,
+          componentsDir: options.componentsDir,
+          indexesDir: "src/ashlar/indexes",
+          styles: {
+            entrypoint: options.entrypoint,
+            theme: "src/ashlar/themes/theme.css",
+            tailwindTheme: "src/ashlar/themes/tailwind-theme.css",
+            tokenTypes: "src/ashlar/themes/tokens.ts",
+          },
+        });
 
-      writeJson("ashlar.config.json", {
-        $schema: "https://ashlar.dev/schemas/config.schema.json",
-        registry: "./registry",
-        componentsDir: "src/ashlar",
-      });
+        writeJson("ashlar.config.json", config);
 
-      writeJson("ashlar-lock.json", {
-        $schema: "https://ashlar.dev/schemas/lock.schema.json",
-        version: "1",
-        registry: "./registry",
-        components: {},
-      });
+        const lockfile = {
+          $schema: "https://ashlar.dev/schemas/lock.schema.json",
+          version: "1",
+          registry: config.registry,
+          components: {},
+        } as const;
 
-      writeFileIfMissing("AGENTS.md", agentsTemplate, force);
-      console.log("Initialized Ashlar");
-    });
+        writeJson("ashlar-lock.json", lockfile);
+        writeThemeFiles(config, force);
+        syncAshlarProject(process.cwd(), config, lockfile);
+
+        writeAgentsContext("AGENTS.md", config, lockfile);
+        writeDesignContext("DESIGN.md", config, lockfile, { cwd: process.cwd(), force });
+        console.log("Initialized Ashlar");
+      },
+    );
 }

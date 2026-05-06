@@ -1,0 +1,153 @@
+{
+  "$schema": "https://ashlar.dev/schemas/registry-index.schema.json",
+  "schemaVersion": "1.0",
+  "registry": "./registry",
+  "name": "ashlar-local",
+  "version": "0.0.1",
+  "publishedAt": "2026-04-29T00:00:00.000Z",
+  "components": {
+    "alert": {
+      "latest": "0.0.1",
+      "versions": ["0.0.1"],
+      "capsuleHashes": {
+        "0.0.1": "sha256:10cd847a43dc3450add9352793233a1dc40d9e8da19b8411015ba35a3bea1ba4"
+      },
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Semantic status message for public-service feedback and validation states."
+    },
+    "banner": {
+      "latest": "0.0.1",
+      "versions": ["0.0.1"],
+      "capsuleHashes": {
+        "0.0.1": "sha256:1b7a4b3f5cd23e5a0c4b956947b73cab4c124483715d8393cba61e2daa89791b"
+      },
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Official-site trust marker for federal and public-service pages."
+    },
+    "benefit-application": {
+      "latest": "0.0.1",
+      "versions": ["0.0.1"],
+      "capsuleHashes": {
+        "0.0.1": "sha256:b2582a2e5a0af8f0418099a5a63d2eaeaf2509803ebf45eb56c9c879fd57143a"
+      },
+      "tier": "pattern",
+      "layer": "L3",
+      "stability": "proposal",
+      "description": "Small public-service application flow that composes the first Ashlar capsules."
+    },
+    "button": {
+      "latest": "0.0.1",
+      "versions": ["0.0.1"],
+      "capsuleHashes": {
+        "0.0.1": "sha256:03b7e5971bc6b3150fe80180b1a2d2cd663057232299bef7eab6dc522da8a70f"
+      },
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Accessible semantic action control for forms and workflows."
+    },
+    "checkbox": {
+      "latest": "0.0.1",
+      "versions": ["0.0.1"],
+      "capsuleHashes": {
+        "0.0.1": "sha256:120034cd4770864cf18b95cf91b32e98bd35c5a4194ebe2af179453b1f22dd63"
+      },
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Native checkbox control for consent, confirmation, and multi-select form questions."
+    },
+    "date-input": {
+      "latest": "0.0.1",
+      "versions": ["0.0.1"],
+      "capsuleHashes": {
+        "0.0.1": "sha256:f724c67393b6be08d4bbe5862703c57a872340cb5fe7826ab26f55772a390b04"
+      },
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Native single-date input for simple public-service date questions."
+    },
+    "error-summary": {
+      "latest": "0.0.1",
+      "versions": ["0.0.1"],
+      "capsuleHashes": {
+        "0.0.1": "sha256:ab516faf9e390321ac03cffca15a41e801c28e05c8f079a93d19ad25903d3ab0"
+      },
+      "tier": "composite",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Linked validation summary that moves people directly to fields needing attention."
+    },
+    "form-field": {
+      "latest": "0.0.1",
+      "versions": ["0.0.1"],
+      "capsuleHashes": {
+        "0.0.1": "sha256:cf7b5defea4958e7af1278de582eadfa5bccfbaca2122967c4be88037283f8da"
+      },
+      "tier": "composite",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Accessible label, hint, error, and control wrapper for public-service forms."
+    },
+    "identifier": {
+      "latest": "0.0.1",
+      "versions": ["0.0.1"],
+      "capsuleHashes": {
+        "0.0.1": "sha256:2f28a72ae30123daf41d96cd0ec498c4999d4df863136f15cd15683612225a7c"
+      },
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Required agency identifier and trust-link footer for federal public-service pages."
+    },
+    "radio-group": {
+      "latest": "0.0.1",
+      "versions": ["0.0.1"],
+      "capsuleHashes": {
+        "0.0.1": "sha256:9e97889ffe073db171bed964a23fd2105e831255733f7e22c1ebf95e84d7501f"
+      },
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Native radio group for mutually exclusive public-service form choices."
+    },
+    "select": {
+      "latest": "0.0.1",
+      "versions": ["0.0.1"],
+      "capsuleHashes": {
+        "0.0.1": "sha256:c27d6a9f3a2a368ec8d4c6295f2bbf06e1613e7457b480284fecb030c60ebe27"
+      },
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Native select control for choosing one option from a bounded public-service list."
+    },
+    "text-input": {
+      "latest": "0.0.1",
+      "versions": ["0.0.1"],
+      "capsuleHashes": {
+        "0.0.1": "sha256:41942403d4054d2b70ca1bc3beb3d996df3d3a72b46d037835312b3166c3353b"
+      },
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Semantic text entry control for forms that need labels, hints, and errors."
+    },
+    "textarea": {
+      "latest": "0.0.1",
+      "versions": ["0.0.1"],
+      "capsuleHashes": {
+        "0.0.1": "sha256:1d9b6d44bdd4dfa72bc27f7690ca00ab39e8337445d433258c595b298d08029b"
+      },
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Native multiline text control for public-service long-answer fields."
+    }
+  }
+}

@@ -36,7 +36,7 @@ This layer covers approximately 70% of typical design-system components in 2026,
 
 - Button, Link, Badge, Tag
 - Card, Banner, Identifier, Alert
-- Form Field (Label + Input + Error), TextInput, Textarea, Checkbox, Radio, Select
+- Form Field (Label + Input + Error), TextInput, Textarea, Date Input, Checkbox, Radio, Select
 - Dialog (`<dialog>`), Tooltip / Popover (popover API + anchor positioning), Accordion (`<details name>`)
 - Layout primitives (Stack, Grid, Cluster, Switcher)
 - Skip link, Focus ring utility, Visually-hidden utility
@@ -115,13 +115,13 @@ button/
 ├── button.machine.ts         # Zag statechart (L1 only)
 ├── button.cem.json           # extended Custom Elements Manifest
 ├── button.evidence.json      # axe runs, keyboard transcripts, WCAG map
-├── button.codemods.yaml      # ast-grep rules for upgrades
+├── button.codemods.json      # ast-grep rules for upgrades
 ├── button.test.ts            # Playwright/axe tests
 ├── button.docs.md            # human + AI documentation
-└── button.checksum.txt       # content hash
+└── button.capsule.json       # manifest, hashes, signature metadata
 ```
 
-Each capsule is signed via Sigstore. The lockfile records the signature; `ashlar verify` checks all installed capsule files against recorded signatures.
+The prototype signs capsule manifests with a local Ed25519 registry key, pins their hashes from the registry index, validates declared capsule Sigstore bundle metadata against the registry trust policy when present, and can require `cosign verify-blob` from the trust root. Real public Sigstore bundles and public trust bundles remain planned supply-chain work.
 
 See [`capsule.md`](./capsule.md) for the full capsule schema and content-addressing rules.
 
@@ -137,8 +137,10 @@ The CLI is a pure Node + ESM tool, distributed via npm and runnable via `npx`, `
 ```bash
 # Initial install
 npx ashlar init                       # writes ashlar.config.json + tokens + lockfile
+npx ashlar status                     # read-only adoption snapshot and next commands
 npx ashlar add button alert dialog    # adds L0 capsules — pure CSS, zero JS
 npx ashlar add combobox               # adds an L1 capsule (Lit + Zag)
+npx ashlar migrate uswds "./src/**/*.{html,tsx,jsx}" # read-only USWDS replacement map
 
 # After local customization
 npx ashlar update                     # safe 3-way merge for any drift
@@ -188,24 +190,26 @@ shadcn's most-cited unfixed problem is that copied components drift after instal
 
 See [`drift-and-updates.md`](./drift-and-updates.md) for the full update protocol, conflict resolution UX, and codemod specification.
 
-## Validation — polyglot, framework-agnostic
+## Validation — polyglot, scoped honestly
 
-`ashlar audit` runs ast-grep rules generated from each component's CEM. ast-grep is a tree-sitter-based AST tool with a YAML rule DSL that handles TSX, JSX, Vue SFCs, Svelte, Astro, plain HTML, and Drupal Twig from the same rule.
+`ashlar audit` runs ast-grep rules generated from each component's CEM. ast-grep is a tree-sitter-based AST tool with a YAML rule DSL. **First-party language coverage is HTML, TSX, JSX, and CSS.** Vue, Svelte, Astro, and ERB require maintained third-party tree-sitter grammars and opt-in via `ashlar.config.json`. Twig, Jinja, and Nunjucks have no maintained tree-sitter parsers as of April 2026; the validator returns `language-unsupported` for these targets rather than pretending coverage. See [validation](./validation.md) for the live support matrix and [STATUS.md](../../STATUS.md) for current shipping state.
 
 ```yaml
-# Generated from button.cem.json _ashlar.anti_patterns
-id: ashlar/button-icon-only-needs-label
-language: [tsx, jsx, vue, svelte, astro, html, twig]
+# Generated from button.cem.json _ashlar.antiPatterns
+id: ashlar/button/icon-only-needs-label
+language: [html, tsx, jsx]
 rule:
-  pattern: <ashlar-button>$ICON</ashlar-button>
+  pattern: <button class="ashlar-button">$ICON</button>
   has:
     pattern: <svg/>
   not:
     has:
       pattern: aria-label="$_"
 message: "Icon-only Button requires aria-label (WCAG 4.1.2)"
-fix: '<ashlar-button aria-label="TODO">$ICON</ashlar-button>'
+fix: '<button class="ashlar-button" aria-label="TODO">$ICON</button>'
 ```
+
+L0 components use the semantic `<button class="ashlar-button">` form per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md); the `<ashlar-button>` custom-element form is reserved for L1 components.
 
 ast-grep is distributed as a single Rust binary (~3MB). No JS dependency tree, no framework coupling, no build-pipeline integration required. CI integration is one line; pre-commit hook integration is one line.
 
@@ -220,41 +224,41 @@ Three artifacts, each does one thing:
 2. **AGENTS.md** in the project root — coding-agent instructions for using Ashlar correctly in the user's codebase. Symlinked from `CLAUDE.md`, `.cursor/rules/ashlar.mdc`, and `.windsurfrules` to cover the editor fragmentation.
 
 3. **MCP server** at `npx ashlar mcp` — exposes tools that go beyond shadcn's install-only MCP:
-   - `search_components(query)` — semantic search across capsules
+   - `search_components(query, filters)` — ranked component, policy, feature, token, evidence, and layer search
    - `get_component(name)` — full extended CEM
    - `validate_usage(file_or_glob)` — runs ast-grep rules, returns violations
-   - `suggest_for_task(description)` — capsule recommendations from natural-language intent
-   - `migrate(component, from, to)` — runs codemods between versions
+   - `suggest_for_task(description)` — deterministic metadata-backed capsule recommendations plus missing-capability gaps, no writes
+   - `migrate(component, from, to)` — planned dry-run codemods between versions
    - `get_evidence(name)` — accessibility evidence packet
    - Resources: `capsule://`, `token://`, `pattern://`, `evidence://`
 
-The killer differentiators versus shadcn's MCP are `validate_usage` and `migrate`. Carbon shipped its MCP with similar tools in February 2026; this is the right shape.
+The durable differentiators versus shadcn's install-and-discovery MCP are policy-aware discovery, deterministic task-to-capsule suggestions with explicit gaps for unavailable primitives, and `validate_usage` today, with migration tooling as the update/codemod slice matures. Those tools are grounded in extended CEM, registry metadata, and evidence packets rather than package names alone. A community proposal `carbon-mcp` (awaiting Carbon-team feedback) explores similar validate/codemod tools; the convergence is real even though Carbon Design System has not officially shipped or endorsed an MCP. See [STATUS.md](../../STATUS.md) for Ashlar's MCP shipping plan.
 
 See [`ai-native.md`](./ai-native.md) for the extended CEM schema, MCP tool specifications, and AGENTS.md template.
 
 ## Tokens
 
-Source format: DTCG 2025.10 (the Design Tokens Community Group format reached first stable in October 2025).
+Source format: DTCG 2025.10 (Design Tokens Community Group [Final Report](https://www.w3.org/community/reports/design-tokens/CG-FINAL-format-20251028/) published October 2025; *not* a W3C Recommendation, but stable enough to anchor on with a swappable compiler boundary).
 
-Compiler: Terrazzo (most complete DTCG support in 2026; Style Dictionary is the fallback).
+Compiler: Terrazzo (most complete DTCG support in 2026; Style Dictionary v4 as a fallback). The current prototype's `theme.ts` now loads DTCG-shaped agency theme JSON and emits CSS variables, a Tailwind v4 companion stylesheet, and typed token helpers; design-tool exports remain v0.0 slice 6 work.
 
 Outputs:
 
 - `tokens.css` — primitive tokens as CSS custom properties
 - `theme.css` — semantic tokens with `light-dark()` for mode switching
 - `mode-hc.css`, `mode-forced.css` — high-contrast and forced-colors overrides
-- `tailwind.css` — Tailwind v4 `@theme` block (optional consumer)
+- `tailwind-theme.css` — Tailwind v4 `@theme` block (optional consumer)
 - `tokens.ts` — typed TypeScript token names
-- `tokens.figma.json` — Figma variables for design-tool sync
+- `tokens.figma.json` — planned Figma variables for design-tool sync
 
 Tokens use modern color spaces (`oklch()`, `color-mix()`, `light-dark()`) so a single token set generates light, dark, and high-contrast palettes without JavaScript:
 
 ```css
 @layer ashlar.tokens {
   :root {
-    --ashlar-action-primary-bg:
+    --ashlar-color-action-primary-bg:
       light-dark(oklch(0.48 0.16 250), oklch(0.68 0.16 250));
-    --ashlar-surface-default:
+    --ashlar-color-surface:
       light-dark(white, oklch(0.18 0.02 260));
   }
 }
@@ -309,17 +313,19 @@ See [`future-architecture.md`](./future-architecture.md) for the detailed evalua
 
 ## Bundle budget
 
-The "lightweight" claim must be backed by real numbers. Targets for a typical 5-component page (Button + FormField + Alert + Dialog + Banner):
+The "lightweight" claim must be backed by real numbers. Targets for a typical L0 public-service page (Button + Banner + Identifier + Alert + Form Field + Text Input + Textarea + Date Input + Select + Radio Group + Checkbox + Error Summary):
 
 | Stack | Gzipped JS+CSS |
 |---|---|
-| Ashlar L0 only (CSS+HTML) | **6–8 KB** |
-| Ashlar L0 + 1 L1 (Combobox) | 12–15 KB |
+| Ashlar L0 only (CSS+HTML) | **under 21 KiB** |
+| Ashlar L0 + 1 L1 (Combobox) | 18–24 KiB |
 | shadcn/ui (Tailwind + Radix) | 40–55 KB |
 | Carbon Web Components | 50–70 KB |
 | Spectrum Web Components | 60–90 KB |
 
 Ashlar is targeting 5–10× smaller than the alternatives for typical government pages. Not by cutting features — by exploiting the platform.
+
+`ashlar bundle budget` now makes the claim executable for current L0 capsules. It verifies capsule manifests before measuring CSS and JavaScript runtime assets, and the default CSS/JS budget numbers live in integrity-covered capsule `bundleBudget` metadata. Current local measurements are 649 B gzipped for Button CSS against the 4 KB v0.0 Button gate with 0 B JavaScript, and 1,993 B gzipped CSS for the twelve current L0 capsules against the 20,992 B page target with 0 B JavaScript.
 
 ## What follows
 

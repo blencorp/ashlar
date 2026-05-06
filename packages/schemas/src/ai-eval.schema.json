@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ashlar.dev/schemas/ai-eval.schema.json",
+  "title": "Ashlar AI Eval Suite",
+  "type": "object",
+  "required": ["$schema", "schemaVersion", "cases"],
+  "properties": {
+    "$schema": {
+      "const": "https://ashlar.dev/schemas/ai-eval.schema.json"
+    },
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "prompt", "outputFile", "policy", "expect"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          },
+          "prompt": {
+            "type": "string",
+            "minLength": 1
+          },
+          "components": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9-]+$"
+            },
+            "uniqueItems": true
+          },
+          "outputFile": {
+            "type": "string",
+            "minLength": 1
+          },
+          "policy": {
+            "enum": ["federal", "components", "all"]
+          },
+          "expect": {
+            "type": "object",
+            "properties": {
+              "errors": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "warnings": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "minErrors": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "maxErrors": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "includesRuleIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
+              "excludesRuleIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

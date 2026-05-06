@@ -1,0 +1,83 @@
+name: Sigstore Release Artifacts
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: Type "sign" to create keyless Sigstore bundles for release artifacts.
+        required: true
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency: sigstore-${{ github.ref }}
+
+jobs:
+  release-artifacts:
+    if: github.repository == 'blencorp/ashlar' && github.ref == 'refs/heads/main' && inputs.confirm == 'sign'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.2
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.15.0
+          package-manager-cache: false
+
+      - uses: sigstore/cosign-installer@v4.1.1
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm build
+      - run: pnpm release:smoke
+      - run: node packages/cli/dist/index.js release provenance-check
+      - run: node packages/cli/dist/index.js release sign-capsules --registry ./registry
+      - run: node packages/cli/dist/index.js release public-trust-verify --registry ./registry
+      - run: mkdir -p reports && node packages/cli/dist/index.js release public-trust-verify --registry ./registry --json > reports/ashlar-public-trust.json
+      - run: node packages/cli/dist/index.js release readiness --registry ./registry --min-stable-l0 0 --allow-unverified-public --allow-local-signatures
+      - run: node packages/cli/dist/index.js release sbom --output reports/ashlar-sbom.spdx.json
+      - run: node packages/cli/dist/index.js release attest --subject reports/ashlar-sbom.spdx.json --output reports/ashlar-sbom.attestation.json
+      - run: node packages/cli/dist/index.js release trust-bundle --registry ./registry --sbom reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json --output reports/ashlar-trust-bundle.json --checklist reports/ashlar-release-trust-checklist.md
+
+      - name: Sign release artifacts with Sigstore
+        run: |
+          cosign sign-blob --yes --bundle reports/ashlar-sbom.sigstore.json reports/ashlar-sbom.spdx.json
+          cosign sign-blob --yes --bundle reports/ashlar-sbom.attestation.sigstore.json reports/ashlar-sbom.attestation.json
+          cosign sign-blob --yes --bundle reports/ashlar-trust-bundle.sigstore.json reports/ashlar-trust-bundle.json
+
+      - name: Verify Sigstore bundles
+        run: |
+          cosign verify-blob reports/ashlar-sbom.spdx.json \
+            --bundle reports/ashlar-sbom.sigstore.json \
+            --certificate-identity "https://github.com/blencorp/ashlar/.github/workflows/sigstore.yml@refs/heads/main" \
+            --certificate-oidc-issuer "https://token.actions.githubusercontent.com"
+          cosign verify-blob reports/ashlar-sbom.attestation.json \
+            --bundle reports/ashlar-sbom.attestation.sigstore.json \
+            --certificate-identity "https://github.com/blencorp/ashlar/.github/workflows/sigstore.yml@refs/heads/main" \
+            --certificate-oidc-issuer "https://token.actions.githubusercontent.com"
+          cosign verify-blob reports/ashlar-trust-bundle.json \
+            --bundle reports/ashlar-trust-bundle.sigstore.json \
+            --certificate-identity "https://github.com/blencorp/ashlar/.github/workflows/sigstore.yml@refs/heads/main" \
+            --certificate-oidc-issuer "https://token.actions.githubusercontent.com"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ashlar-sigstore-release-artifacts
+          path: |
+            reports/ashlar-sbom.spdx.json
+            reports/ashlar-sbom.attestation.json
+            reports/ashlar-trust-bundle.json
+            reports/ashlar-public-trust.json
+            reports/ashlar-release-trust-checklist.md
+            reports/*.sigstore.json
+            registry/**/*.capsule.json
+            registry/**/*.sigstore.json
+            registry/trust-root.json
+            registry/index.json

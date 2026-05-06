@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" data-ashlar-theme="default" data-ashlar-mode="system">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ashlar Vite Example | Live agency theme switching</title>
+    <meta
+      name="description"
+      content="A federal-compliant Vite reference app demonstrating Ashlar's L0 Button capsule, page-shell standards (banner, identifier with required links, page title, meta description), and live runtime switching across Default, VA, and USDA agency themes with light, dark, and system color modes."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23005ea8'/%3E%3Cpath d='M16 24h32v4H16zm0 12h22v4H16zm0 12h28v4H16z' fill='white'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <section class="ashlar-banner" aria-label="Federal banner placeholder">
+      <p>
+        Official website of an example federal agency. The federal banner is a structural placeholder
+        in this demo; the production banner ships as a separate Ashlar capsule.
+      </p>
+    </section>
+
+    <main id="app" class="font-ashlar-sans text-ashlar-text-default">
+      <header class="page-header">
+        <p class="eyebrow">Ashlar reference</p>
+        <h1>Apply for federal benefits</h1>
+        <p class="lead">
+          A live demo of the L0 Button capsule, federal page-shell compliance, and runtime
+          agency-theme switching. Active agency:
+          <strong data-active-agency>Civic baseline</strong>.
+        </p>
+      </header>
+
+      <section
+        class="card bg-ashlar-surface text-ashlar-text-default border-ashlar-border rounded-ashlar-card shadow-ashlar-card"
+        aria-labelledby="controls-title"
+      >
+        <h2 id="controls-title">Theme controls</h2>
+        <p class="muted">
+          Pick an agency theme and a color mode. The choice persists in localStorage.
+        </p>
+
+        <fieldset class="control-group" data-control="theme">
+          <legend>Agency theme</legend>
+          <div class="control-grid" data-control-options></div>
+        </fieldset>
+
+        <fieldset class="control-group" data-control="mode">
+          <legend>Color mode</legend>
+          <div class="control-grid" data-control-options></div>
+        </fieldset>
+      </section>
+
+      <section
+        class="card bg-ashlar-surface text-ashlar-text-default border-ashlar-border rounded-ashlar-card shadow-ashlar-card"
+        aria-labelledby="demo-title"
+      >
+        <h2 id="demo-title">Demo content</h2>
+        <p>
+          The button below is the L0 Button capsule
+          (<code>&lt;button class="ashlar-button"&gt;</code>), styled entirely from Ashlar tokens.
+          The markup never changes; only the resolved tokens do.
+        </p>
+        <div class="demo-actions">
+          <button
+            class="ashlar-button min-h-ashlar-button-min-block-size rounded-ashlar-button bg-ashlar-action-primary-bg text-ashlar-action-primary-fg"
+            data-variant="primary"
+            type="button"
+          >
+            Apply for benefits
+          </button>
+        </div>
+      </section>
+
+      <section
+        class="card bg-ashlar-surface text-ashlar-text-default border-ashlar-border rounded-ashlar-card shadow-ashlar-card"
+        aria-labelledby="tokens-title"
+      >
+        <h2 id="tokens-title">Live tokens</h2>
+        <p class="muted">
+          Resolved CSS custom-property values for the active theme + mode. Open DevTools to inspect
+          the cascade.
+        </p>
+        <ul class="tokens" data-token-list></ul>
+      </section>
+
+      <section
+        class="card bg-ashlar-surface text-ashlar-text-default border-ashlar-border rounded-ashlar-card shadow-ashlar-card"
+        aria-labelledby="audit-title"
+      >
+        <h2 id="audit-title">Audit posture</h2>
+        <p>From this directory:</p>
+        <pre><code>pnpm exec ashlar audit --policy all --registry ../../registry --explain index.html</code></pre>
+        <p class="muted">
+          Runs both the federal page-shell rules and the component anti-pattern rules. This page
+          passes with zero findings.
+        </p>
+      </section>
+
+      <noscript>
+        <p>
+          This example uses JavaScript to apply theme/mode selections. The page still passes
+          <code>ashlar audit --policy all</code> with JavaScript disabled — banner, identifier,
+          page title, and meta description are all static HTML.
+        </p>
+      </noscript>
+    </main>
+
+    <footer class="ashlar-identifier" aria-label="Required identifier links">
+      <a href="/about">About this example agency</a>
+      <a href="/accessibility">Accessibility statement</a>
+      <a href="/foia">FOIA requests</a>
+      <a href="/no-fear-act">No FEAR Act data</a>
+      <a href="/inspector-general">Office of Inspector General</a>
+      <a href="/performance">Performance reports</a>
+      <a href="/privacy">Privacy policy</a>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

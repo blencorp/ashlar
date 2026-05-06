@@ -28,7 +28,7 @@ GOV.UK Frontend's empirical observation that UK government runs 24+ template lan
 
 **Positive**
 
-- Bundle is materially smaller (5–8KB gzipped for typical 5-component L0-only page; vs 40–55KB for shadcn equivalent).
+- Bundle is materially smaller (under 12KB gzipped for a typical L0 public-service page; vs 40–55KB for shadcn equivalent).
 - L0 works in any rendering environment without JavaScript runtime dependency.
 - L1 is framework-agnostic via custom elements plus auto-generated adapters.
 - L2 adapters are not hand-maintained; CEM regenerates them.

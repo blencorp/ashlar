@@ -1,0 +1,33 @@
+{
+  "component": "benefit-application",
+  "version": "0.0.1",
+  "stability": "proposal",
+  "accessibilityStatus": "not-reviewed",
+  "wcag": [
+    {
+      "criterion": "2.4.2",
+      "level": "A",
+      "title": "Page Titled",
+      "status": "planned"
+    },
+    {
+      "criterion": "3.3.1",
+      "level": "A",
+      "title": "Error Identification",
+      "status": "planned"
+    }
+  ],
+  "baselineTests": [
+    {
+      "source": "Section 508 ICT Testing Baseline for Web",
+      "test": "Service flow review",
+      "status": "planned",
+      "evidence": "Planned testing will verify the composed flow, not only individual capsules."
+    }
+  ],
+  "manualTests": [],
+  "automatedResults": {},
+  "knownLimitations": [
+    "Pattern evidence is illustrative until each composed capsule has stable evidence."
+  ]
+}

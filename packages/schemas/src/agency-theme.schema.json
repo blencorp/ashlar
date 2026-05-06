@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ashlar.dev/schemas/agency-theme.schema.json",
+  "title": "Ashlar Agency Theme",
+  "description": "DTCG-aligned theme document. Each agency theme lives in its own JSON file under packages/cli/themes/ (or in a downstream theme registry). The CLI's theme loader scans the directory and validates every file against this schema before compilation.",
+  "type": "object",
+  "required": ["name", "title", "description", "tokens"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Stable theme identifier used as the data-ashlar-theme attribute value."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable theme label."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "One-sentence description shown in theme pickers and contributor docs."
+    },
+    "order": {
+      "type": "number",
+      "description": "Sort hint; lower numbers appear first. Default theme is 0."
+    },
+    "tokens": {
+      "$ref": "#/$defs/tokenGroup"
+    },
+    "modes": {
+      "type": "object",
+      "description": "Mode-specific token overrides. Currently only `dark` is defined; additional modes (high-contrast, forced-colors) may follow.",
+      "properties": {
+        "dark": { "$ref": "#/$defs/tokenGroup" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "tokenGroup": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [{ "$ref": "#/$defs/tokenLeaf" }, { "$ref": "#/$defs/tokenGroup" }]
+      }
+    },
+    "tokenLeaf": {
+      "type": "object",
+      "required": ["$type", "$value"],
+      "properties": {
+        "$type": {
+          "enum": [
+            "color",
+            "dimension",
+            "fontFamily",
+            "fontWeight",
+            "duration",
+            "shadow",
+            "number",
+            "string"
+          ]
+        },
+        "$value": { "type": "string" },
+        "$description": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}
