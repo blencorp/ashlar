@@ -84,6 +84,17 @@ This directory is reviewer intake material for Ashlar's replacement-grade gates.
 
 ${files}
 
+## Using A CI Artifact
+
+The GitHub artifact uploads the contents of this directory, not the parent \`reports/review-pack\` folder. To run the nested stable-evidence validation commands from a checkout at the same commit, extract the artifact back into that path:
+
+\`\`\`bash
+mkdir -p reports/review-pack
+gh run download <run-id> -n ashlar-release-review-pack -D reports/review-pack
+\`\`\`
+
+If you download the artifact as a zip in the browser, extract its contents into \`reports/review-pack/\` before running the generated commands. Reading the pack from another directory is fine, but the stable-evidence worksheet references and commands must be updated to that extracted path before \`ashlar evidence review-status\` can pass.
+
 ## Reviewer Tracks
 
 1. Stable evidence reviewer: start with \`${packRelative(result.outputDir, result.files.stableEvidenceIndex)}\`, complete the target bundle from real keyboard and screen-reader observations, then run the review-status command in the bundle README.
