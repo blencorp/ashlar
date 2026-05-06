@@ -11,7 +11,7 @@
     "typecheck": "svelte-check --tsconfig ./tsconfig.json",
     "test": "pnpm run audit",
     "lint": "biome lint src/main.ts svelte.config.js vite.config.ts",
-    "audit": "pnpm exec ashlar audit --policy all --registry ../../registry public/audit.html"
+    "audit": "node ../../packages/cli/dist/index.js audit --policy all --registry ../../registry public/audit.html"
   },
   "devDependencies": {
     "@ashlar/cli": "workspace:*",
