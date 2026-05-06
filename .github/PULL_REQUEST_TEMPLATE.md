@@ -5,10 +5,10 @@ Describe the change and why it is needed.
 ## Checks
 
 - [ ] Tests added or updated where appropriate.
+- [ ] Changeset added for publishable package changes, or intentionally not needed.
+- [ ] `pnpm check` passes.
 - [ ] `pnpm build` passes.
-- [ ] `pnpm typecheck` passes.
-- [ ] `pnpm test` passes.
-- [ ] `pnpm lint` passes.
+- [ ] `pnpm examples:visual` passes for UI, theme, or example-app changes.
 - [ ] Documentation updated where behavior changed.
 
 ## Accessibility and Evidence
@@ -16,6 +16,7 @@ Describe the change and why it is needed.
 - [ ] Semantic HTML / ARIA impact reviewed.
 - [ ] Keyboard behavior reviewed.
 - [ ] Forced-colors / high-contrast impact reviewed.
+- [ ] No nested-card layout introduced.
 - [ ] Evidence packet updated or not applicable.
 - [ ] No compliance guarantees added.
 

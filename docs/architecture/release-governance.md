@@ -32,6 +32,12 @@ Use semver intent in the changeset:
 
 The `Version Packages` workflow runs on `main` and opens a version pull request with generated changelog and package version changes. The changelog uses GitHub-linked Changesets output so release notes point back to the relevant PRs and commits.
 
+Every package-impacting pull request should include a changeset before merge.
+Documentation-only, CI-only, and non-publishable example changes can skip a
+changeset, but the PR description should say that explicitly. The Changesets
+status workflow is the review-time guard; the Version Packages workflow is the
+post-merge guard that turns accepted changesets into a release PR.
+
 ## Publishing
 
 Publishing remains manually gated by `Publish`, not automatic on every merge. That workflow requires a `publish` confirmation, runs `pnpm check`, `pnpm build`, `pnpm release:smoke`, local provenance preflight, and release readiness with explicit prototype escape hatches before `changeset publish`.
@@ -41,3 +47,16 @@ This split is deliberate:
 - Conventional Commits keep review and squash history semantic.
 - Changesets records package intent and generates version PRs.
 - Trusted publishing and public provenance stay blocked until the release-trust gate is ready.
+
+For UI, theme, or example-app changes, release readiness also depends on the
+example visual-smoke gate:
+
+```bash
+pnpm build
+pnpm examples:visual
+```
+
+That gate runs the production examples in Chromium and rejects horizontal
+overflow, missing agency-theme controls, unreadable dark-mode text input styles,
+agency modals outside the viewport, and nested-card regressions in the
+case-board examples.
