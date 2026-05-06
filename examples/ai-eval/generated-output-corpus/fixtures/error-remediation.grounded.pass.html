@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Fix contact information errors in your application | Example Agency</title>
+    <meta
+      name="description"
+      content="Review application errors, follow linked correction guidance, and resubmit updated contact information."
+    />
+  </head>
+  <body>
+    <section class="ashlar-banner" aria-label="Official website of the United States government">
+      An official website of the United States government
+    </section>
+    <main>
+      <h1>Fix the errors before you continue</h1>
+      <div class="ashlar-alert">We could not submit your application until the email address is corrected.</div>
+      <section class="ashlar-error-summary" aria-labelledby="error-summary-heading">
+        <h2 id="error-summary-heading">There is a problem</h2>
+        <a href="#email">Enter an email address in the correct format.</a>
+      </section>
+      <form action="/apply/contact" method="post">
+        <div class="ashlar-form-field">
+          <label for="email">Email address</label>
+          <p id="email-error">Enter an email address like name@example.gov.</p>
+          <input
+            class="ashlar-text-input"
+            id="email"
+            name="email"
+            type="email"
+            aria-invalid="true"
+            aria-describedby="email-error"
+          />
+        </div>
+        <button class="ashlar-button" type="submit">Save and continue</button>
+      </form>
+    </main>
+    <footer class="ashlar-identifier" aria-label="Agency identifier">
+      <a href="/about">About</a>
+      <a href="/accessibility">Accessibility</a>
+      <a href="/foia">FOIA</a>
+      <a href="/no-fear-act">No FEAR Act</a>
+      <a href="/oig">Office of Inspector General</a>
+      <a href="/performance">Performance reports</a>
+      <a href="/privacy">Privacy</a>
+    </footer>
+  </body>
+</html>

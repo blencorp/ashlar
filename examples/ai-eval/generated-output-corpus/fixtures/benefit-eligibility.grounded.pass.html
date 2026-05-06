@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Check emergency housing assistance eligibility | Example Agency</title>
+    <meta
+      name="description"
+      content="Check whether you may qualify for emergency housing assistance before starting a full application."
+    />
+  </head>
+  <body>
+    <section class="ashlar-banner" aria-label="Official website of the United States government">
+      An official website of the United States government
+    </section>
+    <main>
+      <h1>Check emergency housing assistance eligibility</h1>
+      <form class="ashlar-benefit-application" action="/apply" method="post">
+        <div class="ashlar-form-field">
+          <label for="full-name">Full name</label>
+          <input class="ashlar-text-input" id="full-name" name="full-name" autocomplete="name" />
+        </div>
+        <div class="ashlar-form-field">
+          <label for="state">State or territory</label>
+          <select class="ashlar-select" id="state" name="state">
+            <option value="">Select one</option>
+            <option value="dc">District of Columbia</option>
+            <option value="md">Maryland</option>
+            <option value="va">Virginia</option>
+          </select>
+        </div>
+        <fieldset class="ashlar-radio-group">
+          <legend>Is your household at risk of losing housing within 30 days?</legend>
+          <label><input class="ashlar-radio" type="radio" name="housing-risk" value="yes" /> Yes</label>
+          <label><input class="ashlar-radio" type="radio" name="housing-risk" value="no" /> No</label>
+        </fieldset>
+        <label>
+          <input class="ashlar-checkbox" type="checkbox" id="certify" name="certify" />
+          I certify that the information I provide is accurate.
+        </label>
+        <button class="ashlar-button" type="submit">Check eligibility</button>
+      </form>
+    </main>
+    <footer class="ashlar-identifier" aria-label="Agency identifier">
+      <a href="/about">About</a>
+      <a href="/accessibility">Accessibility</a>
+      <a href="/foia">FOIA</a>
+      <a href="/no-fear-act">No FEAR Act</a>
+      <a href="/oig">Office of Inspector General</a>
+      <a href="/performance">Performance reports</a>
+      <a href="/privacy">Privacy</a>
+    </footer>
+  </body>
+</html>

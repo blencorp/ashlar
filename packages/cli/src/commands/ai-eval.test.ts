@@ -214,6 +214,27 @@ describe("ai-eval command", () => {
     expect(result.stdout).toContain("expected at least 1 error finding(s), found 0");
   });
 
+  it("runs the generated-output corpus suite", () => {
+    const result = runCli([
+      "ai-eval",
+      "--suite",
+      join(
+        repoRoot,
+        "examples",
+        "ai-eval",
+        "generated-output-corpus",
+        "ashlar-generated-output-corpus.json",
+      ),
+      "--registry",
+      join(repoRoot, "registry"),
+    ]);
+
+    expect(result.status, result.stdout).toBe(0);
+    expect(result.stdout).toContain("AI eval passed: 10 case(s)");
+    expect(result.stdout).toContain("benefit-eligibility-grounded");
+    expect(result.stdout).toContain("error-remediation-ungrounded");
+  });
+
   it("validates the suite shape before running output checks", () => {
     const suitePath = join(scratch, "ashlar-ai-eval.json");
     writeGeneratedOutputs();

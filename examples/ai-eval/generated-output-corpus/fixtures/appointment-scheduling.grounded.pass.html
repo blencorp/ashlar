@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Schedule an in-person benefits interview | Example Agency</title>
+    <meta
+      name="description"
+      content="Choose a date, office location, and contact method for an in-person benefits interview."
+    />
+  </head>
+  <body>
+    <section class="ashlar-banner" aria-label="Official website of the United States government">
+      An official website of the United States government
+    </section>
+    <main>
+      <h1>Schedule your benefits interview</h1>
+      <form action="/appointments" method="post">
+        <div class="ashlar-form-field">
+          <label for="appointment-date">Preferred appointment date</label>
+          <input class="ashlar-date-input" id="appointment-date" name="appointment-date" type="date" />
+        </div>
+        <div class="ashlar-form-field">
+          <label for="office">Office location</label>
+          <select class="ashlar-select" id="office" name="office">
+            <option value="">Select an office</option>
+            <option value="north">North Service Center</option>
+            <option value="south">South Service Center</option>
+          </select>
+        </div>
+        <button class="ashlar-button" type="submit">Request appointment</button>
+      </form>
+    </main>
+    <footer class="ashlar-identifier" aria-label="Agency identifier">
+      <a href="/about">About</a>
+      <a href="/accessibility">Accessibility</a>
+      <a href="/foia">FOIA</a>
+      <a href="/no-fear-act">No FEAR Act</a>
+      <a href="/oig">Office of Inspector General</a>
+      <a href="/performance">Performance reports</a>
+      <a href="/privacy">Privacy</a>
+    </footer>
+  </body>
+</html>
