@@ -1,5 +1,5 @@
 {
-  "name": "ashlar",
+  "name": "@ashlar/workspace",
   "version": "0.0.0",
   "description": "Government-first, evidence-backed component registry for public-service interfaces.",
   "private": true,

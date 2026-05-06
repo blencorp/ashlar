@@ -277,7 +277,7 @@ If Sigstore signing infrastructure goes down, registry publication blocks. Mitig
 
 ### R15 — `npx ashlar` package-name collision
 
-If `ashlar` is taken on npm, we rename. Mitigation: reserve before public alpha; have backup names ready (the project has been working under "Ashlar" but that may not survive trademark search).
+If `ashlar` is taken on npm before public alpha, we rename. Mitigation: the release package set now includes a tiny publishable `ashlar` entrypoint that owns the memorable `npx ashlar` command and delegates to `@ashlar/cli`; final reservation still depends on the first trusted-publishing release. Keep backup names ready until that release exists.
 
 ## Kill criteria summary
 

@@ -370,6 +370,7 @@ function writeReadyReleaseTrustArtifacts(): {
     "--npm",
     npmPath,
     "--package",
+    "ashlar@0.1.0",
     "@ashlar/cli@0.1.0",
     "@ashlar/schemas@0.1.0",
     "--json",
@@ -524,7 +525,7 @@ Release candidate: 0.1.0
 
 ## Scope
 
-- Packages reviewed: @ashlar/cli@0.1.0 and @ashlar/schemas@0.1.0
+- Packages reviewed: ashlar@0.1.0, @ashlar/cli@0.1.0, and @ashlar/schemas@0.1.0
 - Registry artifacts reviewed: ${releaseArtifacts.registryArtifact}
 - Workflows reviewed: publish.yml and sigstore.yml
 - Trust-root policy reviewed: registry/trust-root.json
@@ -542,7 +543,7 @@ Release candidate: 0.1.0
 ## Command Output
 
 \`\`\`text
-ashlar release provenance-verify-public --package @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0
+ashlar release provenance-verify-public --package ashlar@0.1.0 @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0
 ashlar release public-trust-verify --registry ${releaseArtifacts.registryArtifact}
 ashlar release verify-trust-bundle --bundle ${releaseArtifacts.trustBundle} --registry ${releaseArtifacts.registryArtifact} --sbom ${releaseArtifacts.sbom} --attestation ${releaseArtifacts.attestation}
 \`\`\`
@@ -666,6 +667,7 @@ function releaseTrustRecordArgs(output: string): string[] {
     "--workflow-run",
     "https://github.com/blencorp/ashlar/actions/runs/101",
     "--package",
+    "ashlar@0.1.0",
     "@ashlar/cli@0.1.0",
     "@ashlar/schemas@0.1.0",
   ];
@@ -999,6 +1001,12 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(sbom.packages).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
+          SPDXID: "SPDXRef-Package-ashlar",
+          name: "ashlar",
+          supplier: "Organization: BLEN",
+          versionInfo: "0.0.0",
+        }),
+        expect.objectContaining({
           SPDXID: "SPDXRef-Package-ashlar-cli",
           name: "@ashlar/cli",
           supplier: "Organization: BLEN",
@@ -1090,6 +1098,7 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
 
     expect(result.status).toBe(0);
     expect(result.stdout).toContain("npm provenance readiness verified");
+    expect(result.stdout).toContain("ashlar");
     expect(result.stdout).toContain("@ashlar/cli");
     expect(result.stdout).toContain("@ashlar/schemas");
   });
@@ -1103,12 +1112,14 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
       "--npm",
       npmPath,
       "--package",
+      "ashlar@0.0.0",
       "@ashlar/cli@0.0.0",
       "@ashlar/schemas@0.0.0",
     ]);
 
     expect(result.status, result.stdout).toBe(0);
     expect(result.stdout).toContain("Public npm provenance verified");
+    expect(result.stdout).toContain("ashlar@0.0.0");
     expect(result.stdout).toContain("@ashlar/cli@0.0.0");
     expect(result.stdout).toContain("@ashlar/schemas@0.0.0");
   });
@@ -1122,6 +1133,7 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
       "--npm",
       npmPath,
       "--package",
+      "ashlar@0.0.0",
       "@ashlar/cli@0.0.0",
       "@ashlar/schemas@0.0.0",
     ]);
@@ -1659,7 +1671,7 @@ Release candidate: 0.1.0
 
 ## Scope
 
-- Packages reviewed: @ashlar/cli@0.1.0 and @ashlar/schemas@0.1.0
+- Packages reviewed: ashlar@0.1.0, @ashlar/cli@0.1.0, and @ashlar/schemas@0.1.0
 - Registry artifacts reviewed: ${artifacts.registryArtifact}
 - Workflows reviewed: publish.yml and sigstore.yml
 - Trust-root policy reviewed: registry/trust-root.json
@@ -1677,7 +1689,7 @@ Release candidate: 0.1.0
 ## Command Output
 
 \`\`\`text
-ashlar release provenance-verify-public --package @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0
+ashlar release provenance-verify-public --package ashlar@0.1.0 @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0
 ashlar release public-trust-verify --registry ${artifacts.registryArtifact}
 ashlar release verify-trust-bundle --bundle ${artifacts.trustBundle} --registry ${artifacts.registryArtifact} --sbom ${artifacts.sbom} --attestation ${artifacts.attestation}
 \`\`\`
@@ -1742,7 +1754,7 @@ Release candidate: 0.1.0
 
 ## Scope
 
-- Packages reviewed: @ashlar/cli@0.1.0 and @ashlar/schemas@0.1.0
+- Packages reviewed: ashlar@0.1.0, @ashlar/cli@0.1.0, and @ashlar/schemas@0.1.0
 - Registry artifacts reviewed: ${artifacts.registryArtifact}
 - Workflows reviewed: publish.yml and sigstore.yml
 - Trust-root policy reviewed: registry/trust-root.json
@@ -1760,7 +1772,7 @@ Release candidate: 0.1.0
 ## Command Output
 
 \`\`\`text
-ashlar release provenance-verify-public --package @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0
+ashlar release provenance-verify-public --package ashlar@0.1.0 @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0
 ashlar release public-trust-verify --registry ${artifacts.registryArtifact}
 ashlar release verify-trust-bundle --bundle ${artifacts.trustBundle} --registry ${artifacts.registryArtifact} --sbom ${artifacts.sbom} --attestation ${artifacts.attestation}
 \`\`\`
@@ -1825,7 +1837,7 @@ Release candidate: 0.1.0
 
 ## Scope
 
-- Packages reviewed: @ashlar/cli@0.1.0 and @ashlar/schemas@0.1.0
+- Packages reviewed: ashlar@0.1.0, @ashlar/cli@0.1.0, and @ashlar/schemas@0.1.0
 - Registry artifacts reviewed: ${artifacts.registryArtifact}
 - Workflows reviewed: publish.yml and sigstore.yml
 - Trust-root policy reviewed: registry/trust-root.json
@@ -1843,7 +1855,7 @@ Release candidate: 0.1.0
 ## Command Output
 
 \`\`\`text
-ashlar release provenance-verify-public --package @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0
+ashlar release provenance-verify-public --package ashlar@0.1.0 @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0
 ashlar release public-trust-verify --registry ${artifacts.registryArtifact}
 ashlar release verify-trust-bundle --bundle ${artifacts.trustBundle} --registry ${artifacts.registryArtifact} --sbom ${artifacts.sbom} --attestation ${artifacts.attestation}
 \`\`\`
@@ -1875,7 +1887,7 @@ Rationale: Public provenance, capsule signing, and trust-bundle verification all
     expect(check.records[0]?.errors).toEqual(
       expect.arrayContaining([
         expect.stringContaining("referenced npm provenance verification failed"),
-        expect.stringContaining("npm provenance verification report is missing @ashlar/cli@0.1.0"),
+        expect.stringContaining("npm provenance verification report includes unreviewed package"),
       ]),
     );
   });
@@ -2030,7 +2042,7 @@ Rationale: The reviewer found the wedge credible for a public-service pilot afte
     expect(record).toContain("Record status: completed external review only");
     expect(record).toContain("Decision: pass");
     expect(record).toContain(
-      "ashlar release provenance-verify-public --package @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0",
+      "ashlar release provenance-verify-public --package ashlar@0.1.0 @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0",
     );
     expect(record).toContain("- Release SBOM attestation:");
     expect(record).toContain("ashlar release verify-trust-bundle --bundle");

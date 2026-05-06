@@ -65,6 +65,18 @@ function assertPublicTarball(tarball) {
   }
 }
 
+function tarballPackageJson(tarball) {
+  const result = spawnSync("tar", ["-xOf", tarball, "package/package.json"], {
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  if (result.status !== 0) {
+    throw new Error(`Unable to read package metadata from ${tarball}:\n${result.stderr ?? ""}`);
+  }
+
+  return JSON.parse(result.stdout);
+}
+
 function writeSmokeFixture(appDir) {
   writeFileSync(
     join(appDir, "page.html"),
@@ -104,11 +116,26 @@ try {
 
   run(["--dir", join(repoRoot, "packages", "schemas"), "pack", "--pack-destination", packDir]);
   run(["--dir", join(repoRoot, "packages", "cli"), "pack", "--pack-destination", packDir]);
+  run(["--dir", join(repoRoot, "packages", "ashlar"), "pack", "--pack-destination", packDir]);
 
   const schemasTarball = newestTarball(packDir, "ashlar-schemas-");
   const cliTarball = newestTarball(packDir, "ashlar-cli-");
+  const ashlarTarball = newestTarball(packDir, "ashlar-0.0.0");
   assertPublicTarball(schemasTarball);
   assertPublicTarball(cliTarball);
+  assertPublicTarball(ashlarTarball);
+
+  const packedCli = tarballPackageJson(cliTarball);
+  if (packedCli.bin?.ashlar !== "./dist/index.js") {
+    throw new Error("Packed @ashlar/cli package does not expose the ashlar binary.");
+  }
+  const packedEntrypoint = tarballPackageJson(ashlarTarball);
+  if (packedEntrypoint.bin?.ashlar !== "./bin/ashlar.js") {
+    throw new Error("Packed ashlar package does not expose the ashlar binary.");
+  }
+  if (typeof packedEntrypoint.dependencies?.["@ashlar/cli"] !== "string") {
+    throw new Error("Packed ashlar package does not depend on @ashlar/cli.");
+  }
 
   writeFileSync(
     join(appDir, "package.json"),
@@ -116,11 +143,11 @@ try {
       {
         type: "module",
         dependencies: {
-          "@ashlar/cli": `file:${cliTarball}`,
-          "@ashlar/schemas": `file:${schemasTarball}`,
+          ashlar: `file:${ashlarTarball}`,
         },
         pnpm: {
           overrides: {
+            "@ashlar/cli": `file:${cliTarball}`,
             "@ashlar/schemas": `file:${schemasTarball}`,
           },
         },
@@ -144,11 +171,11 @@ try {
     throw new Error(`Expected package smoke audit to pass with no findings:\n${audit}`);
   }
 
-  const installedCli = JSON.parse(
-    readFileSync(join(appDir, "node_modules", "@ashlar", "cli", "package.json"), "utf8"),
+  const installedEntrypoint = JSON.parse(
+    readFileSync(join(appDir, "node_modules", "ashlar", "package.json"), "utf8"),
   );
-  if (installedCli.bin?.ashlar !== "./dist/index.js") {
-    throw new Error("Packed @ashlar/cli package does not expose the ashlar binary.");
+  if (installedEntrypoint.bin?.ashlar !== "./bin/ashlar.js") {
+    throw new Error("Packed ashlar package does not expose the ashlar binary.");
   }
 
   console.log(`Packaged CLI smoke passed for ashlar ${version}.`);

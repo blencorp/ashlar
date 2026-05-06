@@ -73,7 +73,7 @@ This track happens only after a release branch is ready on `main`.
 
 Maintainer prep:
 
-1. Configure npm trusted publishers for `@ashlar/cli` and `@ashlar/schemas`.
+1. Configure npm trusted publishers for `ashlar`, `@ashlar/cli`, and `@ashlar/schemas`.
 2. Run `.github/workflows/publish.yml` from GitHub Actions.
 3. Run `.github/workflows/sigstore.yml` from GitHub Actions.
 4. Download the signed registry, SBOM, attestation, trust bundle, `ashlar-npm-provenance.json`, `ashlar-public-trust.json`, release-trust reviewer checklist, and Sigstore bundles.
@@ -82,9 +82,9 @@ Reviewer acceptance commands:
 
 ```bash
 node packages/cli/dist/index.js release provenance-verify-public \
-  --package @ashlar/cli@<version> @ashlar/schemas@<version>
+  --package ashlar@<version> @ashlar/cli@<version> @ashlar/schemas@<version>
 node packages/cli/dist/index.js release provenance-verify-public \
-  --package @ashlar/cli@<version> @ashlar/schemas@<version> \
+  --package ashlar@<version> @ashlar/cli@<version> @ashlar/schemas@<version> \
   --json > <ashlar-npm-provenance.json>
 node packages/cli/dist/index.js release public-trust-verify \
   --registry <signed-registry-artifact>
