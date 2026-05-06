@@ -131,7 +131,9 @@ try {
   );
   writeSmokeFixture(appDir);
 
-  run(["--dir", appDir, "install", "--offline"]);
+  run(["--dir", appDir, "install", "--lockfile-only"]);
+  run(["--dir", appDir, "fetch"]);
+  run(["--dir", appDir, "install", "--offline", "--frozen-lockfile"]);
   const version = run(["--dir", appDir, "exec", "ashlar", "--version"], { capture: true }).trim();
   const audit = run(
     ["--dir", appDir, "exec", "ashlar", "audit", "--policy", "federal", "page.html"],
