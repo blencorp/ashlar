@@ -22,17 +22,86 @@
   }
 
   .ashlar-banner {
-    background: var(--ashlar-color-surface-raised);
-    color: var(--ashlar-color-text-muted);
+    position: relative;
+    z-index: 20;
+    background: var(--ashlar-color-surface-subtle);
+    color: var(--ashlar-color-text-default);
     border-bottom: 1px solid var(--ashlar-color-border);
-    padding-block: 0.625rem;
-    padding-inline: 1.5rem;
     font-size: 0.8125rem;
   }
-  .ashlar-banner p {
-    margin: 0;
+  .ashlar-banner__inner {
+    display: flex;
+    min-block-size: 2.5rem;
     max-width: 56rem;
     margin-inline: auto;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.35rem 1.5rem;
+  }
+  .ashlar-banner__text,
+  .ashlar-banner__details {
+    margin: 0;
+  }
+  .ashlar-banner__text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+  }
+  .ashlar-banner__text::before {
+    display: inline-block;
+    inline-size: 1rem;
+    block-size: 0.625rem;
+    border: 1px solid #dfe1e2;
+    border-radius: 0.0625rem;
+    background:
+      linear-gradient(#b31942 0 0) 0 0 / 100% 14.285% repeat-y,
+      linear-gradient(#ffffff 0 0) 0 7.142% / 100% 14.285% repeat-y,
+      linear-gradient(#005ea8 0 0) 0 0 / 45% 57% no-repeat;
+    content: "";
+    flex: 0 0 auto;
+  }
+  .ashlar-banner__details > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--ashlar-color-link);
+    cursor: pointer;
+    font-weight: 800;
+    list-style: none;
+  }
+  .ashlar-banner__details > summary::-webkit-details-marker {
+    display: none;
+  }
+  .ashlar-banner__details > summary::after {
+    inline-size: 0.45rem;
+    block-size: 0.45rem;
+    border-block-end: 2px solid currentColor;
+    border-inline-end: 2px solid currentColor;
+    content: "";
+    transform: rotate(45deg) translateY(-1px);
+  }
+  .ashlar-banner__details[open] > summary::after {
+    transform: rotate(225deg) translateY(-1px);
+  }
+  .ashlar-banner__grid {
+    position: absolute;
+    inset-block-start: calc(100% + 0.25rem);
+    inset-inline-start: 50%;
+    display: grid;
+    inline-size: min(44rem, calc(100vw - 2rem));
+    transform: translateX(-50%);
+    gap: 1rem;
+    border: 1px solid var(--ashlar-color-border);
+    border-radius: var(--ashlar-radius-panel, 0.5rem);
+    background: var(--ashlar-color-surface);
+    box-shadow: var(--ashlar-elevation-panel);
+    padding: 1rem;
+  }
+  .ashlar-banner__grid p {
+    margin-block: 0.25rem 0;
+    color: var(--ashlar-color-text-muted);
   }
 
   main {
@@ -250,6 +319,21 @@
     outline: 3px solid var(--ashlar-color-focus);
     outline-offset: 3px;
     border-radius: 0.125rem;
+  }
+
+  @media (max-width: 38rem) {
+    .ashlar-banner__inner {
+      display: grid;
+      align-items: start;
+      gap: 0.25rem;
+    }
+
+    .ashlar-banner__grid {
+      position: static;
+      inline-size: auto;
+      margin-block-start: 0.75rem;
+      transform: none;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

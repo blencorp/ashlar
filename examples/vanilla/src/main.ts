@@ -7,7 +7,7 @@ type Mode = "light" | "dark" | "system";
 const root = document.documentElement;
 
 const themeLabels: Record<Theme, { label: string; logo: string }> = {
-  default: { label: "Default", logo: "A" },
+  default: { label: "Default", logo: "US" },
   va: { label: "VA", logo: "VA" },
   usda: { label: "USDA", logo: "USDA" },
 };

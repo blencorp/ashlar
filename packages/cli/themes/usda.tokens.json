@@ -3,6 +3,18 @@
   "name": "usda",
   "title": "USDA",
   "description": "USDA-inspired theme using official USDA dark green and dark blue anchors. Illustrative; not an official USDA brand specification.",
+  "sources": [
+    {
+      "label": "USDA Design and Brand Plays",
+      "url": "https://www.usda.gov/about-usda/policies-and-links/digital/digital-strategy/design-and-brand/design-and-brand-plays",
+      "note": "Uses official USDA dark green and dark blue anchors, while following USDA's guidance to use USWDS colors beyond logo colors."
+    },
+    {
+      "label": "USWDS color guidance",
+      "url": "https://designsystem.digital.gov/design-tokens/color/overview/",
+      "note": "Keeps USDA-adjacent interface colors aligned with USWDS contrast and readability guidance."
+    }
+  ],
   "order": 20,
   "tokens": {
     "color": {
