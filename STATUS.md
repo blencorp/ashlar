@@ -4,7 +4,9 @@ The honest, live index of what Ashlar implements, what is experimental, and what
 
 Date: 2026-05-06
 Phase: v0.0 prototype
-Branch: `codex/standards-evidence-slice`
+Review checkpoint: draft PR [#21](https://github.com/blencorp/ashlar/pull/21) on `codex/standards-evidence-foundation-v7`
+Proof tracking: [Replacement-grade proof gates](https://github.com/blencorp/ashlar/milestone/1) milestone, issues [#22](https://github.com/blencorp/ashlar/issues/22), [#23](https://github.com/blencorp/ashlar/issues/23), and [#24](https://github.com/blencorp/ashlar/issues/24)
+Strict readiness: still failing by design on `stable-l0-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`
 
 ## Implemented today
 
