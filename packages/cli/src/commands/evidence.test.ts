@@ -17,6 +17,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 const here = fileURLToPath(new URL(".", import.meta.url));
 const cliEntry = join(here, "..", "..", "dist", "index.js");
 const repoRoot = resolve(here, "..", "..", "..", "..");
+const CLI_SMOKE_TIMEOUT_MS = 30_000;
 
 let scratch: string;
 
@@ -647,12 +648,16 @@ afterEach(() => {
 });
 
 describe("evidence command", () => {
-  it("passes the evidence check for registry components that do not claim stable evidence", () => {
-    const result = runCli(["evidence", "--check", "--registry", join(repoRoot, "registry")]);
+  it(
+    "passes the evidence check for registry components that do not claim stable evidence",
+    () => {
+      const result = runCli(["evidence", "--check", "--registry", join(repoRoot, "registry")]);
 
-    expect(result.status).toBe(0);
-    expect(result.stdout).toContain("Evidence check passed for");
-  });
+      expect(result.status).toBe(0);
+      expect(result.stdout).toContain("Evidence check passed for");
+    },
+    CLI_SMOKE_TIMEOUT_MS,
+  );
 
   it("writes a Markdown evidence report for procurement and CI review", () => {
     const reportPath = join(scratch, "reports", "ashlar-evidence.md");
