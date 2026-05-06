@@ -56,7 +56,7 @@ function assertPublicTarball(tarball) {
 
   const entries = (result.stdout ?? "").split("\n").filter(Boolean);
   const forbidden = entries.filter(
-    (entry) => entry.includes(".test.") || entry.endsWith("tsconfig.tsbuildinfo"),
+    (entry) => entry.includes(".test.") || entry.endsWith(".tsbuildinfo"),
   );
   if (forbidden.length > 0) {
     throw new Error(
