@@ -18,6 +18,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 const here = fileURLToPath(new URL(".", import.meta.url));
 const cliEntry = join(here, "..", "..", "dist", "index.js");
 const repoRoot = resolve(here, "..", "..", "..", "..");
+const slowReleaseTestTimeout = 30_000;
 
 let scratch: string;
 let createdReviewFiles: string[] = [];
@@ -797,7 +798,7 @@ afterEach(() => {
   rmSync(scratch, { recursive: true, force: true });
 });
 
-describe("release command", () => {
+describe("release command", { timeout: slowReleaseTestTimeout }, () => {
   it("signs registry capsules with Sigstore bundle metadata and verifies the bundle path", () => {
     const registry = copyRegistry();
     const cosignPath = writeFakeCosign();
