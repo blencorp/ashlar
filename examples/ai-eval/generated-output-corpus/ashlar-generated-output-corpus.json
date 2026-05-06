@@ -1,0 +1,152 @@
+{
+  "$schema": "https://ashlar.dev/schemas/ai-eval.schema.json",
+  "schemaVersion": "1.0",
+  "cases": [
+    {
+      "id": "benefit-eligibility-grounded",
+      "prompt": "Generate a benefit eligibility screening page for emergency housing assistance using Ashlar form capsules and a federal trust shell.",
+      "components": ["banner", "identifier", "form-field", "text-input", "checkbox", "radio-group", "select", "button"],
+      "outputFile": "fixtures/benefit-eligibility.grounded.pass.html",
+      "policy": "all",
+      "expect": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "id": "benefit-eligibility-ungrounded",
+      "prompt": "Generate a benefit eligibility screening page for emergency housing assistance without Ashlar grounding.",
+      "components": ["form-field", "checkbox", "button"],
+      "outputFile": "fixtures/benefit-eligibility.ungrounded.fail.html",
+      "policy": "all",
+      "expect": {
+        "minErrors": 3,
+        "includesRuleIds": [
+          "federal/page-title-min-length",
+          "federal/meta-description-min-length",
+          "federal/banner-required",
+          "federal/identifier-required",
+          "ashlar/form-field/field-missing-label",
+          "ashlar/checkbox/checkbox-needs-associated-label",
+          "ashlar/button/icon-only-needs-label"
+        ]
+      }
+    },
+    {
+      "id": "appointment-scheduling-grounded",
+      "prompt": "Generate an appointment scheduling page for an in-person benefits interview using Ashlar date, select, and form-field capsules.",
+      "components": ["banner", "identifier", "form-field", "date-input", "select", "button"],
+      "outputFile": "fixtures/appointment-scheduling.grounded.pass.html",
+      "policy": "all",
+      "expect": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "id": "appointment-scheduling-ungrounded",
+      "prompt": "Generate an appointment scheduling page without Ashlar grounding.",
+      "components": ["date-input", "select"],
+      "outputFile": "fixtures/appointment-scheduling.ungrounded.fail.html",
+      "policy": "all",
+      "expect": {
+        "minErrors": 2,
+        "includesRuleIds": [
+          "federal/meta-description-required",
+          "federal/banner-required",
+          "federal/identifier-required",
+          "ashlar/date-input/date-input-needs-associated-label",
+          "ashlar/date-input/invalid-date-input-needs-describedby",
+          "ashlar/select/select-needs-associated-label",
+          "ashlar/select/invalid-select-needs-describedby"
+        ]
+      }
+    },
+    {
+      "id": "status-tracking-grounded",
+      "prompt": "Generate a case status tracking page where an applicant can enter a claim number and review next steps.",
+      "components": ["banner", "identifier", "form-field", "text-input", "button", "alert"],
+      "outputFile": "fixtures/status-tracking.grounded.pass.html",
+      "policy": "all",
+      "expect": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "id": "status-tracking-ungrounded",
+      "prompt": "Generate a case status tracking page without Ashlar grounding.",
+      "components": ["text-input", "alert"],
+      "outputFile": "fixtures/status-tracking.ungrounded.fail.html",
+      "policy": "all",
+      "expect": {
+        "minErrors": 2,
+        "includesRuleIds": [
+          "federal/page-title-min-length",
+          "federal/meta-description-required",
+          "federal/banner-required",
+          "federal/identifier-required",
+          "ashlar/text-input/invalid-input-needs-describedby",
+          "ashlar/alert/empty-alert"
+        ]
+      }
+    },
+    {
+      "id": "account-profile-grounded",
+      "prompt": "Generate an account profile update form for a public benefits portal with contact preferences and consent.",
+      "components": ["banner", "identifier", "form-field", "text-input", "textarea", "checkbox", "button"],
+      "outputFile": "fixtures/account-profile.grounded.pass.html",
+      "policy": "all",
+      "expect": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "id": "account-profile-ungrounded",
+      "prompt": "Generate an account profile update form without Ashlar grounding.",
+      "components": ["textarea", "radio-group"],
+      "outputFile": "fixtures/account-profile.ungrounded.fail.html",
+      "policy": "all",
+      "expect": {
+        "minErrors": 3,
+        "includesRuleIds": [
+          "federal/banner-required",
+          "federal/identifier-required",
+          "ashlar/textarea/textarea-needs-associated-label",
+          "ashlar/radio-group/radio-group-needs-legend",
+          "ashlar/radio-group/radio-needs-name"
+        ]
+      }
+    },
+    {
+      "id": "error-remediation-grounded",
+      "prompt": "Generate an error remediation page after an applicant submits invalid contact information, including an error summary and corrected field.",
+      "components": ["banner", "identifier", "alert", "error-summary", "form-field", "text-input", "button"],
+      "outputFile": "fixtures/error-remediation.grounded.pass.html",
+      "policy": "all",
+      "expect": {
+        "errors": 0,
+        "warnings": 0
+      }
+    },
+    {
+      "id": "error-remediation-ungrounded",
+      "prompt": "Generate an error remediation page without Ashlar grounding.",
+      "components": ["alert", "error-summary", "text-input", "button"],
+      "outputFile": "fixtures/error-remediation.ungrounded.fail.html",
+      "policy": "all",
+      "expect": {
+        "minErrors": 4,
+        "includesRuleIds": [
+          "federal/banner-required",
+          "federal/identifier-required",
+          "ashlar/alert/empty-alert",
+          "ashlar/error-summary/summary-link-missing-target",
+          "ashlar/text-input/invalid-input-needs-describedby",
+          "ashlar/button/icon-only-needs-label"
+        ]
+      }
+    }
+  ]
+}

@@ -55,6 +55,7 @@ jobs:
       - run: node packages/cli/dist/index.js evidence --report reports/ashlar-evidence.md --registry ./registry
         if: always()
       - run: node packages/cli/dist/index.js ai-eval --suite examples/ai-eval/ashlar-ai-eval.json --registry ./registry --json > reports/ashlar-ai-eval.json
+      - run: node packages/cli/dist/index.js ai-eval --suite examples/ai-eval/generated-output-corpus/ashlar-generated-output-corpus.json --registry ./registry --json > reports/ashlar-ai-eval-corpus.json
       - run: node packages/cli/dist/index.js migrate uswds --registry ./registry --json "examples/uswds-project/**/*.{html,tsx,jsx}" > reports/ashlar-uswds-migration.json
       - run: node packages/cli/dist/index.js bundle budget button --registry ./registry --json > reports/ashlar-button-bundle-budget.json
       - run: node packages/cli/dist/index.js bundle budget --registry ./registry --json > reports/ashlar-l0-bundle-budget.json
@@ -150,6 +151,12 @@ jobs:
         with:
           name: ashlar-ai-eval
           path: reports/ashlar-ai-eval.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-ai-eval-corpus
+          path: reports/ashlar-ai-eval-corpus.json
 
       - uses: actions/upload-artifact@v4
         if: always()

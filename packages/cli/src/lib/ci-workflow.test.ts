@@ -57,6 +57,8 @@ describe("CI workflow", () => {
         continue-on-error: true`;
     const releaseReviewPack =
       "node packages/cli/dist/index.js release review-pack --registry ./registry --output reports/review-pack";
+    const aiEvalCorpus =
+      "node packages/cli/dist/index.js ai-eval --suite examples/ai-eval/generated-output-corpus/ashlar-generated-output-corpus.json --registry ./registry --json > reports/ashlar-ai-eval-corpus.json";
     const uswdsMigration =
       'node packages/cli/dist/index.js migrate uswds --registry ./registry --json "examples/uswds-project/**/*.{html,tsx,jsx}" > reports/ashlar-uswds-migration.json';
     const sarifAudit =
@@ -80,6 +82,7 @@ describe("CI workflow", () => {
     expect(workflow).toContain(releaseReadinessReport);
     expect(workflow).toContain(releaseReadinessAdvisoryStep);
     expect(workflow).toContain(releaseReviewPack);
+    expect(workflow).toContain(aiEvalCorpus);
     expect(workflow).toContain(evidenceReport);
     expect(workflow).toContain(uswdsMigration);
     expect(workflow).toContain("name: ashlar-status");
@@ -110,6 +113,8 @@ describe("CI workflow", () => {
     expect(workflow).toContain("path: reports/ashlar-release-readiness.json");
     expect(workflow).toContain("name: ashlar-release-review-pack");
     expect(workflow).toContain("path: reports/review-pack");
+    expect(workflow).toContain("name: ashlar-ai-eval-corpus");
+    expect(workflow).toContain("path: reports/ashlar-ai-eval-corpus.json");
     expect(workflow).toContain("name: ashlar-uswds-migration");
     expect(workflow).toContain("path: reports/ashlar-uswds-migration.json");
     expect(workflow.indexOf(evidenceCheck)).toBeLessThan(workflow.indexOf(sarifAudit));
@@ -128,6 +133,7 @@ describe("CI workflow", () => {
     expect(workflow.indexOf(designPartnerChecklist)).toBeLessThan(workflow.indexOf(sarifAudit));
     expect(workflow.indexOf(releaseReadinessReport)).toBeLessThan(workflow.indexOf(sarifAudit));
     expect(workflow.indexOf(releaseReviewPack)).toBeLessThan(workflow.indexOf(sarifAudit));
+    expect(workflow.indexOf(aiEvalCorpus)).toBeLessThan(workflow.indexOf(sarifAudit));
     expect(workflow.indexOf(evidenceReport)).toBeLessThan(workflow.indexOf(sarifAudit));
     expect(workflow.indexOf(uswdsMigration)).toBeLessThan(workflow.indexOf(sarifAudit));
   });

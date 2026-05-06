@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Track your emergency assistance case status | Example Agency</title>
+    <meta
+      name="description"
+      content="Track an emergency assistance case, review next steps, and find contact options for your application."
+    />
+  </head>
+  <body>
+    <section class="ashlar-banner" aria-label="Official website of the United States government">
+      An official website of the United States government
+    </section>
+    <main>
+      <h1>Track your case</h1>
+      <div class="ashlar-alert">You can find your case number on the receipt we emailed to you.</div>
+      <form action="/case-status" method="get">
+        <div class="ashlar-form-field">
+          <label for="case-number">Case number</label>
+          <input class="ashlar-text-input" id="case-number" name="case-number" autocomplete="off" />
+        </div>
+        <button class="ashlar-button" type="submit">Find my case</button>
+      </form>
+    </main>
+    <footer class="ashlar-identifier" aria-label="Agency identifier">
+      <a href="/about">About</a>
+      <a href="/accessibility">Accessibility</a>
+      <a href="/foia">FOIA</a>
+      <a href="/no-fear-act">No FEAR Act</a>
+      <a href="/oig">Office of Inspector General</a>
+      <a href="/performance">Performance reports</a>
+      <a href="/privacy">Privacy</a>
+    </footer>
+  </body>
+</html>

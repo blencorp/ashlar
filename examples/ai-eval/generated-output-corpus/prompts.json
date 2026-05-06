@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0",
+  "promptSetId": "public-service-ui-v0.1-seed",
+  "prompts": [
+    {
+      "id": "benefit-eligibility",
+      "category": "benefit eligibility",
+      "prompt": "Generate a benefit eligibility screening page for emergency housing assistance using Ashlar form capsules and a federal trust shell."
+    },
+    {
+      "id": "appointment-scheduling",
+      "category": "appointment scheduling",
+      "prompt": "Generate an appointment scheduling page for an in-person benefits interview using Ashlar date, select, and form-field capsules."
+    },
+    {
+      "id": "status-tracking",
+      "category": "status tracking",
+      "prompt": "Generate a case status tracking page where an applicant can enter a claim number and review next steps."
+    },
+    {
+      "id": "account-profile",
+      "category": "account/profile form",
+      "prompt": "Generate an account profile update form for a public benefits portal with contact preferences and consent."
+    },
+    {
+      "id": "error-remediation",
+      "category": "error/remediation flow",
+      "prompt": "Generate an error remediation page after an applicant submits invalid contact information, including an error summary and corrected field."
+    }
+  ]
+}

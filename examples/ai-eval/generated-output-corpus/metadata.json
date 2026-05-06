@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "1.0",
+  "corpusId": "ashlar-generated-output-corpus-v0.1-seed",
+  "generatedAt": "2026-05-06T16:45:00.000Z",
+  "registryCommit": "876e741fb5871d189db2c4aa5434c759287a82eb",
+  "sourceBranch": "codex/uswds-coverage-matrix-review-fixes",
+  "tool": {
+    "name": "OpenAI Codex",
+    "modelFamily": "GPT-5",
+    "mode": "local coding agent"
+  },
+  "context": {
+    "ashlarRegistryProvided": true,
+    "cemAntiPatternsProvided": true,
+    "federalAuditRulesProvided": true,
+    "mcpRuntimeUsed": false,
+    "agentsDesignContextProvided": false
+  },
+  "limitations": [
+    "Single-session seed corpus; not a broad benchmark.",
+    "Negative fixtures are ungrounded counterexamples generated to exercise known Ashlar findings.",
+    "Independent model/tool outputs should be appended with their own provenance entries before public-alpha AI-readiness claims."
+  ],
+  "fixtures": [
+    {
+      "id": "benefit-eligibility-grounded",
+      "promptId": "benefit-eligibility",
+      "fixture": "fixtures/benefit-eligibility.grounded.pass.html",
+      "contextProvided": "Ashlar registry, CEM anti-patterns, federal trust shell rules",
+      "expectedOutcome": "pass"
+    },
+    {
+      "id": "benefit-eligibility-ungrounded",
+      "promptId": "benefit-eligibility",
+      "fixture": "fixtures/benefit-eligibility.ungrounded.fail.html",
+      "contextProvided": "No Ashlar grounding; intentional unsafe counterexample",
+      "expectedOutcome": "findings"
+    },
+    {
+      "id": "appointment-scheduling-grounded",
+      "promptId": "appointment-scheduling",
+      "fixture": "fixtures/appointment-scheduling.grounded.pass.html",
+      "contextProvided": "Ashlar registry, CEM anti-patterns, federal trust shell rules",
+      "expectedOutcome": "pass"
+    },
+    {
+      "id": "appointment-scheduling-ungrounded",
+      "promptId": "appointment-scheduling",
+      "fixture": "fixtures/appointment-scheduling.ungrounded.fail.html",
+      "contextProvided": "No Ashlar grounding; intentional unsafe counterexample",
+      "expectedOutcome": "findings"
+    },
+    {
+      "id": "status-tracking-grounded",
+      "promptId": "status-tracking",
+      "fixture": "fixtures/status-tracking.grounded.pass.html",
+      "contextProvided": "Ashlar registry, CEM anti-patterns, federal trust shell rules",
+      "expectedOutcome": "pass"
+    },
+    {
+      "id": "status-tracking-ungrounded",
+      "promptId": "status-tracking",
+      "fixture": "fixtures/status-tracking.ungrounded.fail.html",
+      "contextProvided": "No Ashlar grounding; intentional unsafe counterexample",
+      "expectedOutcome": "findings"
+    },
+    {
+      "id": "account-profile-grounded",
+      "promptId": "account-profile",
+      "fixture": "fixtures/account-profile.grounded.pass.html",
+      "contextProvided": "Ashlar registry, CEM anti-patterns, federal trust shell rules",
+      "expectedOutcome": "pass"
+    },
+    {
+      "id": "account-profile-ungrounded",
+      "promptId": "account-profile",
+      "fixture": "fixtures/account-profile.ungrounded.fail.html",
+      "contextProvided": "No Ashlar grounding; intentional unsafe counterexample",
+      "expectedOutcome": "findings"
+    },
+    {
+      "id": "error-remediation-grounded",
+      "promptId": "error-remediation",
+      "fixture": "fixtures/error-remediation.grounded.pass.html",
+      "contextProvided": "Ashlar registry, CEM anti-patterns, federal trust shell rules",
+      "expectedOutcome": "pass"
+    },
+    {
+      "id": "error-remediation-ungrounded",
+      "promptId": "error-remediation",
+      "fixture": "fixtures/error-remediation.ungrounded.fail.html",
+      "contextProvided": "No Ashlar grounding; intentional unsafe counterexample",
+      "expectedOutcome": "findings"
+    }
+  ]
+}
