@@ -2,7 +2,9 @@
 
 The token system is the framework-neutral contract that drives every other layer of Ashlar. Components reference tokens; agencies override tokens; modes (light/dark/HC/forced) switch through tokens; AI tools query tokens.
 
-Source format: **DTCG 2025.10** JSON. Compiler: **Terrazzo**. Outputs: CSS variables, Tailwind v4 `@theme` block, typed TypeScript, JSON, Figma variables.
+Source format: **DTCG 2025.10-shaped** JSON. The current prototype loads stock theme JSON files and emits CSS variables, a Tailwind v4 `@theme` companion file, and typed TypeScript token helpers. The target compiler still includes JSON and design-tool outputs.
+
+> **Status (2026-05-05)**: stock themes live under `packages/cli/themes/*.tokens.json`, `ashlar init` copies those JSON files and writes generated `theme.css`, `tailwind-theme.css`, and `tokens.ts`; `ashlar theme sync` regenerates those outputs from local theme JSON; and `ashlar theme validate` checks schema shape, required semantic token paths, and WCAG AA action contrast in light/dark modes. Tailwind `@theme` output is implemented as a companion stylesheet and is consumed by the Tailwind-enabled Vite example; typed token output is implemented as a generated TypeScript contract. See [STATUS.md](../../STATUS.md).
 
 ## Hierarchy
 
@@ -31,9 +33,9 @@ Raw values. Not consumed directly by components.
     "4": { "$type": "dimension", "$value": "1rem" }
   },
   "radius": {
-    "sm": { "$type": "dimension", "$value": "0.25rem" },
-    "md": { "$type": "dimension", "$value": "0.375rem" },
-    "lg": { "$type": "dimension", "$value": "0.5rem" }
+    "control": { "$type": "dimension", "$value": "0.25rem" },
+    "card": { "$type": "dimension", "$value": "0.375rem" },
+    "panel": { "$type": "dimension", "$value": "0.5rem" }
   },
   "type": {
     "size": {
@@ -93,11 +95,10 @@ Specific to a single component. Consumers can override per-component without aff
 
 ```json
 {
-  "button": {
-    "primary": {
-      "bg":     { "$type": "color", "$value": "{color.action.primary.bg}" },
-      "fg":     { "$type": "color", "$value": "{color.action.primary.fg}" },
-      "radius": { "$type": "dimension", "$value": "{radius.md}" }
+  "component": {
+    "button": {
+      "radius": { "$type": "dimension", "$value": "{radius.control}" },
+      "minBlockSize": { "$type": "dimension", "$value": "2.75rem" }
     }
   }
 }
@@ -142,7 +143,7 @@ Compiler emits `tokens.css`, `theme.css`, and mode-overlay files in cascade laye
     --ashlar-color-action-primary-bg:
       light-dark(oklch(0.42 0.18 250), oklch(0.62 0.18 250));
     --ashlar-color-action-primary-fg: white;
-    --ashlar-radius-md: 0.375rem;
+    --ashlar-radius-control: 0.25rem;
     --ashlar-focus-ring-color:
       light-dark(oklch(0.62 0.18 250), oklch(0.78 0.18 250));
   }
@@ -168,42 +169,40 @@ Compiler emits `tokens.css`, `theme.css`, and mode-overlay files in cascade laye
 @theme {
   --color-ashlar-text-default: var(--ashlar-color-text-default);
   --color-ashlar-surface-default: var(--ashlar-color-surface-default);
-  --color-ashlar-action-primary: var(--ashlar-color-action-primary-bg);
-  --radius-ashlar-md: var(--ashlar-radius-md);
+  --color-ashlar-action-primary-bg: var(--ashlar-color-action-primary-bg);
+  --radius-ashlar-control: var(--ashlar-radius-control);
 }
 ```
 
-Tailwind users get utility classes (`bg-ashlar-action-primary`, `rounded-ashlar-md`) backed by Ashlar tokens. Ashlar components themselves continue to use the underlying CSS variables.
+Tailwind users get utility classes (`bg-ashlar-action-primary-bg`, `rounded-ashlar-control`) backed by Ashlar tokens. Ashlar components themselves continue to use the underlying CSS variables.
 
 ## Output: TypeScript
 
 ```ts
 // tokens.ts (generated)
-export const tokens = {
-  color: {
-    text: {
-      default: 'var(--ashlar-color-text-default)' as const,
-      muted: 'var(--ashlar-color-text-muted)' as const
-    },
-    action: {
-      primary: {
-        bg: 'var(--ashlar-color-action-primary-bg)' as const
-      }
-    }
-  }
-} as const;
+export const ashlarTokenPaths = [
+  "color.action.primary.bg",
+  "color.text.default",
+] as const;
 
-export type TokenName =
-  | 'color.text.default'
-  | 'color.action.primary.bg'
-  // ... auto-generated
+export type AshlarTokenPath = (typeof ashlarTokenPaths)[number];
+
+export const ashlarTokenCssVariables = {
+  "color.action.primary.bg": "--ashlar-color-action-primary-bg",
+  "color.text.default": "--ashlar-color-text-default",
+} as const satisfies Record<AshlarTokenPath, `--${string}`>;
+
+export const ashlarTokenVars = {
+  "color.action.primary.bg": "var(--ashlar-color-action-primary-bg)",
+  "color.text.default": "var(--ashlar-color-text-default)",
+} as const satisfies Record<AshlarTokenPath, `var(--${string})`>;
 ```
 
 Used for IntelliSense in component code and in consumer applications.
 
 ## Agency theme contract
 
-Agency themes extend the default theme by overriding allowed tokens. The theme schema validates that:
+Agency themes extend the default theme by overriding allowed tokens. The target theme schema validates that:
 
 - Required semantic tokens are present.
 - Aliases resolve.
@@ -233,7 +232,7 @@ Agency themes extend the default theme by overriding allowed tokens. The theme s
 }
 ```
 
-`ashlar theme validate` enforces all of the above.
+Current `ashlar theme validate` enforces schema validity, required semantic token paths, alias resolution for those paths, and AA contrast for primary and secondary action foreground/background pairs. Current `ashlar theme sync` regenerates CSS variables, Tailwind `@theme` output, and typed TypeScript token helpers from local theme JSON. The broader compiler contract above remains the target for slice 6 completion.
 
 ## Contrast policy
 

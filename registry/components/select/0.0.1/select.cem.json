@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "select.html",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "AshlarSelect",
+          "tagName": "select",
+          "description": "Native select control for choosing one option from a bounded public-service list.",
+          "_ashlar": {
+            "version": "0.0.1",
+            "tier": "primitive",
+            "layer": "L0",
+            "stability": "experimental",
+            "selector": ".ashlar-select",
+            "a11yRequirements": [
+              {
+                "id": "native-select-required",
+                "wcag": "4.1.2",
+                "severity": "error",
+                "description": "Select controls must use native select semantics for keyboard, name, role, and value."
+              },
+              {
+                "id": "accessible-name-required",
+                "wcag": "3.3.2",
+                "severity": "error",
+                "description": "Select controls must have a visible label or equivalent accessible name."
+              },
+              {
+                "id": "invalid-select-describedby",
+                "wcag": "3.3.1",
+                "severity": "error",
+                "description": "Invalid selects must connect their error text with aria-describedby."
+              },
+              {
+                "id": "focus-visible-required",
+                "wcag": "2.4.7",
+                "severity": "error",
+                "description": "Keyboard focus must be visually distinct."
+              }
+            ],
+            "antiPatterns": [
+              {
+                "id": "select-needs-associated-label",
+                "pattern": "<select $$$ATTRS>$$$CHILDREN</select>",
+                "regex": "class=\"[^\"]*\\bashlar-select\\b",
+                "not": { "regex": "\\b(id|aria-label|aria-labelledby)\\s*=" },
+                "message": "Ashlar Select requires an id plus associated label, aria-label, or aria-labelledby.",
+                "fix": "Add an id and a visible label with matching for, or provide aria-labelledby.",
+                "wcag": "3.3.2",
+                "severity": "error",
+                "languages": ["html"]
+              },
+              {
+                "id": "invalid-select-needs-describedby",
+                "pattern": "<select $$$ATTRS>$$$CHILDREN</select>",
+                "regex": "class=\"[^\"]*\\bashlar-select\\b[\\s\\S]*aria-invalid=\"true\"",
+                "not": { "regex": "aria-describedby\\s*=" },
+                "message": "Invalid Ashlar Select requires aria-describedby pointing to error text.",
+                "fix": "Add aria-describedby with the error message id.",
+                "wcag": "3.3.1",
+                "severity": "error",
+                "languages": ["html"]
+              }
+            ],
+            "tokensConsumed": [
+              "color.surface",
+              "color.input.border",
+              "color.text",
+              "color.status.error.border",
+              "focus.ring.color",
+              "radius.control"
+            ],
+            "platformFeatures": [
+              {
+                "feature": "native-select",
+                "status": "required",
+                "fallback": "Uses the platform select control for keyboard interaction, form submission, and value semantics."
+              },
+              {
+                "feature": "forced-colors",
+                "status": "progressive",
+                "fallback": "Uses system field, text, border, and focus colors."
+              }
+            ],
+            "policyMappings": [
+              {
+                "source": "Section 508",
+                "requirement": "Supports form control name, role, value, labels, keyboard operation, and error relationships when used correctly.",
+                "url": "https://www.section508.gov/"
+              }
+            ],
+            "rendering": "server-safe",
+            "hydrationCost": "none",
+            "criticalForA11y": true
+          }
+        }
+      ]
+    }
+  ]
+}

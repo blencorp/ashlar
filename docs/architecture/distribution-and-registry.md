@@ -1,6 +1,8 @@
 # Distribution and registry
 
-Ashlar is distributed as content-addressed, signed capsules through a registry. This document specifies the registry shape, distribution channels (HTTP and Git), provenance via Sigstore, custom registries, and air-gapped operation.
+Ashlar is distributed as content-addressed capsules through a registry. This document specifies the target registry shape, distribution channels (HTTP and Git), provenance via Sigstore, custom registries, and air-gapped operation.
+
+> **Status (2026-05-05)**: the local prototype has registry-authored signed `*.capsule.json` manifests, per-version manifest hashes pinned in `registry/index.json`, `registry/trust-root.json` with an Ed25519 verification key plus expected Sigstore identity/issuer policy and `bundleVerification: "cosign"`, hash/signature verification on `add`, `update`, and `verify`, declared capsule Sigstore bundle metadata checks plus trust-root-required `cosign verify-blob` when present, `ashlar registry mirror` for verified local directory mirrors, `pnpm release:smoke` to prove packed CLI/schema tarballs install and run in a throwaway consumer project, `ashlar release provenance-check` for local npm provenance readiness, `ashlar release provenance-verify-public` for post-publish npm attestation verification and review-record JSON output, a guarded tokenless `publish.yml` workflow shaped for npm trusted publishing that uploads `ashlar-npm-provenance.json`, `ashlar release sign-capsules` for capsule-local Sigstore bundle generation, `ashlar release public-trust-verify` for strict verification of signed registry artifacts and review-record JSON output, `ashlar release sbom` for an unsigned SPDX release SBOM, `ashlar release attest` / `verify-attestation` for hash-based SBOM tamper evidence in CI, `ashlar release trust-bundle` / `verify-trust-bundle` for a schema-backed local offline-review artifact tying registry trust material to release artifacts, a guarded keyless `sigstore.yml` workflow that signs capsule manifests plus release-review JSON artifacts with cosign bundles and uploads `ashlar-public-trust.json`, and a release-readiness-gated [supply-chain incident playbook](../security/supply-chain-incident-playbook.md). HTTP distribution, real public capsule-level Sigstore bundles, custom registry tooling, configured npmjs.com trusted publishers, published npm provenance attestations, public signed SBOM/trust-bundle artifacts, public Sigstore/TUF trust bundles, and external security review of the playbook remain planned supply-chain work. See [STATUS.md](../../STATUS.md).
 
 ## Registry shape
 
@@ -9,11 +11,12 @@ The registry is the catalog of capsules. Its on-disk structure mirrors the publi
 ```
 registry/
 ├── index.json                  # registry manifest
+├── trust-root.json             # local Ed25519 trust root in the prototype
 ├── components/
 │   ├── button/
 │   │   ├── 1.2.3/
 │   │   │   ├── button.tar.gz   # capsule contents
-│   │   │   ├── manifest.json   # capsule manifest
+│   │   │   ├── button.capsule.json   # capsule manifest
 │   │   │   └── signature.bundle  # Sigstore signature bundle
 │   │   ├── 1.2.4/
 │   │   └── latest -> 1.2.4
@@ -38,6 +41,10 @@ registry/
     "button": {
       "latest": "1.2.4",
       "versions": ["1.0.0", "1.1.0", "1.2.0", "1.2.1", "1.2.3", "1.2.4"],
+      "capsuleHashes": {
+        "1.2.3": "sha256:abc...",
+        "1.2.4": "sha256:def..."
+      },
       "stability": "stable",
       "tier": "primitive",
       "layer": "L0"
@@ -58,7 +65,7 @@ The shadcn pattern. Published to a CDN-fronted endpoint:
 
 ```
 https://registry.ashlar.dev/index.json
-https://registry.ashlar.dev/components/button/1.2.4/manifest.json
+https://registry.ashlar.dev/components/button/1.2.4/button.capsule.json
 https://registry.ashlar.dev/components/button/1.2.4/button.tar.gz
 https://registry.ashlar.dev/components/button/1.2.4/signature.bundle
 ```
@@ -95,15 +102,16 @@ The CLI auto-detects which channel to use based on `ashlar.config.json`:
 
 ## Provenance via Sigstore
 
-Every capsule is signed via **Sigstore/cosign**. The build pipeline:
+Every public capsule will be signed via **Sigstore/cosign**. The target build pipeline:
 
 1. Builds the capsule contents.
 2. Computes the `capsule_hash` (deterministic SHA-256 over file hashes).
 3. Signs `capsule_hash` via Sigstore — keyless, with OIDC identity tied to the GitHub Actions workflow that published the registry.
 4. Embeds the signature bundle in the capsule artifact.
 5. Records the signing certificate chain in the registry index.
+6. Runs `ashlar release public-trust-verify` against the signed registry artifact before publication and writes `ashlar-public-trust.json` for release-trust review records.
 
-Consumers verify on every install and on `ashlar verify`:
+The target consumer flow verifies signatures on every install and on `ashlar verify`:
 
 ```bash
 $ ashlar verify
@@ -143,25 +151,25 @@ The registry build tool (`@ashlar/registry-build`) is open-source so any organiz
 ## Air-gapped operation
 
 ```bash
-$ ashlar registry mirror --output ./ashlar-mirror.tar.gz
+$ ashlar registry mirror --registry ./registry --output ./ashlar-mirror
 ```
 
-Produces a tarball containing:
+The prototype command verifies every listed capsule version against the registry index, capsule manifest, capsule hash, local Ed25519 trust root, any declared capsule Sigstore bundle metadata, and trust-root-required `cosign verify-blob` before copying anything. It writes a directory mirror containing:
 
 - Full registry contents at the requested versions.
-- Signature bundles for all capsules.
-- Verification keyring (Sigstore root + intermediates).
+- Signed local capsule manifests.
+- `trust-root.json` for local Ed25519 verification and the expected Sigstore identity/issuer policy.
 - Index manifests.
 
 Consumers:
 
 ```bash
-$ tar xzf ashlar-mirror.tar.gz
 $ ashlar init --registry ./ashlar-mirror
-$ ashlar update --registry ./ashlar-mirror
+$ ashlar add button
+$ ashlar verify
 ```
 
-All operations work offline. `ashlar verify` checks signatures against the bundled keyring.
+All operations work offline for filesystem registries. `ashlar verify` checks signatures against the mirrored trust root. The public-release target still adds a compressed mirror artifact, Sigstore bundles, Rekor/TUF trust material, and an explicit revocation story.
 
 ## Versioning
 

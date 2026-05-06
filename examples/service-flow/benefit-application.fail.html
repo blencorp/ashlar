@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Apply</title>
+  </head>
+  <body>
+    <main class="ashlar-benefit-application">
+      <h1>Apply for a local benefit</h1>
+
+      <section class="ashlar-error-summary" aria-labelledby="errors-title" tabindex="-1">
+        <h2 class="ashlar-error-summary__title" id="errors-title">There is a problem</h2>
+        <ul>
+          <li><a href="#">Enter your full name</a></li>
+        </ul>
+      </section>
+
+      <div class="ashlar-alert" role="alert"></div>
+
+      <form>
+        <div class="ashlar-form-field">
+          <p class="ashlar-form-field__hint" id="full-name-hint">Use the name on your government ID.</p>
+          <input
+            class="ashlar-text-input"
+            id="full-name"
+            name="full-name"
+            aria-invalid="true"
+          >
+        </div>
+
+        <button class="ashlar-button" data-variant="primary" type="submit">
+          <svg aria-hidden="true"></svg>
+        </button>
+      </form>
+    </main>
+  </body>
+</html>

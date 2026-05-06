@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@import "./ashlar/themes/tailwind-theme.css";
+
 @layer ashlar.tokens, ashlar.base, ashlar.components, example;
 
 @layer example {

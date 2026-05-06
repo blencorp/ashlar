@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "textarea.html",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "AshlarTextarea",
+          "tagName": "textarea",
+          "description": "Native multiline text control for public-service long-answer fields.",
+          "_ashlar": {
+            "version": "0.0.1",
+            "tier": "primitive",
+            "layer": "L0",
+            "stability": "experimental",
+            "selector": ".ashlar-textarea",
+            "a11yRequirements": [
+              {
+                "id": "native-textarea-required",
+                "wcag": "4.1.2",
+                "severity": "error",
+                "description": "Textarea controls must use native textarea semantics for keyboard, name, role, and value."
+              },
+              {
+                "id": "accessible-name-required",
+                "wcag": "3.3.2",
+                "severity": "error",
+                "description": "Textarea controls must have a visible label or equivalent accessible name."
+              },
+              {
+                "id": "invalid-textarea-describedby",
+                "wcag": "3.3.1",
+                "severity": "error",
+                "description": "Invalid textareas must connect their error text with aria-describedby."
+              },
+              {
+                "id": "focus-visible-required",
+                "wcag": "2.4.7",
+                "severity": "error",
+                "description": "Keyboard focus must be visually distinct."
+              }
+            ],
+            "antiPatterns": [
+              {
+                "id": "textarea-needs-associated-label",
+                "pattern": "<textarea $$$ATTRS>$$$TEXT</textarea>",
+                "regex": "class=\"[^\"]*\\bashlar-textarea\\b",
+                "not": {
+                  "regex": "\\b(id|aria-label|aria-labelledby)\\s*="
+                },
+                "message": "Ashlar Textarea requires an id plus associated label, aria-label, or aria-labelledby.",
+                "fix": "Add an id and a visible label with matching for, or provide aria-labelledby.",
+                "wcag": "3.3.2",
+                "severity": "error",
+                "languages": ["html"]
+              },
+              {
+                "id": "invalid-textarea-needs-describedby",
+                "pattern": "<textarea $$$ATTRS>$$$TEXT</textarea>",
+                "regex": "class=\"[^\"]*\\bashlar-textarea\\b[\\s\\S]*aria-invalid=\"true\"",
+                "not": {
+                  "regex": "aria-describedby\\s*="
+                },
+                "message": "Invalid Ashlar Textarea requires aria-describedby pointing to error text.",
+                "fix": "Add aria-describedby with the error message id.",
+                "wcag": "3.3.1",
+                "severity": "error",
+                "languages": ["html"]
+              }
+            ],
+            "tokensConsumed": [
+              "color.surface",
+              "color.input.border",
+              "color.text",
+              "color.status.error.border",
+              "focus.ring.color",
+              "radius.control"
+            ],
+            "platformFeatures": [
+              {
+                "feature": "native-textarea",
+                "status": "required",
+                "fallback": "Uses the platform textarea control for keyboard interaction, form submission, and value semantics."
+              },
+              {
+                "feature": "forced-colors",
+                "status": "progressive",
+                "fallback": "Uses system field, text, border, and focus colors."
+              }
+            ],
+            "policyMappings": [
+              {
+                "source": "Section 508",
+                "requirement": "Supports form control name, role, value, labels, keyboard operation, and error relationships when used correctly.",
+                "url": "https://www.section508.gov/"
+              }
+            ],
+            "rendering": "server-safe",
+            "hydrationCost": "none",
+            "criticalForA11y": true
+          }
+        }
+      ]
+    }
+  ]
+}

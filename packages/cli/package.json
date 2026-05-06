@@ -3,6 +3,15 @@
   "version": "0.0.0",
   "description": "Ashlar component registry CLI.",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blencorp/ashlar.git",
+    "directory": "packages/cli"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "type": "module",
   "bin": {
     "ashlar": "./dist/index.js"
@@ -11,7 +20,12 @@
     ".": "./dist/index.js"
   },
   "files": [
-    "dist",
+    "dist/**/*.d.ts",
+    "dist/**/*.d.ts.map",
+    "dist/**/*.js",
+    "dist/**/*.js.map",
+    "!dist/**/*.test.*",
+    "!dist/**/tsconfig.tsbuildinfo",
     "themes"
   ],
   "scripts": {
@@ -23,11 +37,13 @@
   "dependencies": {
     "@ashlar/schemas": "workspace:*",
     "@ast-grep/napi": "catalog:",
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "ajv": "catalog:",
     "ajv-formats": "catalog:",
     "commander": "catalog:",
     "fast-glob": "catalog:",
-    "parse5": "catalog:"
+    "parse5": "catalog:",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "catalog:",

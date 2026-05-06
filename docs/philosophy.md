@@ -48,7 +48,7 @@ The hard part of a ComboBox is not React rendering — it is the state machine, 
 
 ### 6. Accessibility is evidence, not assertion
 
-"Accessible by default" is marketing. Structured evidence is verifiable truth. Every stable component ships an evidence packet: axe results, keyboard interaction transcripts, screen-reader test notes (NVDA + VoiceOver minimum for stable; JAWS added for LTS), WCAG 2.2 criterion mapping, and explicit alignment to Section 508 ICT Baseline test procedures. Evidence is machine-readable JSON; tools, audits, and AI assistants query it.
+"Accessible by default" is marketing. Structured evidence is verifiable truth. Every stable component ships an evidence packet: axe results, keyboard interaction transcripts, at least one manual screen-reader transcript for stable evidence, a broader NVDA + JAWS + VoiceOver matrix for LTS, WCAG 2.2 criterion mapping, and explicit alignment to Section 508 ICT Baseline test procedures. Evidence is machine-readable JSON; tools, audits, and AI assistants query it.
 
 A component is not stable until its evidence packet is — and the evidence schema explicitly distinguishes `not-reviewed`, `automated-tested`, `manual-tested`, `stable-evidence`, and `known-issue` so the docs cannot overclaim what testing has produced.
 
@@ -96,7 +96,7 @@ Every claim links to STATUS.md or a versioned status field. We do not write "Car
   - **L2**: framework adapters auto-generated from extended CEM (React first; Vue/Svelte/Solid in v0.2).
   - **L3**: patterns — service flows like eligibility check, document upload, address verification.
   - **L4**: templates — the same component rendered as Nunjucks, Twig, Jinja, ERB, plain HTML.
-- **Tokens** — DTCG-format source compiled to CSS variables, Tailwind v4 `@theme`, typed TypeScript, Figma variables.
+- **Tokens** — DTCG-format source compiled to CSS variables, Tailwind v4 `@theme`, and typed TypeScript today, with Figma/design-tool output planned.
 
 ## What Ashlar is not
 
@@ -110,17 +110,17 @@ Every claim links to STATUS.md or a versioned status field. We do not write "Car
 
 ## What we will deliberately defer
 
-- **Date Picker, Data Grid, full Combobox, AI Assistant Panel** — too much surface for v0.0. Defer until the validator wedge, signed registry, three-way merge, and MCP read-only are proven on Button + a small L0 set.
+- **Complex Date Picker, Data Grid, full Combobox, AI Assistant Panel** — too much surface for v0.0. Defer until the validator wedge, signed registry, three-way merge, and MCP read-only are proven on Button + a small L0 set.
 - **Vue / Svelte / Solid adapters** — defer to v0.2; ship React adapter and Lit custom element first.
 - **Effect-system-typed accessibility, resumability, CRDT-friendly patterns, event-sourced forms** — research track for v0.3+; design the architecture so they remain possible without shipping them.
 - **Twig, Jinja, Nunjucks ast-grep coverage** — defer until maintained tree-sitter grammars exist; the validator returns `language-unsupported` for these targets in v0.0.
 
 ## What we will measure ourselves on
 
-- Bundle size of a typical 5-component page (target: under 10KB gzipped for L0-only).
+- Bundle size of a typical L0 public-service page (target: under 21 KiB gzipped for the current twelve-capsule flow).
 - `update` conflict rate across 10+ instrumented test scenarios in v0.0; 30+ in v0.1 (target: under 15%, measuring textual conflict frequency *and* a separate measure of merge-correctness sampling).
-- AI tool generation accuracy when grounded by Ashlar CEM (target: zero hallucinated props; anti-patterns flagged at the file level by `validate_usage`). The eval harness is part of the AI-contract work; it does not exist yet, and the claim is unverified until it does.
-- Multi-stack demo apps shipping the same L0 component (target: one Button capsule, three universes — Vite + plain HTML + one server-rendered stack).
+- AI tool generation accuracy when grounded by Ashlar CEM (target: zero hallucinated props; anti-patterns flagged at the file level by `validate_usage`). `ashlar ai-eval` now provides the deterministic saved-output harness; the live multi-model generated-output corpus is still unbuilt.
+- Multi-stack demo apps shipping the same L0 component contract (target: one representative capsule, three universes — Vite + plain HTML + one server-rendered stack).
 - Friction from `init` to a working accessible form (target: deterministic path with no bespoke setup).
 - Federal procurement legibility: a security reviewer can find SBOM, npm provenance, signed releases, incident playbook, and license without leaving the README.
 

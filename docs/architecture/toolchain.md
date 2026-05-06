@@ -85,7 +85,7 @@ Tailwind output:
 
 ```css
 @theme {
-  --color-ashlar-action-primary: var(--ashlar-color-action-primary-bg);
+  --color-ashlar-action-primary-bg: var(--ashlar-color-action-primary-bg);
   --radius-ashlar-control: var(--ashlar-radius-control);
 }
 ```
@@ -122,7 +122,7 @@ The toolchain should produce:
 The AI tooling surface should be treated as a first-class developer API:
 
 - Extended CEM is the source of truth.
-- MCP exposes search, retrieval, validation, migration, evidence, and token tools.
+- MCP exposes policy-aware search, task suggestions, retrieval, validation, migration, evidence, and token tools.
 - AGENTS.md tells coding agents how to use Ashlar in the local codebase.
 - `ashlar audit` is the enforcement layer when generated code is wrong.
 

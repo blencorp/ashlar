@@ -58,4 +58,4 @@ export function findMatches(
   }));
 }
 
-export { type NapiConfig, type SgNode };
+export type { NapiConfig, SgNode };

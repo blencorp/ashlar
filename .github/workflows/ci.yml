@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
   actions: read
   security-events: write
 
@@ -30,7 +31,135 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - run: pnpm build
+      - run: mkdir -p reports
+      - run: node packages/cli/dist/index.js status --registry ./registry --json > reports/ashlar-status.json
+      - run: pnpm release:smoke
+      - run: node packages/cli/dist/index.js release provenance-check
+      - run: node packages/cli/dist/index.js release sbom --output reports/ashlar-sbom.spdx.json
+      - run: node packages/cli/dist/index.js release attest --subject reports/ashlar-sbom.spdx.json --output reports/ashlar-sbom.attestation.json
+      - run: node packages/cli/dist/index.js release verify-attestation --subject reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json
+      - run: node packages/cli/dist/index.js release trust-bundle --registry ./registry --sbom reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json --output reports/ashlar-trust-bundle.json --checklist reports/ashlar-release-trust-checklist.md
+      - run: node packages/cli/dist/index.js release verify-trust-bundle --registry ./registry --bundle reports/ashlar-trust-bundle.json --sbom reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json
+      - run: node packages/cli/dist/index.js release design-partner-checklist --output reports/ashlar-design-partner-checklist.md
+      - run: node packages/cli/dist/index.js release readiness --registry ./registry --report reports/ashlar-release-readiness.md --json-output reports/ashlar-release-readiness.json
+        continue-on-error: true
+      - run: node packages/cli/dist/index.js evidence --check --registry ./registry
+      - run: node packages/cli/dist/index.js evidence collect button --registry ./registry --fixture registry/components/button/0.0.1/button.html --output reports/button-evidence.json
+      - run: node packages/cli/dist/index.js evidence apply button --registry ./registry --artifact reports/button-evidence.json --output reports/button.evidence.proposed.json
+      - run: node packages/cli/dist/index.js evidence button --check --registry ./registry --evidence-file reports/button.evidence.proposed.json
+      - run: node packages/cli/dist/index.js evidence prepare-stable-all --registry ./registry --output reports/l0-stable-review
+      - run: node packages/cli/dist/index.js evidence review-status button --registry ./registry --review-dir reports/l0-stable-review/button --format json --output reports/button-stable-review-status.json
+        continue-on-error: true
+      - run: node packages/cli/dist/index.js evidence --report reports/ashlar-evidence.md --registry ./registry
+        if: always()
+      - run: node packages/cli/dist/index.js ai-eval --suite examples/ai-eval/ashlar-ai-eval.json --registry ./registry --json > reports/ashlar-ai-eval.json
+      - run: node packages/cli/dist/index.js migrate uswds --registry ./registry --json "examples/uswds-project/**/*.{html,tsx,jsx}" > reports/ashlar-uswds-migration.json
+      - run: node packages/cli/dist/index.js bundle budget button --registry ./registry --json > reports/ashlar-button-bundle-budget.json
+      - run: node packages/cli/dist/index.js bundle budget --registry ./registry --json > reports/ashlar-l0-bundle-budget.json
+      - run: node packages/cli/dist/index.js audit --policy federal --sarif examples/legacy-federal-project/index.html > reports/ashlar-legacy-federal-audit.sarif
       - run: node packages/cli/dist/index.js audit --policy all --registry ./registry --sarif examples/plain-html/index.html > ashlar.sarif
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-status
+          path: reports/ashlar-status.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-evidence-report
+          path: reports/ashlar-evidence.md
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-button-evidence
+          path: reports/button-evidence.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-button-evidence-proposal
+          path: reports/button.evidence.proposed.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-l0-stable-review
+          path: reports/l0-stable-review
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-button-stable-review-status
+          path: reports/button-stable-review-status.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-sbom
+          path: reports/ashlar-sbom.spdx.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-sbom-attestation
+          path: reports/ashlar-sbom.attestation.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-trust-bundle
+          path: reports/ashlar-trust-bundle.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-release-trust-checklist
+          path: reports/ashlar-release-trust-checklist.md
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-design-partner-checklist
+          path: reports/ashlar-design-partner-checklist.md
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-release-readiness
+          path: reports/ashlar-release-readiness.md
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-release-readiness-json
+          path: reports/ashlar-release-readiness.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-ai-eval
+          path: reports/ashlar-ai-eval.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-uswds-migration
+          path: reports/ashlar-uswds-migration.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-bundle-budget
+          path: reports/ashlar-*-bundle-budget.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-legacy-federal-audit
+          path: reports/ashlar-legacy-federal-audit.sarif
 
       - uses: actions/upload-artifact@v4
         if: always()

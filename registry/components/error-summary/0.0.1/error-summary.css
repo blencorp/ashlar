@@ -1,0 +1,29 @@
+@layer ashlar.components {
+  .ashlar-error-summary {
+    border: 0.25rem solid var(--ashlar-color-status-error-border, #d54309);
+    color: var(--ashlar-color-text, #1b1b1b);
+    margin-block: 1.5rem;
+    max-inline-size: 44rem;
+    padding: 1rem;
+  }
+
+  .ashlar-error-summary:focus {
+    outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
+    outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
+  }
+
+  .ashlar-error-summary__title {
+    margin-block-start: 0;
+  }
+
+  .ashlar-error-summary a {
+    color: var(--ashlar-color-link, #005ea8);
+    font-weight: 700;
+  }
+}
+
+@media (forced-colors: active) {
+  .ashlar-error-summary {
+    border-color: CanvasText;
+  }
+}

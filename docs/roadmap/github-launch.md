@@ -66,7 +66,7 @@ Issues:
 - Federal policy-pack prototype.
 - Evidence schema with ICT Baseline mappings.
 - DTCG token compiler.
-- L0 Button, Alert, Form Field, Text Input, Banner.
+- L0 Button, Banner, Identifier, Alert, Form Field, Text Input, Textarea, Date Input, Select, Radio Group, Checkbox, Error Summary.
 - Evidence packet schema and first examples.
 - ast-grep rule generation prototype.
 - Next.js and plain HTML demos.

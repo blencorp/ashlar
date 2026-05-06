@@ -21,7 +21,7 @@
       </p>
     </section>
 
-    <main id="app">
+    <main id="app" class="font-ashlar-sans text-ashlar-text-default">
       <header class="page-header">
         <p class="eyebrow">Ashlar reference</p>
         <h1>Apply for federal benefits</h1>
@@ -32,7 +32,10 @@
         </p>
       </header>
 
-      <section class="card" aria-labelledby="controls-title">
+      <section
+        class="card bg-ashlar-surface text-ashlar-text-default border-ashlar-border rounded-ashlar-card shadow-ashlar-card"
+        aria-labelledby="controls-title"
+      >
         <h2 id="controls-title">Theme controls</h2>
         <p class="muted">
           Pick an agency theme and a color mode. The choice persists in localStorage.
@@ -49,7 +52,10 @@
         </fieldset>
       </section>
 
-      <section class="card" aria-labelledby="demo-title">
+      <section
+        class="card bg-ashlar-surface text-ashlar-text-default border-ashlar-border rounded-ashlar-card shadow-ashlar-card"
+        aria-labelledby="demo-title"
+      >
         <h2 id="demo-title">Demo content</h2>
         <p>
           The button below is the L0 Button capsule
@@ -57,13 +63,20 @@
           The markup never changes; only the resolved tokens do.
         </p>
         <div class="demo-actions">
-          <button class="ashlar-button" data-variant="primary" type="button">
+          <button
+            class="ashlar-button min-h-ashlar-button-min-block-size rounded-ashlar-button bg-ashlar-action-primary-bg text-ashlar-action-primary-fg"
+            data-variant="primary"
+            type="button"
+          >
             Apply for benefits
           </button>
         </div>
       </section>
 
-      <section class="card" aria-labelledby="tokens-title">
+      <section
+        class="card bg-ashlar-surface text-ashlar-text-default border-ashlar-border rounded-ashlar-card shadow-ashlar-card"
+        aria-labelledby="tokens-title"
+      >
         <h2 id="tokens-title">Live tokens</h2>
         <p class="muted">
           Resolved CSS custom-property values for the active theme + mode. Open DevTools to inspect
@@ -72,7 +85,10 @@
         <ul class="tokens" data-token-list></ul>
       </section>
 
-      <section class="card" aria-labelledby="audit-title">
+      <section
+        class="card bg-ashlar-surface text-ashlar-text-default border-ashlar-border rounded-ashlar-card shadow-ashlar-card"
+        aria-labelledby="audit-title"
+      >
         <h2 id="audit-title">Audit posture</h2>
         <p>From this directory:</p>
         <pre><code>pnpm exec ashlar audit --policy all --registry ../../registry --explain index.html</code></pre>

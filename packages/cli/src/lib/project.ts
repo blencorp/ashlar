@@ -9,12 +9,14 @@ export type AshlarConfig = {
   styles?: {
     entrypoint: string;
     theme: string;
+    tailwindTheme?: string;
+    tokenTypes?: string;
   };
 };
 
 export type ResolvedAshlarConfig = Required<Omit<AshlarConfig, "$schema" | "styles">> & {
   $schema?: string;
-  styles: NonNullable<AshlarConfig["styles"]>;
+  styles: Required<NonNullable<AshlarConfig["styles"]>>;
 };
 
 export type AshlarLockfile = {
@@ -58,6 +60,8 @@ export function defaultConfig(overrides: Partial<AshlarConfig> = {}): ResolvedAs
     styles: {
       entrypoint: "src/ashlar/ashlar.css",
       theme: "src/ashlar/themes/theme.css",
+      tailwindTheme: "src/ashlar/themes/tailwind-theme.css",
+      tokenTypes: "src/ashlar/themes/tokens.ts",
     },
     ...overrides,
   });
@@ -72,6 +76,8 @@ export function normalizeConfig(config: AshlarConfig): ResolvedAshlarConfig {
     styles: {
       entrypoint: config.styles?.entrypoint ?? "src/ashlar/ashlar.css",
       theme: config.styles?.theme ?? "src/ashlar/themes/theme.css",
+      tailwindTheme: config.styles?.tailwindTheme ?? "src/ashlar/themes/tailwind-theme.css",
+      tokenTypes: config.styles?.tokenTypes ?? "src/ashlar/themes/tokens.ts",
     },
   };
 }

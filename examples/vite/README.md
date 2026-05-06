@@ -7,6 +7,7 @@ Federal-compliant Vite reference app for Ashlar. Demonstrates:
 - Live runtime switching across the **Default**, **VA**, and **USDA** stock agency themes.
 - Light, dark, and system color modes.
 - Live token introspection — see resolved CSS custom-property values change as themes switch.
+- Tailwind v4 consumption of `src/ashlar/themes/tailwind-theme.css`, proving Ashlar tokens generate usable utility classes without making Tailwind the component authoring layer.
 
 The page is data-driven: themes are discovered automatically from `src/ashlar/themes/*.tokens.json`. Drop a new agency theme JSON into `packages/cli/themes/` (upstream) and re-run `ashlar init` and the picker grows. No code changes required.
 
@@ -40,6 +41,10 @@ pnpm --filter @ashlar/example-vite build
 
 Outputs to `dist/`. Static HTML + CSS + a small JS bundle.
 
+The production build uses `@tailwindcss/vite`; if Ashlar's generated `@theme`
+output breaks, this build fails or the `tailwind-theme.test.ts` proof catches the
+missing token utilities.
+
 ## How this example was created
 
 For reference. The generated files are committed; you do not need to re-run init/add to use the example.
@@ -69,6 +74,8 @@ pnpm exec ashlar add button
 
 # 6. Verify
 pnpm exec ashlar audit --policy all --registry ../../registry index.html
+pnpm exec ashlar theme sync
+pnpm --filter @ashlar/example-vite build
 ```
 
 ## Adding a new agency theme

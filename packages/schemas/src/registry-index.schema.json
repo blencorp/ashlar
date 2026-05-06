@@ -27,7 +27,15 @@
       "type": "object",
       "additionalProperties": {
         "type": "object",
-        "required": ["latest", "versions", "tier", "layer", "stability", "description"],
+        "required": [
+          "latest",
+          "versions",
+          "capsuleHashes",
+          "tier",
+          "layer",
+          "stability",
+          "description"
+        ],
         "properties": {
           "latest": {
             "type": "string"
@@ -36,6 +44,13 @@
             "type": "array",
             "items": {
               "type": "string"
+            }
+          },
+          "capsuleHashes": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
             }
           },
           "tier": {

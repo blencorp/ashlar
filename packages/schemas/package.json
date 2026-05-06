@@ -3,22 +3,45 @@
   "version": "0.0.0",
   "description": "JSON Schemas and TypeScript constants for Ashlar registry artifacts.",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blencorp/ashlar.git",
+    "directory": "packages/schemas"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./ai-eval.schema.json": "./src/ai-eval.schema.json",
     "./capsule.schema.json": "./src/capsule.schema.json",
+    "./codemod.schema.json": "./src/codemod.schema.json",
     "./evidence.schema.json": "./src/evidence.schema.json",
+    "./evidence-artifact.schema.json": "./src/evidence-artifact.schema.json",
+    "./manual-evidence.schema.json": "./src/manual-evidence.schema.json",
+    "./manual-transcript.schema.json": "./src/manual-transcript.schema.json",
     "./registry-index.schema.json": "./src/registry-index.schema.json",
     "./lock.schema.json": "./src/lock.schema.json",
     "./ashlar-cem.schema.json": "./src/ashlar-cem.schema.json",
     "./config.schema.json": "./src/config.schema.json",
-    "./agency-theme.schema.json": "./src/agency-theme.schema.json"
+    "./agency-theme.schema.json": "./src/agency-theme.schema.json",
+    "./trust-root.schema.json": "./src/trust-root.schema.json",
+    "./release-readiness.schema.json": "./src/release-readiness.schema.json",
+    "./release-trust-bundle.schema.json": "./src/release-trust-bundle.schema.json",
+    "./stable-evidence-review-manifest.schema.json": "./src/stable-evidence-review-manifest.schema.json",
+    "./stable-evidence-review-status.schema.json": "./src/stable-evidence-review-status.schema.json"
   },
   "files": [
-    "dist",
+    "dist/**/*.d.ts",
+    "dist/**/*.d.ts.map",
+    "dist/**/*.js",
+    "dist/**/*.js.map",
+    "!dist/**/tsconfig.tsbuildinfo",
     "src/*.json"
   ],
   "scripts": {

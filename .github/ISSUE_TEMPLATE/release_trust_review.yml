@@ -1,0 +1,56 @@
+name: Release trust review
+description: Request review of npm provenance, Sigstore capsule trust, SBOM, or release trust material.
+title: "[Trust]: "
+labels: ["area: security", "area: registry", "status: blocked"]
+body:
+  - type: dropdown
+    id: review-type
+    attributes:
+      label: Review type
+      options:
+        - npm trusted publishing and provenance
+        - Capsule Sigstore bundles
+        - Release SBOM and trust bundle
+        - Supply-chain incident playbook
+        - Other release trust review
+    validations:
+      required: true
+  - type: textarea
+    id: artifacts
+    attributes:
+      label: Artifacts under review
+      description: Link to workflow run, npm package versions, signed registry artifact, SBOM, trust bundle, generated reviewer checklist, or playbook section.
+    validations:
+      required: true
+  - type: textarea
+    id: commands
+    attributes:
+      label: Verification commands
+      description: Paste the exact commands and relevant output.
+      value: |
+        ```bash
+        ashlar release readiness --registry ./registry
+        ashlar release provenance-verify-public --package @ashlar/cli@<version> @ashlar/schemas@<version>
+        ashlar release public-trust-verify --registry <signed-registry-artifact>
+        ashlar release verify-trust-bundle --registry <registry> --bundle <bundle> --sbom <sbom> --attestation <attestation>
+        ```
+    validations:
+      required: true
+  - type: textarea
+    id: findings
+    attributes:
+      label: Findings
+      description: Blocking issues, non-blocking risks, or explicit no-finding statement.
+    validations:
+      required: true
+  - type: checkboxes
+    id: gates
+    attributes:
+      label: Trust gates
+      options:
+        - label: npm trusted publisher settings are configured without long-lived npm tokens.
+        - label: Public npm provenance verification passed for exact package versions.
+        - label: Capsule Sigstore bundles verify with the expected GitHub Actions identity and OIDC issuer.
+        - label: SBOM, attestation, and release trust bundle hashes match the published artifacts.
+        - label: Generated release-trust reviewer checklist is complete and attached to the review.
+        - label: No private keys, long-lived tokens, or private infrastructure details are exposed.

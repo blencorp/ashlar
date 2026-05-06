@@ -28,6 +28,8 @@ Each phase below has a dedicated document with detailed scope.
 - [`02-v0.1-public-alpha.md`](./02-v0.1-public-alpha.md)
 - [`03-v0.2-multi-framework.md`](./03-v0.2-multi-framework.md)
 - [`04-v0.3-research-frontier.md`](./04-v0.3-research-frontier.md)
+- [`replacement-grade-audit.md`](./replacement-grade-audit.md)
+- [`external-review-plan.md`](./external-review-plan.md)
 - [`risks-and-mitigations.md`](./risks-and-mitigations.md)
 
 ## Current research correction
@@ -40,13 +42,13 @@ See [research/08-gap-analysis-2026-04-29.md](../research/08-gap-analysis-2026-04
 
 If Ashlar does these, it succeeds. If it cannot, we redesign before scaling.
 
-- **Bundle target met**: a typical 5-component L0-only page under 10KB gzipped (versus shadcn's 40–55KB).
+- **Bundle target met**: a typical L0 public-service page under 12KB gzipped (versus shadcn's 40–55KB).
 - **Drift solved**: `ashlar update` works on 50+ real updates with under 10% conflict rate.
 - **AI integration meaningful**: Cursor/Claude/Copilot generate Ashlar code with zero hallucinated props when grounded by extended CEM and AGENTS.md; `ashlar audit` catches violations.
 - **Cross-stack proven**: same component capsule renders in Next.js, Drupal Twig, plain HTML, and a Vite SPA — all with passing accessibility evidence.
 - **Fast first useful slice**: `ashlar init` to a working accessible form is a short, deterministic path with no bespoke setup.
 - **Stable accessibility evidence**: at least 12 components reach `stable` with full evidence packets (axe, keyboard, NVDA, VoiceOver, JAWS).
-- **CI usable by agencies**: `audit`, `verify`, `theme validate`, `evidence --check`, and SARIF output run in GitHub Actions.
+- **CI usable by agencies**: `audit`, `verify`, `theme validate`, `evidence --check`, `evidence --report`, and SARIF output run in GitHub Actions. The repo CI now runs the evidence gate and uploads the evidence report; external partner CI proof remains release-hardening work.
 - **Federal standards coverage**: Ashlar can audit page title, meta description, banner, identifier, required links, and accessibility/privacy statement placement as policy-pack rules.
 - **Security provenance credible**: capsules are signed, lockfile-verifiable, SBOM-backed, and mirrorable for air-gapped environments.
 - **Governance healthy**: at least 3 contributing organizations before beta-scale claims.
@@ -101,12 +103,12 @@ Every release — v0.0 through v0.3+ — ships:
 
 | Metric | Tool | Target |
 |---|---|---|
-| Bundle size | `ashlar audit --bundle` | <10KB L0-only, <15KB with one L1 |
+| Bundle size | `ashlar bundle budget` | <10KB L0-only CSS with 0 B JS, <15KB with one L1 |
 | Drift conflict rate | `ashlar update` telemetry (opt-in) | <10% |
 | AI generation accuracy | Eval suite against Cursor/Claude/Copilot | 0 hallucinated props |
 | First useful slice | Fresh-project smoke test | Deterministic init/add/audit flow |
-| Accessibility evidence | `ashlar evidence --report` | All `stable` components have full packet |
-| Federal standards coverage | `ashlar audit --policy federal` | Page shell and service metadata rules pass |
+| Accessibility evidence | `ashlar evidence --check` / `ashlar evidence --report` | All `stable` components have full packet |
+| Federal standards coverage | `ashlar audit --policy federal` | Page shell and service metadata rules pass; legacy fixtures produce actionable findings |
 | Cross-stack parity | Snapshot tests in 4 demo apps | 100% pass |
 | CI integration | GitHub Actions / SARIF | Findings visible in code scanning |
 | Registry trust | `ashlar verify` | Tampered capsule detected |

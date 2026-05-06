@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import type { AshlarLockfile, ResolvedAshlarConfig } from "./project.js";
 import { getComponent } from "./registry.js";
+import { writeThemeCssFromProject } from "./theme.js";
 
 function readIfExists(path: string): string {
   return existsSync(path) ? readFileSync(path, "utf8") : "";
@@ -18,6 +19,7 @@ export function syncAshlarProject(
 ): void {
   mkdirSync(dirname(config.styles.entrypoint), { recursive: true });
   mkdirSync(config.indexesDir, { recursive: true });
+  writeThemeCssFromProject(config);
 
   const components = Object.entries(lockfile.components).sort(([a], [b]) => a.localeCompare(b));
   const componentCss = components

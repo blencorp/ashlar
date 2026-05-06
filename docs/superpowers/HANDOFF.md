@@ -134,8 +134,8 @@ cd -
 
 1. **CLI hook for ast-grep custom languages** — matrix declares vue/svelte/astro/erb opt-in; CLI doesn't yet read `audit.languages.<name>` config to call `registerDynamicLanguage`. ~30 lines.
 2. **`audit --print-rules`** debug output — useful for authors writing new component anti-patterns. Add when a second component lands.
-3. **Token namespace pin** (slice 6) — `architecture/overview.md` uses `--ashlar-action-primary-bg`; `architecture/tokens.md` uses `--ashlar-color-action-primary-bg`. Pin canonical form during slice 6.
-4. **`radius.control` defined? no** — Button CEM consumes it; tokens.md doesn't define it. Slice 6.
+3. ~~**Token namespace pin** (slice 6) — `architecture/overview.md` uses `--ashlar-action-primary-bg`; `architecture/tokens.md` uses `--ashlar-color-action-primary-bg`.~~ Fixed 2026-05-05.
+4. ~~**`radius.control` defined? no** — Button CEM consumes it; tokens.md doesn't define it.~~ Fixed 2026-05-05.
 5. **Governance soften** — reads as if multi-organization maintenance and funded line exist. Soften to "will" / "is committed to". GitHub-launch-readiness gate.
 
 ## Key files
@@ -168,7 +168,7 @@ cd -
 
 - Strategy framing ("federal contractor runs `npx @ashlar/cli audit`") describes target state. The validator *code* works; the *delivery path* via npm is gated on slice 4 (supply-chain hardening). STATUS.md flags this with a "Distribution caveat."
 - `theme.ts` now reads from JSON files (one per theme). `init` copies the stock themes into the consumer project. Editing the consumer copies works for that project; editing `packages/cli/themes/<name>.tokens.json` is the upstream source.
-- `verify` does not validate Sigstore signatures yet — it only re-hashes installed files against `original_hash`. Sigstore is slice 4.
+- `verify` re-hashes installed files, checks registry capsule hashes and local signatures, validates declared capsule Sigstore bundle metadata when present, and runs `cosign verify-blob` when the trust root requires it. Real public bundle publication is still slice 4 work.
 - `audit` exits non-zero on error-level findings only. Federal findings are warnings; component findings are errors by default.
 - The ast-grep linux-x64 binary install on GitHub Actions is unverified by direct test; it should resolve via `@ast-grep/napi`'s optionalDependencies. If CI fails on `pnpm install`, that's the cause.
 - R3's three-org governance criterion is still being met silently (single-author commit history). Recruiting one external maintainer publicly is a GitHub-launch-readiness gate prerequisite.

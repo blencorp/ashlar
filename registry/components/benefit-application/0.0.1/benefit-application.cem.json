@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "benefit-application.html",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "AshlarBenefitApplication",
+          "tagName": "main",
+          "description": "Small public-service application flow that composes the first Ashlar capsules.",
+          "_ashlar": {
+            "version": "0.0.1",
+            "tier": "pattern",
+            "layer": "L3",
+            "stability": "proposal",
+            "selector": ".ashlar-benefit-application",
+            "a11yRequirements": [
+              {
+                "id": "service-flow-page-shell-required",
+                "wcag": "2.4.2",
+                "severity": "warning",
+                "description": "Service flows need descriptive page metadata and trust markers."
+              }
+            ],
+            "antiPatterns": [],
+            "tokensConsumed": [],
+            "platformFeatures": [
+              {
+                "feature": "semantic-html",
+                "status": "required",
+                "fallback": "Uses standard landmarks, headings, forms, labels, and links."
+              }
+            ],
+            "policyMappings": [
+              {
+                "source": "Federal Website Standards",
+                "requirement": "Service pages should include page title, meta description, banner, and identifier trust markers.",
+                "url": "https://standards.digital.gov/standards/"
+              }
+            ],
+            "rendering": "server-safe",
+            "hydrationCost": "none",
+            "criticalForA11y": true
+          }
+        }
+      ]
+    }
+  ]
+}

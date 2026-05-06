@@ -1,6 +1,6 @@
 # Accessibility
 
-Accessibility in Ashlar is **structured evidence**, not a marketing claim. Every stable component ships an evidence packet — machine-readable WCAG mapping, automated test results, manual screen-reader notes, and known limitations — that auditors, AI tools, and consumers can query.
+Accessibility in Ashlar is **structured evidence**, not a marketing claim. Every stable component ships an evidence packet — machine-readable WCAG mapping, automated test results, manual keyboard notes, manual screen-reader notes, and known limitations — that auditors, AI tools, and consumers can query.
 
 This document specifies the engineering target, the evidence packet schema, the test matrix, and the stable-component gates.
 
@@ -91,6 +91,7 @@ Every stable component ships `*.evidence.json`:
       "date": "2026-04-24",
       "tester": "ke@blencorp.com",
       "result": "pass",
+      "evidence": "manual/dialog-nvda-firefox.md",
       "notes": "All states announced correctly; modal title read on open; close button labeled."
     },
     {
@@ -101,6 +102,7 @@ Every stable component ships `*.evidence.json`:
       "date": "2026-04-24",
       "tester": "ke@blencorp.com",
       "result": "pass-with-note",
+      "evidence": "manual/dialog-voiceover-safari.md",
       "notes": "iOS VoiceOver requires double-tap to dismiss when popover is anchored to scrolling parent; documented limitation."
     },
     {
@@ -144,6 +146,62 @@ Every stable component ships `*.evidence.json`:
     { "antiPatternId": "icon-only-needs-label", "preventsViolation": "4.1.2" },
     { "antiPatternId": "remove-focus-outline", "preventsViolation": "2.4.7" }
   ]
+}
+```
+
+Manual keyboard and screen-reader review is captured before publication as a separate `manual-evidence` artifact, then folded into a proposed packet with `ashlar evidence review`. `ashlar evidence prepare-stable <component> --fixture <path> --output <dir>` generates the non-mutating reviewer bundle for the common path: automated evidence, proposed packet, self-contained `REVIEW.html` fixture harness, manual evidence worksheet, keyboard transcript worksheet, screen-reader transcript worksheet, a prefilled `ISSUE.md` for the stable-evidence review request, and a README with the next commands. `ashlar evidence prepare-stable-all --output <dir>` batches that same bundle for every L0 capsule by default and writes an intake `INDEX.md` so reviewers can pick a capsule without maintainers hand-assembling files. `ashlar evidence review-status <component> --review-dir <dir>` reads that bundle, validates the proposed packet, manual worksheet, and transcripts, reports remaining placeholders or blocked results, and simulates review plus graduation in memory without writing reviewed or stable evidence files. `ashlar evidence manual-template <component> --output <path>` generates a schema-backed starter file from the component's WCAG and ICT Baseline mappings; its placeholders are `known-issue` / `blocked` until a reviewer replaces them with real observations. `ashlar evidence transcript-template <component> --type keyboard|screen-reader --output <path>` generates the matching `manual-transcript.schema.json` starter, and `ashlar evidence transcript-validate <component> --transcript <path> [--type keyboard|screen-reader]` validates completed transcripts against schema, type, and component/version before they are referenced from the manual review. Manual test references that point to local files must resolve to `manual-transcript.schema.json` JSON artifacts, so the stable gate validates the transcript type, component/version, result, environment, steps, and placeholder-free content before graduation. A reviewed packet can be marked `stable-evidence` with `ashlar evidence graduate` only if the full evidence gate passes. `ashlar evidence publish <component> --evidence-file <path> --signing-key <path> --key-id <id> --output <receipt>` then writes the graduated packet into a local registry source, copies referenced local transcript files into the capsule under `evidence/`, rewrites the packet to point at those capsule-local files, rebuilds the capsule manifest, signs it with a trusted local Ed25519 key, updates the registry index capsule hash, and emits a publication receipt. Existing capsule evidence paths are reused only when the file content matches; a different transcript at the same path fails before signing or registry writes. This keeps generated or human review artifacts out of signed registry evidence until a maintainer has reviewed and re-signed the capsule, and it gives external review records a concrete artifact to prove the reviewed packet was actually published.
+
+For the stable gate, manual review must include both keyboard evidence and screen-reader evidence. The keyboard test must record `manualTests[].tech` as keyboard review and point `manualTests[].evidence` to a local schema-backed keyboard transcript JSON artifact or an HTTPS evidence URL. The screen-reader test must record the assistive technology in `manualTests[].tech` as a real screen reader, such as NVDA, JAWS, VoiceOver, TalkBack, Narrator, Orca, ChromeVox, or "screen reader", and point `manualTests[].evidence` to a local schema-backed screen-reader transcript JSON artifact or an HTTPS evidence URL. Keyboard-only evidence does not satisfy the screen-reader requirement; screen-reader notes do not substitute for keyboard evidence. A result without an evidence reference, or a `TODO` / `TBD` / placeholder evidence string, does not satisfy either requirement. During `ashlar evidence graduate` and proposed-packet checks, local evidence references must resolve to files from the project root. Once published into the registry, local evidence references resolve from the capsule directory so transcript files are part of the signed capsule. External references must be HTTPS URLs.
+
+```json
+{
+  "$schema": "https://ashlar.dev/schemas/manual-evidence.schema.json",
+  "schemaVersion": "1.0",
+  "component": "button",
+  "version": "0.0.1",
+  "reviewedAt": "2026-05-05T14:00:00.000Z",
+  "reviewer": "a11y-reviewer@example.gov",
+  "wcag": [
+    {
+      "criterion": "2.4.7",
+      "status": "pass",
+      "evidence": "manual/button-keyboard-review.md#focus-visible"
+    }
+  ],
+  "baselineTests": [
+    {
+      "source": "Section 508 ICT Testing Baseline for Web",
+      "test": "Keyboard Accessible",
+      "status": "pass",
+      "evidence": "manual/button-keyboard-review.md"
+    }
+  ],
+  "manualTests": [
+    {
+      "tech": "Keyboard",
+      "browser": "Firefox",
+      "browserVersion": "145",
+      "os": "Windows 11",
+      "date": "2026-05-05",
+      "tester": "a11y-reviewer@example.gov",
+      "result": "pass",
+      "evidence": "manual/button-keyboard-review.json#keyboard-firefox",
+      "notes": "Tab, Shift+Tab, Enter, Space, disabled state, and focus visibility passed."
+    },
+    {
+      "tech": "NVDA",
+      "version": "2025.4",
+      "browser": "Firefox",
+      "browserVersion": "145",
+      "os": "Windows 11",
+      "date": "2026-05-05",
+      "tester": "a11y-reviewer@example.gov",
+      "result": "pass",
+      "evidence": "manual/button-screen-reader-review.json#nvda-firefox",
+      "notes": "Focus, label, role, and activation were announced as expected."
+    }
+  ],
+  "knownLimitations": []
 }
 ```
 
@@ -231,11 +289,13 @@ A component cannot be marked `stable` without:
 
 1. Complete `*.evidence.json` with all required WCAG criteria addressed.
 2. Section 508 ICT Baseline mapping for applicable component behavior.
-3. At least three manual screen-reader tests recorded (NVDA, VoiceOver, one of JAWS/TalkBack).
-4. Automated axe results showing zero violations.
-5. Playwright keyboard tests passing.
-6. Forced-colors render check passing.
-7. Token contrast validation against the default theme.
+3. Automated accessibility results recorded for the capsule fixture.
+4. At least one passing manual keyboard test with an actionable evidence reference.
+5. At least one passing manual screen-reader test with a real screen-reader technology and an actionable transcript/evidence reference.
+6. Known limitations recorded, even when the list is empty.
+7. Review metadata recorded and local evidence references resolving to files or HTTPS URLs.
+
+LTS evidence raises the manual matrix to NVDA, VoiceOver, and one of JAWS or TalkBack, plus broader browser and forced-colors checks.
 8. CEM `_ashlar.antiPatterns` populated for known misuse vectors.
 9. ast-grep rules generated and tested.
 10. Documentation includes "do not" examples and known limitations.

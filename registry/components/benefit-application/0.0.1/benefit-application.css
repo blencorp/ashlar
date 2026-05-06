@@ -1,0 +1,13 @@
+@layer ashlar.components {
+  .ashlar-benefit-application {
+    display: grid;
+    gap: 1.5rem;
+    max-inline-size: 48rem;
+  }
+
+  .ashlar-benefit-application__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+}

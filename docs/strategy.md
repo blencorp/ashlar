@@ -5,14 +5,14 @@ Ashlar is open-source supply-chain and validation infrastructure for federal-sta
 It does three things federal teams cannot get from a component library alone:
 
 - **Audit**. `ashlar audit` enforces Federal Web Standards, USWDS conventions, and component-level accessibility rules in CI, emitting SARIF that lands in GitHub Code Scanning, GitLab, and Azure DevOps. It runs against existing markup — TSX, JSX, plain HTML, ERB, and other languages where ast-grep has real coverage — without requiring agencies to install a new component library first.
-- **Sign and verify**. Components ship as content-addressed *capsules* with cryptographically-verifiable releases. A lockfile records hashes; `ashlar verify` re-hashes installed files and validates Sigstore signatures against the embedded chain. Air-gapped agencies can mirror the registry with a bundled trust root.
+- **Sign and verify**. Components ship as content-addressed *capsules* with cryptographically-verifiable releases. A lockfile records hashes; `ashlar verify` re-hashes installed files, validates the current local registry signatures, and can run trust-root-required Sigstore bundle verification with `cosign verify-blob`. Air-gapped agencies can mirror the registry with explicit trust material.
 - **Update safely**. Capsules install as source code (shadcn-style ownership) but track provenance through a lockfile and three-way merge. Local customizations survive upstream updates; codemods carry breaking changes; accessibility-critical files force confirmation on update.
 
 The accessibility evidence schema (axe + keyboard + manual screen-reader + WCAG mapping + ICT Baseline alignment) and the AI contract (extended Custom Elements Manifest, MCP server, AGENTS.md) are how each of those three verbs gets grounded — not separate pillars.
 
 ## What's true today vs. planned
 
-This repository is in v0.0 prototype. See [STATUS.md](STATUS.md) for the live list of what is implemented, experimental, and planned. Headline claims that are not yet code (Sigstore signing, three-way merge, MCP server, ast-grep validation across all the languages eventually targeted, full DTCG token compiler) are explicitly marked. The strategy below describes where Ashlar is heading, with implementation status linked from each section.
+This repository is in v0.0 prototype. See [STATUS.md](STATUS.md) for the live list of what is implemented, experimental, and planned. Headline claims that are not yet code or not yet publicly proven (real public capsule Sigstore bundles, npm provenance, hosted/write MCP, ast-grep validation across all languages eventually targeted, full DTCG token compiler) are explicitly marked. The strategy below describes where Ashlar is heading, with implementation status linked from each section.
 
 ## The case
 
@@ -80,7 +80,7 @@ Every stable component ships an evidence packet: axe results, keyboard transcrip
 
 ### Supply-chain provenance
 
-Capsules are content-addressed (SHA-256), signed with Sigstore (cosign sign-blob), tracked in a lockfile with original and current hashes, distributed via HTTP/CDN with signed Git mirrors as the air-gapped fallback. `ashlar verify` re-hashes installed files and validates signatures against the embedded chain. The npm path uses npm trusted publishing (GA July 2025) for SLSA-aware provenance attestations. Federal mirrors operate offline by bundling a verification trust root. The supply-chain incident playbook (what happens when the Ashlar npm package or signing identity is compromised) is part of the security model, not an afterthought.
+The target distribution model is content-addressed capsules (SHA-256), signed with Sigstore (cosign sign-blob), tracked in a lockfile with original and current hashes, distributed via HTTP/CDN with signed Git mirrors as the air-gapped fallback. The prototype already verifies local registry signatures, declared Sigstore bundle metadata, and trust-root-required `cosign verify-blob`; real public bundle publication remains a release blocker. The npm path uses npm trusted publishing for provenance attestations. Federal mirrors operate offline by bundling a verification trust root. The supply-chain incident playbook (what happens when the Ashlar npm package or signing identity is compromised) is part of the security model, not an afterthought.
 
 ### Polyglot, framework-agnostic linting
 
@@ -107,7 +107,7 @@ The August 2025 *America by Design* executive order requires initial results by 
 - Contribution model explains evidence gates and review rhythm, not just code style.
 - Security policy exists with a documented incident-response posture before the first public capsule release.
 - The first demo is a credible federal workflow (form flow with audit + evidence + signed install), not a component gallery.
-- The CLI v0.0 surface is `init`, `add`, `audit`, `verify`, `evidence`, `search`, `view`, `design sync`, with `update` and `mcp` arriving in subsequent v0.0 slices.
+- The current v0.0 CLI surface includes `init`, `add`, `audit`, `verify`, `update`, `evidence`, `search`, `suggest`, `view`, `design sync`, `theme sync`, `theme validate`, `mcp`, `ai-eval`, `bundle budget`, `registry mirror`, and release-readiness tooling.
 - At least one external maintainer is publicly named before the repo flips to public, addressing R3's bus-factor kill criterion.
 
 ## On absorption

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ashlar.dev/schemas/trust-root.schema.json",
+  "schemaVersion": "1.0",
+  "keys": [
+    {
+      "keyId": "ashlar-local-dev-2026-05-05",
+      "algorithm": "ed25519",
+      "publicKey": "MCowBQYDK2VwAyEAOGdq1/UsP/IvEbNb4bShybzQytHwwTui3bk2K9ySTIk="
+    },
+    {
+      "keyId": "ashlar-local-dev-checkbox-2026-05-06",
+      "algorithm": "ed25519",
+      "publicKey": "MCowBQYDK2VwAyEAw/wcqvsVfcs9XMqF/LGnXY3+q01OkkEsbV8ZsnmTAdU="
+    },
+    {
+      "keyId": "ashlar-local-dev-date-input-2026-05-06",
+      "algorithm": "ed25519",
+      "publicKey": "MCowBQYDK2VwAyEAzjkHfcLhgLN9M5pEWLjwQQfiiDUrRuXffA+9ppkpRnk="
+    },
+    {
+      "keyId": "ashlar-local-dev-radio-group-2026-05-06",
+      "algorithm": "ed25519",
+      "publicKey": "MCowBQYDK2VwAyEA1snwSm22B7wocMp4EFNZJ4UUC7qCKu6326yEsZ3tkpg="
+    },
+    {
+      "keyId": "ashlar-local-dev-identifier-2026-05-06",
+      "algorithm": "ed25519",
+      "publicKey": "MCowBQYDK2VwAyEAl+WPurNsUBubjfFY9kplv72Pogj4v8SEW8sHFVfNqOM="
+    },
+    {
+      "keyId": "ashlar-local-dev-select-2026-05-06b",
+      "algorithm": "ed25519",
+      "publicKey": "MCowBQYDK2VwAyEA3H0rt700kuRtY2Kb+M3fq7puDEDmFaZvhHslHyi1DA4="
+    },
+    {
+      "keyId": "ashlar-local-dev-textarea-2026-05-06",
+      "algorithm": "ed25519",
+      "publicKey": "MCowBQYDK2VwAyEA82VW8uyzw4qx0L8T50HpevqtVcVdgG+5NkqomN1ilRg="
+    }
+  ],
+  "sigstore": {
+    "certificateIdentities": [
+      "https://github.com/blencorp/ashlar/.github/workflows/sigstore.yml@refs/heads/main"
+    ],
+    "certificateOidcIssuers": ["https://token.actions.githubusercontent.com"],
+    "bundleVerification": "cosign"
+  }
+}

@@ -5,6 +5,8 @@
   "indexesDir": "src/ashlar/indexes",
   "styles": {
     "entrypoint": "src/ashlar/ashlar.css",
-    "theme": "src/ashlar/themes/theme.css"
+    "theme": "src/ashlar/themes/theme.css",
+    "tailwindTheme": "src/ashlar/themes/tailwind-theme.css",
+    "tokenTypes": "src/ashlar/themes/tokens.ts"
   }
 }

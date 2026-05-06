@@ -34,13 +34,23 @@ function compile(specifier: string): AjvValidateFunction {
 }
 
 const validators = {
+  aiEval: compile("ai-eval.schema.json"),
   capsule: compile("capsule.schema.json"),
+  codemod: compile("codemod.schema.json"),
   evidence: compile("evidence.schema.json"),
+  evidenceArtifact: compile("evidence-artifact.schema.json"),
+  manualEvidence: compile("manual-evidence.schema.json"),
+  manualTranscript: compile("manual-transcript.schema.json"),
   lock: compile("lock.schema.json"),
   registryIndex: compile("registry-index.schema.json"),
   ashlarCem: compile("ashlar-cem.schema.json"),
   config: compile("config.schema.json"),
   agencyTheme: compile("agency-theme.schema.json"),
+  trustRoot: compile("trust-root.schema.json"),
+  releaseReadiness: compile("release-readiness.schema.json"),
+  releaseTrustBundle: compile("release-trust-bundle.schema.json"),
+  stableEvidenceReviewManifest: compile("stable-evidence-review-manifest.schema.json"),
+  stableEvidenceReviewStatus: compile("stable-evidence-review-status.schema.json"),
 } as const;
 
 export type SchemaName = keyof typeof validators;

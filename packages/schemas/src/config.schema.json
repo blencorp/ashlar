@@ -32,6 +32,14 @@
         "theme": {
           "type": "string",
           "description": "Path to the generated theme stylesheet."
+        },
+        "tailwindTheme": {
+          "type": "string",
+          "description": "Path to the generated Tailwind v4 @theme companion stylesheet."
+        },
+        "tokenTypes": {
+          "type": "string",
+          "description": "Path to the generated TypeScript token contract."
         }
       },
       "additionalProperties": false

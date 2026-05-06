@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ashlar.dev/schemas/stable-evidence-review-status.schema.json",
+  "title": "Ashlar Stable Evidence Review Status",
+  "type": "object",
+  "required": [
+    "$schema",
+    "schemaVersion",
+    "component",
+    "version",
+    "status",
+    "reviewDir",
+    "files",
+    "blockers",
+    "nextCommands"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://ashlar.dev/schemas/stable-evidence-review-status.schema.json"
+    },
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "component": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": ["ready", "blocked"]
+    },
+    "reviewDir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "files": {
+      "type": "object",
+      "required": [
+        "manifest",
+        "proposedEvidence",
+        "manualEvidence",
+        "keyboardTranscript",
+        "reviewHarness",
+        "screenReaderTranscript",
+        "reviewedEvidence",
+        "stableEvidence"
+      ],
+      "properties": {
+        "manifest": {
+          "type": "string",
+          "minLength": 1
+        },
+        "proposedEvidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "manualEvidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "keyboardTranscript": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewHarness": {
+          "type": "string",
+          "minLength": 1
+        },
+        "screenReaderTranscript": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewedEvidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stableEvidence": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["file", "message", "rule"],
+        "properties": {
+          "file": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "rule": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "nextCommands": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "additionalProperties": false
+}

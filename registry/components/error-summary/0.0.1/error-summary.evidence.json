@@ -1,0 +1,31 @@
+{
+  "component": "error-summary",
+  "version": "0.0.1",
+  "stability": "experimental",
+  "accessibilityStatus": "not-reviewed",
+  "wcag": [
+    {
+      "criterion": "3.3.1",
+      "level": "A",
+      "title": "Error Identification",
+      "status": "planned"
+    },
+    {
+      "criterion": "2.4.1",
+      "level": "A",
+      "title": "Bypass Blocks",
+      "status": "planned"
+    }
+  ],
+  "baselineTests": [
+    {
+      "source": "Section 508 ICT Testing Baseline for Web",
+      "test": "Error Identification",
+      "status": "planned",
+      "evidence": "Planned testing will verify summary links point to invalid fields and are understandable."
+    }
+  ],
+  "manualTests": [],
+  "automatedResults": {},
+  "knownLimitations": []
+}

@@ -8,3 +8,4 @@ coverage
 ashlar.sarif
 ashlar-lock.json
 output/
+reports/

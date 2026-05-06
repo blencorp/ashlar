@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "name": "identifier",
+  "version": "0.0.1",
+  "layer": "L0",
+  "stability": "experimental",
+  "files": {
+    "identifier.cem.json": "sha256:3d6eb25eab905e7c945c835cb6ee815555a61c590689c324cf75804ad11beb47",
+    "identifier.css": "sha256:620329d928edab11297e376e4798da56c9aa92bbe9c21da1cc1c3d3879e3755b",
+    "identifier.evidence.json": "sha256:b5ea7858758fc61dad6775af71b026ed4ce4390e0c2b3ef99add3d794c36e5bb",
+    "identifier.html": "sha256:c58caccc787359102b80f095fab7031e67a9ecd923b8ff8b36fc60e7359691b4"
+  },
+  "bundleBudget": {
+    "cssGzipBytes": 1536,
+    "jsGzipBytes": 0
+  },
+  "capsule_hash": "sha256:2f28a72ae30123daf41d96cd0ec498c4999d4df863136f15cd15683612225a7c",
+  "signature": {
+    "keyId": "ashlar-local-dev-identifier-2026-05-06",
+    "algorithm": "ed25519",
+    "value": "p5vs9rsyagokLAXDqOEzzuhikuH4j3r6Im3hpGKhqoRfxcdxRYJkpwJcQQ7KhSTGnN9GadQ0yI+5YPA3FV4iBQ=="
+  }
+}

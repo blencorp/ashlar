@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "name": "textarea",
+  "version": "0.0.1",
+  "layer": "L0",
+  "stability": "experimental",
+  "files": {
+    "textarea.cem.json": "sha256:759e6120591319e7c1ffde66b4df2c4964f06397234207c55b98b8ad4c5ec79e",
+    "textarea.css": "sha256:8b2a10b4c8101eb1d265c40fa4ae97a8db7563e884d5275dd9648e9cd4cc72f0",
+    "textarea.evidence.json": "sha256:05f771816c2e44b02a66af9dacc490ae8e168ffb7c93a6572d0cc6c1fc1be86f",
+    "textarea.html": "sha256:61cec3974f29ac2ac17a848386eaec6f880becd634b6a7603d47c0c196e4c5b8"
+  },
+  "bundleBudget": {
+    "cssGzipBytes": 1536,
+    "jsGzipBytes": 0
+  },
+  "capsule_hash": "sha256:1d9b6d44bdd4dfa72bc27f7690ca00ab39e8337445d433258c595b298d08029b",
+  "signature": {
+    "keyId": "ashlar-local-dev-textarea-2026-05-06",
+    "algorithm": "ed25519",
+    "value": "iV8Ped4SxAgn5p7TvzMIQx4D1wUfAXIccoMsMLJge98Wi7w4bWq9tXnwNo6yXq0pvdV0QTuz35x/uxM8uJwODg=="
+  }
+}

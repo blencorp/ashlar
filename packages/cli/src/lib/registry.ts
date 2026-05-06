@@ -1,20 +1,23 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { isAbsolute, join, resolve } from "node:path";
+import type { CapsuleTrustRoot } from "./capsule.js";
+import { describeErrors, validate } from "./schema-validate.js";
 
 export type RegistryLayer = "L0" | "L1" | "L2" | "L3" | "L4";
 export type RegistryStability = "proposal" | "experimental" | "beta" | "stable" | "deprecated";
 export type RegistryTier = "foundation" | "primitive" | "composite" | "pattern" | "block";
 
-type RegistryIndexComponent = {
+export type RegistryIndexComponent = {
   latest: string;
   versions: string[];
+  capsuleHashes: Record<string, string>;
   tier: RegistryTier;
   layer: RegistryLayer;
   stability: RegistryStability;
   description: string;
 };
 
-type RegistryIndex = {
+export type RegistryIndex = {
   schemaVersion: "1.0";
   registry: string;
   name: string;
@@ -23,12 +26,40 @@ type RegistryIndex = {
   components: Record<string, RegistryIndexComponent>;
 };
 
-type AshlarMetadata = {
+export type AshlarMetadata = {
+  selector?: string;
+  variants?: string[];
+  sizes?: string[];
+  a11yRequirements?: Array<{
+    id: string;
+    wcag: string;
+    severity: string;
+    description?: string;
+  }>;
+  antiPatterns?: Array<{
+    id: string;
+    message?: string;
+    fix?: string;
+    wcag?: string;
+    severity?: string;
+    reason?: string;
+    languages?: string[];
+  }>;
+  tokensConsumed?: string[];
   platformFeatures?: Array<{ feature: string; status: string; fallback: string }>;
   policyMappings?: Array<{ source: string; requirement: string; url?: string }>;
+  rendering?: string;
+  hydrationCost?: string;
+  criticalForA11y?: boolean;
+  examples?: Record<string, string>;
+  doNot?: string[];
 };
 
 type CemDeclaration = {
+  kind?: string;
+  name?: string;
+  tagName?: string;
+  description?: string;
   _ashlar?: AshlarMetadata;
 };
 
@@ -43,6 +74,25 @@ export type EvidencePacket = {
   version: string;
   stability: RegistryStability;
   accessibilityStatus: string;
+  wcag?: Array<{
+    criterion: string;
+    level: string;
+    title: string;
+    status: string;
+    evidence?: string;
+    notes?: string;
+  }>;
+  baselineTests?: Array<{
+    source: string;
+    test: string;
+    status: string;
+    evidence?: string;
+  }>;
+  manualTests?: Array<Record<string, unknown>>;
+  automatedResults?: Record<string, unknown>;
+  knownLimitations?: unknown[];
+  lastReviewed?: string;
+  reviewer?: string;
 };
 
 export type RegistryListItem = RegistryIndexComponent & {
@@ -51,9 +101,12 @@ export type RegistryListItem = RegistryIndexComponent & {
 
 export type RegistryComponent = RegistryListItem & {
   version: string;
+  capsuleHash: string;
   directory: string;
+  trustRoot?: CapsuleTrustRoot;
   files: string[];
   cem: CemManifest;
+  ashlar: AshlarMetadata;
   evidence: EvidencePacket;
   platformFeatures: NonNullable<AshlarMetadata["platformFeatures"]>;
   policyMappings: NonNullable<AshlarMetadata["policyMappings"]>;
@@ -63,7 +116,7 @@ function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
 }
 
-function resolveRegistryRoot(cwd: string, registryPath: string): string {
+export function resolveRegistryRoot(cwd: string, registryPath: string): string {
   return isAbsolute(registryPath) ? registryPath : resolve(cwd, registryPath);
 }
 
@@ -74,7 +127,34 @@ export function readRegistryIndex(cwd: string, registryPath = "./registry"): Reg
     throw new Error(`Ashlar registry index not found: ${indexPath}`);
   }
 
-  return readJson<RegistryIndex>(indexPath);
+  const index = readJson<RegistryIndex>(indexPath);
+  const result = validate("registryIndex", index);
+  if (!result.ok) {
+    throw new Error(`Invalid Ashlar registry index at ${indexPath}:\n${describeErrors(result)}`);
+  }
+
+  return index;
+}
+
+export function readRegistryTrustRoot(
+  cwd: string,
+  registryPath = "./registry",
+): CapsuleTrustRoot | undefined {
+  const trustRootPath = join(resolveRegistryRoot(cwd, registryPath), "trust-root.json");
+
+  if (!existsSync(trustRootPath)) {
+    return undefined;
+  }
+
+  const trustRoot = readJson<CapsuleTrustRoot>(trustRootPath);
+  const result = validate("trustRoot", trustRoot);
+  if (!result.ok) {
+    throw new Error(
+      `Invalid Ashlar registry trust root at ${trustRootPath}:\n${describeErrors(result)}`,
+    );
+  }
+
+  return trustRoot;
 }
 
 export function listComponents(cwd: string, registryPath = "./registry"): RegistryListItem[] {
@@ -124,6 +204,30 @@ export function getComponent(
   }
 
   const version = resolveComponentVersion(cwd, name, registryPath);
+  return getComponentVersion(cwd, name, version, registryPath);
+}
+
+export function getComponentVersion(
+  cwd: string,
+  name: string,
+  version: string,
+  registryPath = "./registry",
+): RegistryComponent {
+  const item = listComponents(cwd, registryPath).find((component) => component.name === name);
+
+  if (!item) {
+    throw new Error(`Unknown Ashlar component: ${name}`);
+  }
+
+  if (!item.versions.includes(version)) {
+    throw new Error(`Registry index for ${name} does not include version: ${version}`);
+  }
+
+  const capsuleHash = item.capsuleHashes[version];
+  if (!capsuleHash) {
+    throw new Error(`Registry index for ${name} is missing capsule hash for version: ${version}`);
+  }
+
   const directory = join(resolveRegistryRoot(cwd, registryPath), "components", name, version);
 
   if (!existsSync(directory)) {
@@ -140,9 +244,12 @@ export function getComponent(
   return {
     ...item,
     version,
+    capsuleHash,
     directory,
+    trustRoot: readRegistryTrustRoot(cwd, registryPath),
     files,
     cem,
+    ashlar: metadata,
     evidence: readJson<EvidencePacket>(join(directory, `${name}.evidence.json`)),
     platformFeatures: metadata.platformFeatures ?? [],
     policyMappings: metadata.policyMappings ?? [],

@@ -19,10 +19,10 @@ registry/
         │   ├── button.html.erb            # 0.4KB — ERB template
         │   ├── button.cem.json            # 4.2KB — extended CEM (see button.cem.json)
         │   ├── button.evidence.json       # 1.8KB — accessibility evidence packet
-        │   ├── button.codemods.yaml       # 0.6KB — ast-grep migration rules
+        │   ├── button.codemods.json       # 0.6KB — ast-grep migration rules
         │   ├── button.test.ts             # 3.4KB — Playwright + axe tests
         │   ├── button.docs.md             # 5.1KB — human + AI docs
-        │   └── button.lock.json           # 0.9KB — capsule manifest with file hashes
+        │   └── button.capsule.json        # 0.9KB — capsule manifest with file hashes
         ├── 1.2.4/                         # next patch version
         └── latest -> 1.2.4                # symlink to current
 ```
@@ -193,31 +193,27 @@ Identical DOM contract; different template syntax.
 
 See [`button.cem.json`](./button.cem.json) for the full extended CEM example.
 
-### `button.codemods.yaml`
+### `button.codemods.json`
 
-```yaml
-- id: button-rename-color-prop
-  from: 1.1.x
-  to: 1.2.x
-  language: [tsx, jsx, vue, svelte, astro, html, twig, njk, jinja, erb]
-  rule:
-    pattern: <ashlar-button color="$VAL">
-  fix: <ashlar-button variant="$VAL">
-  message: "color prop renamed to variant in 1.2.0"
-  confirm: false
-
-- id: button-deprecate-rounded-class
-  from: 1.0.x
-  to: 1.1.x
-  language: [tsx, jsx, html, twig]
-  rule:
-    pattern: class="$P ashlar-button--rounded $S"
-  fix: class="$P $S"
-  note: "ashlar-button--rounded class removed; use --ashlar-button-radius CSS variable instead"
-  confirm: true
+```json
+{
+  "schemaVersion": "1.0",
+  "component": "button",
+  "from": "1.1.0",
+  "to": "1.2.0",
+  "rules": [
+    {
+      "id": "button-rename-color-token",
+      "target": "button.css",
+      "language": "css",
+      "pattern": "color: var(--ashlar-color-action-primary-bg);",
+      "rewrite": "color: var(--ashlar-color-action-primary-surface);"
+    }
+  ]
+}
 ```
 
-### `button.lock.json`
+### `button.capsule.json`
 
 ```json
 {
@@ -230,10 +226,20 @@ See [`button.cem.json`](./button.cem.json) for the full extended CEM example.
     "button.css": "sha256:def4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cde",
     "button.html.njk": "sha256:ghi4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cgh",
     "button.cem.json": "sha256:jkl4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cjk",
-    "button.evidence.json": "sha256:mno4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cmn"
+    "button.evidence.json": "sha256:mno4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cmn",
+    "button.codemods.json": "sha256:pqr4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cpq"
+  },
+  "codemods": ["button.codemods.json"],
+  "bundleBudget": {
+    "cssGzipBytes": 4096,
+    "jsGzipBytes": 0
   },
   "capsule_hash": "sha256:abc4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3cab",
-  "signature": "sigstore:MEUCIAyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+  "signature": {
+    "keyId": "ashlar-local-dev-2026-05-05",
+    "algorithm": "ed25519",
+    "value": "base64-signature"
+  },
   "dependencies": {
     "tokens": [
       "color.action.primary.bg",
@@ -263,10 +269,10 @@ combobox/
 ├── combobox.signals.ts        # signal definitions (~40 lines)
 ├── combobox.cem.json
 ├── combobox.evidence.json
-├── combobox.codemods.yaml
+├── combobox.codemods.json
 ├── combobox.test.ts
 ├── combobox.docs.md
-└── combobox.lock.json
+└── combobox.capsule.json
 ```
 
 The `combobox.html.*` templates render the initial closed-state DOM. The custom element (`<ashlar-combobox>`) upgrades on the client and resumes from `data-ashlar-state` if SSR-resumability is in play.
