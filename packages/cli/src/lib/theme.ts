@@ -339,8 +339,7 @@ function normalizeTokenPath(path: string): string {
 function tokenMatchesPath(token: FlattenedThemeToken, normalizedPath: string): boolean {
   return (
     token.path.toLowerCase() === normalizedPath ||
-    token.path.split(".").map(normalizeTokenSegment).join("-").toLowerCase() ===
-      normalizedPath ||
+    token.path.split(".").map(normalizeTokenSegment).join("-").toLowerCase() === normalizedPath ||
     token.cssVariable.replace(/^--ashlar-/, "").toLowerCase() === normalizedPath
   );
 }
@@ -431,9 +430,7 @@ function parseHexColor(value: string): [number, number, number] | null {
 function relativeLuminance([red, green, blue]: [number, number, number]): number {
   const [r, g, b] = [red, green, blue].map((channel) => {
     const normalized = channel / 255;
-    return normalized <= 0.03928
-      ? normalized / 12.92
-      : ((normalized + 0.055) / 1.055) ** 2.4;
+    return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
   });
 
   return 0.2126 * (r ?? 0) + 0.7152 * (g ?? 0) + 0.0722 * (b ?? 0);
@@ -443,9 +440,71 @@ function formatRatio(value: number): string {
   return value.toFixed(2);
 }
 
+function formatCssValue(value: string, indent: string): string {
+  const colorMix = value.match(/^color-mix\(in srgb, (.+), transparent ([^)]+)\)$/);
+  if (!colorMix?.[1] || !colorMix[2]) {
+    return value;
+  }
+
+  return `color-mix(\n${indent}  in srgb,\n${indent}  ${colorMix[1]},\n${indent}  transparent ${colorMix[2]}\n${indent})`;
+}
+
 function renderDeclarations(tokens: TokenTree): string {
+  const indent = "    ";
+
   return flattenTokens(tokens)
-    .map(([name, value]) => `    ${name}: ${value};`)
+    .map(([name, value]) => `${indent}${name}: ${formatCssValue(value, indent)};`)
+    .join("\n");
+}
+
+const legacyComponentVariableAliases = [
+  ["--ashlar-color-text", "var(--ashlar-color-text-default)", "var(--ashlar-color-text-default)"],
+  [
+    "--ashlar-color-link",
+    "var(--ashlar-color-action-secondary-fg)",
+    "var(--ashlar-color-action-secondary-fg)",
+  ],
+  [
+    "--ashlar-color-link-inverse",
+    "var(--ashlar-color-text-inverse)",
+    "var(--ashlar-color-text-inverse)",
+  ],
+  [
+    "--ashlar-color-surface-muted",
+    "var(--ashlar-color-surface-subtle)",
+    "var(--ashlar-color-surface-subtle)",
+  ],
+  ["--ashlar-color-border-subtle", "var(--ashlar-color-border)", "var(--ashlar-color-border)"],
+  ["--ashlar-color-input-border", "var(--ashlar-color-border)", "var(--ashlar-color-border)"],
+  [
+    "--ashlar-color-status-info-border",
+    "var(--ashlar-color-action-primary-bg)",
+    "var(--ashlar-color-action-primary-bg)",
+  ],
+  ["--ashlar-color-status-error-border", "#d54309", "#ff8d7b"],
+  ["--ashlar-color-status-error-fg", "#b50909", "#fdb8ae"],
+  [
+    "--ashlar-color-text-inverse-muted",
+    formatCssValue("color-mix(in srgb, var(--ashlar-color-text-inverse), transparent 24%)", "    "),
+    formatCssValue("color-mix(in srgb, var(--ashlar-color-text-inverse), transparent 24%)", "    "),
+  ],
+] as const;
+
+function renderCompatibilityDeclarations(tokens: TokenTree, mode: ThemeTokenMode): string {
+  const emittedVariables = new Set(flattenTokens(tokens).map(([name]) => name));
+
+  return legacyComponentVariableAliases
+    .filter(([name]) => !emittedVariables.has(name))
+    .map(([name, lightValue, darkValue]) => {
+      const value = mode === "dark" ? darkValue : lightValue;
+      return `    ${name}: ${value};`;
+    })
+    .join("\n");
+}
+
+function renderThemeDeclarations(tokens: TokenTree, mode: ThemeTokenMode): string {
+  return [renderDeclarations(tokens), renderCompatibilityDeclarations(tokens, mode)]
+    .filter(Boolean)
     .join("\n");
 }
 
@@ -507,21 +566,21 @@ export function buildThemeCss(themes = loadStockThemes()): string {
           ? `  :root,\n  :root[data-ashlar-theme="${theme.name}"]`
           : `  :root[data-ashlar-theme="${theme.name}"]`;
 
-      return `${selector} {\n    color-scheme: light;\n${renderDeclarations(theme.tokens)}\n  }`;
+      return `${selector} {\n    color-scheme: light;\n${renderThemeDeclarations(theme.tokens, "light")}\n  }`;
     })
     .join("\n\n");
 
   const darkThemes = themes
     .map(
       (theme) =>
-        `  :root[data-ashlar-theme="${theme.name}"][data-ashlar-mode="dark"] {\n    color-scheme: dark;\n${renderDeclarations(theme.dark)}\n  }`,
+        `  :root[data-ashlar-theme="${theme.name}"][data-ashlar-mode="dark"] {\n    color-scheme: dark;\n${renderThemeDeclarations(theme.dark, "dark")}\n  }`,
     )
     .join("\n\n");
 
   const systemDarkThemes = themes
     .map(
       (theme) =>
-        `    :root[data-ashlar-theme="${theme.name}"][data-ashlar-mode="system"] {\n      color-scheme: dark;\n${renderDeclarations(theme.dark).replace(/^/gm, "  ")}\n    }`,
+        `    :root[data-ashlar-theme="${theme.name}"][data-ashlar-mode="system"] {\n      color-scheme: dark;\n${renderThemeDeclarations(theme.dark, "dark").replace(/^/gm, "  ")}\n    }`,
     )
     .join("\n\n");
 
@@ -590,7 +649,9 @@ export function writeThemeCssFromProject(config: ResolvedAshlarConfig): ThemeVal
   if (errors.length > 0) {
     throw new Error(
       `Ashlar theme validation failed:\n${errors
-        .map((finding) => `  - ${finding.theme}/${finding.mode} ${finding.rule}: ${finding.message}`)
+        .map(
+          (finding) => `  - ${finding.theme}/${finding.mode} ${finding.rule}: ${finding.message}`,
+        )
         .join("\n")}`,
     );
   }

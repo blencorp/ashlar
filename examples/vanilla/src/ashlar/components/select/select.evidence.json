@@ -1,0 +1,55 @@
+{
+  "component": "select",
+  "version": "0.0.1",
+  "stability": "experimental",
+  "accessibilityStatus": "not-reviewed",
+  "wcag": [
+    {
+      "criterion": "2.4.7",
+      "level": "AA",
+      "title": "Focus Visible",
+      "status": "planned"
+    },
+    {
+      "criterion": "3.3.1",
+      "level": "A",
+      "title": "Error Identification",
+      "status": "planned"
+    },
+    {
+      "criterion": "3.3.2",
+      "level": "A",
+      "title": "Labels or Instructions",
+      "status": "planned"
+    },
+    {
+      "criterion": "4.1.2",
+      "level": "A",
+      "title": "Name, Role, Value",
+      "status": "planned"
+    }
+  ],
+  "baselineTests": [
+    {
+      "source": "Section 508 ICT Testing Baseline for Web",
+      "test": "Labels or Instructions",
+      "status": "planned",
+      "evidence": "Planned testing will verify visible label association and accessible name exposure."
+    },
+    {
+      "source": "Section 508 ICT Testing Baseline for Web",
+      "test": "Keyboard Accessible",
+      "status": "planned",
+      "evidence": "Planned testing will verify native select keyboard operation and focus visibility."
+    },
+    {
+      "source": "Section 508 ICT Testing Baseline for Web",
+      "test": "Error Identification",
+      "status": "planned",
+      "evidence": "Planned testing will verify invalid state and error-description relationships."
+    }
+  ],
+  "manualTests": [],
+  "automatedResults": {},
+  "knownLimitations": []
+}

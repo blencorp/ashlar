@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "text-input.html",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "AshlarTextInput",
+          "tagName": "input",
+          "description": "Semantic text entry control for forms that need labels, hints, and errors.",
+          "_ashlar": {
+            "version": "0.0.1",
+            "tier": "primitive",
+            "layer": "L0",
+            "stability": "experimental",
+            "selector": ".ashlar-text-input",
+            "a11yRequirements": [
+              {
+                "id": "accessible-name-required",
+                "wcag": "4.1.2",
+                "severity": "error",
+                "description": "Text inputs must have an accessible name from a label or equivalent association."
+              },
+              {
+                "id": "invalid-input-describedby",
+                "wcag": "3.3.1",
+                "severity": "error",
+                "description": "Invalid inputs must connect their error text with aria-describedby."
+              }
+            ],
+            "antiPatterns": [
+              {
+                "id": "invalid-input-needs-describedby",
+                "pattern": "<input $$$ATTRS>",
+                "regex": "class=\"[^\"]*\\bashlar-text-input\\b[\\s\\S]*aria-invalid=\"true\"",
+                "not": { "regex": "aria-describedby\\s*=" },
+                "message": "Invalid Ashlar Text Input requires aria-describedby pointing to error text.",
+                "fix": "Add aria-describedby with the error message id.",
+                "wcag": "3.3.1",
+                "severity": "error",
+                "languages": ["html"]
+              }
+            ],
+            "tokensConsumed": [
+              "color.input.border",
+              "color.text",
+              "color.status.error.border",
+              "focus.ring.color",
+              "radius.control"
+            ],
+            "platformFeatures": [
+              {
+                "feature": "native-input",
+                "status": "required",
+                "fallback": "Uses native input semantics and browser focus behavior."
+              },
+              {
+                "feature": "forced-colors",
+                "status": "progressive",
+                "fallback": "Uses system field and highlight colors."
+              }
+            ],
+            "policyMappings": [
+              {
+                "source": "Section 508",
+                "requirement": "Supports form input name, role, value, labels, and error relationships when used correctly.",
+                "url": "https://www.section508.gov/"
+              }
+            ],
+            "rendering": "server-safe",
+            "hydrationCost": "none",
+            "criticalForA11y": true
+          }
+        }
+      ]
+    }
+  ]
+}

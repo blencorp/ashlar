@@ -1,0 +1,22 @@
+{
+  "name": "@ashlar/example-vanilla",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Vanilla TypeScript Ashlar reference app.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4180 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4180 --strictPort",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm run audit",
+    "lint": "biome lint src vite.config.ts",
+    "audit": "node ../../packages/cli/dist/index.js audit --policy all --registry ../../registry index.html"
+  },
+  "devDependencies": {
+    "@ashlar/cli": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

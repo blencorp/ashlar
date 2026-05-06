@@ -1,0 +1,25 @@
+{
+  "name": "@ashlar/example-svelte",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Svelte Ashlar reference app.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4183 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4183 --strictPort",
+    "typecheck": "svelte-check --tsconfig ./tsconfig.json",
+    "test": "pnpm run audit",
+    "lint": "biome lint src/main.ts svelte.config.js vite.config.ts",
+    "audit": "node ../../packages/cli/dist/index.js audit --policy all --registry ../../registry public/audit.html"
+  },
+  "devDependencies": {
+    "@ashlar/cli": "workspace:*",
+    "@sveltejs/vite-plugin-svelte": "catalog:",
+    "@tsconfig/svelte": "catalog:",
+    "svelte": "catalog:",
+    "svelte-check": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

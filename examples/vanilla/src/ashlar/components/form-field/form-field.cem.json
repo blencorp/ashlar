@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "form-field.html",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "AshlarFormField",
+          "tagName": "div",
+          "description": "Accessible label, hint, error, and control wrapper for public-service forms.",
+          "_ashlar": {
+            "version": "0.0.1",
+            "tier": "composite",
+            "layer": "L0",
+            "stability": "experimental",
+            "selector": ".ashlar-form-field",
+            "a11yRequirements": [
+              {
+                "id": "label-required",
+                "wcag": "3.3.2",
+                "severity": "error",
+                "description": "Every form field must include a label associated with the control."
+              }
+            ],
+            "antiPatterns": [
+              {
+                "id": "field-missing-label",
+                "pattern": "<div $$$ATTRS>$$$CHILDREN</div>",
+                "regex": "class=\"[^\"]*\\bashlar-form-field\\b",
+                "not": { "has": { "pattern": "<label $$$>$$$TEXT</label>", "stopBy": "end" } },
+                "message": "Ashlar Form Field with an input requires an associated label.",
+                "fix": "Add a label with for/id association inside the form field.",
+                "wcag": "3.3.2",
+                "severity": "error",
+                "languages": ["html"]
+              }
+            ],
+            "tokensConsumed": [
+              "color.text",
+              "color.text-muted",
+              "color.status.error.fg"
+            ],
+            "platformFeatures": [
+              {
+                "feature": "semantic-label",
+                "status": "required",
+                "fallback": "Uses native label and form-control association."
+              }
+            ],
+            "policyMappings": [
+              {
+                "source": "Section 508",
+                "requirement": "Supports form labels and instructions when used with associated controls.",
+                "url": "https://www.section508.gov/"
+              }
+            ],
+            "rendering": "server-safe",
+            "hydrationCost": "none",
+            "criticalForA11y": true
+          }
+        }
+      ]
+    }
+  ]
+}

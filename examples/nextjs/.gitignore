@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+
+# Ashlar-generated artifacts ARE committed in this example so clones can run
+# without first invoking init/add.
+!ashlar-lock.json
+!ashlar.config.json
+!AGENTS.md
+!DESIGN.md
+!src/ashlar/

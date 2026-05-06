@@ -1,0 +1,33 @@
+@layer ashlar.components {
+  .ashlar-text-input {
+    border: 1px solid var(--ashlar-color-input-border, #565c65);
+    border-radius: var(--ashlar-radius-control, 0.25rem);
+    box-sizing: border-box;
+    color: var(--ashlar-color-text, #1b1b1b);
+    font: inherit;
+    inline-size: min(100%, var(--ashlar-text-input-max-inline-size, 30rem));
+    min-block-size: 2.75rem;
+    padding-block: 0.5rem;
+    padding-inline: 0.75rem;
+  }
+
+  .ashlar-text-input:focus-visible {
+    outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
+    outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
+  }
+
+  .ashlar-text-input[aria-invalid="true"] {
+    border-color: var(--ashlar-color-status-error-border, #d54309);
+    border-inline-start-width: 0.5rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .ashlar-text-input {
+    border-color: FieldText;
+  }
+
+  .ashlar-text-input:focus-visible {
+    outline-color: Highlight;
+  }
+}
