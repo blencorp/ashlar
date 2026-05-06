@@ -2,10 +2,25 @@
 type Theme = "default" | "va" | "usda";
 type Mode = "light" | "dark" | "system";
 
-const themes: Array<{ value: Theme; label: string }> = [
-  { value: "default", label: "Federal" },
-  { value: "va", label: "VA" },
-  { value: "usda", label: "USDA" },
+const themes: Array<{ value: Theme; label: string; logo: string; note: string }> = [
+  {
+    value: "default",
+    label: "Default",
+    logo: "A",
+    note: "USWDS-token baseline.",
+  },
+  {
+    value: "va",
+    label: "VA",
+    logo: "VA",
+    note: "VA semantic color tokens.",
+  },
+  {
+    value: "usda",
+    label: "USDA",
+    logo: "USDA",
+    note: "USDA green and blue anchors.",
+  },
 ];
 
 const modes: Array<{ value: Mode; label: string }> = [
@@ -96,7 +111,14 @@ const columns = [
 ];
 
 let theme: Theme = "default";
-let mode: Mode = "system";
+let mode: Mode = "light";
+
+$: selectedTheme = themes.find((option) => option.value === theme) ?? themes[0];
+
+function selectTheme(event: MouseEvent, value: Theme) {
+  theme = value;
+  (event.currentTarget as HTMLElement).closest("details")?.removeAttribute("open");
+}
 
 $: if (typeof document !== "undefined") {
   document.documentElement.dataset.ashlarTheme = theme;
@@ -105,20 +127,22 @@ $: if (typeof document !== "undefined") {
 </script>
 
 <section class="ashlar-banner" aria-label="Official website of the United States government">
-  <p class="ashlar-banner__text">An official website of the United States government</p>
-  <details class="ashlar-banner__details">
-    <summary>How you know</summary>
-    <div class="ashlar-banner__grid">
-      <div>
-        <strong>Official websites use .gov</strong>
-        <p>A .gov website belongs to an official government organization in the United States.</p>
+  <div class="ashlar-banner__inner">
+    <p class="ashlar-banner__text">An official website of the United States government</p>
+    <details class="ashlar-banner__details">
+      <summary>How you know</summary>
+      <div class="ashlar-banner__grid">
+        <div>
+          <strong>Official websites use .gov</strong>
+          <p>A .gov website belongs to an official government organization in the United States.</p>
+        </div>
+        <div>
+          <strong>Secure .gov websites use HTTPS</strong>
+          <p>A lock or https:// means you have safely connected to the .gov website.</p>
+        </div>
       </div>
-      <div>
-        <strong>Secure .gov websites use HTTPS</strong>
-        <p>A lock or https:// means you have safely connected to the .gov website.</p>
-      </div>
-    </div>
-  </details>
+    </details>
+  </div>
 </section>
 
 <main class="case-shell">
@@ -131,33 +155,59 @@ $: if (typeof document !== "undefined") {
         moving across agency themes.
       </p>
     </div>
-    <section class="theme-switcher" aria-labelledby="theme-title">
-      <h2 id="theme-title">Agency theme</h2>
-      <div class="theme-switcher__row">
-        {#each themes as option}
-          <button
-            aria-pressed={theme === option.value}
-            class="control-button"
-            on:click={() => (theme = option.value)}
-            type="button"
-          >
-            {option.label}
-          </button>
-        {/each}
+    <details class="agency-picker">
+      <summary class="agency-trigger">
+        <span class="agency-trigger__body">
+          <span class="agency-logo" data-agency={selectedTheme.value} aria-hidden="true">
+            {selectedTheme.logo}
+          </span>
+          <span>
+            <span class="agency-trigger__label">Agency</span>
+            <span class="agency-trigger__name">{selectedTheme.label}</span>
+          </span>
+        </span>
+      </summary>
+      <div class="agency-panel">
+        <div class="agency-panel__header">
+          <div>
+            <span class="agency-panel__kicker">Theme</span>
+            <h2 class="agency-panel__title">Choose agency system</h2>
+          </div>
+        </div>
+        <fieldset class="agency-grid">
+          <legend class="visually-hidden">Agency theme</legend>
+          {#each themes as option}
+            <button
+              aria-pressed={theme === option.value}
+              class="agency-card"
+              on:click={(event) => selectTheme(event, option.value)}
+              type="button"
+            >
+              <span class="agency-logo" data-agency={option.value} aria-hidden="true">
+                {option.logo}
+              </span>
+              <span>
+                <span class="agency-card__name">{option.label}</span>
+                <span class="agency-card__note">{option.note}</span>
+              </span>
+            </button>
+          {/each}
+        </fieldset>
+        <fieldset class="mode-switch">
+          <legend class="visually-hidden">Color mode</legend>
+          {#each modes as option}
+            <button
+              aria-pressed={mode === option.value}
+              class="control-button"
+              on:click={() => (mode = option.value)}
+              type="button"
+            >
+              {option.label}
+            </button>
+          {/each}
+        </fieldset>
       </div>
-      <div class="theme-switcher__row">
-        {#each modes as option}
-          <button
-            aria-pressed={mode === option.value}
-            class="control-button"
-            on:click={() => (mode = option.value)}
-            type="button"
-          >
-            {option.label}
-          </button>
-        {/each}
-      </div>
-    </section>
+    </details>
   </header>
 
   <section class="metrics" aria-label="Queue metrics">
@@ -239,7 +289,9 @@ $: if (typeof document !== "undefined") {
               <button class="ashlar-button" data-variant="primary" type="button">
                 {item.primaryAction}
               </button>
-              <button class="ashlar-button" type="button">{item.secondaryAction}</button>
+              <button class="ashlar-button" data-variant="secondary" type="button">
+                {item.secondaryAction}
+              </button>
             </div>
           </section>
         {/each}

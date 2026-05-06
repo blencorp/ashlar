@@ -5,7 +5,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Ashlar Next.js Example | Benefits intake",
   description:
-    "Next.js App Router Ashlar example showing a federal page shell, source-owned Button capsule, and runtime agency theme switching.",
+    "Next.js App Router Ashlar example showing a public-service page shell, source-owned Button capsule, and runtime agency theme switching.",
 };
 
 type RootLayoutProps = {
@@ -14,7 +14,7 @@ type RootLayoutProps = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" data-ashlar-theme="default" data-ashlar-mode="system">
+    <html lang="en" data-ashlar-theme="default" data-ashlar-mode="light">
       <body>{children}</body>
     </html>
   );

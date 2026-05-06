@@ -1,30 +1,32 @@
 <!doctype html>
-<html lang="en" data-ashlar-theme="default" data-ashlar-mode="system">
+<html lang="en" data-ashlar-theme="default" data-ashlar-mode="light">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ashlar Vanilla Example | Benefits intake</title>
     <meta
       name="description"
-      content="Vanilla TypeScript Ashlar example showing a federal page shell, source-owned Button capsule, and runtime agency theme switching."
+      content="Vanilla TypeScript Ashlar example showing a public-service page shell, source-owned Button capsule, and runtime agency theme switching."
     >
   </head>
   <body>
     <section class="ashlar-banner" aria-label="Official website of the United States government">
-      <p class="ashlar-banner__text">An official website of the United States government</p>
-      <details class="ashlar-banner__details">
-        <summary>How you know</summary>
-        <div class="ashlar-banner__grid">
-          <div>
-            <strong>Official websites use .gov</strong>
-            <p>A .gov website belongs to an official government organization in the United States.</p>
+      <div class="ashlar-banner__inner">
+        <p class="ashlar-banner__text">An official website of the United States government</p>
+        <details class="ashlar-banner__details">
+          <summary>How you know</summary>
+          <div class="ashlar-banner__grid">
+            <div>
+              <strong>Official websites use .gov</strong>
+              <p>A .gov website belongs to an official government organization in the United States.</p>
+            </div>
+            <div>
+              <strong>Secure .gov websites use HTTPS</strong>
+              <p>A lock or https:// means you have safely connected to the .gov website.</p>
+            </div>
           </div>
-          <div>
-            <strong>Secure .gov websites use HTTPS</strong>
-            <p>A lock or https:// means you have safely connected to the .gov website.</p>
-          </div>
-        </div>
-      </details>
+        </details>
+      </div>
     </section>
 
     <main class="case-shell">
@@ -37,19 +39,60 @@
             moving across agency themes.
           </p>
         </div>
-        <section class="theme-switcher" aria-labelledby="theme-title">
-          <h2 id="theme-title">Agency theme</h2>
-          <div class="theme-switcher__row">
-            <button class="control-button" data-theme="default" type="button">Federal</button>
-            <button class="control-button" data-theme="va" type="button">VA</button>
-            <button class="control-button" data-theme="usda" type="button">USDA</button>
+        <details class="agency-picker">
+          <summary class="agency-trigger">
+            <span class="agency-trigger__body">
+              <span
+                class="agency-logo"
+                data-selected-agency-mark
+                data-agency="default"
+                aria-hidden="true"
+              >A</span>
+              <span>
+                <span class="agency-trigger__label">Agency</span>
+                <span class="agency-trigger__name" data-selected-agency>Default</span>
+              </span>
+            </span>
+          </summary>
+          <div class="agency-panel">
+            <div class="agency-panel__header">
+              <div>
+                <span class="agency-panel__kicker">Theme</span>
+                <h2 class="agency-panel__title">Choose agency system</h2>
+              </div>
+            </div>
+            <fieldset class="agency-grid">
+              <legend class="visually-hidden">Agency theme</legend>
+              <button class="agency-card" data-theme="default" type="button">
+                <span class="agency-logo" data-agency="default" aria-hidden="true">A</span>
+                <span>
+                  <span class="agency-card__name">Default</span>
+                  <span class="agency-card__note">USWDS-token baseline.</span>
+                </span>
+              </button>
+              <button class="agency-card" data-theme="va" type="button">
+                <span class="agency-logo" data-agency="va" aria-hidden="true">VA</span>
+                <span>
+                  <span class="agency-card__name">VA</span>
+                  <span class="agency-card__note">VA semantic color tokens.</span>
+                </span>
+              </button>
+              <button class="agency-card" data-theme="usda" type="button">
+                <span class="agency-logo" data-agency="usda" aria-hidden="true">USDA</span>
+                <span>
+                  <span class="agency-card__name">USDA</span>
+                  <span class="agency-card__note">USDA green and blue anchors.</span>
+                </span>
+              </button>
+            </fieldset>
+            <fieldset class="mode-switch">
+              <legend class="visually-hidden">Color mode</legend>
+              <button class="control-button" data-mode="light" type="button">Light</button>
+              <button class="control-button" data-mode="dark" type="button">Dark</button>
+              <button class="control-button" data-mode="system" type="button">System</button>
+            </fieldset>
           </div>
-          <div class="theme-switcher__row">
-            <button class="control-button" data-mode="light" type="button">Light</button>
-            <button class="control-button" data-mode="dark" type="button">Dark</button>
-            <button class="control-button" data-mode="system" type="button">System</button>
-          </div>
-        </section>
+        </details>
       </header>
 
       <section class="metrics" aria-label="Queue metrics">
@@ -134,7 +177,7 @@
             </div>
             <div class="case-card__actions">
               <button class="ashlar-button" data-variant="primary" type="button">Open case</button>
-              <button class="ashlar-button" type="button">Assign</button>
+              <button class="ashlar-button" data-variant="secondary" type="button">Assign</button>
             </div>
           </section>
           <section class="case-card" aria-labelledby="case-2-title">
@@ -151,7 +194,7 @@
             </div>
             <div class="case-card__actions">
               <button class="ashlar-button" data-variant="primary" type="button">Open case</button>
-              <button class="ashlar-button" type="button">Message</button>
+              <button class="ashlar-button" data-variant="secondary" type="button">Message</button>
             </div>
           </section>
         </article>
@@ -176,7 +219,7 @@
             </div>
             <div class="case-card__actions">
               <button class="ashlar-button" data-variant="primary" type="button">Review uploads</button>
-              <button class="ashlar-button" type="button">Send reminder</button>
+              <button class="ashlar-button" data-variant="secondary" type="button">Send reminder</button>
             </div>
           </section>
           <section class="case-card" aria-labelledby="case-4-title">
@@ -193,7 +236,7 @@
             </div>
             <div class="case-card__actions">
               <button class="ashlar-button" data-variant="primary" type="button">Open case</button>
-              <button class="ashlar-button" type="button">Snooze</button>
+              <button class="ashlar-button" data-variant="secondary" type="button">Snooze</button>
             </div>
           </section>
         </article>
@@ -217,7 +260,7 @@
             </div>
             <div class="case-card__actions">
               <button class="ashlar-button" data-variant="primary" type="button">Approve</button>
-              <button class="ashlar-button" type="button">Quality check</button>
+              <button class="ashlar-button" data-variant="secondary" type="button">Quality check</button>
             </div>
           </section>
           <section class="case-card" aria-labelledby="case-6-title">
@@ -234,7 +277,7 @@
             </div>
             <div class="case-card__actions">
               <button class="ashlar-button" data-variant="primary" type="button">Approve</button>
-              <button class="ashlar-button" type="button">Open case</button>
+              <button class="ashlar-button" data-variant="secondary" type="button">Open case</button>
             </div>
           </section>
         </article>

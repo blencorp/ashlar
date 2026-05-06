@@ -20,10 +20,25 @@ type Column = {
   cases: CaseItem[];
 };
 
-const themes: Array<{ value: Theme; label: string }> = [
-  { value: "default", label: "Federal" },
-  { value: "va", label: "VA" },
-  { value: "usda", label: "USDA" },
+const themes: Array<{ value: Theme; label: string; logo: string; note: string }> = [
+  {
+    value: "default",
+    label: "Default",
+    logo: "A",
+    note: "USWDS-token baseline.",
+  },
+  {
+    value: "va",
+    label: "VA",
+    logo: "VA",
+    note: "VA semantic color tokens.",
+  },
+  {
+    value: "usda",
+    label: "USDA",
+    logo: "USDA",
+    note: "USDA green and blue anchors.",
+  },
 ];
 
 const modes: Array<{ value: Mode; label: string }> = [
@@ -115,7 +130,7 @@ const columns: Column[] = [
 
 export function App() {
   const [theme, setTheme] = useState<Theme>("default");
-  const [mode, setMode] = useState<Mode>("system");
+  const [mode, setMode] = useState<Mode>("light");
 
   useEffect(() => {
     document.documentElement.dataset.ashlarTheme = theme;
@@ -124,7 +139,7 @@ export function App() {
 
   return (
     <>
-      <FederalBanner />
+      <GovBanner />
       <main className="case-shell">
         <header className="case-header">
           <div>
@@ -135,7 +150,7 @@ export function App() {
               queue moving across agency themes.
             </p>
           </div>
-          <ThemeSwitcher mode={mode} setMode={setMode} setTheme={setTheme} theme={theme} />
+          <AgencyPicker mode={mode} setMode={setMode} setTheme={setTheme} theme={theme} />
         </header>
 
         <section className="metrics" aria-label="Queue metrics">
@@ -176,68 +191,101 @@ export function App() {
   );
 }
 
-function FederalBanner() {
+function GovBanner() {
   return (
     <section
       className="ashlar-banner"
       aria-label="Official website of the United States government"
     >
-      <p className="ashlar-banner__text">An official website of the United States government</p>
-      <details className="ashlar-banner__details">
-        <summary>How you know</summary>
-        <div className="ashlar-banner__grid">
-          <div>
-            <strong>Official websites use .gov</strong>
-            <p>
-              A .gov website belongs to an official government organization in the United States.
-            </p>
+      <div className="ashlar-banner__inner">
+        <p className="ashlar-banner__text">An official website of the United States government</p>
+        <details className="ashlar-banner__details">
+          <summary>How you know</summary>
+          <div className="ashlar-banner__grid">
+            <div>
+              <strong>Official websites use .gov</strong>
+              <p>
+                A .gov website belongs to an official government organization in the United States.
+              </p>
+            </div>
+            <div>
+              <strong>Secure .gov websites use HTTPS</strong>
+              <p>A lock or https:// means you have safely connected to the .gov website.</p>
+            </div>
           </div>
-          <div>
-            <strong>Secure .gov websites use HTTPS</strong>
-            <p>A lock or https:// means you have safely connected to the .gov website.</p>
-          </div>
-        </div>
-      </details>
+        </details>
+      </div>
     </section>
   );
 }
 
-function ThemeSwitcher(props: {
+function AgencyPicker(props: {
   mode: Mode;
   setMode: (mode: Mode) => void;
   setTheme: (theme: Theme) => void;
   theme: Theme;
 }) {
+  const selectedTheme = themes.find((option) => option.value === props.theme) ?? themes[0];
+
   return (
-    <section className="theme-switcher" aria-labelledby="theme-title">
-      <h2 id="theme-title">Agency theme</h2>
-      <div className="theme-switcher__row">
-        {themes.map((option) => (
-          <button
-            aria-pressed={props.theme === option.value}
-            className="control-button"
-            key={option.value}
-            onClick={() => props.setTheme(option.value)}
-            type="button"
-          >
-            {option.label}
-          </button>
-        ))}
+    <details className="agency-picker">
+      <summary className="agency-trigger">
+        <span className="agency-trigger__body">
+          <span className="agency-logo" data-agency={selectedTheme?.value} aria-hidden="true">
+            {selectedTheme?.logo}
+          </span>
+          <span>
+            <span className="agency-trigger__label">Agency</span>
+            <span className="agency-trigger__name">{selectedTheme?.label}</span>
+          </span>
+        </span>
+      </summary>
+      <div className="agency-panel">
+        <div className="agency-panel__header">
+          <div>
+            <span className="agency-panel__kicker">Theme</span>
+            <h2 className="agency-panel__title">Choose agency system</h2>
+          </div>
+        </div>
+        <fieldset className="agency-grid">
+          <legend className="visually-hidden">Agency theme</legend>
+          {themes.map((option) => (
+            <button
+              aria-pressed={props.theme === option.value}
+              className="agency-card"
+              key={option.value}
+              onClick={(event) => {
+                props.setTheme(option.value);
+                event.currentTarget.closest("details")?.removeAttribute("open");
+              }}
+              type="button"
+            >
+              <span className="agency-logo" data-agency={option.value} aria-hidden="true">
+                {option.logo}
+              </span>
+              <span>
+                <span className="agency-card__name">{option.label}</span>
+                <span className="agency-card__note">{option.note}</span>
+              </span>
+            </button>
+          ))}
+        </fieldset>
+        <fieldset className="mode-switch">
+          <legend className="visually-hidden">Color mode</legend>
+          {modes.map((option) => (
+            <button
+              aria-pressed={props.mode === option.value}
+              className="control-button"
+              key={option.value}
+              onClick={() => props.setMode(option.value)}
+              type="button"
+            >
+              {option.label}
+            </button>
+          ))}
+        </fieldset>
       </div>
-      <div className="theme-switcher__row">
-        {modes.map((option) => (
-          <button
-            aria-pressed={props.mode === option.value}
-            className="control-button"
-            key={option.value}
-            onClick={() => props.setMode(option.value)}
-            type="button"
-          >
-            {option.label}
-          </button>
-        ))}
-      </div>
-    </section>
+    </details>
   );
 }
 
@@ -331,7 +379,7 @@ function CaseCard({ item }: { item: CaseItem }) {
         <button className="ashlar-button" data-variant="primary" type="button">
           {item.primaryAction}
         </button>
-        <button className="ashlar-button" type="button">
+        <button className="ashlar-button" data-variant="secondary" type="button">
           {item.secondaryAction}
         </button>
       </div>

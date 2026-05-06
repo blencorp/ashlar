@@ -5,10 +5,25 @@ import { useEffect, useState } from "react";
 type Theme = "default" | "va" | "usda";
 type Mode = "light" | "dark" | "system";
 
-const themes: Array<{ value: Theme; label: string }> = [
-  { value: "default", label: "Federal" },
-  { value: "va", label: "VA" },
-  { value: "usda", label: "USDA" },
+const themes: Array<{ value: Theme; label: string; logo: string; note: string }> = [
+  {
+    value: "default",
+    label: "Default",
+    logo: "A",
+    note: "USWDS-token baseline.",
+  },
+  {
+    value: "va",
+    label: "VA",
+    logo: "VA",
+    note: "VA semantic color tokens.",
+  },
+  {
+    value: "usda",
+    label: "USDA",
+    logo: "USDA",
+    note: "USDA green and blue anchors.",
+  },
 ];
 
 const modes: Array<{ value: Mode; label: string }> = [
@@ -100,7 +115,8 @@ const columns = [
 
 export default function Page() {
   const [theme, setTheme] = useState<Theme>("default");
-  const [mode, setMode] = useState<Mode>("system");
+  const [mode, setMode] = useState<Mode>("light");
+  const selectedTheme = themes.find((option) => option.value === theme) ?? themes[0];
 
   useEffect(() => {
     document.documentElement.dataset.ashlarTheme = theme;
@@ -113,22 +129,25 @@ export default function Page() {
         className="ashlar-banner"
         aria-label="Official website of the United States government"
       >
-        <p className="ashlar-banner__text">An official website of the United States government</p>
-        <details className="ashlar-banner__details">
-          <summary>How you know</summary>
-          <div className="ashlar-banner__grid">
-            <div>
-              <strong>Official websites use .gov</strong>
-              <p>
-                A .gov website belongs to an official government organization in the United States.
-              </p>
+        <div className="ashlar-banner__inner">
+          <p className="ashlar-banner__text">An official website of the United States government</p>
+          <details className="ashlar-banner__details">
+            <summary>How you know</summary>
+            <div className="ashlar-banner__grid">
+              <div>
+                <strong>Official websites use .gov</strong>
+                <p>
+                  A .gov website belongs to an official government organization in the United
+                  States.
+                </p>
+              </div>
+              <div>
+                <strong>Secure .gov websites use HTTPS</strong>
+                <p>A lock or https:// means you have safely connected to the .gov website.</p>
+              </div>
             </div>
-            <div>
-              <strong>Secure .gov websites use HTTPS</strong>
-              <p>A lock or https:// means you have safely connected to the .gov website.</p>
-            </div>
-          </div>
-        </details>
+          </details>
+        </div>
       </section>
 
       <main className="case-shell">
@@ -141,35 +160,64 @@ export default function Page() {
               queue moving across agency themes.
             </p>
           </div>
-          <section className="theme-switcher" aria-labelledby="theme-title">
-            <h2 id="theme-title">Agency theme</h2>
-            <div className="theme-switcher__row">
-              {themes.map((option) => (
-                <button
-                  aria-pressed={theme === option.value}
-                  className="control-button"
-                  key={option.value}
-                  onClick={() => setTheme(option.value)}
-                  type="button"
-                >
-                  {option.label}
-                </button>
-              ))}
+          <details className="agency-picker">
+            <summary className="agency-trigger">
+              <span className="agency-trigger__body">
+                <span className="agency-logo" data-agency={selectedTheme?.value} aria-hidden="true">
+                  {selectedTheme?.logo}
+                </span>
+                <span>
+                  <span className="agency-trigger__label">Agency</span>
+                  <span className="agency-trigger__name">{selectedTheme?.label}</span>
+                </span>
+              </span>
+            </summary>
+            <div className="agency-panel">
+              <div className="agency-panel__header">
+                <div>
+                  <span className="agency-panel__kicker">Theme</span>
+                  <h2 className="agency-panel__title">Choose agency system</h2>
+                </div>
+              </div>
+              <fieldset className="agency-grid">
+                <legend className="visually-hidden">Agency theme</legend>
+                {themes.map((option) => (
+                  <button
+                    aria-pressed={theme === option.value}
+                    className="agency-card"
+                    key={option.value}
+                    onClick={(event) => {
+                      setTheme(option.value);
+                      event.currentTarget.closest("details")?.removeAttribute("open");
+                    }}
+                    type="button"
+                  >
+                    <span className="agency-logo" data-agency={option.value} aria-hidden="true">
+                      {option.logo}
+                    </span>
+                    <span>
+                      <span className="agency-card__name">{option.label}</span>
+                      <span className="agency-card__note">{option.note}</span>
+                    </span>
+                  </button>
+                ))}
+              </fieldset>
+              <fieldset className="mode-switch">
+                <legend className="visually-hidden">Color mode</legend>
+                {modes.map((option) => (
+                  <button
+                    aria-pressed={mode === option.value}
+                    className="control-button"
+                    key={option.value}
+                    onClick={() => setMode(option.value)}
+                    type="button"
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </fieldset>
             </div>
-            <div className="theme-switcher__row">
-              {modes.map((option) => (
-                <button
-                  aria-pressed={mode === option.value}
-                  className="control-button"
-                  key={option.value}
-                  onClick={() => setMode(option.value)}
-                  type="button"
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          </section>
+          </details>
         </header>
 
         <section className="metrics" aria-label="Queue metrics">
@@ -285,7 +333,7 @@ export default function Page() {
                     <button className="ashlar-button" data-variant="primary" type="button">
                       {item.primaryAction}
                     </button>
-                    <button className="ashlar-button" type="button">
+                    <button className="ashlar-button" data-variant="secondary" type="button">
                       {item.secondaryAction}
                     </button>
                   </div>

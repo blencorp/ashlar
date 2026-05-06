@@ -1,14 +1,30 @@
 <script setup lang="ts">
-import { ref, watchEffect } from "vue";
+import { computed, ref, watchEffect } from "vue";
 
 type Theme = "default" | "va" | "usda";
 type Mode = "light" | "dark" | "system";
+type ThemeOption = { value: Theme; label: string; logo: string; note: string };
 
-const themes: Array<{ value: Theme; label: string }> = [
-  { value: "default", label: "Federal" },
-  { value: "va", label: "VA" },
-  { value: "usda", label: "USDA" },
-];
+const themes = [
+  {
+    value: "default",
+    label: "Default",
+    logo: "A",
+    note: "USWDS-token baseline.",
+  },
+  {
+    value: "va",
+    label: "VA",
+    logo: "VA",
+    note: "VA semantic color tokens.",
+  },
+  {
+    value: "usda",
+    label: "USDA",
+    logo: "USDA",
+    note: "USDA green and blue anchors.",
+  },
+] satisfies [ThemeOption, ...ThemeOption[]];
 
 const modes: Array<{ value: Mode; label: string }> = [
   { value: "light", label: "Light" },
@@ -98,7 +114,15 @@ const columns = [
 ];
 
 const theme = ref<Theme>("default");
-const mode = ref<Mode>("system");
+const mode = ref<Mode>("light");
+const selectedTheme = computed<ThemeOption>(
+  () => themes.find((option) => option.value === theme.value) ?? themes[0],
+);
+
+function selectTheme(event: MouseEvent, value: Theme) {
+  theme.value = value;
+  (event.currentTarget as HTMLElement).closest("details")?.removeAttribute("open");
+}
 
 watchEffect(() => {
   document.documentElement.dataset.ashlarTheme = theme.value;
@@ -108,20 +132,22 @@ watchEffect(() => {
 
 <template>
   <section class="ashlar-banner" aria-label="Official website of the United States government">
-    <p class="ashlar-banner__text">An official website of the United States government</p>
-    <details class="ashlar-banner__details">
-      <summary>How you know</summary>
-      <div class="ashlar-banner__grid">
-        <div>
-          <strong>Official websites use .gov</strong>
-          <p>A .gov website belongs to an official government organization in the United States.</p>
+    <div class="ashlar-banner__inner">
+      <p class="ashlar-banner__text">An official website of the United States government</p>
+      <details class="ashlar-banner__details">
+        <summary>How you know</summary>
+        <div class="ashlar-banner__grid">
+          <div>
+            <strong>Official websites use .gov</strong>
+            <p>A .gov website belongs to an official government organization in the United States.</p>
+          </div>
+          <div>
+            <strong>Secure .gov websites use HTTPS</strong>
+            <p>A lock or https:// means you have safely connected to the .gov website.</p>
+          </div>
         </div>
-        <div>
-          <strong>Secure .gov websites use HTTPS</strong>
-          <p>A lock or https:// means you have safely connected to the .gov website.</p>
-        </div>
-      </div>
-    </details>
+      </details>
+    </div>
   </section>
 
   <main class="case-shell">
@@ -134,33 +160,59 @@ watchEffect(() => {
           moving across agency themes.
         </p>
       </div>
-      <section class="theme-switcher" aria-labelledby="theme-title">
-        <h2 id="theme-title">Agency theme</h2>
-        <div class="theme-switcher__row">
-          <button
-            v-for="option in themes"
-            :key="option.value"
-            :aria-pressed="theme === option.value"
-            class="control-button"
-            type="button"
-            @click="theme = option.value"
-          >
-            {{ option.label }}
-          </button>
+      <details class="agency-picker">
+        <summary class="agency-trigger">
+          <span class="agency-trigger__body">
+            <span class="agency-logo" :data-agency="selectedTheme.value" aria-hidden="true">
+              {{ selectedTheme.logo }}
+            </span>
+            <span>
+              <span class="agency-trigger__label">Agency</span>
+              <span class="agency-trigger__name">{{ selectedTheme.label }}</span>
+            </span>
+          </span>
+        </summary>
+        <div class="agency-panel">
+          <div class="agency-panel__header">
+            <div>
+              <span class="agency-panel__kicker">Theme</span>
+              <h2 class="agency-panel__title">Choose agency system</h2>
+            </div>
+          </div>
+          <fieldset class="agency-grid">
+            <legend class="visually-hidden">Agency theme</legend>
+            <button
+              v-for="option in themes"
+              :key="option.value"
+              :aria-pressed="theme === option.value"
+              class="agency-card"
+              type="button"
+              @click="selectTheme($event, option.value)"
+            >
+              <span class="agency-logo" :data-agency="option.value" aria-hidden="true">
+                {{ option.logo }}
+              </span>
+              <span>
+                <span class="agency-card__name">{{ option.label }}</span>
+                <span class="agency-card__note">{{ option.note }}</span>
+              </span>
+            </button>
+          </fieldset>
+          <fieldset class="mode-switch">
+            <legend class="visually-hidden">Color mode</legend>
+            <button
+              v-for="option in modes"
+              :key="option.value"
+              :aria-pressed="mode === option.value"
+              class="control-button"
+              type="button"
+              @click="mode = option.value"
+            >
+              {{ option.label }}
+            </button>
+          </fieldset>
         </div>
-        <div class="theme-switcher__row">
-          <button
-            v-for="option in modes"
-            :key="option.value"
-            :aria-pressed="mode === option.value"
-            class="control-button"
-            type="button"
-            @click="mode = option.value"
-          >
-            {{ option.label }}
-          </button>
-        </div>
-      </section>
+      </details>
     </header>
 
     <section class="metrics" aria-label="Queue metrics">
@@ -244,7 +296,9 @@ watchEffect(() => {
             <button class="ashlar-button" data-variant="primary" type="button">
               {{ item.primaryAction }}
             </button>
-            <button class="ashlar-button" type="button">{{ item.secondaryAction }}</button>
+            <button class="ashlar-button" data-variant="secondary" type="button">
+              {{ item.secondaryAction }}
+            </button>
           </div>
         </section>
       </article>

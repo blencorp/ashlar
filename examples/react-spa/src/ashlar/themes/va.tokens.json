@@ -10,11 +10,18 @@
       "surface": { "$type": "color", "$value": "#ffffff" },
       "surfaceRaised": { "$type": "color", "$value": "#ffffff" },
       "surfaceSubtle": { "$type": "color", "$value": "#e6eef7" },
+      "surfaceMuted": { "$type": "color", "$value": "{color.surfaceSubtle}" },
       "border": { "$type": "color", "$value": "#a9aeb1" },
+      "borderSubtle": { "$type": "color", "$value": "{color.border}" },
+      "inputBorder": { "$type": "color", "$value": "{color.border}" },
       "text": {
         "default": { "$type": "color", "$value": "#1b1b1b" },
         "muted": { "$type": "color", "$value": "#565c65" },
-        "inverse": { "$type": "color", "$value": "#ffffff" }
+        "inverse": { "$type": "color", "$value": "#ffffff" },
+        "inverseMuted": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, var(--ashlar-color-text-inverse), transparent 24%)"
+        }
       },
       "action": {
         "primary": {
@@ -28,19 +35,24 @@
           "border": { "$type": "color", "$value": "#005ea2" }
         }
       },
+      "link": { "$type": "color", "$value": "{color.action.secondary.fg}" },
+      "linkInverse": { "$type": "color", "$value": "{color.text.inverse}" },
       "focus": { "$type": "color", "$value": "#face00" },
       "status": {
         "infoBg": { "$type": "color", "$value": "#e7f6f8" },
         "infoFg": { "$type": "color", "$value": "#1b1b1b" },
+        "infoBorder": { "$type": "color", "$value": "{color.action.primary.bg}" },
         "successBg": { "$type": "color", "$value": "#ecf3ec" },
         "warningBg": { "$type": "color", "$value": "#faf3d1" },
-        "errorBg": { "$type": "color", "$value": "#f4e3db" }
+        "errorBg": { "$type": "color", "$value": "#f4e3db" },
+        "errorBorder": { "$type": "color", "$value": "#d54309" },
+        "errorFg": { "$type": "color", "$value": "#b50909" }
       }
     },
     "font": {
       "sans": {
         "$type": "fontFamily",
-        "$value": "\"Source Sans 3\", \"Public Sans\", system-ui, sans-serif"
+        "$value": "\"Source Sans Pro\", \"Source Sans 3\", \"Public Sans\", system-ui, sans-serif"
       }
     },
     "radius": {
@@ -81,7 +93,7 @@
         "text": {
           "default": { "$type": "color", "$value": "#ffffff" },
           "muted": { "$type": "color", "$value": "#dfe1e2" },
-          "inverse": { "$type": "color", "$value": "#1b1b1b" }
+          "inverse": { "$type": "color", "$value": "#ffffff" }
         },
         "action": {
           "primary": {
@@ -95,7 +107,16 @@
             "border": { "$type": "color", "$value": "#58b4ff" }
           }
         },
-        "focus": { "$type": "color", "$value": "#face00" }
+        "focus": { "$type": "color", "$value": "#face00" },
+        "status": {
+          "infoBg": { "$type": "color", "$value": "#1f2f38" },
+          "infoFg": { "$type": "color", "$value": "#ffffff" },
+          "successBg": { "$type": "color", "$value": "#193322" },
+          "warningBg": { "$type": "color", "$value": "#3d2f12" },
+          "errorBg": { "$type": "color", "$value": "#3f241f" },
+          "errorBorder": { "$type": "color", "$value": "#ff8d7b" },
+          "errorFg": { "$type": "color", "$value": "#fdb8ae" }
+        }
       }
     }
   }
