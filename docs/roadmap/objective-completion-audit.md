@@ -1,7 +1,7 @@
 # Objective Completion Audit
 
 Date: 2026-05-06
-Branch inspected: `codex/npx-ashlar-entrypoint-status`
+Branch inspected: `codex/objective-completion-audit`
 
 ## Objective
 
@@ -25,7 +25,7 @@ Strict readiness evidence: `node packages/cli/dist/index.js release readiness --
 | Requirement | Current evidence | Coverage judgment | Missing proof |
 | --- | --- | --- | --- |
 | Replace day-to-day USWDS usage | `ashlar audit --policy federal`, `ashlar migrate uswds`, 12 L0 capsules in `registry/components`, `benefit-application` service-flow capsule, `examples/uswds-project` migration fixture, `examples/legacy-federal-project` audit fixture | Strong prototype, not replacement-grade | Stable accessibility evidence, external design-partner validation, wider component/pattern coverage, public release |
-| Become memorable like shadcn/ui | Unscoped `ashlar` package in PR #30, `npx ashlar` docs/status alignment, source-capsule distribution model, `apps/www` marketing surface | Good naming/DX direction | Package name must be reserved by real npm publish; docs site/community launch still missing |
+| Become memorable like shadcn/ui | Unscoped `ashlar` package in PR #31, `npx ashlar` docs/status alignment, source-capsule distribution model, `apps/www` marketing surface | Good naming/DX direction | Package name must be reserved by real npm publish; docs site/community launch still missing |
 | Address shadcn gaps | `ashlar update`, `ashlar verify`, capsule lockfile hashes, update survival tests, signed capsule manifests, release readiness, SBOM/trust-bundle/provenance tooling | Strongest product wedge in repo | Needs real release traffic, public Sigstore bundles, npm provenance, external security review |
 | AI-native gov app workflow | `ashlar mcp`, MCP `validate_usage`, `search_components`, `suggest_for_task`, `list_tokens`, `get_token`, `ashlar ai-eval`, generated `AGENTS.md` and `DESIGN.md` | Useful local AI-native substrate | Real generated-output corpus, hosted/remote MCP decision, write-tool threat model if write tools are ever added |
 | Amazing DX and easy integration | `ashlar init`, `status`, `add`, `audit`, `search`, `suggest`, `view`, `theme sync`, `theme validate`, release smoke installing packed CLI into a clean consumer | Good local DX | Public npm install path, public docs, first-run docs/tutorials, real user feedback |
@@ -34,19 +34,20 @@ Strict readiness evidence: `node packages/cli/dist/index.js release readiness --
 
 ## Current PR Evidence
 
-Open active draft stack:
+Open active ready-for-review stack:
 
 - #21 `Build standards evidence foundation` - green CI and Changesets.
 - #25 `Refresh proof gate checkpoint docs` - green CI and Changesets.
 - #26 `Document release review pack artifact extraction` - green CI and Changesets.
 - #28 `Make release trust checklist paths portable` - green CI and Changesets.
-- #30 `Add ashlar npx entrypoint` - green CI and Changesets; replaces #29.
+- #31 `Add ashlar npx entrypoint` - green CI and Changesets; replaces #30 and #29.
 
 Closed as superseded:
 
 - #14 stale failed branch, replaced by #21.
 - #27 red portable-path branch, replaced by #28.
 - #29 first npx-entrypoint checkpoint, replaced by #30 after repository rules blocked follow-up push.
+- #30 second npx-entrypoint checkpoint, replaced by #31 to carry the objective audit on a fresh branch.
 
 ## Gate Audit
 
