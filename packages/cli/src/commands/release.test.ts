@@ -1300,6 +1300,9 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     const readme = readFileSync(join(output, "README.md"), "utf8");
     expect(readme).toContain("It does not create completed `docs/reviews/*.md` proof records");
     expect(readme).toContain("Do not count this pack as external review");
+    expect(readme).toContain("Using A CI Artifact");
+    expect(readme).toContain("gh run download <run-id> -n ashlar-release-review-pack");
+    expect(readme).toContain("extract its contents into `reports/review-pack/`");
     expect(readme).toContain("stable-evidence/INDEX.md");
     expect(readme).toContain("release-trust/ashlar-release-trust-checklist.md");
     expect(readme).toContain("design-partner/ashlar-design-partner-checklist.md");
