@@ -248,6 +248,7 @@ See [docs/roadmap/00-roadmap.md](docs/roadmap/00-roadmap.md), [docs/roadmap/01-v
 - [External review plan](docs/roadmap/external-review-plan.md)
 - [Architecture overview](docs/architecture/overview.md)
 - [Toolchain decision](docs/architecture/toolchain.md)
+- [Release governance](docs/architecture/release-governance.md)
 - [Compliance, security, and CI tooling](docs/architecture/compliance-security-ci.md)
 - [Final research pass](docs/research/07-final-research-2026-04-29.md)
 - [Gap analysis](docs/research/08-gap-analysis-2026-04-29.md)

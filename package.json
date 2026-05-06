@@ -21,6 +21,7 @@
     "test": "turbo run test",
     "lint": "turbo run lint",
     "check": "turbo run lint typecheck test",
+    "commitlint": "commitlint",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "changeset": "changeset",
@@ -31,7 +32,10 @@
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
+    "@changesets/changelog-github": "catalog:",
     "@changesets/cli": "catalog:",
+    "@commitlint/cli": "catalog:",
+    "@commitlint/config-conventional": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

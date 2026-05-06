@@ -15,6 +15,9 @@ catalog:
   "@biomejs/biome": ^2.4.13
   "@tailwindcss/vite": ^4.2.4
   "@changesets/cli": ^2.31.0
+  "@changesets/changelog-github": ^0.7.0
+  "@commitlint/cli": ^20.5.3
+  "@commitlint/config-conventional": ^20.5.3
   "@types/node": ^24.12.2
   ajv: ^8.17.1
   ajv-formats: ^3.0.1
