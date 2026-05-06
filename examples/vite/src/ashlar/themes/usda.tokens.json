@@ -2,7 +2,7 @@
   "$schema": "https://ashlar.dev/schemas/agency-theme.schema.json",
   "name": "usda",
   "title": "USDA",
-  "description": "USDA-inspired theme using forest green and federal blue anchors. Illustrative; not an official USDA brand specification.",
+  "description": "USDA-inspired theme using official USDA dark green and dark blue anchors. Illustrative; not an official USDA brand specification.",
   "order": 20,
   "tokens": {
     "color": {
@@ -10,11 +10,18 @@
       "surface": { "$type": "color", "$value": "#ffffff" },
       "surfaceRaised": { "$type": "color", "$value": "#ffffff" },
       "surfaceSubtle": { "$type": "color", "$value": "#edf3e8" },
+      "surfaceMuted": { "$type": "color", "$value": "{color.surfaceSubtle}" },
       "border": { "$type": "color", "$value": "#c8d6c0" },
+      "borderSubtle": { "$type": "color", "$value": "{color.border}" },
+      "inputBorder": { "$type": "color", "$value": "{color.border}" },
       "text": {
         "default": { "$type": "color", "$value": "#1b1b1b" },
         "muted": { "$type": "color", "$value": "#4d5948" },
-        "inverse": { "$type": "color", "$value": "#ffffff" }
+        "inverse": { "$type": "color", "$value": "#ffffff" },
+        "inverseMuted": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, var(--ashlar-color-text-inverse), transparent 24%)"
+        }
       },
       "action": {
         "primary": {
@@ -28,19 +35,24 @@
           "border": { "$type": "color", "$value": "#002d72" }
         }
       },
+      "link": { "$type": "color", "$value": "{color.action.secondary.fg}" },
+      "linkInverse": { "$type": "color", "$value": "{color.text.inverse}" },
       "focus": { "$type": "color", "$value": "#f6c744" },
       "status": {
         "infoBg": { "$type": "color", "$value": "#e6f1f7" },
         "infoFg": { "$type": "color", "$value": "#1b1b1b" },
+        "infoBorder": { "$type": "color", "$value": "{color.action.primary.bg}" },
         "successBg": { "$type": "color", "$value": "#e7f3e8" },
         "warningBg": { "$type": "color", "$value": "#fbf3d0" },
-        "errorBg": { "$type": "color", "$value": "#f4e3db" }
+        "errorBg": { "$type": "color", "$value": "#f4e3db" },
+        "errorBorder": { "$type": "color", "$value": "#d54309" },
+        "errorFg": { "$type": "color", "$value": "#b50909" }
       }
     },
     "font": {
       "sans": {
         "$type": "fontFamily",
-        "$value": "\"Public Sans\", \"Source Sans 3\", system-ui, sans-serif"
+        "$value": "\"Source Sans Pro\", \"Public Sans\", \"Source Sans 3\", system-ui, sans-serif"
       }
     },
     "radius": {
@@ -51,7 +63,7 @@
     "elevation": {
       "card": {
         "$type": "shadow",
-        "$value": "0 1px 2px rgb(0 84 64 / 0.10), 0 10px 22px rgb(0 45 114 / 0.08)"
+        "$value": "0 1px 2px rgb(0 84 64 / 0.1), 0 10px 22px rgb(0 45 114 / 0.08)"
       },
       "panel": { "$type": "shadow", "$value": "0 18px 40px rgb(0 84 64 / 0.12)" }
     },
@@ -84,7 +96,7 @@
         "text": {
           "default": { "$type": "color", "$value": "#f7fbf7" },
           "muted": { "$type": "color", "$value": "#cbdacb" },
-          "inverse": { "$type": "color", "$value": "#10221c" }
+          "inverse": { "$type": "color", "$value": "#ffffff" }
         },
         "action": {
           "primary": {
@@ -98,7 +110,16 @@
             "border": { "$type": "color", "$value": "#9ec5ff" }
           }
         },
-        "focus": { "$type": "color", "$value": "#f6c744" }
+        "focus": { "$type": "color", "$value": "#f6c744" },
+        "status": {
+          "infoBg": { "$type": "color", "$value": "#1c3638" },
+          "infoFg": { "$type": "color", "$value": "#f7fbf7" },
+          "successBg": { "$type": "color", "$value": "#1a3526" },
+          "warningBg": { "$type": "color", "$value": "#392f12" },
+          "errorBg": { "$type": "color", "$value": "#3f241f" },
+          "errorBorder": { "$type": "color", "$value": "#ff8d7b" },
+          "errorFg": { "$type": "color", "$value": "#fdb8ae" }
+        }
       }
     }
   }

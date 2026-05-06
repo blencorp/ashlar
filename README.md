@@ -41,7 +41,7 @@ The current prototype implements:
 - `release attest` / `release verify-attestation` to create and verify a hash-based tamper-evidence artifact for release outputs;
 - `release sign-capsules` to generate capsule Sigstore bundles with cosign and write manifest metadata, `release public-trust-verify` to require all signed capsule bundles to pass the consumer Sigstore verifier, plus `release trust-bundle` / `release verify-trust-bundle` to tie the local registry trust root, signed capsule hashes, release SBOM, and SBOM attestation into one schema-backed offline-review artifact;
 - Guarded manual `publish.yml` and `sigstore.yml` workflows that emit review-record JSON for npm provenance and public capsule trust, then keylessly sign and verify release SBOM, SBOM attestation, and release trust bundle artifacts with cosign bundles;
-- A Vite theme workbench across Federal, VA, and USDA themes with light/dark/system modes, plus a Tailwind v4 build proof that consumes the generated `@theme` output;
+- A Vite theme workbench across Default, VA, and USDA themes with light/dark/system modes, plus a Tailwind v4 build proof that consumes the generated `@theme` output;
 - Real benefits-operations case-board examples for vanilla TypeScript, React SPA, Next.js App Router, Svelte, and Vue, each consuming source-owned Ashlar capsules and generated theme CSS;
 - A plain HTML demo;
 - CI that runs checks, build, release smoke, provenance readiness, strict replacement-readiness reporting, stable-evidence reviewer bundles and blocker reports, a portable release review-pack artifact, evidence reports, bundle budgets, AI evals, and SARIF artifact upload.
