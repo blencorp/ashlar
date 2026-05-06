@@ -4,6 +4,8 @@ Date: 2026-05-05
 
 This audit answers one question: is Ashlar already credible as a USWDS replacement-grade, shadcn-class public-service UI system, or is it still a prototype with a strong thesis?
 
+For the component and pattern surface area behind that question, see [uswds-coverage-matrix.md](./uswds-coverage-matrix.md).
+
 ## Verdict
 
 Ashlar is not replacement-grade yet.
@@ -27,7 +29,7 @@ Current strict gate status:
 
 | Requirement | Current artifact or command | Evidence inspected | Status |
 |---|---|---|---|
-| Replace day-to-day USWDS needs without being USWDS-hostile | `docs/product-doctrine.md`, `docs/strategy.md`, `docs/architecture/overview.md` | Public posture says USWDS-compatible, not official or hostile; replacement is earned, not claimed. | Partially met |
+| Replace day-to-day USWDS needs without being USWDS-hostile | `docs/product-doctrine.md`, `docs/strategy.md`, `docs/architecture/overview.md`, `docs/roadmap/uswds-coverage-matrix.md` | Public posture says USWDS-compatible, not official or hostile; replacement is earned, not claimed. The coverage matrix makes component and pattern gaps explicit. | Partially met |
 | Be more than another AI UI library | `docs/product-doctrine.md`, `docs/architecture/ai-native.md`, `packages/cli/src/commands/mcp.ts`, `packages/cli/src/lib/ai-eval.ts` | AI claim is grounded in read-only MCP discovery, evidence retrieval, token lookup, and `validate_usage`; write tools remain blocked. | Partially met |
 | Address shadcn gap: copied source drifts | `packages/cli/src/commands/update.ts`, `packages/cli/src/lib/codemod.ts`, `packages/cli/src/commands/update-survival.test.ts` | `update` has lockfile hashes, three-way merge, codemods, critical-file confirmation, and 11 survival scenarios. | Prototype met |
 | Address shadcn gap: no evidence chain | `packages/cli/src/lib/evidence-check.ts`, `packages/cli/src/lib/evidence-review-status.ts`, `packages/schemas/src/manual-transcript.schema.json` | Stable gate requires WCAG, ICT Baseline, automated evidence, keyboard transcript, screen-reader transcript, limitations, and reviewer metadata. | Tooling met; evidence missing |

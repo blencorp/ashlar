@@ -24,7 +24,7 @@ Strict readiness evidence: `node packages/cli/dist/index.js release readiness --
 
 | Requirement | Current evidence | Coverage judgment | Missing proof |
 | --- | --- | --- | --- |
-| Replace day-to-day USWDS usage | `ashlar audit --policy federal`, `ashlar migrate uswds`, 12 L0 capsules in `registry/components`, `benefit-application` service-flow capsule, `examples/uswds-project` migration fixture, `examples/legacy-federal-project` audit fixture | Strong prototype, not replacement-grade | Stable accessibility evidence, external design-partner validation, wider component/pattern coverage, public release |
+| Replace day-to-day USWDS usage | `ashlar audit --policy federal`, `ashlar migrate uswds`, 12 L0 capsules in `registry/components`, `benefit-application` service-flow capsule, `examples/uswds-project` migration fixture, `examples/legacy-federal-project` audit fixture, `docs/roadmap/uswds-coverage-matrix.md` | Strong prototype, not replacement-grade. Coverage gaps are now explicit. | Stable accessibility evidence, external design-partner validation, wider component/pattern coverage, public release |
 | Become memorable like shadcn/ui | Unscoped `ashlar` package in PR #31, `npx ashlar` docs/status alignment, source-capsule distribution model, `apps/www` marketing surface | Good naming/DX direction | Package name must be reserved by real npm publish; docs site/community launch still missing |
 | Address shadcn gaps | `ashlar update`, `ashlar verify`, capsule lockfile hashes, update survival tests, signed capsule manifests, release readiness, SBOM/trust-bundle/provenance tooling | Strongest product wedge in repo | Needs real release traffic, public Sigstore bundles, npm provenance, external security review |
 | AI-native gov app workflow | `ashlar mcp`, MCP `validate_usage`, `search_components`, `suggest_for_task`, `list_tokens`, `get_token`, `ashlar ai-eval`, generated `AGENTS.md` and `DESIGN.md` | Useful local AI-native substrate | Real generated-output corpus, hosted/remote MCP decision, write-tool threat model if write tools are ever added |
@@ -76,6 +76,7 @@ The following release-readiness checks fail today:
 2. Produce the first real Button stable-evidence packet: automated artifact, manual keyboard transcript, manual screen-reader transcript, reviewed packet, graduated packet, local publication receipt, and completed `docs/reviews/stable-evidence-*.md`.
 3. Run the first real trusted-publishing release for `ashlar`, `@ashlar/cli`, and `@ashlar/schemas`; attach `ashlar-npm-provenance.json`.
 4. Run the Sigstore workflow for capsule/release artifacts and attach `ashlar-public-trust.json`.
-5. Complete release-trust and design-partner review records, then rerun strict `ashlar release readiness` without local escape hatches.
+5. Review the USWDS coverage matrix and turn the v0.1 public-alpha set into explicit capsule/evidence issues.
+6. Complete release-trust and design-partner review records, then rerun strict `ashlar release readiness` without local escape hatches.
 
 Do not claim Ashlar replaces USWDS, or that it is public-alpha ready, until those checks pass.
