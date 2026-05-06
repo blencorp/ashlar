@@ -1,0 +1,26 @@
+{
+  "name": "@ashlar/example-nextjs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Next.js App Router Ashlar reference app.",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1 --port 4182",
+    "build": "next build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm run audit",
+    "lint": "biome lint app next.config.mjs",
+    "audit": "pnpm exec ashlar audit --policy federal --registry ../../registry public/audit.html && pnpm exec ashlar audit --policy components --registry ../../registry public/audit.html app/page.tsx app/globals.css"
+  },
+  "dependencies": {
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@ashlar/cli": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "typescript": "catalog:"
+  }
+}

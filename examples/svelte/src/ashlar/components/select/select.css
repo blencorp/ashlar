@@ -1,0 +1,36 @@
+@layer ashlar.components {
+  .ashlar-select {
+    background-color: var(--ashlar-color-surface, #ffffff);
+    border: 1px solid var(--ashlar-color-input-border, #565c65);
+    border-radius: var(--ashlar-radius-control, 0.25rem);
+    box-sizing: border-box;
+    color: var(--ashlar-color-text, #1b1b1b);
+    font: inherit;
+    inline-size: min(100%, var(--ashlar-select-max-inline-size, 30rem));
+    min-block-size: 2.75rem;
+    padding-block: 0.5rem;
+    padding-inline: 0.75rem;
+  }
+
+  .ashlar-select:focus-visible {
+    outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
+    outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
+  }
+
+  .ashlar-select[aria-invalid="true"] {
+    border-color: var(--ashlar-color-status-error-border, #d54309);
+    border-inline-start-width: 0.5rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .ashlar-select {
+    background-color: Field;
+    border-color: FieldText;
+    color: FieldText;
+  }
+
+  .ashlar-select:focus-visible {
+    outline-color: Highlight;
+  }
+}

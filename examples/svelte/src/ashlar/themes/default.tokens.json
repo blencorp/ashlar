@@ -1,0 +1,102 @@
+{
+  "$schema": "https://ashlar.dev/schemas/agency-theme.schema.json",
+  "name": "default",
+  "title": "Default",
+  "description": "Neutral baseline using USWDS-oriented semantic roles. Selected when no agency theme is applied.",
+  "order": 0,
+  "tokens": {
+    "color": {
+      "page": { "$type": "color", "$value": "#f7f9fb" },
+      "surface": { "$type": "color", "$value": "#ffffff" },
+      "surfaceRaised": { "$type": "color", "$value": "#ffffff" },
+      "surfaceSubtle": { "$type": "color", "$value": "#eef3f7" },
+      "border": { "$type": "color", "$value": "#c9d4df" },
+      "text": {
+        "default": { "$type": "color", "$value": "#1b1b1b" },
+        "muted": { "$type": "color", "$value": "#4d5965" },
+        "inverse": { "$type": "color", "$value": "#ffffff" }
+      },
+      "action": {
+        "primary": {
+          "bg": { "$type": "color", "$value": "#005ea8" },
+          "fg": { "$type": "color", "$value": "#ffffff" },
+          "hover": { "$type": "color", "$value": "#1a4480" }
+        },
+        "secondary": {
+          "bg": { "$type": "color", "$value": "#ffffff" },
+          "fg": { "$type": "color", "$value": "#005ea8" },
+          "border": { "$type": "color", "$value": "#005ea8" }
+        }
+      },
+      "focus": { "$type": "color", "$value": "#2491ff" },
+      "status": {
+        "infoBg": { "$type": "color", "$value": "#e7f6f8" },
+        "infoFg": { "$type": "color", "$value": "#1b1b1b" },
+        "successBg": { "$type": "color", "$value": "#ecf3ec" },
+        "warningBg": { "$type": "color", "$value": "#faf3d1" },
+        "errorBg": { "$type": "color", "$value": "#f4e3db" }
+      }
+    },
+    "font": {
+      "sans": {
+        "$type": "fontFamily",
+        "$value": "\"Public Sans\", \"Source Sans 3\", system-ui, sans-serif"
+      }
+    },
+    "radius": {
+      "control": { "$type": "dimension", "$value": "0.25rem" },
+      "card": { "$type": "dimension", "$value": "0.375rem" },
+      "panel": { "$type": "dimension", "$value": "0.5rem" }
+    },
+    "elevation": {
+      "card": { "$type": "shadow", "$value": "0 1px 2px rgb(27 27 27 / 0.08)" },
+      "panel": { "$type": "shadow", "$value": "0 10px 28px rgb(27 27 27 / 0.08)" }
+    },
+    "component": {
+      "button": {
+        "radius": { "$type": "dimension", "$value": "{radius.control}" },
+        "minBlockSize": { "$type": "dimension", "$value": "2.75rem" }
+      },
+      "card": {
+        "radius": { "$type": "dimension", "$value": "{radius.card}" },
+        "shadow": { "$type": "shadow", "$value": "{elevation.card}" }
+      }
+    },
+    "focus": {
+      "ring": {
+        "color": { "$type": "color", "$value": "{color.focus}" },
+        "width": { "$type": "dimension", "$value": "0.25rem" },
+        "offset": { "$type": "dimension", "$value": "0.18rem" }
+      }
+    }
+  },
+  "modes": {
+    "dark": {
+      "color": {
+        "page": { "$type": "color", "$value": "#111827" },
+        "surface": { "$type": "color", "$value": "#182230" },
+        "surfaceRaised": { "$type": "color", "$value": "#1f2a37" },
+        "surfaceSubtle": { "$type": "color", "$value": "#253347" },
+        "border": { "$type": "color", "$value": "#4b5565" },
+        "text": {
+          "default": { "$type": "color", "$value": "#f8fafc" },
+          "muted": { "$type": "color", "$value": "#cbd5e1" },
+          "inverse": { "$type": "color", "$value": "#111827" }
+        },
+        "action": {
+          "primary": {
+            "bg": { "$type": "color", "$value": "#58b4ff" },
+            "fg": { "$type": "color", "$value": "#111827" },
+            "hover": { "$type": "color", "$value": "#a1d3ff" }
+          },
+          "secondary": {
+            "bg": { "$type": "color", "$value": "#111827" },
+            "fg": { "$type": "color", "$value": "#58b4ff" },
+            "border": { "$type": "color", "$value": "#58b4ff" }
+          }
+        },
+        "focus": { "$type": "color", "$value": "#face00" }
+      }
+    }
+  }
+}

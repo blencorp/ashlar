@@ -1,0 +1,37 @@
+{
+  "component": "banner",
+  "version": "0.0.1",
+  "stability": "experimental",
+  "accessibilityStatus": "not-reviewed",
+  "wcag": [
+    {
+      "criterion": "2.1.1",
+      "level": "A",
+      "title": "Keyboard",
+      "status": "planned"
+    },
+    {
+      "criterion": "2.4.6",
+      "level": "AA",
+      "title": "Headings and Labels",
+      "status": "planned"
+    }
+  ],
+  "baselineTests": [
+    {
+      "source": "Section 508 ICT Testing Baseline for Web",
+      "test": "Keyboard Accessible",
+      "status": "planned",
+      "evidence": "Planned keyboard testing will verify native summary disclosure behavior and focus visibility."
+    },
+    {
+      "source": "Federal Website Standards",
+      "test": "Banner",
+      "status": "planned",
+      "evidence": "Planned page-shell testing will verify the banner appears near the top of the body and identifies the site as official."
+    }
+  ],
+  "manualTests": [],
+  "automatedResults": {},
+  "knownLimitations": []
+}

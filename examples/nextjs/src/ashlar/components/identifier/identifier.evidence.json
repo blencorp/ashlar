@@ -1,0 +1,43 @@
+{
+  "component": "identifier",
+  "version": "0.0.1",
+  "stability": "experimental",
+  "accessibilityStatus": "not-reviewed",
+  "wcag": [
+    {
+      "criterion": "2.4.4",
+      "level": "A",
+      "title": "Link Purpose (In Context)",
+      "status": "planned"
+    },
+    {
+      "criterion": "2.4.6",
+      "level": "AA",
+      "title": "Headings and Labels",
+      "status": "planned"
+    },
+    {
+      "criterion": "2.4.7",
+      "level": "AA",
+      "title": "Focus Visible",
+      "status": "planned"
+    }
+  ],
+  "baselineTests": [
+    {
+      "source": "Section 508 ICT Testing Baseline for Web",
+      "test": "Links and User Controls",
+      "status": "planned",
+      "evidence": "Planned testing will verify every identifier link has meaningful text and visible focus."
+    },
+    {
+      "source": "USWDS Identifier",
+      "test": "Required links",
+      "status": "planned",
+      "evidence": "Planned page-shell testing will verify About, Accessibility, FOIA, No FEAR Act, OIG, Performance, and Privacy links are recognizable."
+    }
+  ],
+  "manualTests": [],
+  "automatedResults": {},
+  "knownLimitations": []
+}

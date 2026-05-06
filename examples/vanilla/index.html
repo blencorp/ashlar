@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en" data-ashlar-theme="default" data-ashlar-mode="system">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashlar Vanilla Example | Benefits intake</title>
+    <meta
+      name="description"
+      content="Vanilla TypeScript Ashlar example showing a federal page shell, source-owned Button capsule, and runtime agency theme switching."
+    >
+  </head>
+  <body>
+    <section class="ashlar-banner" aria-label="Official website of the United States government">
+      <p class="ashlar-banner__text">An official website of the United States government</p>
+      <details class="ashlar-banner__details">
+        <summary>How you know</summary>
+        <div class="ashlar-banner__grid">
+          <div>
+            <strong>Official websites use .gov</strong>
+            <p>A .gov website belongs to an official government organization in the United States.</p>
+          </div>
+          <div>
+            <strong>Secure .gov websites use HTTPS</strong>
+            <p>A lock or https:// means you have safely connected to the .gov website.</p>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <main class="case-shell">
+      <header class="case-header">
+        <div>
+          <p class="eyebrow">Benefits operations</p>
+          <h1>Case board for nutrition assistance renewals</h1>
+          <p class="lead">
+            Triage urgent applications, review verification gaps, and keep a same-day service queue
+            moving across agency themes.
+          </p>
+        </div>
+        <section class="theme-switcher" aria-labelledby="theme-title">
+          <h2 id="theme-title">Agency theme</h2>
+          <div class="theme-switcher__row">
+            <button class="control-button" data-theme="default" type="button">Federal</button>
+            <button class="control-button" data-theme="va" type="button">VA</button>
+            <button class="control-button" data-theme="usda" type="button">USDA</button>
+          </div>
+          <div class="theme-switcher__row">
+            <button class="control-button" data-mode="light" type="button">Light</button>
+            <button class="control-button" data-mode="dark" type="button">Dark</button>
+            <button class="control-button" data-mode="system" type="button">System</button>
+          </div>
+        </section>
+      </header>
+
+      <section class="metrics" aria-label="Queue metrics">
+        <div class="metric">
+          <p class="metric__label">Open cases</p>
+          <p class="metric__value">42</p>
+        </div>
+        <div class="metric">
+          <p class="metric__label">Urgent today</p>
+          <p class="metric__value">8</p>
+        </div>
+        <div class="metric">
+          <p class="metric__label">Avg wait</p>
+          <p class="metric__value">14m</p>
+        </div>
+        <div class="metric">
+          <p class="metric__label">Ready to approve</p>
+          <p class="metric__value">11</p>
+        </div>
+      </section>
+
+      <div class="ashlar-alert" role="status">
+        <p>Six cases need income verification before 3:00 PM. Two have interpreter requests.</p>
+      </div>
+
+      <section class="toolbar" aria-label="Board filters">
+        <div class="ashlar-form-field">
+          <label class="ashlar-form-field__label" for="case-search">Search cases</label>
+          <p class="ashlar-form-field__hint" id="case-search-hint">Name, case ID, or county.</p>
+          <input
+            class="ashlar-text-input"
+            id="case-search"
+            name="case-search"
+            aria-describedby="case-search-hint"
+            value="Prince George's"
+          >
+        </div>
+        <div class="ashlar-form-field">
+          <label class="ashlar-form-field__label" for="program">Program</label>
+          <select class="ashlar-select" id="program" name="program">
+            <option>SNAP renewal</option>
+            <option>WIC intake</option>
+            <option>Summer EBT</option>
+          </select>
+        </div>
+        <fieldset class="ashlar-radio-group view-toggle" aria-describedby="view-mode-hint">
+          <legend class="ashlar-radio-group__legend">View</legend>
+          <p class="ashlar-radio-group__hint" id="view-mode-hint">Choose queue layout.</p>
+          <div class="ashlar-radio-option">
+            <input class="ashlar-radio" id="view-board" name="view-mode" type="radio" checked>
+            <label class="ashlar-radio-label" for="view-board">Board</label>
+          </div>
+          <div class="ashlar-radio-option">
+            <input class="ashlar-radio" id="view-list" name="view-mode" type="radio">
+            <label class="ashlar-radio-label" for="view-list">List</label>
+          </div>
+        </fieldset>
+        <div class="ashlar-checkbox-field">
+          <input class="ashlar-checkbox" id="urgent-only" name="urgent-only" type="checkbox" checked>
+          <label class="ashlar-checkbox-label" for="urgent-only">Urgent only</label>
+        </div>
+      </section>
+
+      <section class="board" aria-label="Application case board">
+        <article class="board-column" aria-labelledby="new-title">
+          <div class="board-column__header">
+            <h2 id="new-title">New intake</h2>
+            <span class="board-count">14</span>
+          </div>
+          <section class="case-card" aria-labelledby="case-1-title">
+            <div class="case-card__header">
+              <div>
+                <p class="case-card__meta">PG-2048</p>
+                <h3 id="case-1-title">Maya Johnson</h3>
+                <p class="case-card__program">SNAP renewal</p>
+              </div>
+              <span class="priority">Urgent</span>
+            </div>
+            <div class="tag-row">
+              <span class="tag">Income uploaded</span>
+              <span class="tag">Phone preferred</span>
+            </div>
+            <div class="case-card__actions">
+              <button class="ashlar-button" data-variant="primary" type="button">Open case</button>
+              <button class="ashlar-button" type="button">Assign</button>
+            </div>
+          </section>
+          <section class="case-card" aria-labelledby="case-2-title">
+            <div class="case-card__header">
+              <div>
+                <p class="case-card__meta">MO-1182</p>
+                <h3 id="case-2-title">Andre Wilson</h3>
+                <p class="case-card__program">Summer EBT</p>
+              </div>
+            </div>
+            <div class="tag-row">
+              <span class="tag">New household</span>
+              <span class="tag">Spanish</span>
+            </div>
+            <div class="case-card__actions">
+              <button class="ashlar-button" data-variant="primary" type="button">Open case</button>
+              <button class="ashlar-button" type="button">Message</button>
+            </div>
+          </section>
+        </article>
+
+        <article class="board-column" aria-labelledby="docs-title">
+          <div class="board-column__header">
+            <h2 id="docs-title">Awaiting documents</h2>
+            <span class="board-count">17</span>
+          </div>
+          <section class="case-card" aria-labelledby="case-3-title">
+            <div class="case-card__header">
+              <div>
+                <p class="case-card__meta">PG-1933</p>
+                <h3 id="case-3-title">Rosa Martinez</h3>
+                <p class="case-card__program">WIC intake</p>
+              </div>
+              <span class="priority">Due 2 PM</span>
+            </div>
+            <div class="tag-row">
+              <span class="tag">Needs ID</span>
+              <span class="tag">Interpreter</span>
+            </div>
+            <div class="case-card__actions">
+              <button class="ashlar-button" data-variant="primary" type="button">Review uploads</button>
+              <button class="ashlar-button" type="button">Send reminder</button>
+            </div>
+          </section>
+          <section class="case-card" aria-labelledby="case-4-title">
+            <div class="case-card__header">
+              <div>
+                <p class="case-card__meta">AA-3011</p>
+                <h3 id="case-4-title">Samir Patel</h3>
+                <p class="case-card__program">SNAP renewal</p>
+              </div>
+            </div>
+            <div class="tag-row">
+              <span class="tag">Rent proof</span>
+              <span class="tag">SMS sent</span>
+            </div>
+            <div class="case-card__actions">
+              <button class="ashlar-button" data-variant="primary" type="button">Open case</button>
+              <button class="ashlar-button" type="button">Snooze</button>
+            </div>
+          </section>
+        </article>
+
+        <article class="board-column" aria-labelledby="approve-title">
+          <div class="board-column__header">
+            <h2 id="approve-title">Ready for approval</h2>
+            <span class="board-count">11</span>
+          </div>
+          <section class="case-card" aria-labelledby="case-5-title">
+            <div class="case-card__header">
+              <div>
+                <p class="case-card__meta">CH-4520</p>
+                <h3 id="case-5-title">Lena Brooks</h3>
+                <p class="case-card__program">SNAP renewal</p>
+              </div>
+            </div>
+            <div class="tag-row">
+              <span class="tag">Verified</span>
+              <span class="tag">Meets threshold</span>
+            </div>
+            <div class="case-card__actions">
+              <button class="ashlar-button" data-variant="primary" type="button">Approve</button>
+              <button class="ashlar-button" type="button">Quality check</button>
+            </div>
+          </section>
+          <section class="case-card" aria-labelledby="case-6-title">
+            <div class="case-card__header">
+              <div>
+                <p class="case-card__meta">PG-2120</p>
+                <h3 id="case-6-title">Evan Kim</h3>
+                <p class="case-card__program">Summer EBT</p>
+              </div>
+            </div>
+            <div class="tag-row">
+              <span class="tag">School matched</span>
+              <span class="tag">Auto eligible</span>
+            </div>
+            <div class="case-card__actions">
+              <button class="ashlar-button" data-variant="primary" type="button">Approve</button>
+              <button class="ashlar-button" type="button">Open case</button>
+            </div>
+          </section>
+        </article>
+      </section>
+    </main>
+
+    <footer class="ashlar-identifier">
+      <div class="ashlar-identifier__inner">
+        <div class="ashlar-identifier__identity">
+          <p class="ashlar-identifier__eyebrow">An official website of the United States government</p>
+          <p class="ashlar-identifier__name">Example Benefits Agency</p>
+        </div>
+        <nav class="ashlar-identifier__nav" aria-label="Required agency links">
+          <a href="/about">About</a>
+          <a href="/accessibility">Accessibility</a>
+          <a href="/foia">FOIA</a>
+          <a href="/no-fear-act">No FEAR Act</a>
+          <a href="/inspector-general">Office of Inspector General</a>
+          <a href="/performance">Performance reports</a>
+          <a href="/privacy">Privacy policy</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

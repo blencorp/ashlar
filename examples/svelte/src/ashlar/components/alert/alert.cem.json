@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "alert.html",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "AshlarAlert",
+          "tagName": "div",
+          "description": "Semantic status message for public-service feedback and validation states.",
+          "_ashlar": {
+            "version": "0.0.1",
+            "tier": "primitive",
+            "layer": "L0",
+            "stability": "experimental",
+            "selector": ".ashlar-alert",
+            "variants": ["info", "error"],
+            "a11yRequirements": [
+              {
+                "id": "meaningful-message-required",
+                "wcag": "3.3.1",
+                "severity": "error",
+                "description": "Alerts must include meaningful text that explains the status or error."
+              }
+            ],
+            "antiPatterns": [
+              {
+                "id": "empty-alert",
+                "pattern": "<div $$$ATTRS></div>",
+                "regex": "class=\"[^\"]*\\bashlar-alert\\b",
+                "message": "Ashlar Alert requires meaningful text content.",
+                "fix": "Add concise status or error text inside the alert.",
+                "wcag": "3.3.1",
+                "severity": "error",
+                "languages": ["html"]
+              }
+            ],
+            "tokensConsumed": [
+              "color.status.info.bg",
+              "color.status.info.border",
+              "color.status.error.bg",
+              "color.status.error.border",
+              "color.text"
+            ],
+            "platformFeatures": [
+              {
+                "feature": "forced-colors",
+                "status": "progressive",
+                "fallback": "Uses borders and outline colors that map to system colors."
+              }
+            ],
+            "policyMappings": [
+              {
+                "source": "WCAG",
+                "requirement": "Status and error messages must be perceivable and understandable when used in forms.",
+                "url": "https://www.w3.org/TR/WCAG22/"
+              }
+            ],
+            "rendering": "server-safe",
+            "hydrationCost": "none",
+            "criticalForA11y": true
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "component": "form-field",
+  "version": "0.0.1",
+  "stability": "experimental",
+  "accessibilityStatus": "not-reviewed",
+  "wcag": [
+    {
+      "criterion": "3.3.2",
+      "level": "A",
+      "title": "Labels or Instructions",
+      "status": "planned"
+    },
+    {
+      "criterion": "1.3.1",
+      "level": "A",
+      "title": "Info and Relationships",
+      "status": "planned"
+    }
+  ],
+  "baselineTests": [
+    {
+      "source": "Section 508 ICT Testing Baseline for Web",
+      "test": "Labels and Instructions",
+      "status": "planned",
+      "evidence": "Planned testing will verify label, hint, error, and control relationships."
+    }
+  ],
+  "manualTests": [],
+  "automatedResults": {},
+  "knownLimitations": []
+}

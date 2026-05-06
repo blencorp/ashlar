@@ -1,0 +1,63 @@
+@layer ashlar.components {
+  .ashlar-radio-group {
+    border: 0;
+    display: grid;
+    gap: 0.625rem;
+    margin: 0;
+    max-inline-size: var(--ashlar-radio-group-max-inline-size, 36rem);
+    padding: 0;
+  }
+
+  .ashlar-radio-group__legend {
+    color: var(--ashlar-color-text, #1b1b1b);
+    font-weight: 700;
+    margin-block-end: 0.25rem;
+    padding: 0;
+  }
+
+  .ashlar-radio-group__hint {
+    color: var(--ashlar-color-text-muted, #565c65);
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  .ashlar-radio-option {
+    align-items: start;
+    display: grid;
+    gap: 0.625rem;
+    grid-template-columns: max-content minmax(0, 1fr);
+  }
+
+  .ashlar-radio {
+    accent-color: var(--ashlar-color-action-primary-bg, #005ea8);
+    block-size: 1.25rem;
+    inline-size: 1.25rem;
+    margin-block-start: 0.125rem;
+  }
+
+  .ashlar-radio:focus-visible {
+    outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
+    outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
+  }
+
+  .ashlar-radio-label {
+    color: var(--ashlar-color-text, #1b1b1b);
+    line-height: 1.45;
+  }
+
+  .ashlar-radio[aria-invalid="true"] + .ashlar-radio-label,
+  .ashlar-radio-group[aria-invalid="true"] .ashlar-radio-label {
+    color: var(--ashlar-color-status-error-fg, #b50909);
+    font-weight: 700;
+  }
+}
+
+@media (forced-colors: active) {
+  .ashlar-radio {
+    accent-color: ButtonText;
+  }
+
+  .ashlar-radio:focus-visible {
+    outline-color: Highlight;
+  }
+}

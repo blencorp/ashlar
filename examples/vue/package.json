@@ -1,0 +1,24 @@
+{
+  "name": "@ashlar/example-vue",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Vue Ashlar reference app.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4184 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4184 --strictPort",
+    "typecheck": "vue-tsc -p tsconfig.json --noEmit",
+    "test": "pnpm run audit",
+    "lint": "biome lint src/main.ts vite.config.ts",
+    "audit": "pnpm exec ashlar audit --policy all --registry ../../registry public/audit.html"
+  },
+  "devDependencies": {
+    "@ashlar/cli": "workspace:*",
+    "@vitejs/plugin-vue": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vue": "catalog:",
+    "vue-tsc": "catalog:"
+  }
+}

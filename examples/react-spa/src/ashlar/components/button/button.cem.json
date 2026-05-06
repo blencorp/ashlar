@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "button.html",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "AshlarButton",
+          "tagName": "button",
+          "description": "Accessible semantic action control for forms and workflows.",
+          "_ashlar": {
+            "version": "0.0.1",
+            "tier": "primitive",
+            "layer": "L0",
+            "stability": "experimental",
+            "selector": ".ashlar-button",
+            "variants": ["primary"],
+            "a11yRequirements": [
+              {
+                "id": "accessible-name-required",
+                "wcag": "4.1.2",
+                "severity": "error",
+                "description": "Button must have visible text content or an aria-label."
+              },
+              {
+                "id": "focus-visible-required",
+                "wcag": "2.4.7",
+                "severity": "error",
+                "description": "Focus must be visually distinct."
+              }
+            ],
+            "antiPatterns": [
+              {
+                "id": "icon-only-needs-label",
+                "pattern": "<button $$$ATTRS>$$$CHILDREN</button>",
+                "regex": "class=\"[^\"]*\\bashlar-button\\b",
+                "has": { "pattern": "<svg $$$></svg>", "stopBy": "end" },
+                "not": { "regex": "aria-label\\s*=" },
+                "message": "Icon-only Ashlar Button requires aria-label (WCAG 4.1.2).",
+                "fix": "Add visible text or aria-label.",
+                "wcag": "4.1.2",
+                "severity": "error",
+                "languages": ["html"]
+              }
+            ],
+            "tokensConsumed": [
+              "color.action.primary.bg",
+              "color.action.primary.fg",
+              "focus.ring.color",
+              "radius.control"
+            ],
+            "platformFeatures": [
+              {
+                "feature": "forced-colors",
+                "status": "progressive",
+                "fallback": "Uses system colors for border, background, foreground, and focus outline."
+              }
+            ],
+            "policyMappings": [
+              {
+                "source": "Section 508",
+                "requirement": "Supports keyboard operation and accessible name when used correctly; maps to WCAG 2.0/2.2 Name, Role, Value and Focus Visible expectations.",
+                "url": "https://www.section508.gov/"
+              }
+            ],
+            "rendering": "server-safe",
+            "hydrationCost": "none",
+            "criticalForA11y": true
+          }
+        }
+      ]
+    }
+  ]
+}

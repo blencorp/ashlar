@@ -1,0 +1,140 @@
+{
+  "generatedBy": "ashlar-cli@0.0.0",
+  "components": [
+    {
+      "name": "alert",
+      "version": "0.0.1",
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Semantic status message for public-service feedback and validation states.",
+      "accessibilityStatus": "not-reviewed",
+      "sourceFiles": [
+        "src/ashlar/components/alert/alert.cem.json",
+        "src/ashlar/components/alert/alert.css",
+        "src/ashlar/components/alert/alert.evidence.json",
+        "src/ashlar/components/alert/alert.html"
+      ]
+    },
+    {
+      "name": "banner",
+      "version": "0.0.1",
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Official-site trust marker for federal and public-service pages.",
+      "accessibilityStatus": "not-reviewed",
+      "sourceFiles": [
+        "src/ashlar/components/banner/banner.cem.json",
+        "src/ashlar/components/banner/banner.css",
+        "src/ashlar/components/banner/banner.evidence.json",
+        "src/ashlar/components/banner/banner.html"
+      ]
+    },
+    {
+      "name": "button",
+      "version": "0.0.1",
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Accessible semantic action control for forms and workflows.",
+      "accessibilityStatus": "not-reviewed",
+      "sourceFiles": [
+        "src/ashlar/components/button/button.cem.json",
+        "src/ashlar/components/button/button.css",
+        "src/ashlar/components/button/button.evidence.json",
+        "src/ashlar/components/button/button.html"
+      ]
+    },
+    {
+      "name": "checkbox",
+      "version": "0.0.1",
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Native checkbox control for consent, confirmation, and multi-select form questions.",
+      "accessibilityStatus": "not-reviewed",
+      "sourceFiles": [
+        "src/ashlar/components/checkbox/checkbox.cem.json",
+        "src/ashlar/components/checkbox/checkbox.css",
+        "src/ashlar/components/checkbox/checkbox.evidence.json",
+        "src/ashlar/components/checkbox/checkbox.html"
+      ]
+    },
+    {
+      "name": "form-field",
+      "version": "0.0.1",
+      "tier": "composite",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Accessible label, hint, error, and control wrapper for public-service forms.",
+      "accessibilityStatus": "not-reviewed",
+      "sourceFiles": [
+        "src/ashlar/components/form-field/form-field.cem.json",
+        "src/ashlar/components/form-field/form-field.css",
+        "src/ashlar/components/form-field/form-field.evidence.json",
+        "src/ashlar/components/form-field/form-field.html"
+      ]
+    },
+    {
+      "name": "identifier",
+      "version": "0.0.1",
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Required agency identifier and trust-link footer for federal public-service pages.",
+      "accessibilityStatus": "not-reviewed",
+      "sourceFiles": [
+        "src/ashlar/components/identifier/identifier.cem.json",
+        "src/ashlar/components/identifier/identifier.css",
+        "src/ashlar/components/identifier/identifier.evidence.json",
+        "src/ashlar/components/identifier/identifier.html"
+      ]
+    },
+    {
+      "name": "radio-group",
+      "version": "0.0.1",
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Native radio group for mutually exclusive public-service form choices.",
+      "accessibilityStatus": "not-reviewed",
+      "sourceFiles": [
+        "src/ashlar/components/radio-group/radio-group.cem.json",
+        "src/ashlar/components/radio-group/radio-group.css",
+        "src/ashlar/components/radio-group/radio-group.evidence.json",
+        "src/ashlar/components/radio-group/radio-group.html"
+      ]
+    },
+    {
+      "name": "select",
+      "version": "0.0.1",
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Native select control for choosing one option from a bounded public-service list.",
+      "accessibilityStatus": "not-reviewed",
+      "sourceFiles": [
+        "src/ashlar/components/select/select.cem.json",
+        "src/ashlar/components/select/select.css",
+        "src/ashlar/components/select/select.evidence.json",
+        "src/ashlar/components/select/select.html"
+      ]
+    },
+    {
+      "name": "text-input",
+      "version": "0.0.1",
+      "tier": "primitive",
+      "layer": "L0",
+      "stability": "experimental",
+      "description": "Semantic text entry control for forms that need labels, hints, and errors.",
+      "accessibilityStatus": "not-reviewed",
+      "sourceFiles": [
+        "src/ashlar/components/text-input/text-input.cem.json",
+        "src/ashlar/components/text-input/text-input.css",
+        "src/ashlar/components/text-input/text-input.evidence.json",
+        "src/ashlar/components/text-input/text-input.html"
+      ]
+    }
+  ]
+}
