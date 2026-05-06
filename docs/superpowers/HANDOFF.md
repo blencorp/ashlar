@@ -166,7 +166,7 @@ cd -
 
 ## Honest gotchas
 
-- Strategy framing ("federal contractor runs `npx @ashlar/cli audit`") describes target state. The validator *code* works; the *delivery path* via npm is gated on slice 4 (supply-chain hardening). STATUS.md flags this with a "Distribution caveat."
+- Strategy framing ("federal contractor runs `npx ashlar audit`") describes target state. The validator *code* works; the *delivery path* via npm is gated on slice 4 (supply-chain hardening). STATUS.md flags this with a "Distribution caveat."
 - `theme.ts` now reads from JSON files (one per theme). `init` copies the stock themes into the consumer project. Editing the consumer copies works for that project; editing `packages/cli/themes/<name>.tokens.json` is the upstream source.
 - `verify` re-hashes installed files, checks registry capsule hashes and local signatures, validates declared capsule Sigstore bundle metadata when present, and runs `cosign verify-blob` when the trust root requires it. Real public bundle publication is still slice 4 work.
 - `audit` exits non-zero on error-level findings only. Federal findings are warnings; component findings are errors by default.

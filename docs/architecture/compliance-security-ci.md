@@ -297,7 +297,7 @@ Implemented locally. Writes an SPDX 2.3 JSON SBOM for the release packages and d
 
 The generated document includes:
 
-- `@ashlar/schemas` and `@ashlar/cli` release package entries;
+- `ashlar`, `@ashlar/cli`, and `@ashlar/schemas` release package entries;
 - runtime dependency entries with package URLs where versions are known;
 - `DESCRIBES` relationships for release packages;
 - `DEPENDS_ON` relationships from release packages to runtime dependencies.
@@ -373,7 +373,7 @@ Implemented locally as a guarded manual workflow for release-review artifacts. T
 
 Implemented locally. Checks the repository-side prerequisites for provenance-capable npm publishing:
 
-- `@ashlar/schemas` and `@ashlar/cli` are publishable public packages;
+- `ashlar`, `@ashlar/cli`, and `@ashlar/schemas` are publishable public packages;
 - each package has `publishConfig.provenance: true`;
 - each package has repository metadata pointing to `https://github.com/blencorp/ashlar.git` and its monorepo directory;
 - CI grants `id-token: write`;

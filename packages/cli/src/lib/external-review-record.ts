@@ -636,7 +636,7 @@ function publicProvenanceReport(value: unknown): PublicProvenanceVerification | 
 
 function reviewedPackageSpecs(content: string): string[] {
   const value = externalReviewFieldValue(content, "Packages reviewed") ?? "";
-  return Array.from(value.matchAll(/@ashlar\/(?:cli|schemas)@[0-9A-Za-z.+-]+/g))
+  return Array.from(value.matchAll(/(?:ashlar|@ashlar\/(?:cli|schemas))@[0-9A-Za-z.+-]+/g))
     .map((match) => match[0])
     .sort();
 }
@@ -672,7 +672,7 @@ function publicProvenanceVerificationArtifactErrors(input: {
     .sort();
 
   if (expectedSpecs.length === 0) {
-    errors.push("release trust record does not list concrete @ashlar package specs");
+    errors.push("release trust record does not list concrete Ashlar package specs");
   }
   for (const spec of expectedSpecs) {
     if (!actualSpecs.includes(spec)) {

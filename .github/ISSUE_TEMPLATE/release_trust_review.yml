@@ -30,7 +30,7 @@ body:
       value: |
         ```bash
         ashlar release readiness --registry ./registry
-        ashlar release provenance-verify-public --package @ashlar/cli@<version> @ashlar/schemas@<version>
+        ashlar release provenance-verify-public --package ashlar@<version> @ashlar/cli@<version> @ashlar/schemas@<version>
         ashlar release public-trust-verify --registry <signed-registry-artifact>
         ashlar release verify-trust-bundle --registry <registry> --bundle <bundle> --sbom <sbom> --attestation <attestation>
         ```
