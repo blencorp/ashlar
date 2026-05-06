@@ -56,6 +56,11 @@ function packRelative(packRoot: string, path: string): string {
   return value.length === 0 ? "." : value;
 }
 
+function cwdRelative(cwd: string, path: string): string {
+  const value = relative(cwd, path).replaceAll("\\", "/");
+  return value.startsWith("../") ? path : value;
+}
+
 function writeJson(path: string, value: unknown): void {
   mkdirSync(dirname(path), { recursive: true });
   writeFileSync(path, `${JSON.stringify(value, null, 2)}\n`);
@@ -211,12 +216,12 @@ export function writeReleaseReviewPack(input: ReleaseReviewPackInput): ReleaseRe
     sbomPath: sbom,
   });
   writeReleaseTrustReviewChecklist({
-    attestationPath: attestation,
+    attestationPath: cwdRelative(input.cwd, attestation),
     bundle,
-    bundlePath: trustBundle,
+    bundlePath: cwdRelative(input.cwd, trustBundle),
     output: releaseTrustChecklist,
     registryPath: input.registryPath,
-    sbomPath: sbom,
+    sbomPath: cwdRelative(input.cwd, sbom),
   });
   writeDesignPartnerReviewChecklist({
     legacyFixture: "examples/legacy-federal-project/index.html",
