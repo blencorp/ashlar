@@ -1,4 +1,4 @@
-# HANDOFF — 2026-04-29 (updated, second pass)
+# HANDOFF — 2026-05-06 proof-gate checkpoint
 
 For the next session picking up Ashlar work. Read this first; it should orient you in under five minutes. After this, read [STATUS.md](../../STATUS.md) (the canonical truth table) and scan the recent commits.
 
@@ -7,11 +7,16 @@ For the next session picking up Ashlar work. Read this first; it should orient y
 - **Branch**: active foundation PR stack ending at `codex/npx-ashlar-entrypoint`.
 - **Phase**: v0.0 prototype.
 - **Slices shipped/prototyped**: 1 (Standards & Evidence), 2 (Validator Wedge), 3 (Drift Management prototype), plus started substrate for 4 (Supply-chain Hardening), 5 (AI Contracts), and 6 (Token Pipeline).
-- **Slice in flight**: foundation stack review/merge and remaining public-proof gates: stable Button evidence, public npm provenance, public capsule Sigstore trust, and external review records.
+- **Current posture**: coherent standards/evidence foundation, not replacement-grade yet.
+- **Strict readiness blockers**: `stable-l0-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
+- **Proof tracking**: milestone [Replacement-grade proof gates](https://github.com/blencorp/ashlar/milestone/1), issues [#22](https://github.com/blencorp/ashlar/issues/22), [#23](https://github.com/blencorp/ashlar/issues/23), and [#24](https://github.com/blencorp/ashlar/issues/24).
+- **Next real work**: collect external proof for Button stable evidence, public release trust/provenance, and one design-partner validation. Do not create placeholder `docs/reviews/*.md` records.
 - **Apps surface**: `examples/plain-html/` (CI audit target), `examples/vite/` (theme picker reference), `apps/www/` (marketing landing).
 - **Tests**: use Node 24.15.0. The current PR stack has green CI; `pnpm check`, `pnpm build`, `pnpm release:smoke`, provenance readiness, SBOM/trust-bundle generation, evidence checks, AI eval, migration report, bundle budgets, and audits run in CI.
 
 The repo and the docs are coherent. Every claim in `README.md`, `docs/strategy.md`, and `docs/philosophy.md` defers to [STATUS.md](../../STATUS.md). When a doc and STATUS disagree, STATUS wins.
+
+The older notes below preserve useful background, but treat branch names, completed-slice counts, PR state, and next-step recommendations from the 2026-04-29 session as historical unless STATUS.md agrees with them.
 
 ## Decision: docs framework is Astro Starlight (planned for next session)
 

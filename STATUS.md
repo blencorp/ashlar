@@ -7,6 +7,8 @@ For the current prompt-to-artifact gap map against the broader "gov shadcn" obje
 Date: 2026-05-06
 Phase: v0.0 prototype
 Branch: active foundation PR stack through `codex/npx-ashlar-entrypoint`
+Proof tracking: [Replacement-grade proof gates](https://github.com/blencorp/ashlar/milestone/1) milestone, issues [#22](https://github.com/blencorp/ashlar/issues/22), [#23](https://github.com/blencorp/ashlar/issues/23), and [#24](https://github.com/blencorp/ashlar/issues/24)
+Strict readiness: still failing by design on `stable-l0-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`
 
 ## Implemented today
 
