@@ -1309,6 +1309,35 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(readme).not.toContain(output);
   });
 
+  it("writes checkout-relative release-trust checklist paths for relative review pack output", () => {
+    const outputArg = `reports/review-pack-${reviewFileSuffix()}`;
+    const output = join(repoRoot, outputArg);
+
+    try {
+      rmSync(output, { recursive: true, force: true });
+      const result = runCli([
+        "release",
+        "review-pack",
+        "--registry",
+        "./registry",
+        "--output",
+        outputArg,
+      ]);
+
+      expect(result.status, result.stdout).toBe(0);
+      const checklist = readFileSync(
+        join(output, "release-trust", "ashlar-release-trust-checklist.md"),
+        "utf8",
+      );
+      expect(checklist).toContain(
+        `ashlar release verify-trust-bundle --registry ./registry --bundle ${outputArg}/release-trust/ashlar-trust-bundle.json --sbom ${outputArg}/release-trust/ashlar-sbom.spdx.json --attestation ${outputArg}/release-trust/ashlar-sbom.attestation.json`,
+      );
+      expect(checklist).not.toContain(repoRoot);
+    } finally {
+      rmSync(output, { recursive: true, force: true });
+    }
+  });
+
   it("writes a design partner reviewer checklist for external product validation", () => {
     const checklistPath = join(scratch, "ashlar-design-partner-checklist.md");
 
