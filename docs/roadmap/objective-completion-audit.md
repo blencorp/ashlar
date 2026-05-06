@@ -1,7 +1,7 @@
 # Objective Completion Audit
 
 Date: 2026-05-06
-Branch inspected: `codex/objective-completion-audit`
+Branch inspected: `codex/ai-eval-generated-output-corpus`
 
 ## Objective
 
@@ -25,7 +25,7 @@ Strict readiness evidence: `node packages/cli/dist/index.js release readiness --
 | Requirement | Current evidence | Coverage judgment | Missing proof |
 | --- | --- | --- | --- |
 | Replace day-to-day USWDS usage | `ashlar audit --policy federal`, `ashlar migrate uswds`, 12 L0 capsules in `registry/components`, `benefit-application` service-flow capsule, `examples/uswds-project` migration fixture, `examples/legacy-federal-project` audit fixture, `docs/roadmap/uswds-coverage-matrix.md` | Strong prototype, not replacement-grade. Coverage gaps are now explicit. | Stable accessibility evidence, external design-partner validation, wider component/pattern coverage, public release |
-| Become memorable like shadcn/ui | Unscoped `ashlar` package in PR #31, `npx ashlar` docs/status alignment, source-capsule distribution model, `apps/www` marketing surface | Good naming/DX direction | Package name must be reserved by real npm publish; docs site/community launch still missing |
+| Become memorable like shadcn/ui | Unscoped `ashlar` package in PR #46, `npx ashlar` docs/status alignment, source-capsule distribution model, `apps/www` marketing surface | Good naming/DX direction | Package name must be reserved by real npm publish; docs site/community launch still missing |
 | Address shadcn gaps | `ashlar update`, `ashlar verify`, capsule lockfile hashes, update survival tests, signed capsule manifests, release readiness, SBOM/trust-bundle/provenance tooling | Strongest product wedge in repo | Needs real release traffic, public Sigstore bundles, npm provenance, external security review |
 | AI-native gov app workflow | `ashlar mcp`, MCP `validate_usage`, `search_components`, `suggest_for_task`, `list_tokens`, `get_token`, `ashlar ai-eval`, generated `AGENTS.md` and `DESIGN.md`, and `examples/ai-eval/generated-output-corpus` | Useful local AI-native substrate with a small seed corpus | Independent model/tool outputs beyond the Codex seed corpus, hosted/remote MCP decision, write-tool threat model if write tools are ever added |
 | Amazing DX and easy integration | `ashlar init`, `status`, `add`, `audit`, `search`, `suggest`, `view`, `theme sync`, `theme validate`, release smoke installing packed CLI into a clean consumer | Good local DX | Public npm install path, public docs, first-run docs/tutorials, real user feedback |
@@ -36,18 +36,22 @@ Strict readiness evidence: `node packages/cli/dist/index.js release readiness --
 
 Open active ready-for-review stack:
 
-- #21 `Build standards evidence foundation` - green CI and Changesets.
-- #25 `Refresh proof gate checkpoint docs` - green CI and Changesets.
-- #26 `Document release review pack artifact extraction` - green CI and Changesets.
-- #28 `Make release trust checklist paths portable` - green CI and Changesets.
-- #31 `Add ashlar npx entrypoint` - green CI and Changesets; replaces #30 and #29.
+- #42 `Build standards evidence foundation (review fixes)` - green CI and Changesets; base `main`.
+- #43 `Refresh proof gate checkpoint docs (restacked)` - green CI and Changesets; base `codex/standards-foundation-review-fixes`.
+- #44 `Document release review pack artifact extraction (restacked)` - green CI and Changesets; base `codex/standards-foundation-review-fixes`.
+- #45 `Make release trust checklist paths portable (restacked)` - green CI and Changesets; base `codex/review-pack-artifact-instructions-review-fixes`.
+- #46 `Add ashlar npx entrypoint (restacked)` - green CI and Changesets; base `codex/typecheck-build-info-isolation-review-fixes`.
+- #47 `Refresh objective audit PR evidence (restacked)` - green CI and Changesets; base `codex/objective-completion-audit-review-fixes`.
+- #48 `Define USWDS coverage matrix (restacked)` - green CI and Changesets; base `codex/objective-audit-pr-evidence-review-fixes`.
+- #49 `Add generated-output AI eval corpus` - green CI and Changesets; base `codex/uswds-coverage-matrix-review-fixes`.
+
+All open stack PRs remain `reviewDecision: REVIEW_REQUIRED` and `mergeStateStatus: BLOCKED` until human review lands. Copilot could not review #42 because the first PR diff exceeds its 20,000-line limit; no actionable inline review thread is open on #42-#49.
 
 Closed as superseded:
 
-- #14 stale failed branch, replaced by #21.
-- #27 red portable-path branch, replaced by #28.
-- #29 first npx-entrypoint checkpoint, replaced by #30 after repository rules blocked follow-up push.
-- #30 second npx-entrypoint checkpoint, replaced by #31 to carry the objective audit on a fresh branch.
+- #14 stale failed branch, replaced by the foundation stack.
+- #21, #25, #26, #28, #31, #33, and #37 were replaced by the current #42-#48 restacked review-fix PRs.
+- #27, #29, and #30 were intermediate red or blocked branches superseded during the same restack.
 
 ## Gate Audit
 
@@ -69,6 +73,13 @@ The following release-readiness checks fail today:
 - `external-review-proof`: missing `stable-evidence-*.md`, `release-trust-*.md`, and `design-partner-*.md`.
 - `npm-provenance-public`: requires real npm trusted publishing and `ashlar release provenance-verify-public` against published versions.
 - `sigstore-public-trust`: 0/13 capsule manifests include public Sigstore bundle metadata; current capsules still use local Ed25519 signatures.
+
+Current Button reviewer intake for issue #22 is available from the green #49 CI run:
+
+- `ashlar-l0-stable-review`: `https://github.com/blencorp/ashlar/actions/runs/25448692910/artifacts/6836240755`
+- `ashlar-button-stable-review-status`: `https://github.com/blencorp/ashlar/actions/runs/25448692910/artifacts/6836241000`
+- `ashlar-release-review-pack`: `https://github.com/blencorp/ashlar/actions/runs/25448692910/artifacts/6836243165`
+- `ashlar-release-readiness-json`: `https://github.com/blencorp/ashlar/actions/runs/25448692910/artifacts/6836242820`
 
 ## Next Concrete Work
 
