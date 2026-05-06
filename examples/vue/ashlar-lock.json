@@ -121,7 +121,7 @@
     },
     "text-input": {
       "version": "0.0.1",
-      "capsule_hash": "sha256:41942403d4054d2b70ca1bc3beb3d996df3d3a72b46d037835312b3166c3353b",
+      "capsule_hash": "sha256:3b4822051714d40746e60f79d2cb4d3f542562362bddc9a4188243c49332c7d5",
       "stability": "experimental",
       "installed_at": "2026-05-06T18:08:29.126Z",
       "installed_via": "ashlar-cli@0.0.0",
@@ -132,8 +132,8 @@
           "critical_for_a11y": false
         },
         "src/ashlar/components/text-input/text-input.css": {
-          "original_hash": "sha256:468324db685143785467f7159bdcb553236dbeaf248c2e35ee65aa2c3b9b0f44",
-          "current_hash": "sha256:468324db685143785467f7159bdcb553236dbeaf248c2e35ee65aa2c3b9b0f44",
+          "original_hash": "sha256:571615ddb3af26db517e5313b924ce89f6426022c50a1bd1832430f221b11b05",
+          "current_hash": "sha256:571615ddb3af26db517e5313b924ce89f6426022c50a1bd1832430f221b11b05",
           "critical_for_a11y": true
         },
         "src/ashlar/components/text-input/text-input.evidence.json": {

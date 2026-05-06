@@ -23,6 +23,28 @@ describe("theme loader", () => {
     expect(themes[0]?.name).toBe("default");
   });
 
+  it("loads source provenance for stock themes", () => {
+    const themes = loadStockThemes();
+    expect(getDefaultTheme().sources).toContainEqual(
+      expect.objectContaining({
+        label: "USWDS system color tokens",
+        url: "https://designsystem.digital.gov/design-tokens/color/system-tokens/",
+      }),
+    );
+    expect(themes.find((theme) => theme.name === "va")?.sources).toContainEqual(
+      expect.objectContaining({
+        label: "VA.gov color palette",
+        url: "https://design.va.gov/foundation/color-palette",
+      }),
+    );
+    expect(themes.find((theme) => theme.name === "usda")?.sources).toContainEqual(
+      expect.objectContaining({
+        label: "USDA Design and Brand Plays",
+        url: "https://www.usda.gov/about-usda/policies-and-links/digital/digital-strategy/design-and-brand/design-and-brand-plays",
+      }),
+    );
+  });
+
   it("validates theme files (action.primary.bg color)", () => {
     const themes = loadStockThemes();
     const defaultTheme = themes.find((t) => t.name === "default");
@@ -50,7 +72,9 @@ describe("theme loader", () => {
   it("buildTailwindThemeCss emits Tailwind v4 theme variables backed by Ashlar CSS variables", () => {
     const css = buildTailwindThemeCss();
     expect(css).toContain("@theme");
-    expect(css).toContain("--color-ashlar-action-primary-bg: var(--ashlar-color-action-primary-bg);");
+    expect(css).toContain(
+      "--color-ashlar-action-primary-bg: var(--ashlar-color-action-primary-bg);",
+    );
     expect(css).toContain("--radius-ashlar-control: var(--ashlar-radius-control);");
     expect(css).toContain("--font-ashlar-sans: var(--ashlar-font-sans);");
   });

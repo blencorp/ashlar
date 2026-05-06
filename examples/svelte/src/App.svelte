@@ -6,20 +6,20 @@ const themes: Array<{ value: Theme; label: string; logo: string; note: string }>
   {
     value: "default",
     label: "Default",
-    logo: "A",
-    note: "USWDS-token baseline.",
+    logo: "US",
+    note: "USWDS color and type sources.",
   },
   {
     value: "va",
     label: "VA",
     logo: "VA",
-    note: "VA semantic color tokens.",
+    note: "VA.gov color and typography.",
   },
   {
     value: "usda",
     label: "USDA",
     logo: "USDA",
-    note: "USDA green and blue anchors.",
+    note: "USDA brand plays plus USWDS.",
   },
 ];
 
@@ -130,7 +130,7 @@ $: if (typeof document !== "undefined") {
   <div class="ashlar-banner__inner">
     <p class="ashlar-banner__text">An official website of the United States government</p>
     <details class="ashlar-banner__details">
-      <summary>How you know</summary>
+      <summary>Here's how you know</summary>
       <div class="ashlar-banner__grid">
         <div>
           <strong>Official websites use .gov</strong>
@@ -171,7 +171,7 @@ $: if (typeof document !== "undefined") {
         <div class="agency-panel__header">
           <div>
             <span class="agency-panel__kicker">Theme</span>
-            <h2 class="agency-panel__title">Choose agency system</h2>
+            <h2 class="agency-panel__title">Choose agency theme</h2>
           </div>
         </div>
         <fieldset class="agency-grid">

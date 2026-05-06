@@ -26,11 +26,18 @@ export type TokenTree = {
   [key: string]: TokenLeaf | TokenTree;
 };
 
+export type AgencyThemeSource = {
+  label: string;
+  url: string;
+  note?: string;
+};
+
 type AgencyThemeFile = {
   $schema?: string;
   name: string;
   title: string;
   description: string;
+  sources?: AgencyThemeSource[];
   order?: number;
   tokens: TokenTree;
   modes?: {
@@ -42,6 +49,7 @@ export type ThemeDefinition = {
   name: string;
   title: string;
   description: string;
+  sources: AgencyThemeSource[];
   order: number;
   tokens: TokenTree;
   dark: TokenTree;
@@ -131,6 +139,7 @@ function readJsonThemeFile(absolutePath: string, label: string): ThemeDefinition
     name: theme.name,
     title: theme.title,
     description: theme.description,
+    sources: theme.sources ?? [],
     order: theme.order ?? 100,
     tokens: theme.tokens,
     dark: theme.modes?.dark ?? {},

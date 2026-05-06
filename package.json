@@ -22,6 +22,7 @@
     "lint": "turbo run lint",
     "check": "turbo run lint typecheck test",
     "commitlint": "commitlint",
+    "examples:visual": "node scripts/example-visual-smoke.mjs",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "changeset": "changeset",
@@ -36,6 +37,7 @@
     "@changesets/cli": "catalog:",
     "@commitlint/cli": "catalog:",
     "@commitlint/config-conventional": "catalog:",
+    "@playwright/test": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

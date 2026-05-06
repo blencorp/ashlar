@@ -29,8 +29,10 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm check
       - run: pnpm build
+      - run: pnpm examples:visual
       - run: rm -rf packages/cli/dist && pnpm --filter @ashlar/cli build
       - run: mkdir -p reports
       - run: node packages/cli/dist/index.js status --registry ./registry --json > reports/ashlar-status.json
@@ -61,6 +63,12 @@ jobs:
       - run: node packages/cli/dist/index.js bundle budget --registry ./registry --json > reports/ashlar-l0-bundle-budget.json
       - run: node packages/cli/dist/index.js audit --policy federal --sarif examples/legacy-federal-project/index.html > reports/ashlar-legacy-federal-audit.sarif
       - run: node packages/cli/dist/index.js audit --policy all --registry ./registry --sarif examples/plain-html/index.html > ashlar.sarif
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ashlar-example-visual-smoke
+          path: reports/example-visual-smoke
 
       - uses: actions/upload-artifact@v4
         if: always()

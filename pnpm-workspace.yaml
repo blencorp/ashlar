@@ -19,6 +19,7 @@ catalog:
   "@changesets/changelog-github": ^0.7.0
   "@commitlint/cli": ^20.5.3
   "@commitlint/config-conventional": ^20.5.3
+  "@playwright/test": ^1.59.1
   "@tsconfig/svelte": ^5.0.8
   "@types/node": ^24.12.2
   "@types/react": ^19.2.14

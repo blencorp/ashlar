@@ -3,6 +3,18 @@
   "name": "va",
   "title": "VA",
   "description": "VA.gov-inspired service theme grounded in VA semantic color tokens. Illustrative; not an official VA brand specification.",
+  "sources": [
+    {
+      "label": "VA.gov color palette",
+      "url": "https://design.va.gov/foundation/color-palette",
+      "note": "Uses VA semantic colors, including vads-color-primary and base text values."
+    },
+    {
+      "label": "VA.gov typography",
+      "url": "https://design.va.gov/foundation/typography",
+      "note": "Uses VA's Source Sans Pro sans-serif stack and VA typography scale references."
+    }
+  ],
   "order": 10,
   "tokens": {
     "color": {

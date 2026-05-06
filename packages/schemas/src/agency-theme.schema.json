@@ -22,6 +22,33 @@
       "minLength": 1,
       "description": "One-sentence description shown in theme pickers and contributor docs."
     },
+    "sources": {
+      "type": "array",
+      "description": "Primary agency or government design-system sources used to derive this theme. These links travel with generated theme JSON so downstream teams can audit provenance.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["label", "url"],
+        "properties": {
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Short source name shown in theme provenance UIs."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Canonical public URL for the agency design-system or brand source."
+          },
+          "note": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Short note describing which tokens or design constraints came from this source."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
     "order": {
       "type": "number",
       "description": "Sort hint; lower numbers appear first. Default theme is 0."

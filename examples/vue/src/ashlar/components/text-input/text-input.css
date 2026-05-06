@@ -1,5 +1,6 @@
 @layer ashlar.components {
   .ashlar-text-input {
+    background-color: var(--ashlar-color-surface, #ffffff);
     border: 1px solid var(--ashlar-color-input-border, #565c65);
     border-radius: var(--ashlar-radius-control, 0.25rem);
     box-sizing: border-box;
@@ -24,6 +25,7 @@
 
 @media (forced-colors: active) {
   .ashlar-text-input {
+    background-color: Field;
     border-color: FieldText;
   }
 

@@ -3,6 +3,23 @@
   "name": "default",
   "title": "Default",
   "description": "Default public-service baseline grounded in USWDS design-token conventions. Selected when no agency theme is applied.",
+  "sources": [
+    {
+      "label": "USWDS color guidance",
+      "url": "https://designsystem.digital.gov/design-tokens/color/overview/",
+      "note": "Uses the USWDS theme/system token model and contrast-first color guidance."
+    },
+    {
+      "label": "USWDS system color tokens",
+      "url": "https://designsystem.digital.gov/design-tokens/color/system-tokens/",
+      "note": "Maps the default blue and neutral values to USWDS system token families."
+    },
+    {
+      "label": "USWDS font tokens",
+      "url": "https://designsystem.digital.gov/design-tokens/typesetting/font/",
+      "note": "Keeps Public Sans and system fallback alignment with USWDS type settings."
+    }
+  ],
   "order": 0,
   "tokens": {
     "color": {

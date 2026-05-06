@@ -13,6 +13,11 @@ type AgencyTheme = {
   name: string;
   title: string;
   description: string;
+  sources?: Array<{
+    label: string;
+    url: string;
+    note?: string;
+  }>;
   order?: number;
 };
 
@@ -143,7 +148,10 @@ function renderControls(): void {
   }
 
   for (const theme of themes) {
-    themeContainer.appendChild(buildControl("theme", theme.name, theme.title, theme.description));
+    const sources = theme.sources?.map((source) => source.label).join(" + ");
+    themeContainer.appendChild(
+      buildControl("theme", theme.name, theme.title, sources ?? theme.description),
+    );
   }
   for (const mode of modes) {
     modeContainer.appendChild(buildControl("mode", mode.name, mode.title, mode.description));
