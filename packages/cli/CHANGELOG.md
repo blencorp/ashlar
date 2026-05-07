@@ -1,5 +1,11 @@
 # @ashlar/cli
 
+## 0.3.4
+
+### Patch Changes
+
+- [#83](https://github.com/blencorp/ashlar/pull/83) [`df9b68c`](https://github.com/blencorp/ashlar/commit/df9b68c8eca11658f28eec381d0b48a0cbba0c04) Thanks [@naodya](https://github.com/naodya)! - Extend the shadcn v4 compatibility surface with init scaffold flags plus add path, silent, and overwrite behaviors while preserving Ashlar's branded TUI output.
+
 ## 0.3.3
 
 ### Patch Changes
