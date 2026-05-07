@@ -198,7 +198,10 @@ function GovBanner() {
       aria-label="Official website of the United States government"
     >
       <div className="ashlar-banner__inner">
-        <p className="ashlar-banner__text">An official website of the United States government</p>
+        <p className="ashlar-banner__text">
+          <span className="ashlar-banner__flag" aria-hidden="true" />
+          <span>An official website of the United States government</span>
+        </p>
         <details className="ashlar-banner__details">
           <summary>Here's how you know</summary>
           <div className="ashlar-banner__grid">

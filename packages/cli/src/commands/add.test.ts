@@ -59,6 +59,7 @@ describe("add command", () => {
     const design = readFileSync(join(scratch, "DESIGN.md"), "utf8");
     expect(design).toContain("form-field@0.0.1");
     expect(design).toContain("--ashlar-color-action-primary-bg");
+    expect(design).toContain("do not place cards inside cards");
     expect(design).toContain("validate_usage");
 
     expect(existsSync(join(scratch, "src/ashlar/indexes/components.json"))).toBe(true);

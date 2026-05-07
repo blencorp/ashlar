@@ -18,10 +18,11 @@
       "description": "Semantic status message for public-service feedback and validation states."
     },
     "banner": {
-      "latest": "0.0.1",
-      "versions": ["0.0.1"],
+      "latest": "0.0.2",
+      "versions": ["0.0.1", "0.0.2"],
       "capsuleHashes": {
-        "0.0.1": "sha256:1b7a4b3f5cd23e5a0c4b956947b73cab4c124483715d8393cba61e2daa89791b"
+        "0.0.1": "sha256:1b7a4b3f5cd23e5a0c4b956947b73cab4c124483715d8393cba61e2daa89791b",
+        "0.0.2": "sha256:de275cf52609200a1f3afaace582c705d6254761b074c0c59fcbe267736bb0f5"
       },
       "tier": "primitive",
       "layer": "L0",

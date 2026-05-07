@@ -28,6 +28,7 @@ Use a restrained, trustworthy civic interface. Prioritize clarity, plain languag
 - Do use Ashlar tokens and installed components.
 - Do preserve focus indicators and forced-colors behavior.
 - Do keep forms dense enough for repeat use but readable at 200% zoom.
+- Do keep workflow surfaces flat; do not place cards inside cards or use cards as layout wrappers.
 - Do not invent brand colors outside the agency theme.
 - Do not remove focus-visible styles.
 - Do not use decorative gradients or oversized marketing layouts for operational government flows.

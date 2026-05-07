@@ -85,6 +85,7 @@ ${installedCapsuleLines(capsules)}
 - Prioritize clarity, plain language, visible focus, and resilient layouts over novelty.
 - Preserve focus indicators, label associations, error summaries, and forced-colors behavior.
 - Keep forms dense enough for repeat use but readable at 200% zoom.
+- Keep workflow surfaces flat: do not place cards inside cards or use cards as layout wrappers.
 - Do not invent props, variants, classes, or behaviors outside installed Ashlar capsule manifests.
 - Do not use decorative gradients or oversized marketing layouts for operational government flows.
 
