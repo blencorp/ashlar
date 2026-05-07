@@ -3,10 +3,11 @@ import { dirname, join } from "node:path";
 import type { Command } from "commander";
 import { writeAgentsContext } from "../lib/agents.js";
 import { readVerifiedCapsuleManifest } from "../lib/capsule.js";
+import { applyCommandCwd, type CwdOption } from "../lib/cwd.js";
 import { writeDesignContext } from "../lib/design-context.js";
 import { sha256File } from "../lib/hash.js";
 import { readConfig, readLockfile, writeJson } from "../lib/project.js";
-import { getComponent } from "../lib/registry.js";
+import { getComponent, listComponents } from "../lib/registry.js";
 import { syncAshlarProject } from "../lib/styles.js";
 import {
   printBrandHeader,
@@ -18,9 +19,11 @@ import {
   printSuccess,
 } from "../lib/tui.js";
 
-type AddOptions = {
+type AddOptions = CwdOption & {
+  all?: boolean;
   diff?: boolean;
   dryRun?: boolean;
+  yes?: boolean;
   view?: boolean;
 };
 
@@ -156,92 +159,100 @@ function renderDiff(plans: InstallPlan[]): void {
 export function registerAddCommand(program: Command) {
   program
     .command("add")
-    .argument("<components...>")
+    .argument("[components...]", "Component names")
     .description("Add component capsules from the configured registry")
+    .option("-a, --all", "Add every available component in the configured registry")
+    .option("-c, --cwd <path>", "Working directory. Defaults to the current directory.")
     .option("--dry-run", "Preview verified install writes without changing files")
     .option("--diff", "Show a source diff for verified install writes without changing files")
     .option("--view", "Show verified capsule metadata and target files before install")
+    .option("-y, --yes", "Skip confirmation prompts. Present for shadcn CLI compatibility.")
     .action((components: string[], options: AddOptions) => {
-      const config = readConfig();
-      const plans: InstallPlan[] = [];
+      try {
+        applyCommandCwd(options);
+        const config = readConfig();
+        const selectedComponents = options.all
+          ? listComponents(process.cwd(), config.registry).map((component) => component.name)
+          : components;
 
-      for (const component of components) {
-        try {
+        if (selectedComponents.length === 0) {
+          throw new Error("No Ashlar components requested. Pass component names or --all.");
+        }
+
+        const plans: InstallPlan[] = [];
+        for (const component of selectedComponents) {
           plans.push(buildInstallPlan(component, config));
-        } catch (error) {
-          console.error(error instanceof Error ? error.message : String(error));
-          process.exitCode = 1;
+        }
+
+        if (options.view || options.dryRun || options.diff) {
+          if (options.view) {
+            renderView(plans);
+          }
+          if (options.dryRun) {
+            renderDryRun(plans);
+          }
+          if (options.diff) {
+            renderDiff(plans);
+          }
+          printFooter();
           return;
         }
-      }
 
-      if (options.view || options.dryRun || options.diff) {
-        if (options.view) {
-          renderView(plans);
-        }
-        if (options.dryRun) {
-          renderDryRun(plans);
-        }
-        if (options.diff) {
-          renderDiff(plans);
-        }
-        printFooter();
-        return;
-      }
+        printBrandHeader("Installing source-owned capsules");
+        const lockfile = readLockfile();
 
-      printBrandHeader("Installing source-owned capsules");
-      const lockfile = readLockfile();
+        for (const plan of plans) {
+          const installedFiles: Record<
+            string,
+            { original_hash: string; current_hash: string; critical_for_a11y: boolean }
+          > = {};
 
-      for (const plan of plans) {
-        const installedFiles: Record<
-          string,
-          { original_hash: string; current_hash: string; critical_for_a11y: boolean }
-        > = {};
-
-        for (const file of plan.files) {
-          const target = file.target;
-          mkdirSync(dirname(target), { recursive: true });
-          copyFileSync(file.source, target);
-          const hash = sha256File(target);
-          if (hash !== file.expectedHash) {
-            console.error(
-              `Installed file hash mismatch for ${plan.detail.name}@${plan.detail.version}: ${target}`,
-            );
-            process.exitCode = 1;
-            return;
+          for (const file of plan.files) {
+            const target = file.target;
+            mkdirSync(dirname(target), { recursive: true });
+            copyFileSync(file.source, target);
+            const hash = sha256File(target);
+            if (hash !== file.expectedHash) {
+              throw new Error(
+                `Installed file hash mismatch for ${plan.detail.name}@${plan.detail.version}: ${target}`,
+              );
+            }
+            installedFiles[target] = {
+              original_hash: file.expectedHash,
+              current_hash: file.expectedHash,
+              critical_for_a11y: file.criticalForA11y,
+            };
           }
-          installedFiles[target] = {
-            original_hash: file.expectedHash,
-            current_hash: file.expectedHash,
-            critical_for_a11y: file.criticalForA11y,
+
+          lockfile.components[plan.detail.name] = {
+            version: plan.detail.version,
+            capsule_hash: plan.manifest.capsule_hash,
+            stability: plan.manifest.stability,
+            installed_at: new Date().toISOString(),
+            installed_via: "ashlar-cli@0.0.0",
+            files: installedFiles,
           };
+
+          printSuccess(`Added ${plan.detail.name}@${plan.detail.version}`);
+          for (const file of Object.keys(installedFiles).sort()) {
+            console.log(`  ${file}`);
+          }
         }
 
-        lockfile.components[plan.detail.name] = {
-          version: plan.detail.version,
-          capsule_hash: plan.manifest.capsule_hash,
-          stability: plan.manifest.stability,
-          installed_at: new Date().toISOString(),
-          installed_via: "ashlar-cli@0.0.0",
-          files: installedFiles,
-        };
-
-        printSuccess(`Added ${plan.detail.name}@${plan.detail.version}`);
-        for (const file of Object.keys(installedFiles).sort()) {
-          console.log(`  ${file}`);
-        }
+        writeJson("ashlar-lock.json", lockfile);
+        syncAshlarProject(process.cwd(), config, lockfile);
+        writeAgentsContext("AGENTS.md", config, lockfile);
+        writeDesignContext("DESIGN.md", config, lockfile, { cwd: process.cwd(), force: true });
+        printSection("Next");
+        printCommand(
+          "ashlar verify",
+          "Check installed files against registry hashes and signatures.",
+        );
+        printCommand("ashlar status", "Review adoption gates, evidence status, and next actions.");
+        printFooter();
+      } catch (error) {
+        console.error(error instanceof Error ? error.message : String(error));
+        process.exitCode = 1;
       }
-
-      writeJson("ashlar-lock.json", lockfile);
-      syncAshlarProject(process.cwd(), config, lockfile);
-      writeAgentsContext("AGENTS.md", config, lockfile);
-      writeDesignContext("DESIGN.md", config, lockfile, { cwd: process.cwd(), force: true });
-      printSection("Next");
-      printCommand(
-        "ashlar verify",
-        "Check installed files against registry hashes and signatures.",
-      );
-      printCommand("ashlar status", "Review adoption gates, evidence status, and next actions.");
-      printFooter();
     });
 }
