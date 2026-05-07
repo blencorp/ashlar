@@ -1,5 +1,11 @@
 # @ashlar/cli
 
+## 0.3.3
+
+### Patch Changes
+
+- [#79](https://github.com/blencorp/ashlar/pull/79) [`9c39443`](https://github.com/blencorp/ashlar/commit/9c39443bc57a2f0c1fdadd89beb58eeac9079b14) Thanks [@naodya](https://github.com/naodya)! - Package the complete signed registry directory in Sigstore release artifacts so reviewers can rerun public trust verification from a downloaded workflow artifact.
+
 ## 0.3.2
 
 ### Patch Changes
