@@ -2,7 +2,7 @@
 
 Synthesized from primary-source research conducted April 2026. The full source list is in [`source-map.md`](./source-map.md).
 
-This document records what the modern web platform delivers in 2026 and what JavaScript a design system can therefore stop shipping. It is the empirical foundation for Ashlar's L0 (platform-driven foundation) layer.
+This document records what the modern web platform delivers in 2026 and what JavaScript a design system can therefore stop shipping. It is the empirical foundation for Ashlar's markup primitive layer.
 
 ## Headline finding
 
@@ -76,8 +76,8 @@ After exploiting all of the above, custom JavaScript (and therefore Web Componen
 
 The 70/30 split is the empirical foundation for Ashlar's two-layer separation:
 
-- **L0** is built on the platform primitives above. It targets the ~70% of components that need zero or trivial JavaScript. These work in any rendering environment, framework or not.
-- **L1** is reserved for the ~30% above. These ship as Web Components wrapping Zag statecharts, with framework adapters generated from CEM.
+- **Markup primitives** are built on the platform primitives above. They target the ~70% of components that need zero or trivial JavaScript. These work in any rendering environment, framework or not.
+- **Interactive components** are reserved for the ~30% above. These ship as Web Components wrapping Zag statecharts, with framework adapters generated from CEM.
 
 This split keeps the bundle small, the maintenance surface small, and the cross-stack reach maximal. It also means a federal Drupal site can adopt 70% of Ashlar without taking on any JavaScript runtime at all.
 

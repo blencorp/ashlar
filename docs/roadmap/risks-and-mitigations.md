@@ -62,13 +62,13 @@ The Australian Government Design System died because a single agency owned it. A
 If Lit custom elements + Declarative Shadow DOM + framework SSR (especially Next.js) does not work cleanly in real production apps, the WC-first thesis fails.
 
 **Mitigations**:
-- Pick Lit + React 19 + Next.js as v0.0 proving ground for the L1 Combobox.
-- Document Firefox ARIA reflection fallbacks per L1 component.
+- Pick Lit + React 19 + Next.js as v0.0 proving ground for the interactive Combobox.
+- Document Firefox ARIA reflection fallbacks per interactive component.
 - Use Light DOM by default — minimizes hydration friction.
-- L4 templates as escape hatch for non-JS / SSR-heavy environments.
+- application-block templates as escape hatch for non-JS / SSR-heavy environments.
 - Test against Astro, Next.js, Nuxt, SvelteKit, SolidStart in v0.2.
 
-**Kill criterion**: if SSR hydration is unreliable in Next.js after v0.0 iteration, reconsider WC-first for L1 (consider Stencil, or a different L1 strategy).
+**Kill criterion**: if SSR hydration is unreliable in Next.js after v0.0 iteration, reconsider Web Component-first interactive components (consider Stencil, or a different interactive strategy).
 
 ### R5 — MCP / AI integration introduces security exposure
 
@@ -163,7 +163,7 @@ Auto-generating Vue / Svelte / Solid adapters from extended CEM may produce idio
 Firefox's `ElementInternals` ARIA reflection is incomplete. This causes accessibility regressions if components rely on it.
 
 **Mitigations**:
-- All L1 components set ARIA via host attributes, not via `internals.aria*`.
+- All interactive components set ARIA via host attributes, not via `internals.aria*`.
 - Per-component test specs include Firefox-specific ARIA propagation checks.
 - `_ashlar.firefoxFallbacks` field in CEM documents per-component fallbacks.
 
@@ -243,17 +243,17 @@ CISA-flagged contemporary threats: the September 2025 Shai-Hulud worm (~500 npm 
 ### R21 — Lit + Zag has no production prior art
 
 **Severity**: High.
-**Phase exposure**: v0.1 (first L1 component).
+**Phase exposure**: v0.1 (first interactive component).
 
-The L1 substrate is currently designed around Lit components driven by Zag statecharts. Zag has no `@zag-js/vanilla` package; the maintainer's discussion #2309 confirms vanilla support is proof-of-concept only. There is no published production Lit + Zag combination at scale. R4 covers WC-with-framework-SSR friction; this risk covers the more fundamental question of whether the proposed L1 architecture itself works.
+The interactive component substrate is currently designed around Lit components driven by Zag statecharts. Zag has no `@zag-js/vanilla` package; the maintainer's discussion #2309 confirms vanilla support is proof-of-concept only. There is no published production Lit + Zag combination at scale. R4 covers WC-with-framework-SSR friction; this risk covers the more fundamental question of whether the proposed interactive architecture itself works.
 
 **Mitigations**:
-- L1 ComboBox is deferred from v0.0 to v0.1; substrate decisions are not made on Button alone.
+- interactive ComboBox is deferred from v0.0 to v0.1; substrate decisions are not made on Button alone.
 - ADR-0010 explicitly marks Lit + Zag as a research bet.
-- One iteration on a real L1 component before scaling beyond Button; if it doesn't feel right, ADR-0010 is revisited (alternatives: Lit + custom statechart wrapper, Stencil, a different combination).
+- One iteration on a real interactive component before scaling beyond Button; if it doesn't feel right, ADR-0010 is revisited (alternatives: Lit + custom statechart wrapper, Stencil, a different combination).
 - Keep behavior contracts (statechart + signals) framework-neutral so the underlying library can swap without component-author changes.
 
-**Kill criterion**: if the first real L1 component takes more than two iterations to feel production-stable, pause v0.1 component scaling and revisit the substrate.
+**Kill criterion**: if the first real interactive component takes more than two iterations to feel production-stable, pause v0.1 component scaling and revisit the substrate.
 
 ### R22 — Evidence labor budget gap at v0.1+
 
@@ -292,7 +292,7 @@ Ashlar does not ship if:
 - Compliance and CI tooling cannot run credibly in real partner projects (R16).
 - Absorption pressure forces give-up of the verification substrate (R19).
 - Supply-chain compromise leaves consumers unable to detect or recover (R20).
-- L1 substrate (Lit + Zag or alternative) needs more than two iterations to feel stable (R21).
+- interactive component substrate (Lit + Zag or alternative) needs more than two iterations to feel stable (R21).
 - Evidence labor is unfunded against the stable-component target (R22).
 
 Each of these is a stop-the-line condition. The team explicitly acknowledges them rather than discovering them at release.

@@ -4,6 +4,7 @@ import { readCapsuleManifest, readVerifiedCapsuleManifest } from "./capsule.js";
 import { checkBundleBudget } from "./bundle-budget.js";
 import { checkEvidence } from "./evidence-check.js";
 import { checkExternalReviewRecords } from "./external-review-record.js";
+import { formatRegistryLayer } from "./layers.js";
 import { runAiEvalSuite } from "./ai-eval.js";
 import { checkReleaseProvenanceReadiness } from "./release-provenance.js";
 import {
@@ -58,7 +59,7 @@ function check(
 function componentDetails(components: RegistryComponent[]): string[] {
   return components.map(
     (component) =>
-      `${component.name}@${component.version} ${component.layer} ${component.stability} evidence:${component.evidence.accessibilityStatus}`,
+      `${component.name}@${component.version} ${formatRegistryLayer(component.layer)} ${component.stability} evidence:${component.evidence.accessibilityStatus}`,
   );
 }
 
@@ -118,7 +119,7 @@ function componentCoverageCheck(input: {
     return check(
       "component-coverage",
       "fail",
-      `Requires at least ${input.minL0Components} L0 component(s); found ${l0.length}.`,
+      `Requires at least ${input.minL0Components} ${formatRegistryLayer("L0")} capsule(s); found ${l0.length}.`,
       componentDetails(l0),
     );
   }
@@ -126,7 +127,7 @@ function componentCoverageCheck(input: {
   return check(
     "component-coverage",
     "pass",
-    `Found ${l0.length} L0 component(s), meeting the ${input.minL0Components} component gate.`,
+    `Found ${l0.length} ${formatRegistryLayer("L0")} capsule(s), meeting the ${input.minL0Components} component gate.`,
     componentDetails(l0),
   );
 }
@@ -146,7 +147,7 @@ function stableEvidenceCheck(input: {
     return check(
       "stable-l0-evidence",
       "fail",
-      `Requires at least ${input.minStableL0Components} stable-evidence L0 component(s); found ${stableL0.length}.`,
+      `Requires at least ${input.minStableL0Components} stable-evidence ${formatRegistryLayer("L0")} capsule(s); found ${stableL0.length}.`,
       componentDetails(input.components.filter((component) => component.layer === "L0")),
     );
   }
@@ -154,7 +155,7 @@ function stableEvidenceCheck(input: {
   return check(
     "stable-l0-evidence",
     "pass",
-    `Found ${stableL0.length} stable-evidence L0 component(s).`,
+    `Found ${stableL0.length} stable-evidence ${formatRegistryLayer("L0")} capsule(s).`,
     componentDetails(stableL0),
   );
 }
@@ -188,7 +189,7 @@ function bundleBudgetCheck(input: { cwd: string; registryPath: string }): Releas
       registryPath: input.registryPath,
     });
     const details = [
-      `${report.summary.componentCount} L0 component(s)`,
+      `${report.summary.componentCount} ${formatRegistryLayer("L0")} capsule(s)`,
       `${report.summary.cssGzipBytes} B CSS gzip / ${report.summary.maxCssGzipBytes} B budget`,
       `${report.summary.jsGzipBytes} B JS gzip / ${report.summary.maxJsGzipBytes ?? "unbounded"} B budget`,
     ];

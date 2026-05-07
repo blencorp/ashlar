@@ -6,7 +6,7 @@ Proposed.
 
 ## Decision
 
-Author L1 components as **Web Components wrapping a statechart** (Lit + Zag is the current candidate; see "Lit + Zag is a research bet" below for the open question). Generate framework-specific adapters (`@blen/ashlar-react`, `@blen/ashlar-vue`, `@blen/ashlar-svelte`, `@blen/ashlar-solid`) **automatically from extended Custom Elements Manifests**. React is not privileged; it is one consumer among several.
+Author interactive components as **Web Components wrapping a statechart** (Lit + Zag is the current candidate; see "Lit + Zag is a research bet" below for the open question). Generate framework-specific adapters (`@blen/ashlar-react`, `@blen/ashlar-vue`, `@blen/ashlar-svelte`, `@blen/ashlar-solid`) **automatically from extended Custom Elements Manifests**. React is not privileged; it is one consumer among several.
 
 Ship the custom element itself (`@blen/ashlar-element`) as a first-class delivery for Drupal, Sitecore, AEM, plain HTML, and other framework-less environments.
 
@@ -30,9 +30,9 @@ Lit is preferred over Stencil because of larger community, simpler model, alignm
 
 ### Lit + Zag is a research bet
 
-There is no production prior art for Lit components driven by Zag statecharts as of April 2026. Zag has no `@zag-js/vanilla` package; the maintainer's own [discussion #2309](https://github.com/chakra-ui/zag/discussions/2309) confirms vanilla support is a proof-of-concept ("didn't get to implement it"). The L1 substrate may end up being Lit + Zag, Lit + a custom statechart wrapper, or a different combination entirely.
+There is no production prior art for Lit components driven by Zag statecharts as of April 2026. Zag has no `@zag-js/vanilla` package; the maintainer's own [discussion #2309](https://github.com/chakra-ui/zag/discussions/2309) confirms vanilla support is a proof-of-concept ("didn't get to implement it"). The interactive component substrate may end up being Lit + Zag, Lit + a custom statechart wrapper, or a different combination entirely.
 
-Slice 5 of the [v0.0 roadmap](../roadmap/01-v0.0-foundation.md) is the place to evaluate this bet; if Lit + Zag does not feel right after one iteration on a real L1 component, this ADR is revisited before scaling beyond Button. The decision to defer L1 components from v0.0 to v0.1 is partly driven by this open question. We do not commit to a statechart library on the first L1 component without evidence that the combination works.
+Slice 5 of the [v0.0 roadmap](../roadmap/01-v0.0-foundation.md) is the place to evaluate this bet; if Lit + Zag does not feel right after one iteration on a real interactive component, this ADR is revisited before scaling beyond Button. The decision to defer interactive components from v0.0 to v0.1 is partly driven by this open question. We do not commit to a statechart library on the first interactive component without evidence that the combination works.
 
 ## Consequences
 
@@ -54,10 +54,10 @@ Slice 5 of the [v0.0 roadmap](../roadmap/01-v0.0-foundation.md) is the place to 
 
 **Mitigations**
 
-- Framework integration testing as a v0.0 success gate: prove `@blen/ashlar-element` + Next.js SSR + Vite SPA + Drupal Twig + plain HTML all work for a representative L1 component (Combobox).
-- Document Firefox ARIA fallbacks per L1 component.
+- Framework integration testing as a v0.0 success gate: prove `@blen/ashlar-element` + Next.js SSR + Vite SPA + Drupal Twig + plain HTML all work for a representative interactive component (Combobox).
+- Document Firefox ARIA fallbacks per interactive component.
 - Adapter generators ship as part of the Ashlar build pipeline; consumers do not need to run them.
-- Lit SSR escape hatch: ship CSS-only "shell" SSR mode for non-JS environments via L4 templates.
+- Lit SSR escape hatch: ship CSS-only "shell" SSR mode for non-JS environments via application-block templates.
 
 ## References
 

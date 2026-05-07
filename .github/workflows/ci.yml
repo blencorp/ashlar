@@ -51,8 +51,8 @@ jobs:
       - run: node packages/cli/dist/index.js evidence collect button --registry ./registry --fixture registry/components/button/0.0.1/button.html --output reports/button-evidence.json
       - run: node packages/cli/dist/index.js evidence apply button --registry ./registry --artifact reports/button-evidence.json --output reports/button.evidence.proposed.json
       - run: node packages/cli/dist/index.js evidence button --check --registry ./registry --evidence-file reports/button.evidence.proposed.json
-      - run: node packages/cli/dist/index.js evidence prepare-stable-all --registry ./registry --output reports/l0-stable-review
-      - run: node packages/cli/dist/index.js evidence review-status button --registry ./registry --review-dir reports/l0-stable-review/button --format json --output reports/button-stable-review-status.json
+      - run: node packages/cli/dist/index.js evidence prepare-stable-all --registry ./registry --output reports/markup-primitive-stable-review
+      - run: node packages/cli/dist/index.js evidence review-status button --registry ./registry --review-dir reports/markup-primitive-stable-review/button --format json --output reports/button-stable-review-status.json
         continue-on-error: true
       - run: node packages/cli/dist/index.js evidence --report reports/ashlar-evidence.md --registry ./registry
         if: always()
@@ -97,8 +97,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ashlar-l0-stable-review
-          path: reports/l0-stable-review
+          name: ashlar-markup-primitive-stable-review
+          path: reports/markup-primitive-stable-review
 
       - uses: actions/upload-artifact@v4
         if: always()

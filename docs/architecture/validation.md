@@ -8,7 +8,7 @@ This document specifies the rule format, rule generation from CEM, integration p
 
 ## Why not ESLint
 
-ESLint is JavaScript-only. Ashlar's audience includes Drupal (Twig), Sitecore, AEM, server-rendered Django/Rails/PHP, plain HTML, and L4 templates in Nunjucks/Jinja/ERB. ESLint cannot validate component usage in any of these. Building per-template-language linters is multiplicative engineering effort with inconsistent rule expressiveness.
+ESLint is JavaScript-only. Ashlar's audience includes Drupal (Twig), Sitecore, AEM, server-rendered Django/Rails/PHP, plain HTML, and application-block templates in Nunjucks/Jinja/ERB. ESLint cannot validate component usage in any of these. Building per-template-language linters is multiplicative engineering effort with inconsistent rule expressiveness.
 
 ast-grep is built on tree-sitter, which has grammars for every relevant target. One YAML rule, all languages. See [ADR 0007](../adr/adr-0007-validation-strategy.md) for the full rationale.
 
@@ -33,7 +33,7 @@ fix: |
   <button class="ashlar-button" aria-label="TODO">$ICON</button>
 ```
 
-L0 components use the semantic markup (`<button class="ashlar-button">`) per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md). The custom-element form (`<ashlar-button>`) is reserved for L1 components and never used in L0 anti-pattern rules.
+Markup primitive components use the semantic markup (`<button class="ashlar-button">`) per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md). The custom-element form (`<ashlar-button>`) is reserved for interactive components and never used in markup primitive anti-pattern rules.
 
 ## Generating rules from CEM
 

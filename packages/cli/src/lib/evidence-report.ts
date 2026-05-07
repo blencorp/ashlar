@@ -1,4 +1,5 @@
 import type { EvidenceCheckResult } from "./evidence-check.js";
+import { formatRegistryLayer } from "./layers.js";
 import type { RegistryComponent } from "./registry.js";
 
 type StatusItem = {
@@ -69,7 +70,7 @@ export function buildEvidenceReport(
       `### ${component.name}@${component.version}`,
       `- stability: ${evidence.stability}`,
       `- accessibility: ${evidence.accessibilityStatus}`,
-      `- layer: ${component.layer}`,
+      `- layer: ${formatRegistryLayer(component.layer)}`,
       `- tier: ${component.tier}`,
       `- WCAG mappings: ${summarizeStatuses(evidence.wcag)}`,
       `- ICT Baseline mappings: ${summarizeStatuses(evidence.baselineTests)}`,

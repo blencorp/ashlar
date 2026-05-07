@@ -62,7 +62,7 @@ Until the multi-organization maintainer team exists, decisions are provisional a
 - **Component proposal** — new component capsule.
 - **Token proposal** — primitive or semantic token additions.
 - **Agency theme** — themed override pack.
-- **Pattern proposal** — new L3 pattern.
+- **Pattern proposal** — new service pattern.
 - **Codemod** — migration transform for a breaking change.
 - **Bug fix** — patches without API changes.
 - **Docs** — documentation, guides, examples.
@@ -77,7 +77,7 @@ Until the multi-organization maintainer team exists, decisions are provisional a
 4. **Token impact review** — new tokens? semantic implications?
 5. **Accessibility plan** — WCAG criteria, keyboard map, ARIA roles.
 6. **Prototype** in `experimental` status.
-7. **Public feedback gate** (long enough for meaningful community and expert review; longer for L3 patterns).
+7. **Public feedback gate** (long enough for meaningful community and expert review; longer for service patterns).
 8. **Beta release** with automated tests + initial evidence.
 9. **Evidence completion** — manual SR tests, contrast validation, anti-pattern registration.
 10. **Stable release** — full evidence packet, codemods documented.

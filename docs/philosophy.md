@@ -34,9 +34,9 @@ In 2026, declarative web standards do most of what design-system JavaScript used
 
 Default to the platform. Reach for JavaScript only where the platform genuinely cannot — and document that decision per component with a baseline tier and a fallback strategy.
 
-### 3. L0 ships semantic HTML, not custom elements
+### 3. Markup primitives ship semantic HTML, not custom elements
 
-L0 capsules use platform HTML plus Ashlar classes and data attributes as the canonical DOM contract: `<button class="ashlar-button" data-variant="primary">`, not `<ashlar-button>`. This is the contract that survives across React, Vue, Astro, plain HTML, Drupal, Sitecore, Rails, Django, and other server-rendered stacks. Custom elements are reserved for L1 components that genuinely need JavaScript behavior. See [ADR 0011](adr/adr-0011-l0-semantic-contract.md).
+Markup primitive capsules, stored internally as layer `L0`, use platform HTML plus Ashlar classes and data attributes as the canonical DOM contract: `<button class="ashlar-button" data-variant="primary">`, not `<ashlar-button>`. This is the contract that survives across React, Vue, Astro, plain HTML, Drupal, Sitecore, Rails, Django, and other server-rendered stacks. Custom elements are reserved for interactive components that genuinely need JavaScript behavior. See [ADR 0011](adr/adr-0011-l0-semantic-contract.md).
 
 ### 4. Source ownership requires safe updates
 
@@ -91,11 +91,11 @@ Every claim links to STATUS.md or a versioned status field. We do not write "Car
 - **Evidence schema** — machine-readable accessibility evidence (axe + keyboard + manual SR + WCAG + ICT Baseline), stable-component gate, queryable by tools and auditors.
 - **AI contract** — extended Custom Elements Manifest with `_ashlar` namespace; MCP server exposing search, evidence retrieval, validation, and migration; AGENTS.md sync for editor coverage.
 - **Layered architecture**:
-  - **L0**: semantic HTML + CSS capsules; zero or trivial JavaScript; ~70% of typical components.
-  - **L1**: custom elements wrapping statecharts and signals, for components that genuinely need behavior; ~30% of components. The statechart library choice is a research bet (see risks).
-  - **L2**: framework adapters auto-generated from extended CEM (React first; Vue/Svelte/Solid in v0.2).
-  - **L3**: patterns — service flows like eligibility check, document upload, address verification.
-  - **L4**: templates — the same component rendered as Nunjucks, Twig, Jinja, ERB, plain HTML.
+  - **Markup primitives** (`L0`): semantic HTML + CSS capsules; zero or trivial JavaScript; ~70% of typical components.
+  - **Interactive components** (`L1`): custom elements wrapping statecharts and signals, for components that genuinely need behavior; ~30% of components. The statechart library choice is a research bet (see risks).
+  - **Framework adapters** (`L2`): auto-generated from extended CEM (React first; Vue/Svelte/Solid in v0.2).
+  - **Service patterns** (`L3`): flows like eligibility check, document upload, address verification.
+  - **Application blocks** (`L4`): the same component rendered as Nunjucks, Twig, Jinja, ERB, plain HTML.
 - **Tokens** — DTCG-format source compiled to CSS variables, Tailwind v4 `@theme`, and typed TypeScript today, with Figma/design-tool output planned.
 
 ## What Ashlar is not
@@ -104,23 +104,23 @@ Every claim links to STATUS.md or a versioned status field. We do not write "Car
 - **Not a Tailwind theme.** Tailwind is a first-class output target, not the authoring layer.
 - **Not a USWDS replacement-by-collision.** USWDS interop is a feature, not a side effect. Ashlar runs *under* USWDS, not against it.
 - **Not a shadcn fork.** It addresses what shadcn left unfixed and uses different architectural primitives.
-- **Not a Web Components library.** Web Components are the framework-agnostic delivery mechanism for the L1 ~30%. They are not the authoring layer for the L0 ~70%, and they are not by themselves a durable differentiator now that USWDS 3.13 ships one.
+- **Not a Web Components library.** Web Components are the framework-agnostic delivery mechanism for the interactive ~30%. They are not the authoring layer for the markup primitive ~70%, and they are not by themselves a durable differentiator now that USWDS 3.13 ships one.
 - **Not "AI-native" because it has an `llms.txt`.** AI-native means structured contracts AI tools query, validate against, and migrate with. The verb is `validate`, not the adjective.
 - **Not a research platform.** It will ship — but it will ship only what is real.
 
 ## What we will deliberately defer
 
-- **Complex Date Picker, Data Grid, full Combobox, AI Assistant Panel** — too much surface for v0.0. Defer until the validator wedge, signed registry, three-way merge, and MCP read-only are proven on Button + a small L0 set.
+- **Complex Date Picker, Data Grid, full Combobox, AI Assistant Panel** — too much surface for v0.0. Defer until the validator wedge, signed registry, three-way merge, and MCP read-only are proven on Button + a small markup primitive set.
 - **Vue / Svelte / Solid adapters** — defer to v0.2; ship React adapter and Lit custom element first.
 - **Effect-system-typed accessibility, resumability, CRDT-friendly patterns, event-sourced forms** — research track for v0.3+; design the architecture so they remain possible without shipping them.
 - **Twig, Jinja, Nunjucks ast-grep coverage** — defer until maintained tree-sitter grammars exist; the validator returns `language-unsupported` for these targets in v0.0.
 
 ## What we will measure ourselves on
 
-- Bundle size of a typical L0 public-service page (target: under 21 KiB gzipped for the current twelve-capsule flow).
+- Bundle size of a typical markup primitive public-service page (target: under 21 KiB gzipped for the current twelve-capsule flow).
 - `update` conflict rate across 10+ instrumented test scenarios in v0.0; 30+ in v0.1 (target: under 15%, measuring textual conflict frequency *and* a separate measure of merge-correctness sampling).
 - AI tool generation accuracy when grounded by Ashlar CEM (target: zero hallucinated props; anti-patterns flagged at the file level by `validate_usage`). `ashlar ai-eval` now provides the deterministic saved-output harness; the live multi-model generated-output corpus is still unbuilt.
-- Multi-stack demo apps shipping the same L0 component contract (target: one representative capsule, three universes — Vite + plain HTML + one server-rendered stack).
+- Multi-stack demo apps shipping the same markup primitive contract (target: one representative capsule, three universes — Vite + plain HTML + one server-rendered stack).
 - Friction from `init` to a working accessible form (target: deterministic path with no bespoke setup).
 - Federal procurement legibility: a security reviewer can find SBOM, npm provenance, signed releases, incident playbook, and license without leaving the README.
 

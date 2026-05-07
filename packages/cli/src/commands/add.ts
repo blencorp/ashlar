@@ -6,6 +6,7 @@ import { readVerifiedCapsuleManifest } from "../lib/capsule.js";
 import { applyCommandCwd, type CwdOption } from "../lib/cwd.js";
 import { writeDesignContext } from "../lib/design-context.js";
 import { sha256File } from "../lib/hash.js";
+import { formatRegistryLayer } from "../lib/layers.js";
 import { readConfig, readLockfile, writeJson } from "../lib/project.js";
 import { getComponent, listComponents } from "../lib/registry.js";
 import { syncAshlarProject } from "../lib/styles.js";
@@ -72,7 +73,7 @@ function renderDryRun(plans: InstallPlan[]): void {
   for (const plan of plans) {
     printSection(`${plan.detail.name}@${plan.detail.version}`);
     printKeyValue("tier", plan.detail.tier);
-    printKeyValue("layer", plan.detail.layer);
+    printKeyValue("layer", formatRegistryLayer(plan.detail.layer));
     printKeyValue("stability", plan.detail.stability);
     printKeyValue("capsule hash", plan.manifest.capsule_hash);
     for (const file of plan.files) {
@@ -93,7 +94,7 @@ function renderView(plans: InstallPlan[]): void {
   for (const plan of plans) {
     printSection(`${plan.detail.name}@${plan.detail.version}`);
     printKeyValue("Tier", plan.detail.tier);
-    printKeyValue("Layer", plan.detail.layer);
+    printKeyValue("Layer", formatRegistryLayer(plan.detail.layer));
     printKeyValue("Stability", plan.detail.stability);
     printKeyValue("Evidence", plan.detail.evidence.accessibilityStatus);
     printKeyValue("Capsule hash", plan.manifest.capsule_hash);

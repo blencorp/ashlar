@@ -185,7 +185,7 @@ migrate_plan(component: string, from?: string, to?: string)
 ```
 capsule://<name>@<version>         → full capsule (including all files)
 token://<token-name>               → token definition
-pattern://<name>                   → L3 pattern with composition
+pattern://<name>                   → service pattern with composition
 evidence://<component>@<version>   → evidence packet
 docs://<component>                 → component docs
 ```
@@ -273,13 +273,13 @@ This project uses Ashlar capsules: source-owned public-service UI with evidence,
 - Use only installed Ashlar capsules unless the user explicitly asks to add a new capsule.
 - Do not invent props, variants, classes, or behaviors that are absent from installed CEM files.
 - Preserve semantic HTML, accessible names, label associations, focus-visible styles, and forced-colors behavior.
-- For L0 components, use semantic platform markup such as `<button class="ashlar-button" data-variant="primary">`, not custom elements.
+- For markup primitive capsules (internal layer L0), use semantic platform markup such as `<button class="ashlar-button" data-variant="primary">`, not custom elements.
 - Use Ashlar CSS variables for styling; do not hard-code agency colors into capsule source.
 - After editing Ashlar markup, run `ashlar audit --policy all`.
 - Before claiming installed capsule integrity, run `ashlar verify`.
 ```
 
-The generated file intentionally avoids framework import examples until framework adapters exist. L0 capsules are source-owned HTML/CSS primitives, not React/Vue packages.
+The generated file intentionally avoids framework import examples until framework adapters exist. markup primitive capsules are source-owned HTML/CSS primitives, not React/Vue packages.
 
 ## Editor symlinks
 

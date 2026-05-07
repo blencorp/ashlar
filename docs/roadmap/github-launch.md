@@ -66,7 +66,7 @@ Issues:
 - Federal policy-pack prototype.
 - Evidence schema with ICT Baseline mappings.
 - DTCG token compiler.
-- L0 Button, Banner, Identifier, Alert, Form Field, Text Input, Textarea, Date Input, Select, Radio Group, Checkbox, Error Summary.
+- Button markup primitive, Banner, Identifier, Alert, Form Field, Text Input, Textarea, Date Input, Select, Radio Group, Checkbox, Error Summary.
 - Evidence packet schema and first examples.
 - ast-grep rule generation prototype.
 - Next.js and plain HTML demos.
@@ -104,7 +104,7 @@ Issues:
 - MCP server.
 - Docs site with `llms.txt`.
 - 20+ components.
-- First L3 pattern.
+- First service pattern.
 - At least 12 full evidence packets.
 - Partner onboarding guide.
 
@@ -137,7 +137,7 @@ Goal: stable public-service UI infrastructure.
 Issues:
 
 - 25-30 stable components.
-- 6+ stable L3 patterns.
+- 6+ stable service patterns.
 - Full accessibility evidence for stable components.
 - Third-party security and accessibility review complete.
 - Long-term governance and funding model.

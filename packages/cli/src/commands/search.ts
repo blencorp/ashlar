@@ -1,7 +1,8 @@
 import type { Command } from "commander";
 import { searchRegistryComponents } from "../lib/component-search.js";
-import type { RegistryLayer, RegistryStability, RegistryTier } from "../lib/registry.js";
+import type { RegistryStability, RegistryTier } from "../lib/registry.js";
 import { applyCommandCwd, type CwdOption } from "../lib/cwd.js";
+import { formatRegistryLayer, parseRegistryLayerAlias } from "../lib/layers.js";
 import { readConfig } from "../lib/project.js";
 import {
   printBrandHeader,
@@ -13,7 +14,7 @@ import {
 
 type SearchOptions = {
   json?: boolean;
-  layer?: RegistryLayer;
+  layer?: string;
   tier?: RegistryTier;
   stability?: RegistryStability;
   evidence?: string;
@@ -35,7 +36,10 @@ export function registerSearchCommand(program: Command) {
     .argument("[query]", "Component name or description text")
     .option("-c, --cwd <path>", "Working directory. Defaults to the current directory.")
     .option("-q, --query <text>", "Query string. Mirrors shadcn search -q.")
-    .option("--layer <layer>", "Filter by layer, such as L0 or L3")
+    .option(
+      "--layer <layer>",
+      "Filter by layer, such as markup-primitives, service-patterns, or internal aliases L0-L4",
+    )
     .option("--tier <tier>", "Filter by tier: foundation, primitive, composite, pattern, or block")
     .option("--stability <stability>", "Filter by stability")
     .option("--evidence <status>", "Filter by evidence status")
@@ -58,11 +62,17 @@ export function registerSearchCommand(program: Command) {
         if (!Number.isInteger(offset) || offset < 0) {
           throw new Error("--offset must be a non-negative integer");
         }
+        const layer = options.layer ? parseRegistryLayerAlias(options.layer) : undefined;
+        if (layer === "all") {
+          throw new Error(
+            "--layer all is not needed for search; omit --layer to search all layers.",
+          );
+        }
         const components = searchRegistryComponents({
           cwd: process.cwd(),
           registryPath: config.registry,
           query: searchQuery,
-          layer: options.layer,
+          layer,
           tier: options.tier,
           stability: options.stability,
           evidence: options.evidence,
@@ -93,7 +103,7 @@ export function registerSearchCommand(program: Command) {
         for (const item of components) {
           printSection(`${item.name}@${item.version}`);
           console.log(
-            `${item.name}@${item.version} [${item.layer}, ${item.tier}, ${item.stability}] ${item.description}`,
+            `${item.name}@${item.version} [${formatRegistryLayer(item.layer)}, ${item.tier}, ${item.stability}] ${item.description}`,
           );
           console.log(`  Evidence: ${item.evidenceStatus}`);
           console.log(`  Reasons: ${item.reasons.join("; ")}`);

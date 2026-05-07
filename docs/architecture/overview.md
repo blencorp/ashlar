@@ -4,31 +4,32 @@ This document describes the layered architecture, the atomic unit (the capsule),
 
 For the current implementation foundation, see [`toolchain.md`](./toolchain.md). For the agency-facing validation, security, and CI surface, see [`compliance-security-ci.md`](./compliance-security-ci.md).
 
-## The five layers
+## The five adoption layers
 
-Ashlar is organized as five independently usable layers. Each layer has a clear contract; consumers can adopt one without adopting the others.
+Ashlar is organized as five independently usable layers. Product docs use the names below; the short `L0`-`L4` codes remain in registry JSON and some gate IDs for compatibility.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│ L4 │ Templates    Nunjucks / Twig / Jinja / ERB / HTML  │
+│ L4 │ Application blocks                                 │
+│    │ Nunjucks / Twig / Jinja / ERB / HTML templates     │
 ├─────────────────────────────────────────────────────────┤
-│ L3 │ Patterns     Service flows: eligibility, upload,   │
-│    │              address-form, identity-shell, etc.    │
+│ L3 │ Service patterns                                   │
+│    │ Eligibility, upload, address form, identity shell  │
 ├─────────────────────────────────────────────────────────┤
-│ L2 │ Adapters     Auto-generated from CEM:              │
-│    │              @blen/ashlar-react, @blen/ashlar-vue, …          │
+│ L2 │ Framework adapters                                 │
+│    │ Auto-generated from CEM: React, Vue, Svelte, etc.  │
 ├─────────────────────────────────────────────────────────┤
-│ L1 │ Components   Lit custom elements wrapping Zag      │
-│    │              statecharts + signals (~30% of items) │
+│ L1 │ Interactive components                             │
+│    │ Lit custom elements wrapping statecharts/signals   │
 ├─────────────────────────────────────────────────────────┤
-│ L0 │ Foundation   Pure CSS + HTML capsules; exploits    │
-│    │              modern platform (~70% of items)       │
+│ L0 │ Markup primitives                                  │
+│    │ Pure CSS + HTML capsules, zero JavaScript runtime  │
 ├─────────────────────────────────────────────────────────┤
 │      Tokens (DTCG 2025.10) → CSS vars / Tailwind / TS   │
 └─────────────────────────────────────────────────────────┘
 ```
 
-### L0 — Platform-driven foundation
+### Markup primitives (`L0`)
 
 Pure CSS and HTML. No JavaScript runtime dependency. Components are class-based with semantic data attributes. Styling is delivered via cascade layers and CSS variables.
 
@@ -41,13 +42,13 @@ This layer covers approximately 70% of typical design-system components in 2026,
 - Layout primitives (Stack, Grid, Cluster, Switcher)
 - Skip link, Focus ring utility, Visually-hidden utility
 
-L0 components work in any rendering environment: React, Vue, Astro, plain HTML, Drupal, Sitecore, AEM, server-rendered Django/Rails/PHP. The same CSS and the same DOM contract.
+Markup primitive components work in any rendering environment: React, Vue, Astro, plain HTML, Drupal, Sitecore, AEM, server-rendered Django/Rails/PHP. The same CSS and the same DOM contract.
 
-### L1 — Stateful Web Components
+### Interactive components (`L1`)
 
 Lit-based custom elements. Each component wraps a Zag statechart (the behavior) and signals (the reactive data). The component is a thin shell that defines the custom element, handles SSR via Declarative Shadow DOM where needed, subscribes to the machine, and renders DOM updates.
 
-L1 covers the components that genuinely need JavaScript state:
+Interactive components cover the components that genuinely need JavaScript state:
 
 - ComboBox / Autocomplete (rich)
 - Date Picker (range, restricted, fiscal calendars)
@@ -60,7 +61,7 @@ L1 covers the components that genuinely need JavaScript state:
 
 Light DOM is the default for theming compatibility; Shadow DOM is used only when encapsulation is genuinely required (and Declarative Shadow DOM serializes for SSR).
 
-### L2 — Framework adapters (auto-generated)
+### Framework adapters (`L2`)
 
 Thin per-framework wrappers generated from each component's Custom Elements Manifest:
 
@@ -72,7 +73,7 @@ Thin per-framework wrappers generated from each component's Custom Elements Mani
 
 Adapters are not hand-maintained. When the underlying machine or component changes, adapters regenerate. There is no parallel React tree drifting from the canonical implementation.
 
-### L3 — Patterns
+### Service patterns (`L3`)
 
 Composed service flows shipped as capsules. Each pattern includes the components it composes, plain-language content guidance, accessibility considerations specific to the flow, and user-research notes.
 
@@ -86,7 +87,7 @@ Initial patterns:
 - Emergency alert
 - Identity verification shell (the UX shell only — does not bind to Login.gov)
 
-### L4 — Templates
+### Application blocks (`L4`)
 
 The same component rendered into multiple template languages. This is the answer to GOV.UK's empirical observation that government uses 24+ templating languages: instead of forcing teams to switch, ship the rendering they need.
 
@@ -111,8 +112,8 @@ button/
 ├── button.html.njk           # Nunjucks template (canonical HTML)
 ├── button.html.twig          # Twig template
 ├── button.html               # plain HTML example
-├── button.element.ts         # Lit custom element (L1 only)
-├── button.machine.ts         # Zag statechart (L1 only)
+├── button.element.ts         # Lit custom element (interactive only)
+├── button.machine.ts         # Zag statechart (interactive only)
 ├── button.cem.json           # extended Custom Elements Manifest
 ├── button.evidence.json      # axe runs, keyboard transcripts, WCAG map
 ├── button.codemods.json      # ast-grep rules for upgrades
@@ -138,8 +139,8 @@ The CLI is a pure Node + ESM tool, distributed via npm and runnable via `npx`, `
 # Initial install
 npx @blen/ashlar init                       # writes ashlar.config.json + tokens + lockfile
 npx @blen/ashlar status                     # read-only adoption snapshot and next commands
-npx @blen/ashlar add button alert dialog    # adds L0 capsules — pure CSS, zero JS
-npx @blen/ashlar add combobox               # adds an L1 capsule (Lit + Zag)
+npx @blen/ashlar add button alert dialog    # adds markup primitive capsules: pure CSS, zero JS
+npx @blen/ashlar add combobox               # adds an interactive capsule: Lit + Zag
 npx @blen/ashlar migrate uswds "./src/**/*.{html,tsx,jsx}" # read-only USWDS replacement map
 
 # After local customization
@@ -209,7 +210,7 @@ message: "Icon-only Button requires aria-label (WCAG 4.1.2)"
 fix: '<button class="ashlar-button" aria-label="TODO">$ICON</button>'
 ```
 
-L0 components use the semantic `<button class="ashlar-button">` form per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md); the `<ashlar-button>` custom-element form is reserved for L1 components.
+Markup primitive components use the semantic `<button class="ashlar-button">` form per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md); the `<ashlar-button>` custom-element form is reserved for interactive components.
 
 ast-grep is distributed as a single Rust binary (~3MB). No JS dependency tree, no framework coupling, no build-pipeline integration required. CI integration is one line; pre-commit hook integration is one line.
 
@@ -299,11 +300,11 @@ See [`accessibility.md`](./accessibility.md) for the test matrix, evidence schem
 
 Several architectural primitives shape the long-term direction without being in the v0.0 scope:
 
-- **Signals as the reactive layer** — TC39 Signals is in Stage 1; Solid, Preact, Vue, and Angular all align with the proposal. L1 components use signals internally. When TC39 Signals lands as a platform standard, Ashlar components migrate without breaking changes.
+- **Signals as the reactive layer** — TC39 Signals is in Stage 1; Solid, Preact, Vue, and Angular all align with the proposal. Interactive components use signals internally. When TC39 Signals lands as a platform standard, Ashlar components migrate without breaking changes.
 
-- **Resumability-friendly serialization** — L1 components' machine state should serialize to data attributes so the entire SSR + client-takeover flow can resume without re-execution. This is a discipline now; an exploitation later.
+- **Resumability-friendly serialization** — interactive components' machine state should serialize to data attributes so the entire SSR + client-takeover flow can resume without re-execution. This is a discipline now; an exploitation later.
 
-- **Event-sourced patterns** — government audit requirements often need full reconstructibility. L3 patterns for forms / wizards / eligibility flows should be designable as event-sourced; the design system should ship at least one canonical example.
+- **Event-sourced patterns** — government audit requirements often need full reconstructibility. Service patterns for forms / wizards / eligibility flows should be designable as event-sourced; the design system should ship at least one canonical example.
 
 - **Effect systems for accessibility constraints** — typed effects (Effect-TS or descendants) could enforce accessibility requirements at the type level. Research track for v0.3+.
 
@@ -313,19 +314,19 @@ See [`future-architecture.md`](./future-architecture.md) for the detailed evalua
 
 ## Bundle budget
 
-The "lightweight" claim must be backed by real numbers. Targets for a typical L0 public-service page (Button + Banner + Identifier + Alert + Form Field + Text Input + Textarea + Date Input + Select + Radio Group + Checkbox + Error Summary):
+The "lightweight" claim must be backed by real numbers. Targets for a typical markup primitive public-service page (Button + Banner + Identifier + Alert + Form Field + Text Input + Textarea + Date Input + Select + Radio Group + Checkbox + Error Summary):
 
 | Stack | Gzipped JS+CSS |
 |---|---|
-| Ashlar L0 only (CSS+HTML) | **under 21 KiB** |
-| Ashlar L0 + 1 L1 (Combobox) | 18–24 KiB |
+| Ashlar markup primitives only (CSS+HTML) | **under 21 KiB** |
+| Ashlar markup primitives + 1 interactive component (Combobox) | 18–24 KiB |
 | shadcn/ui (Tailwind + Radix) | 40–55 KB |
 | Carbon Web Components | 50–70 KB |
 | Spectrum Web Components | 60–90 KB |
 
 Ashlar is targeting 5–10× smaller than the alternatives for typical government pages. Not by cutting features — by exploiting the platform.
 
-`ashlar bundle budget` now makes the claim executable for current L0 capsules. It verifies capsule manifests before measuring CSS and JavaScript runtime assets, and the default CSS/JS budget numbers live in integrity-covered capsule `bundleBudget` metadata. Current local measurements are 649 B gzipped for Button CSS against the 4 KB v0.0 Button gate with 0 B JavaScript, and 1,993 B gzipped CSS for the twelve current L0 capsules against the 20,992 B page target with 0 B JavaScript.
+`ashlar bundle budget` now makes the claim executable for current markup primitive capsules. It verifies capsule manifests before measuring CSS and JavaScript runtime assets, and the default CSS/JS budget numbers live in integrity-covered capsule `bundleBudget` metadata. Current local measurements are 649 B gzipped for Button CSS against the 4 KB v0.0 Button gate with 0 B JavaScript, and 1,993 B gzipped CSS for the twelve current markup primitive capsules against the 20,992 B page target with 0 B JavaScript.
 
 ## What follows
 
@@ -340,5 +341,5 @@ The remaining architecture documents detail each subsystem:
 - `ai-native.md` — extended CEM, MCP server, AGENTS.md
 - `accessibility.md` — evidence schema, test matrix, stable gates
 - `distribution-and-registry.md` — HTTP, signed Git, Sigstore, air-gapped
-- `patterns-and-templates.md` — L3 / L4 spec
+- `patterns-and-templates.md` — service pattern / application block spec
 - `future-architecture.md` — signals, resumability, effects, event-sourcing, CRDTs

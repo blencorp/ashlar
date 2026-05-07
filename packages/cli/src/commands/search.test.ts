@@ -25,7 +25,9 @@ describe("search command", () => {
     const result = runCli(["search", "official website", "--policy", "Federal Website Standards"]);
 
     expect(result.status).toBe(0);
-    expect(result.stdout).toContain("banner@0.0.3 [L0, primitive, experimental]");
+    expect(result.stdout).toContain(
+      "banner@0.0.3 [markup primitives (L0), primitive, experimental]",
+    );
     expect(result.stdout).toContain("Reasons:");
     expect(result.stdout).toContain("policy: Federal Website Standards");
     expect(result.stdout).toContain("Install: ashlar add banner");
@@ -57,5 +59,17 @@ describe("search command", () => {
     expect(result.status).toBe(0);
     expect(payload.count).toBe(1);
     expect(payload.components[0]?.name).not.toBe("alert");
+  });
+
+  it("accepts human-readable layer aliases", () => {
+    const result = runCli(["search", "--layer", "service-patterns", "--json"]);
+    const payload = JSON.parse(result.stdout) as {
+      components: Array<{ layer: string; name: string }>;
+    };
+
+    expect(result.status).toBe(0);
+    expect(payload.components).toEqual([
+      expect.objectContaining({ layer: "L3", name: "benefit-application" }),
+    ]);
   });
 });

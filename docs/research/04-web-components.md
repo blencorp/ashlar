@@ -2,7 +2,7 @@
 
 Synthesized from primary-source research conducted April 2026. The full source list is in [`source-map.md`](./source-map.md).
 
-This document records the state of Web Components in 2026, the architectures used by peer government design systems, and the empirical pain points reported by USWDS users. It is the foundation for Ashlar's L1 (Web Components) and L4 (templates) decisions, and for the framework-adapter strategy in L2.
+This document records the state of Web Components in 2026, the architectures used by peer government design systems, and the empirical pain points reported by USWDS users. It is the foundation for Ashlar's interactive component and application-block template decisions, and for the framework-adapter strategy.
 
 ## Web Components state in 2026
 
@@ -53,7 +53,7 @@ This document records the state of Web Components in 2026, the architectures use
 - **Accessibility evidence**: issues are prioritized as "Evidenced" — must include user research showing real barriers. Theoretical issues wait. New accessibility strategy published January 2023; tested to WCAG 2.1, updating toward 2.2. Brand refresh and Frontend updates June 2025.
 - **Versioning**: semver, regular releases of `govuk-frontend` on npm.
 
-**Lesson for Ashlar**: government uses many template languages, not one framework. L4 (templates) is the empirical answer to this — ship Nunjucks, Twig, Jinja, ERB, plain HTML renderings of the same component.
+**Lesson for Ashlar**: government uses many template languages, not one framework. Application-block templates are the empirical answer to this — ship Nunjucks, Twig, Jinja, ERB, plain HTML renderings of the same component.
 
 ### GC Design System (Canada) — the closest peer
 
@@ -95,7 +95,7 @@ Verified top complaints:
 7. **Missing components**: Data Grid (35 votes), Tabs, Drawer, Skeleton, Charts.
 8. **USWDS team's own roadmap creates uncertainty**: Elements (Lit-based WC), Tokens (Style Dictionary), and Core 4.0 announced for Spring 2025; the team is sticking with Lit but **not accepting external code contributions** during the architecture transition. Developers who built Lit components for clients are blocked from upstreaming.
 
-**Implication for Ashlar**: every one of the above is addressable. The framework gap is the L2 adapters; opaque JavaScript is the explicit CEM with rendering classification; missing components are L1 priorities; the "not accepting contributions" status means we cannot rely on convergence with USWDS in the near term — but we can ship explicit USWDS interop and contribute upstream when the door reopens.
+**Implication for Ashlar**: every one of the above is addressable. The framework gap is the framework adapters; opaque JavaScript is the explicit CEM with rendering classification; missing components are interactive component priorities; the "not accepting contributions" status means we cannot rely on convergence with USWDS in the near term — but we can ship explicit USWDS interop and contribute upstream when the door reopens.
 
 ## Architectural recommendation
 

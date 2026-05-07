@@ -8,7 +8,7 @@ Templates live in `docs/reviews/templates/`. They help create consistent records
 
 Required top-level record prefixes before stronger replacement-grade claims:
 
-- `stable-evidence-*.md` - completed accessibility review for at least one L0 capsule, including the linked GitHub issue, completed manual evidence artifacts, transcript validation output, `evidence review-status` output, and the `evidence publish --output` publication receipt.
+- `stable-evidence-*.md` - completed accessibility review for at least one markup primitive capsule, including the linked GitHub issue, completed manual evidence artifacts, transcript validation output, `evidence review-status` output, and the `evidence publish --output` publication receipt.
 - `release-trust-*.md` - completed security/release trust review, including npm provenance verification, signed registry verification, SBOM/trust-bundle verification, and workflow artifact links.
 - `design-partner-*.md` - completed design partner review of the validator wedge or first service-flow proof, including scenario, commands/screens reviewed, feedback, and adoption blockers.
 

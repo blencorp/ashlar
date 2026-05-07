@@ -31,8 +31,11 @@ function printText(report: ReturnType<typeof buildProjectStatus>): void {
   printSection("Registry");
   printKeyValue("available", report.registry.available ? "yes" : "no");
   printKeyValue("capsules", report.registry.componentCount);
-  printKeyValue("L0 capsules", report.registry.l0Count);
-  printKeyValue("stable-evidence L0 capsules", report.registry.stableEvidenceL0Count);
+  printKeyValue("markup primitives", `${report.registry.markupPrimitiveCount} (internal L0)`);
+  printKeyValue(
+    "stable-evidence markup primitives",
+    `${report.registry.stableEvidenceMarkupPrimitiveCount} (internal L0)`,
+  );
   printSection("Checks");
   for (const check of report.checks) {
     console.log(`  ${formatStatus(check.status)} ${check.id}: ${check.summary}`);

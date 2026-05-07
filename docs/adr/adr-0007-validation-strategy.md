@@ -24,7 +24,7 @@ Rules are generated from extended CEM `_ashlar.antiPatterns` and `_ashlar.constr
 
 **Positive**
 
-- True polyglot validation across the entire L4 (templates) surface.
+- True polyglot validation across the entire application-block template surface.
 - Zero coupling to consumer build pipelines.
 - Rules are authored once in the manifest, generated automatically.
 - Single binary, easy CI/CD integration, no node_modules bloat.

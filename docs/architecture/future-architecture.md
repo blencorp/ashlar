@@ -20,13 +20,13 @@ The intent is to keep the v0.x architecture compatible with these directions, ev
 
 **What**: Standard SSR runs component logic on the server, sends HTML, then re-runs the same logic on the client to "hydrate." Resumability (Qwik's contribution) serializes the entire execution state — including a statechart's current state — into HTML, then resumes on the client without re-running setup.
 
-**Ashlar discipline**: L1 components serialize machine state to `data-ashlar-state` and `data-ashlar-context` attributes. The custom element on the client reads these and jumps directly to that state.
+**Ashlar discipline**: interactive components serialize machine state to `data-ashlar-state` and `data-ashlar-context` attributes. The custom element on the client reads these and jumps directly to that state.
 
 **What this preserves**: future ability to ship a resumability-driven render mode (Qwik-style or successor framework). For government services on slow devices, kiosks, rural connections, this is materially better than hydration.
 
 **Forward conditions**: when a resumability-friendly framework reaches enterprise-grade production maturity (Qwik, post-Qwik successor, or framework-neutral resumability standard), Ashlar ships an `@blen/ashlar-resume` package that exploits the discipline. v0.3+ at the earliest.
 
-## 3. Event-sourced patterns for L3
+## 3. Event-sourced service patterns
 
 **Status**: Pattern category (planned for v0.2).
 
@@ -34,14 +34,14 @@ The intent is to keep the v0.x architecture compatible with these directions, ev
 
 **Government relevance**: federal benefits, eligibility, and case-management contexts have hard audit requirements. Every form submission, every eligibility determination, every benefits decision must be reconstructible from logs. **Event sourcing is the natural architecture for this.** Statecharts compose with it cleanly — every transition is an event.
 
-**Ashlar pattern**: an "event-sourced form" pattern in L3 that consumers can adopt for audit-heavy flows. It includes:
+**Ashlar pattern**: an "event-sourced form" service pattern that consumers can adopt for audit-heavy flows. It includes:
 
 - An event log API (consumer pluggable; can be IndexedDB locally, server-streamed, or fully server-side).
 - Replay tooling for time-travel debugging.
 - Audit-trail rendering primitives.
 - Integration hooks for compliance reporting.
 
-**Forward conditions**: ship one canonical event-sourced pattern in L3 (likely the application-review-and-submit pattern) once the pattern infrastructure is stable.
+**Forward conditions**: ship one canonical event-sourced service pattern (likely the application-review-and-submit pattern) once the pattern infrastructure is stable.
 
 ## 4. CRDT-friendly collaborative patterns
 
@@ -51,7 +51,7 @@ The intent is to keep the v0.x architecture compatible with these directions, ev
 
 **Ashlar does not ship a sync engine.** Ashlar ships patterns and components that are **CRDT-aware**: form fields that can present a "this field was updated by another user" indicator, conflict-resolution UX, optimistic-update visuals.
 
-**Forward conditions**: a pattern category, not a runtime requirement. Ships when an L3 pattern (likely "collaborative review" or "field case management") reaches priority and we have a clear consumer with a real CRDT integration.
+**Forward conditions**: a pattern category, not a runtime requirement. Ships when an service pattern (likely "collaborative review" or "field case management") reaches priority and we have a clear consumer with a real CRDT integration.
 
 ## 5. Effect systems for typed accessibility
 
@@ -111,7 +111,7 @@ The intent is to keep the v0.x architecture compatible with these directions, ev
 
 **What**: Patterns for federated identity (Login.gov, ID.me, DHS, agency SSO) without binding Ashlar to any specific provider. Local-first credential caches for offline-tolerant kiosks.
 
-**Forward conditions**: ships when the identity pattern reaches priority. Most likely paired with the `account-creation` pattern in L3.
+**Forward conditions**: ships when the identity pattern reaches priority. Most likely paired with the `account-creation` service pattern.
 
 ## How adoption decisions work
 

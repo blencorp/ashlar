@@ -1,5 +1,6 @@
 import type { Command } from "commander";
 import { applyCommandCwd, type CwdOption } from "../lib/cwd.js";
+import { formatRegistryLayer } from "../lib/layers.js";
 import { getComponent } from "../lib/registry.js";
 import { readConfig } from "../lib/project.js";
 import {
@@ -35,7 +36,7 @@ export function registerViewCommand(program: Command) {
         for (const detail of details) {
           printSection(`${detail.name}@${detail.version}`);
           printKeyValue("Tier", detail.tier);
-          printKeyValue("Layer", detail.layer);
+          printKeyValue("Layer", formatRegistryLayer(detail.layer));
           printKeyValue("Stability", detail.stability);
           printKeyValue("Evidence", detail.evidence.accessibilityStatus);
           printKeyValue(

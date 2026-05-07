@@ -46,7 +46,7 @@ The durable difference is the bundle of guarantees around each component:
 - **Safe updates**: lockfiles, original hashes, three-way merge, codemods, and accessibility-critical confirmations keep source ownership maintainable.
 - **Provenance**: capsule hashes, signatures, npm provenance, SBOMs, and air-gapped mirrors make adoption legible to procurement and security reviewers.
 - **AI contract**: extended CEM, AGENTS.md, and MCP expose the same contract to humans, validators, and coding agents.
-- **Light footprint**: L0 components default to semantic HTML and CSS, with JavaScript only where behavior requires it.
+- **Light footprint**: markup primitive components default to semantic HTML and CSS, with JavaScript only where behavior requires it.
 
 If a feature does not strengthen one of those guarantees, it is secondary.
 
@@ -116,7 +116,7 @@ The winning claim is not "agents can generate Ashlar UI." The winning claim is "
 Ashlar should be built in this order:
 
 1. **Validator**: policy and component audit that works before adoption.
-2. **Capsules**: source-owned L0 components with evidence and policy mappings.
+2. **Capsules**: source-owned markup primitive components with evidence and policy mappings.
 3. **Verify and update**: hashes, signatures, drift detection, three-way merge, codemods.
 4. **Service slices**: real public-service flows, not galleries.
 5. **AI contract**: MCP and editor instructions grounded in the same evidence and CEM.

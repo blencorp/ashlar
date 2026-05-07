@@ -13,7 +13,7 @@ This document defines the recommended v0/v1 technical foundation. The goal is to
 | Token compiler | Terrazzo primary, Style Dictionary fallback | Terrazzo has strong DTCG coverage; fallback reduces tool risk. |
 | CSS authoring | Semantic CSS + cascade layers | Works everywhere, including CMS and static HTML stacks. |
 | Tailwind | First-class output target | Emit Tailwind v4 `@theme`; do not make Tailwind a hard dependency. |
-| L1 components | Lit Web Components | Standards-aligned, small, USWDS Elements-aligned. |
+| Interactive components | Lit Web Components | Standards-aligned, small, USWDS Elements-aligned. |
 | Behavior | Zag statecharts + signals | Portable behavior across Web Components and framework wrappers. |
 | Signing | Sigstore/cosign | Verifiable provenance without long-lived signing keys. |
 | Supply-chain model | SLSA-informed provenance | Aligns with federal security expectations. |

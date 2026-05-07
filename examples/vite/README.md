@@ -2,7 +2,7 @@
 
 Public-service Vite reference app for Ashlar. Demonstrates:
 
-- L0 Button capsule (`<button class="ashlar-button">`) installed via `ashlar add`.
+- markup primitive Button capsule (`<button class="ashlar-button">`) installed via `ashlar add`.
 - Public-service page-shell compliance (banner, identifier with required links, ≥20-char page title, ≥50-char meta description).
 - Live runtime switching across the **Default**, **VA**, and **USDA** stock agency themes.
 - Light, dark, and system color modes.

@@ -32,9 +32,9 @@ describe("CI workflow", () => {
     const proposedEvidenceCheck =
       "node packages/cli/dist/index.js evidence button --check --registry ./registry --evidence-file reports/button.evidence.proposed.json";
     const stableReviewBundle =
-      "node packages/cli/dist/index.js evidence prepare-stable-all --registry ./registry --output reports/l0-stable-review";
+      "node packages/cli/dist/index.js evidence prepare-stable-all --registry ./registry --output reports/markup-primitive-stable-review";
     const stableReviewStatus =
-      "node packages/cli/dist/index.js evidence review-status button --registry ./registry --review-dir reports/l0-stable-review/button --format json --output reports/button-stable-review-status.json";
+      "node packages/cli/dist/index.js evidence review-status button --registry ./registry --review-dir reports/markup-primitive-stable-review/button --format json --output reports/button-stable-review-status.json";
     const stableReviewStatusStep = `- run: ${stableReviewStatus}
         continue-on-error: true`;
     const releaseSmoke = "pnpm release:smoke";
@@ -93,8 +93,8 @@ describe("CI workflow", () => {
     expect(workflow).toContain("path: reports/button-evidence.json");
     expect(workflow).toContain("name: ashlar-button-evidence-proposal");
     expect(workflow).toContain("path: reports/button.evidence.proposed.json");
-    expect(workflow).toContain("name: ashlar-l0-stable-review");
-    expect(workflow).toContain("path: reports/l0-stable-review");
+    expect(workflow).toContain("name: ashlar-markup-primitive-stable-review");
+    expect(workflow).toContain("path: reports/markup-primitive-stable-review");
     expect(workflow).toContain("name: ashlar-button-stable-review-status");
     expect(workflow).toContain("path: reports/button-stable-review-status.json");
     expect(workflow).toContain("name: ashlar-sbom");

@@ -6,6 +6,7 @@ import { applyEvidenceArtifact } from "./evidence-apply.js";
 import { collectAutomatedEvidence } from "./evidence-collect.js";
 import { buildManualEvidenceTemplate } from "./evidence-manual-template.js";
 import { buildManualTranscriptTemplate } from "./evidence-transcript.js";
+import { formatRegistryLayer } from "./layers.js";
 import { getComponent, listComponents, type RegistryLayer } from "./registry.js";
 import { describeErrors, validate } from "./schema-validate.js";
 
@@ -182,7 +183,8 @@ ashlar evidence ${bundle.component} --check --registry ${registryPath} --evidenc
 }
 
 function batchReviewerIndex(batch: StableEvidenceReviewBatch, cwd: string, registryPath: string) {
-  const layerLabel = batch.layer === "all" ? "all registry layers" : `${batch.layer} capsules`;
+  const layerLabel =
+    batch.layer === "all" ? "all registry layers" : `${formatRegistryLayer(batch.layer)} capsules`;
   const rows = batch.bundles
     .map((bundle) => {
       const reviewDir = cwdRelative(cwd, bundle.outputDir);
@@ -594,7 +596,11 @@ export function prepareStableEvidenceReviewBatch(
     (component) => layer === "all" || component.layer === layer,
   );
   if (components.length === 0) {
-    throw new Error(`No Ashlar components found for stable evidence review layer: ${layer}`);
+    throw new Error(
+      `No Ashlar components found for stable evidence review layer: ${
+        layer === "all" ? "all" : formatRegistryLayer(layer)
+      }`,
+    );
   }
 
   const bundles = components.map((component) => {

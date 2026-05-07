@@ -34,7 +34,7 @@ This project uses Ashlar capsules: source-owned public-service UI with evidence,
 - Use only installed Ashlar capsules unless the user explicitly asks to add a new capsule; if adding is requested, run the discovery workflow first.
 - Do not invent props, variants, classes, or behaviors that are absent from the installed CEM files.
 - Preserve semantic HTML, accessible names, label associations, focus-visible styles, and forced-colors behavior.
-- For L0 components, use semantic platform markup such as `<button class="ashlar-button" data-variant="primary">`, not custom elements.
+- For markup primitive capsules (internal layer L0), use semantic platform markup such as `<button class="ashlar-button" data-variant="primary">`, not custom elements.
 - Use Ashlar CSS variables for styling; do not hard-code agency colors into capsule source.
 - After editing Ashlar markup, run `ashlar audit --policy all` or the repo-local equivalent.
 - Before claiming installed capsule integrity, run `ashlar verify`.

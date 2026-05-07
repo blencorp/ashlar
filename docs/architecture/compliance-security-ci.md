@@ -46,7 +46,7 @@ npx @blen/ashlar evidence --format json dialog
 npx @blen/ashlar evidence collect button --fixture registry/components/button/0.0.1/button.html --output reports/button-evidence.json
 npx @blen/ashlar evidence apply button --artifact reports/button-evidence.json --output reports/button.evidence.proposed.json
 npx @blen/ashlar evidence prepare-stable button --fixture registry/components/button/0.0.1/button.html --output reports/button-stable-review
-npx @blen/ashlar evidence prepare-stable-all --output reports/l0-stable-review
+npx @blen/ashlar evidence prepare-stable-all --output reports/markup-primitive-stable-review
 npx @blen/ashlar evidence manual-template button --output reports/button-manual-review.json
 npx @blen/ashlar evidence finalize-stable button --review-dir reports/button-stable-review
 npx @blen/ashlar evidence review button --evidence-file reports/button.evidence.proposed.json --manual-file reports/button-manual-review.json --output reports/button.evidence.reviewed.json
@@ -172,7 +172,7 @@ Implemented locally. Writes a complete non-mutating reviewer bundle for a compon
 
 The command is intentionally preparation only. It does not mark evidence stable, publish into the registry, or replace the requirement for real keyboard and screen-reader observations.
 
-CI uploads the L0 reviewer intake as `ashlar-l0-stable-review` so reviewers can start from the exact automated evidence, proposed packets, transcript worksheets, issue bodies, and follow-up commands produced by the release branch. The uploaded bundles still contain blocked manual worksheets until a real reviewer completes them. CI also uploads `ashlar-button-stable-review-status`, the schema-backed JSON output from `evidence review-status` for the Button bundle, as the exact current blocker list for one L0 bundle. `review-status` validates `MANIFEST.json` and blocks if immutable generated inputs, such as the proposed evidence packet, drift from their recorded hashes; reviewer worksheets are marked mutable so completed manual review does not fail the manifest check by itself.
+CI uploads the markup primitive reviewer intake as `ashlar-markup-primitive-stable-review` so reviewers can start from the exact automated evidence, proposed packets, transcript worksheets, issue bodies, and follow-up commands produced by the release branch. The uploaded bundles still contain blocked manual worksheets until a real reviewer completes them. CI also uploads `ashlar-button-stable-review-status`, the schema-backed JSON output from `evidence review-status` for the Button bundle, as the exact current blocker list for one markup primitive bundle. `review-status` validates `MANIFEST.json` and blocks if immutable generated inputs, such as the proposed evidence packet, drift from their recorded hashes; reviewer worksheets are marked mutable so completed manual review does not fail the manifest check by itself.
 
 Completed `stable-evidence-*` review records are also tied back to their bundle and publication: `ashlar release review-record-check` reruns `evidence review-status` for the `Evidence bundle path` recorded in the markdown and verifies local `Publication receipt` JSON from `ashlar evidence publish --output` against the signed registry state. A manually written record cannot satisfy replacement readiness if the referenced bundle is missing, blocked, no longer matches its generated manifest, or has not been published into the signed registry evidence packet.
 
@@ -180,7 +180,7 @@ Completed `release-trust-*` records get the same treatment for local artifacts. 
 
 Completed `design-partner-*` records also validate local review artifacts. If the record cites local screens, validator output, or the generated design-partner checklist, those paths must exist before readiness counts the record. HTTPS links remain valid for hosted recordings or partner-provided artifacts.
 
-`ashlar evidence prepare-stable-all --output <dir>` batches the same non-mutating reviewer bundle for every matching registry capsule, defaulting to L0. It writes one subdirectory per capsule plus an `INDEX.md` with status commands and the claim boundary. CI uploads that intake directory as `ashlar-l0-stable-review`; it is preparation for real review, not proof and not a stable evidence claim.
+`ashlar evidence prepare-stable-all --output <dir>` batches the same non-mutating reviewer bundle for every matching registry capsule, defaulting to markup primitives. It writes one subdirectory per capsule plus an `INDEX.md` with status commands and the claim boundary. CI uploads that intake directory as `ashlar-markup-primitive-stable-review`; it is preparation for real review, not proof and not a stable evidence claim.
 
 ### `ashlar evidence transcript-template`
 
@@ -265,8 +265,8 @@ Implemented locally. Runs schema-backed AI eval suites against saved generated o
 Implemented locally. Aggregates the current replacement-grade gates into one status report:
 
 - verified registry trust root and capsule manifests;
-- minimum L0 component coverage;
-- minimum stable-evidence L0 count;
+- minimum markup primitive component coverage;
+- minimum stable-evidence markup primitive count;
 - stable evidence gate results;
 - manifest-carried bundle budgets;
 - deterministic AI eval suite;
@@ -412,12 +412,12 @@ This command is useful only after packages exist on npm. Until then, `ashlar rel
 
 Implemented locally. Verifies capsule manifests, reads the CSS and JavaScript runtime files listed in those manifests, computes raw and gzipped bytes, and fails CI when the combined gzipped CSS or JavaScript exceeds the configured budget. If explicit CLI flags are omitted, the command uses the integrity-covered `bundleBudget` defaults in each capsule manifest.
 
-- Current L0 twelve-capsule page: target under 20,992 B gzipped.
-- L0 JavaScript: target exactly 0 B unless a component is explicitly moved out of L0.
-- One L1 component added: target under 24 KiB gzipped.
+- Current markup primitive twelve-capsule page: target under 20,992 B gzipped.
+- Markup primitive JavaScript: target exactly 0 B unless a component is explicitly moved out of the markup primitive layer.
+- One interactive component added: target under 24 KiB gzipped.
 - Button v0.0 gate: under 4KB gzipped CSS.
 
-Current local measurements are 649 B gzipped for Button CSS with 0 B JavaScript, and 1,993 B gzipped CSS with 0 B JavaScript for the twelve current L0 capsules. Future L1 work should use manifest `bundleBudget.jsGzipBytes` for runtime budgets.
+Current local measurements are 649 B gzipped for Button CSS with 0 B JavaScript, and 1,993 B gzipped CSS with 0 B JavaScript for the twelve current markup primitive capsules. Future interactive component work should use manifest `bundleBudget.jsGzipBytes` for runtime budgets.
 
 ## SARIF output
 
@@ -462,8 +462,8 @@ jobs:
       - run: npx @blen/ashlar evidence --check
       - run: npx @blen/ashlar release readiness --report reports/ashlar-release-readiness.md --json-output reports/ashlar-release-readiness.json
         continue-on-error: true
-      - run: npx @blen/ashlar evidence prepare-stable-all --output reports/l0-stable-review
-      - run: npx @blen/ashlar evidence review-status button --review-dir reports/l0-stable-review/button --format json --output reports/button-stable-review-status.json
+      - run: npx @blen/ashlar evidence prepare-stable-all --output reports/markup-primitive-stable-review
+      - run: npx @blen/ashlar evidence review-status button --review-dir reports/markup-primitive-stable-review/button --format json --output reports/button-stable-review-status.json
         continue-on-error: true
       - run: npx @blen/ashlar evidence --report reports/ashlar-evidence.md
         if: always()
@@ -481,8 +481,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: ashlar-l0-stable-review
-          path: reports/l0-stable-review
+          name: ashlar-markup-primitive-stable-review
+          path: reports/markup-primitive-stable-review
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -16,7 +16,7 @@ The largest gap is that the roadmap is still too component-centered. Government 
 
 2. **DTCG 2025.10 tokens.** The Design Tokens Community Group's 2025.10 format is stable enough to anchor the token source, but it is a Community Group report, not a W3C Recommendation. Ashlar should continue to use it, while keeping the compiler boundary swappable.
 
-3. **Platform-first L0 components.** `dialog`, `popover`, `light-dark()`, custom properties, cascade layers, and forced-colors support make zero-JS primitives more credible than they were a few years ago. This is still the right direction for low-bundle, low-maintenance government UI.
+3. **Platform-first markup primitives.** `dialog`, `popover`, `light-dark()`, custom properties, cascade layers, and forced-colors support make zero-JS primitives more credible than they were a few years ago. This is still the right direction for low-bundle, low-maintenance government UI.
 
 4. **Baseline-gated CSS adoption.** Some planned CSS capabilities are recent. `light-dark()` is Baseline 2024, Popover is Baseline 2025, and `@scope` is Baseline 2025. Ashlar should support a feature-tier policy so new platform APIs are used intentionally with tested fallbacks.
 
@@ -50,15 +50,15 @@ Roadmap change: update accessibility/legal baseline docs and keep a dated legal-
 
 ### 4. USWDS is already moving into Web Components
 
-USWDS 3.13 introduced an HTML Web Component variant of Banner. That means "we use Web Components" is not a durable differentiator by itself. Ashlar's durable differentiators are verifiable capsules, source ownership with safe updates, L4 templates, policy packs, evidence dashboards, AI validation, and lower bundle/runtime cost.
+USWDS 3.13 introduced an HTML Web Component variant of Banner. That means "we use Web Components" is not a durable differentiator by itself. Ashlar's durable differentiators are verifiable capsules, source ownership with safe updates, application-block templates, policy packs, evidence dashboards, AI validation, and lower bundle/runtime cost.
 
 Roadmap change: reposition Banner/Identifier as compatibility and standards-pack work, not as proof that Web Components alone are the future.
 
 ### 5. Content, language, and service design need product weight
 
-M-23-22 emphasizes plain language, content testing with intended audiences, translation/localization, privacy policy placement, feedback, and prioritizing high-impact services. The current L3 pattern idea includes content guidance, but the roadmap does not make content schemas, language variants, or feedback hooks release blockers.
+M-23-22 emphasizes plain language, content testing with intended audiences, translation/localization, privacy policy placement, feedback, and prioritizing high-impact services. The current service pattern idea includes content guidance, but the roadmap does not make content schemas, language variants, or feedback hooks release blockers.
 
-Roadmap change: every L3 pattern should ship `*.content.md`, `*.research.md`, multilingual placeholders where needed, page-level metadata, feedback placement guidance, and an audit rule set for common content/UX failures.
+Roadmap change: every service pattern should ship `*.content.md`, `*.research.md`, multilingual placeholders where needed, page-level metadata, feedback placement guidance, and an audit rule set for common content/UX failures.
 
 ### 6. DX needs preview-before-install and explainable audit output
 

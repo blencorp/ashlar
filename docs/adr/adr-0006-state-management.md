@@ -6,7 +6,7 @@ Proposed.
 
 ## Decision
 
-Express L1 component behavior as:
+Express interactive component behavior as:
 
 - **Statecharts** (via Zag.js) for discrete state transitions, ARIA orchestration, keyboard handling, and focus management.
 - **Signals** (Solid- or Preact-style, aligned with TC39 Signals Stage 1 proposal) for fine-grained reactive data flow within components.
@@ -31,7 +31,7 @@ Statecharts and signals are complementary: statecharts define the component's di
 - Multi-framework support is collapse-able — one machine, many adapters.
 - Statechart is itself accessibility evidence (mapping states to WCAG).
 - Signals position Ashlar for TC39 platform-level reactivity.
-- L1 components are smaller than equivalent shadcn/Radix combinations because behavior amortizes across a small machine library.
+- interactive components are smaller than equivalent shadcn/Radix combinations because behavior amortizes across a small machine library.
 
 **Negative**
 

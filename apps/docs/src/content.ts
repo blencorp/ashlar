@@ -290,7 +290,7 @@ export const pages: DocPage[] = [
       },
     ],
     checkpoints: [
-      "At least one L0 stable-evidence packet needs real keyboard and screen-reader review.",
+      "At least one markup primitive stable-evidence packet needs real keyboard and screen-reader review.",
       "External review records must be completed under docs/reviews/ before proof gates pass.",
       "Public npm provenance and public capsule Sigstore trust require real release artifacts.",
     ],
