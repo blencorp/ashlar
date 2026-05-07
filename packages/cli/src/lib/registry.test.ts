@@ -55,10 +55,11 @@ describe("registry", () => {
       "textarea",
       "benefit-application",
     ];
+    const expectedVersions = new Map<string, string>([["banner", "0.0.2"]]);
 
     for (const name of names) {
       const detail = getComponent(repoRoot, name);
-      expect(detail.version).toBe("0.0.1");
+      expect(detail.version).toBe(expectedVersions.get(name) ?? "0.0.1");
       expect(detail.evidence.component).toBe(name);
       expect(detail.files).toContain(`${name}.cem.json`);
       expect(detail.files).toContain(`${name}.evidence.json`);

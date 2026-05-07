@@ -472,7 +472,22 @@
   }
 
   .ashlar-banner__text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     font-weight: 700;
+  }
+
+  .ashlar-banner__flag {
+    display: inline-block;
+    inline-size: 1.25rem;
+    block-size: 0.8125rem;
+    border: 1px solid #dfe1e2;
+    border-radius: 0.0625rem;
+    background:
+      linear-gradient(#005ea8 0 0) left top / 46% 54% no-repeat,
+      repeating-linear-gradient(to bottom, #b31942 0 7.69%, #ffffff 7.69% 15.38%);
+    flex: 0 0 auto;
   }
 
   .ashlar-banner__details {
@@ -848,6 +863,7 @@
 /* Ashlar component: text-input */
 @layer ashlar.components {
   .ashlar-text-input {
+    background-color: var(--ashlar-color-surface, #ffffff);
     border: 1px solid var(--ashlar-color-input-border, #565c65);
     border-radius: var(--ashlar-radius-control, 0.25rem);
     box-sizing: border-box;
@@ -872,6 +888,7 @@
 
 @media (forced-colors: active) {
   .ashlar-text-input {
+    background-color: Field;
     border-color: FieldText;
   }
 

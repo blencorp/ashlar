@@ -112,6 +112,38 @@ async function inspectExample(browserInstance, example, url) {
         throw new Error(`${viewport.name} browser runtime issue(s): ${runtimeIssues.join(" | ")}`);
       }
 
+      const bannerFlag = await page.evaluate(() => {
+        const flag = document.querySelector(".ashlar-banner__flag");
+        if (!flag) {
+          return null;
+        }
+        const style = getComputedStyle(flag);
+        return {
+          ariaHidden: flag.getAttribute("aria-hidden"),
+          backgroundImage: style.backgroundImage,
+          height: Number.parseFloat(style.height),
+          width: Number.parseFloat(style.width),
+        };
+      });
+      if (!bannerFlag) {
+        throw new Error(`${viewport.name} is missing the decorative government banner flag`);
+      }
+      if (bannerFlag.ariaHidden !== "true") {
+        throw new Error(`${viewport.name} banner flag must be hidden from assistive technology`);
+      }
+      if (
+        bannerFlag.backgroundImage === "none" ||
+        !bannerFlag.backgroundImage.includes("linear-gradient") ||
+        !bannerFlag.backgroundImage.includes("repeating-linear-gradient")
+      ) {
+        throw new Error(`${viewport.name} banner flag is not rendering as a multi-color flag`);
+      }
+      if (bannerFlag.width < 18 || bannerFlag.height < 10) {
+        throw new Error(
+          `${viewport.name} banner flag is too small: ${bannerFlag.width}px x ${bannerFlag.height}px`,
+        );
+      }
+
       pages.push({ viewport: viewport.name, screenshot, h1: metrics.h1 });
       await page.close();
     }

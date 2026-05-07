@@ -128,7 +128,10 @@ $: if (typeof document !== "undefined") {
 
 <section class="ashlar-banner" aria-label="Official website of the United States government">
   <div class="ashlar-banner__inner">
-    <p class="ashlar-banner__text">An official website of the United States government</p>
+    <p class="ashlar-banner__text">
+      <span class="ashlar-banner__flag" aria-hidden="true"></span>
+      <span>An official website of the United States government</span>
+    </p>
     <details class="ashlar-banner__details">
       <summary>Here's how you know</summary>
       <div class="ashlar-banner__grid">

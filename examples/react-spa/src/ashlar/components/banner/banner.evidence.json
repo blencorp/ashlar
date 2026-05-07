@@ -1,6 +1,6 @@
 {
   "component": "banner",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "stability": "experimental",
   "accessibilityStatus": "not-reviewed",
   "wcag": [

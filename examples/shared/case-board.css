@@ -50,16 +50,18 @@
   }
 
   .ashlar-banner__text::before {
+    content: none;
+  }
+
+  .ashlar-banner__flag {
     display: inline-block;
-    inline-size: 1rem;
-    block-size: 0.625rem;
+    inline-size: 1.25rem;
+    block-size: 0.8125rem;
     border: 1px solid #dfe1e2;
     border-radius: 0.0625rem;
     background:
-      linear-gradient(#b31942 0 0) 0 0 / 100% 14.285% repeat-y,
-      linear-gradient(#ffffff 0 0) 0 7.142% / 100% 14.285% repeat-y,
-      linear-gradient(#005ea8 0 0) 0 0 / 45% 57% no-repeat;
-    content: "";
+      linear-gradient(#005ea8 0 0) left top / 46% 54% no-repeat,
+      repeating-linear-gradient(to bottom, #b31942 0 7.69%, #ffffff 7.69% 15.38%);
     flex: 0 0 auto;
   }
 

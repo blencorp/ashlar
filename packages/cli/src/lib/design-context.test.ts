@@ -29,6 +29,7 @@ describe("buildDesignContext", () => {
     expect(context).toContain("suggest_for_task");
     expect(context).toContain("ashlar audit --policy all");
     expect(context).toContain("validate_usage");
+    expect(context).toContain("do not place cards inside cards");
   });
 
   it("includes installed capsule metadata and evidence from the registry", () => {

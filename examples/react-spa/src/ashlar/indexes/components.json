@@ -18,7 +18,7 @@
     },
     {
       "name": "banner",
-      "version": "0.0.1",
+      "version": "0.0.2",
       "tier": "primitive",
       "layer": "L0",
       "stability": "experimental",

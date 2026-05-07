@@ -11,7 +11,7 @@
           "tagName": "section",
           "description": "Official-site trust marker for federal and public-service pages.",
           "_ashlar": {
-            "version": "0.0.1",
+            "version": "0.0.2",
             "tier": "primitive",
             "layer": "L0",
             "stability": "experimental",
