@@ -1,5 +1,14 @@
 # @ashlar/cli
 
+## 0.1.3
+
+### Patch Changes
+
+- [#64](https://github.com/blencorp/ashlar/pull/64) [`181b359`](https://github.com/blencorp/ashlar/commit/181b3596d096a6603277c88c13847a97bba92d5e) Thanks [@naodya](https://github.com/naodya)! - Require agency theme source provenance, expose theme sources through generated DESIGN.md and MCP token tools, and document source-backed stock themes.
+
+- Updated dependencies [[`181b359`](https://github.com/blencorp/ashlar/commit/181b3596d096a6603277c88c13847a97bba92d5e)]:
+  - @ashlar/schemas@0.1.2
+
 ## 0.1.2
 
 ### Patch Changes
