@@ -1,5 +1,6 @@
 import type { Command } from "commander";
 import { suggestComponentsForTask } from "../lib/component-suggest.js";
+import { applyCommandCwd, type CwdOption } from "../lib/cwd.js";
 import { readConfig } from "../lib/project.js";
 import {
   printBrandHeader,
@@ -12,17 +13,19 @@ import {
 type SuggestOptions = {
   json?: boolean;
   limit?: string;
-};
+} & CwdOption;
 
 export function registerSuggestCommand(program: Command) {
   program
     .command("suggest")
     .description("Suggest Ashlar capsules for a public-service UI task without modifying files")
     .argument("<task...>", 'Task description, such as "benefits application form"')
+    .option("-c, --cwd <path>", "Working directory. Defaults to the current directory.")
     .option("--limit <count>", "Maximum suggestions", "13")
     .option("--json", "Emit JSON")
     .action((taskParts: string[], options: SuggestOptions) => {
       try {
+        applyCommandCwd(options);
         const limit = Number.parseInt(options.limit ?? "12", 10);
         if (!Number.isInteger(limit) || limit < 1) {
           throw new Error("--limit must be a positive integer");

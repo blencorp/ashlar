@@ -1,4 +1,5 @@
 import type { Command } from "commander";
+import { applyCommandCwd, type CwdOption } from "../lib/cwd.js";
 import { buildProjectStatus } from "../lib/project-status.js";
 import {
   formatStatus,
@@ -13,7 +14,7 @@ import {
 type StatusOptions = {
   json?: boolean;
   registry?: string;
-};
+} & CwdOption;
 
 function printText(report: ReturnType<typeof buildProjectStatus>): void {
   printBrandHeader("Project status and adoption path");
@@ -51,10 +52,12 @@ export function registerStatusCommand(program: Command) {
     .command("status")
     .alias("info")
     .description("Show read-only Ashlar project adoption status and next actions")
+    .option("-c, --cwd <path>", "Working directory. Defaults to the current directory.")
     .option("--registry <path>", "Registry path or URL")
     .option("--json", "Print JSON status report")
     .action((options: StatusOptions) => {
       try {
+        applyCommandCwd(options);
         const report = buildProjectStatus({
           cwd: process.cwd(),
           registryPath: options.registry,

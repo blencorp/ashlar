@@ -23,7 +23,7 @@ Ashlar is in v0.0 prototype. **See [STATUS.md](STATUS.md) for the live, honest l
 The current prototype implements:
 
 - A federal HTML policy audit with seven page-shell rules, parser-backed, with SARIF output;
-- A local registry index and the `init`, `status`, `add` with `--view` / `--dry-run` / `--diff` preview flags, `audit`, `verify`, `update`, `migrate uswds`, `mcp`, `evidence`, `evidence collect`, `evidence apply`, `evidence prepare-stable`, `evidence prepare-stable-all`, `evidence review-status`, `evidence finalize-stable`, `search`, `suggest`, `view`, `design sync`, `theme sync`, `theme validate`, `registry mirror`, `release sign-capsules`, and `release public-trust-verify` commands;
+- A local registry index and the `init` / `create`, `status` / `info`, `add` with `--all` / `--view` / `--dry-run` / `--diff` preview flags, `audit`, `verify`, `update`, `migrate uswds`, `mcp`, `evidence`, `evidence collect`, `evidence apply`, `evidence prepare-stable`, `evidence prepare-stable-all`, `evidence review-status`, `evidence finalize-stable`, `search` / `list`, `suggest`, `view` / `docs`, `design sync`, `theme sync`, `theme validate`, `registry mirror`, `release sign-capsules`, and `release public-trust-verify` commands;
 - A content-addressed capsule manifest and lockfile substrate (registry manifests verified against index-pinned hashes and local Ed25519 signatures on `add`, `update`, `verify`, and `registry mirror`; declared capsule Sigstore bundle metadata is checked against the registry trust policy and can require `cosign verify-blob`; `update` can run capsule-listed JSON codemods before merge; current registry capsules still need real public Sigstore bundles);
 - Experimental Button, Banner, Identifier, Alert, Form Field, Text Input, Select, Radio Group, Checkbox, Error Summary, and Benefit Application capsules with platform features, policy mappings, and ICT Baseline planned-test entries. The current Banner capsule uses an inline decorative U.S. flag SVG aligned to USWDS/Federal Website Standards guidance rather than a CSS-painted placeholder;
 - A first service-flow proof fixture that passes `audit --policy all`, plus a broken fixture that demonstrates explainable findings;
@@ -78,6 +78,8 @@ pnpm build
 
 # Initialize a target project (e.g. a Vite app)
 node /path/to/ashlar/packages/cli/dist/index.js init
+mkdir -p ./my-public-service-app
+node /path/to/ashlar/packages/cli/dist/index.js create --cwd ./my-public-service-app --registry /path/to/ashlar/registry --yes
 
 # See the current adoption state and next commands
 node /path/to/ashlar/packages/cli/dist/index.js status --registry ./registry
@@ -85,6 +87,7 @@ node /path/to/ashlar/packages/cli/dist/index.js status --registry ./registry
 # Inspect the registry
 node /path/to/ashlar/packages/cli/dist/index.js search button
 node /path/to/ashlar/packages/cli/dist/index.js search "official website" --policy "Federal Website Standards"
+node /path/to/ashlar/packages/cli/dist/index.js search --query "official website" --policy "Federal Website Standards" --limit 1
 node /path/to/ashlar/packages/cli/dist/index.js search --feature details-summary --json
 node /path/to/ashlar/packages/cli/dist/index.js suggest "Build a benefits application form"
 node /path/to/ashlar/packages/cli/dist/index.js suggest "Ask yes/no eligibility questions"
@@ -99,6 +102,7 @@ node /path/to/ashlar/packages/cli/dist/index.js migrate uswds --registry ./regis
 node /path/to/ashlar/packages/cli/dist/index.js add button --view
 node /path/to/ashlar/packages/cli/dist/index.js add button --dry-run
 node /path/to/ashlar/packages/cli/dist/index.js add button --diff
+node /path/to/ashlar/packages/cli/dist/index.js add --all --dry-run
 node /path/to/ashlar/packages/cli/dist/index.js add form-field text-input textarea date-input select radio-group checkbox button alert error-summary identifier
 
 # Verify the install

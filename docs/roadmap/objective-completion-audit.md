@@ -1,7 +1,7 @@
 # Objective Completion Audit
 
-Date: 2026-05-06
-Branch inspected: `main` after #42-#54 merged (`ff52dfa`)
+Date: 2026-05-07
+Branch inspected: `main` after #75 and #76 merged (`01b7305`), plus current `feat/cli-shadcn-v4-parity` working branch evidence where noted
 
 ## Objective
 
@@ -11,30 +11,30 @@ Build a government-first UI library that can credibly replace day-to-day USWDS u
 
 Not achieved yet.
 
-Ashlar has a real substrate now: signed source capsules, federal and component audits, migration planning, update survival tests, local MCP, first-run docs, evidence tooling, release readiness gates, bundle budgets, framework examples, and a memorable `npx ashlar` package entrypoint. The remaining blockers are not implementation effort proxies; they are proof gates:
+Ashlar has a real substrate now: signed source capsules, federal and component audits, migration planning, update survival tests, local MCP, first-run docs, evidence tooling, release readiness gates, bundle budgets, framework examples, a memorable `npx ashlar` package entrypoint, banner visual regression tests, and shadcn-v4-compatible CLI ergonomics in the current branch. The remaining blockers are not implementation effort proxies; they are proof gates:
 
 - one stable-evidence L0 component with real manual accessibility evidence;
 - completed external review records;
 - public npm trusted-publishing provenance for `ashlar`, `@ashlar/cli`, and `@ashlar/schemas`;
 - public capsule Sigstore trust material.
 
-Strict readiness evidence: `node packages/cli/dist/index.js release readiness --registry ./registry --json` returned `status: "fail"` on 2026-05-06 with 9 passing checks and 4 failing checks: `stable-l0-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
+Strict readiness evidence: `node packages/cli/dist/index.js release readiness --registry ./registry --json-output /tmp/ashlar-readiness.json --report /tmp/ashlar-readiness.md` returned `status: "fail"` on 2026-05-07 with 9 passing checks and 4 failing checks: `stable-l0-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
 
 ## Prompt-To-Artifact Checklist
 
 | Requirement | Current evidence | Coverage judgment | Missing proof |
 | --- | --- | --- | --- |
-| Replace day-to-day USWDS usage | `ashlar audit --policy federal`, `ashlar migrate uswds`, 12 L0 capsules in `registry/components`, `benefit-application` service-flow capsule, `examples/uswds-project` migration fixture, `examples/legacy-federal-project` audit fixture, `docs/roadmap/uswds-coverage-matrix.md` | Strong prototype, not replacement-grade. Coverage gaps are now explicit. | Stable accessibility evidence, external design-partner validation, wider component/pattern coverage, public release |
+| Replace day-to-day USWDS usage | `ashlar audit --policy federal`, `ashlar migrate uswds`, 12 L0 capsules in `registry/components`, `benefit-application` service-flow capsule, `examples/uswds-project` migration fixture, `examples/legacy-federal-project` audit fixture, `docs/roadmap/uswds-coverage-matrix.md`, framework case-board examples, banner visual smoke | Strong prototype, not replacement-grade. Coverage gaps are now explicit. | Stable accessibility evidence, external design-partner validation, wider component/pattern coverage, public release |
 | Become memorable like shadcn/ui | Unscoped `ashlar` package, `npx ashlar` docs/status alignment, source-capsule distribution model, `apps/www` marketing surface, and `apps/docs` first-run docs app are merged to `main` | Good naming/DX direction with a first-run docs surface. | Package name must be reserved by real npm publish; public docs deployment and community launch still missing |
 | Address shadcn gaps | `ashlar update`, `ashlar verify`, capsule lockfile hashes, update survival tests, signed capsule manifests, release readiness, SBOM/trust-bundle/provenance tooling | Strongest product wedge in repo | Needs real release traffic, public Sigstore bundles, npm provenance, external security review |
 | AI-native gov app workflow | `ashlar mcp`, MCP `validate_usage`, `search_components`, `suggest_for_task`, `list_tokens`, `get_token`, `ashlar ai-eval`, generated `AGENTS.md` and `DESIGN.md`, and `examples/ai-eval/generated-output-corpus` | Useful local AI-native substrate with a small seed corpus | Independent model/tool outputs beyond the Codex seed corpus, hosted/remote MCP decision, write-tool threat model if write tools are ever added |
-| Amazing DX and easy integration | `ashlar init`, `status`, `add`, `audit`, `search`, `suggest`, `view`, `theme sync`, `theme validate`, release smoke installing packed CLI into a clean consumer, `apps/docs` first-run path for install/audit/add/verify/theme/AI/trust, and real framework examples for vanilla TypeScript, React SPA, Next.js App Router, Svelte, and Vue | Good local DX and first-run guidance | Public npm install path, public docs deployment, real user feedback |
-| Light footprint | `ashlar bundle budget` reports 12 L0 capsules at 1,993 B CSS gzip and 0 B JS gzip against a 20,992 B L0 budget; Button is 649 B CSS gzip and 0 B JS | Strong evidence for current L0 substrate | Must hold as L1 interactive components arrive |
+| Amazing DX and easy integration | `ashlar init|create`, `status|info`, `add --all --view --dry-run --diff`, `search|list -q -l`, `suggest`, `view|docs`, `-c/--cwd` on common commands, `audit`, `theme sync`, `theme validate`, release smoke installing packed CLI into a clean consumer, `apps/docs` first-run path for install/audit/add/verify/theme/AI/trust, and real framework examples for vanilla TypeScript, React SPA, Next.js App Router, Svelte, and Vue | Good local DX and first-run guidance; current branch adds shadcn-v4-compatible ergonomics without claiming template/preset support. | Public npm install path, public docs deployment, real user feedback, real template/preset system if Ashlar chooses to mirror that shadcn surface |
+| Light footprint | `ashlar bundle budget` reports 12 L0 capsules at 2,100 B CSS gzip and 0 B JS gzip against a 20,992 B L0 budget; Button is 649 B CSS gzip and 0 B JS | Strong evidence for current L0 substrate | Must hold as L1 interactive components arrive |
 | Gov trust/compliance posture | Federal page-shell audit, evidence gate, review-pack generation, incident playbook, release readiness, SBOM, trust bundle, issue templates | Strong process and tooling | Real stable evidence, completed review records, public provenance/Sigstore proof |
 
 ## Current PR Evidence
 
-Merged implementation stack:
+Merged implementation stack now includes the earlier foundation work plus the recent banner and release merges:
 
 - #42 `feat: build standards evidence foundation`
 - #43 `docs: refresh proof gate checkpoint docs`
@@ -49,12 +49,17 @@ Merged implementation stack:
 - #52 `docs: refresh objective audit after docs app`
 - #53 `ci: add release governance`
 - #54 `feat: add framework case-board examples`
+- #75 `fix(banner): replace fake flag with svg proof`
+- #76 `chore(release): version packages`
 
-Post-merge evidence on the final #54 merge SHA `ff52dfa`: GitHub `CI` completed successfully, and the `Version Packages` workflow completed successfully after running `pnpm check`, `pnpm build`, and creating the version PR.
+Post-merge evidence on #75 and #76: GitHub `CI` completed successfully on merge SHA `77e4b3f` and again on release SHA `01b7305`; the `Version Packages` workflow completed successfully after #75 and again after #76. The #75 CI run included `pnpm check`, `pnpm build`, `pnpm examples:visual`, release smoke, evidence checks, AI eval, bundle budgets, and SARIF upload.
 
-Open release/version PR:
+Current branch evidence:
 
-- #55 `chore(release): version packages` from `changeset-release/main` to `main`; clean and created by the Changesets action. This is versioning work, not proof that npm publication/provenance is complete.
+- `feat/cli-shadcn-v4-parity` adds `create` as an `init` alias, `-c/--cwd` for common commands, `search -q/-l`, and `add --all`.
+- Local `pnpm format:check`, `pnpm check`, `pnpm build`, `pnpm examples:visual`, and `pnpm release:smoke` passed under Node 24.15.0.
+- Local CLI tests passed: 34 test files, 255 tests.
+- Manual smoke passed for `create --cwd`, `search --cwd --query --limit --json`, and `add --cwd --all --dry-run`.
 
 ## Gate Audit
 
@@ -77,11 +82,11 @@ The following release-readiness checks fail today:
 - `npm-provenance-public`: requires real npm trusted publishing and `ashlar release provenance-verify-public` against published versions.
 - `sigstore-public-trust`: 0/13 capsule manifests include public Sigstore bundle metadata; current capsules still use local Ed25519 signatures.
 
-Current Button reviewer intake and release-review artifacts are produced by the green `main` CI run for `ff52dfa`; they remain intake artifacts only. They do not count as completed external review records.
+Current Button reviewer intake and release-review artifacts are produced by green CI runs; they remain intake artifacts only. They do not count as completed external review records.
 
 ## Next Concrete Work
 
-1. Review and merge #55 when the release/version package changes are ready; do not confuse that with a public npm release.
+1. Merge the CLI parity branch after full local checks and PR CI.
 2. Produce the first real Button stable-evidence packet: automated artifact, manual keyboard transcript, manual screen-reader transcript, reviewed packet, graduated packet, local publication receipt, and completed `docs/reviews/stable-evidence-*.md`.
 3. Run the first real trusted-publishing release for `ashlar`, `@ashlar/cli`, and `@ashlar/schemas`; attach `ashlar-npm-provenance.json`.
 4. Run the Sigstore workflow for capsule/release artifacts and attach `ashlar-public-trust.json`.

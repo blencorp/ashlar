@@ -4,6 +4,7 @@ import { writeDesignContext } from "../lib/design-context.js";
 import { defaultConfig, writeJson } from "../lib/project.js";
 import { syncAshlarProject } from "../lib/styles.js";
 import { writeThemeFiles } from "../lib/theme.js";
+import { applyCommandCwd, type CwdOption } from "../lib/cwd.js";
 import {
   printBrandHeader,
   printCommand,
@@ -16,8 +17,11 @@ import {
 export function registerInitCommand(program: Command) {
   program
     .command("init")
+    .alias("create")
     .description("Initialize Ashlar in this project")
     .option("--force", "Overwrite existing Ashlar config files")
+    .option("-c, --cwd <path>", "Working directory. Defaults to the current directory.")
+    .option("-y, --yes", "Skip confirmation prompts. Present for shadcn CLI compatibility.")
     .option("--registry <path>", "Registry path or URL", "./registry")
     .option(
       "--components-dir <path>",
@@ -30,55 +34,69 @@ export function registerInitCommand(program: Command) {
       "src/ashlar/ashlar.css",
     )
     .action(
-      (options: {
-        componentsDir: string;
-        entrypoint: string;
-        force?: boolean;
-        registry: string;
-      }) => {
-        const force = Boolean(options.force);
-        const config = defaultConfig({
-          registry: options.registry,
-          componentsDir: options.componentsDir,
-          indexesDir: "src/ashlar/indexes",
-          styles: {
-            entrypoint: options.entrypoint,
-            theme: "src/ashlar/themes/theme.css",
-            tailwindTheme: "src/ashlar/themes/tailwind-theme.css",
-            tokenTypes: "src/ashlar/themes/tokens.ts",
-          },
-        });
+      (
+        options: {
+          componentsDir: string;
+          entrypoint: string;
+          force?: boolean;
+          registry: string;
+        } & CwdOption,
+      ) => {
+        try {
+          applyCommandCwd(options);
+          const force = Boolean(options.force);
+          const config = defaultConfig({
+            registry: options.registry,
+            componentsDir: options.componentsDir,
+            indexesDir: "src/ashlar/indexes",
+            styles: {
+              entrypoint: options.entrypoint,
+              theme: "src/ashlar/themes/theme.css",
+              tailwindTheme: "src/ashlar/themes/tailwind-theme.css",
+              tokenTypes: "src/ashlar/themes/tokens.ts",
+            },
+          });
 
-        writeJson("ashlar.config.json", config);
+          writeJson("ashlar.config.json", config);
 
-        const lockfile = {
-          $schema: "https://ashlar.dev/schemas/lock.schema.json",
-          version: "1",
-          registry: config.registry,
-          components: {},
-        } as const;
+          const lockfile = {
+            $schema: "https://ashlar.dev/schemas/lock.schema.json",
+            version: "1",
+            registry: config.registry,
+            components: {},
+          } as const;
 
-        writeJson("ashlar-lock.json", lockfile);
-        writeThemeFiles(config, force);
-        syncAshlarProject(process.cwd(), config, lockfile);
+          writeJson("ashlar-lock.json", lockfile);
+          writeThemeFiles(config, force);
+          syncAshlarProject(process.cwd(), config, lockfile);
 
-        writeAgentsContext("AGENTS.md", config, lockfile);
-        writeDesignContext("DESIGN.md", config, lockfile, { cwd: process.cwd(), force });
-        printBrandHeader("Initialized source-owned Ashlar project files");
-        printSuccess("Initialized Ashlar");
-        printSection("Project files");
-        printKeyValue("config", "ashlar.config.json");
-        printKeyValue("lockfile", "ashlar-lock.json");
-        printKeyValue("components", config.componentsDir);
-        printKeyValue("entrypoint", config.styles.entrypoint);
-        printSection("Next");
-        printCommand('ashlar search "official website"', "Find signed capsules by policy or task.");
-        printCommand(
-          "ashlar add banner identifier",
-          "Install source-owned public-service shell capsules.",
-        );
-        printCommand("ashlar verify", "Check local source against registry hashes and signatures.");
-        printFooter();
+          writeAgentsContext("AGENTS.md", config, lockfile);
+          writeDesignContext("DESIGN.md", config, lockfile, { cwd: process.cwd(), force });
+          printBrandHeader("Initialized source-owned Ashlar project files");
+          printSuccess("Initialized Ashlar");
+          printSection("Project files");
+          printKeyValue("config", "ashlar.config.json");
+          printKeyValue("lockfile", "ashlar-lock.json");
+          printKeyValue("components", config.componentsDir);
+          printKeyValue("entrypoint", config.styles.entrypoint);
+          printSection("Next");
+          printCommand(
+            'ashlar search "official website"',
+            "Find signed capsules by policy or task.",
+          );
+          printCommand(
+            "ashlar add banner identifier",
+            "Install source-owned public-service shell capsules.",
+          );
+          printCommand(
+            "ashlar verify",
+            "Check local source against registry hashes and signatures.",
+          );
+          printFooter();
+        } catch (error) {
+          console.error(error instanceof Error ? error.message : String(error));
+          process.exitCode = 1;
+        }
       },
     );
 }

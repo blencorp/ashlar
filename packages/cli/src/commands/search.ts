@@ -1,6 +1,7 @@
 import type { Command } from "commander";
 import { searchRegistryComponents } from "../lib/component-search.js";
 import type { RegistryLayer, RegistryStability, RegistryTier } from "../lib/registry.js";
+import { applyCommandCwd, type CwdOption } from "../lib/cwd.js";
 import { readConfig } from "../lib/project.js";
 import {
   printBrandHeader,
@@ -17,10 +18,11 @@ type SearchOptions = {
   stability?: RegistryStability;
   evidence?: string;
   policy?: string;
+  query?: string;
   feature?: string;
   token?: string;
   limit?: string;
-};
+} & CwdOption;
 
 export function registerSearchCommand(program: Command) {
   program
@@ -30,6 +32,8 @@ export function registerSearchCommand(program: Command) {
       "Search the local Ashlar registry by component, policy, feature, token, or evidence metadata",
     )
     .argument("[query]", "Component name or description text")
+    .option("-c, --cwd <path>", "Working directory. Defaults to the current directory.")
+    .option("-q, --query <text>", "Query string. Mirrors shadcn search -q.")
     .option("--layer <layer>", "Filter by layer, such as L0 or L3")
     .option("--tier <tier>", "Filter by tier: foundation, primitive, composite, pattern, or block")
     .option("--stability <stability>", "Filter by stability")
@@ -37,11 +41,13 @@ export function registerSearchCommand(program: Command) {
     .option("--policy <text>", "Filter by policy source or requirement text")
     .option("--feature <text>", "Filter by platform feature")
     .option("--token <text>", "Filter by consumed design token")
-    .option("--limit <count>", "Maximum results", "20")
+    .option("-l, --limit <count>", "Maximum results", "20")
     .option("--json", "Emit JSON")
     .action((query = "", options: SearchOptions) => {
       try {
+        applyCommandCwd(options);
         const config = readConfig();
+        const searchQuery = options.query ?? query;
         const limit = Number.parseInt(options.limit ?? "20", 10);
         if (!Number.isInteger(limit) || limit < 1) {
           throw new Error("--limit must be a positive integer");
@@ -49,7 +55,7 @@ export function registerSearchCommand(program: Command) {
         const components = searchRegistryComponents({
           cwd: process.cwd(),
           registryPath: config.registry,
-          query,
+          query: searchQuery,
           layer: options.layer,
           tier: options.tier,
           stability: options.stability,
@@ -61,7 +67,9 @@ export function registerSearchCommand(program: Command) {
         });
 
         if (options.json) {
-          console.log(JSON.stringify({ query, count: components.length, components }, null, 2));
+          console.log(
+            JSON.stringify({ query: searchQuery, count: components.length, components }, null, 2),
+          );
           return;
         }
 
@@ -73,7 +81,7 @@ export function registerSearchCommand(program: Command) {
         }
 
         printBrandHeader("Registry search");
-        printKeyValue("query", query || "(all)");
+        printKeyValue("query", searchQuery || "(all)");
         printKeyValue("results", components.length);
         for (const item of components) {
           printSection(`${item.name}@${item.version}`);

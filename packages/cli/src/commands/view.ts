@@ -1,4 +1,5 @@
 import type { Command } from "commander";
+import { applyCommandCwd, type CwdOption } from "../lib/cwd.js";
 import { getComponent } from "../lib/registry.js";
 import { readConfig } from "../lib/project.js";
 import {
@@ -15,11 +16,12 @@ export function registerViewCommand(program: Command) {
     .alias("docs")
     .description("Show component registry metadata before install")
     .argument("<components...>", "Component names")
+    .option("-c, --cwd <path>", "Working directory. Defaults to the current directory.")
     .option("--json", "Emit JSON")
-    .action((components: string[], options: { json?: boolean }) => {
-      const config = readConfig();
-
+    .action((components: string[], options: { json?: boolean } & CwdOption) => {
       try {
+        applyCommandCwd(options);
+        const config = readConfig();
         const details = components.map((component) =>
           getComponent(process.cwd(), component, config.registry),
         );
