@@ -1,6 +1,13 @@
 import type { Command } from "commander";
 import { suggestComponentsForTask } from "../lib/component-suggest.js";
 import { readConfig } from "../lib/project.js";
+import {
+  printBrandHeader,
+  printCommand,
+  printFooter,
+  printListItem,
+  printSection,
+} from "../lib/tui.js";
 
 type SuggestOptions = {
   json?: boolean;
@@ -34,16 +41,19 @@ export function registerSuggestCommand(program: Command) {
           return;
         }
 
+        printBrandHeader("Task-to-capsule suggestions");
         console.log(`Task: ${report.task}`);
         if (report.suggestions.length === 0) {
           console.log("No Ashlar capsules matched the task metadata.");
           for (const note of report.notes) {
-            console.log(`  ${note}`);
+            printListItem(note);
           }
+          printFooter();
           return;
         }
 
         for (const [index, suggestion] of report.suggestions.entries()) {
+          printSection(`${index + 1}. ${suggestion.name}@${suggestion.version}`);
           console.log(
             `${index + 1}. ${suggestion.name}@${suggestion.version} [${suggestion.layer}, ${suggestion.tier}, ${suggestion.stability}]`,
           );
@@ -56,14 +66,20 @@ export function registerSuggestCommand(program: Command) {
           console.log(`Install: ${report.installCommand}`);
         }
         if (report.gaps.length > 0) {
-          console.log("Gaps:");
+          printSection("Gaps");
           for (const gap of report.gaps) {
-            console.log(`  - ${gap.capability}: ${gap.recommendation}`);
+            printListItem(`${gap.capability}: ${gap.recommendation}`);
           }
         }
         for (const note of report.notes) {
           console.log(`Note: ${note}`);
         }
+        if (report.installCommand) {
+          printSection("Next");
+          printCommand(report.installCommand, "Install the suggested source-owned capsules.");
+          printCommand("ashlar verify", "Check hashes, signatures, and local edits after install.");
+        }
+        printFooter();
       } catch (error) {
         console.error(error instanceof Error ? error.message : String(error));
         process.exitCode = 1;

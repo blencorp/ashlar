@@ -2,6 +2,13 @@ import type { Command } from "commander";
 import { searchRegistryComponents } from "../lib/component-search.js";
 import type { RegistryLayer, RegistryStability, RegistryTier } from "../lib/registry.js";
 import { readConfig } from "../lib/project.js";
+import {
+  printBrandHeader,
+  printCommand,
+  printFooter,
+  printKeyValue,
+  printSection,
+} from "../lib/tui.js";
 
 type SearchOptions = {
   json?: boolean;
@@ -18,6 +25,7 @@ type SearchOptions = {
 export function registerSearchCommand(program: Command) {
   program
     .command("search")
+    .alias("list")
     .description(
       "Search the local Ashlar registry by component, policy, feature, token, or evidence metadata",
     )
@@ -58,11 +66,17 @@ export function registerSearchCommand(program: Command) {
         }
 
         if (components.length === 0) {
+          printBrandHeader("Registry search");
           console.log("No Ashlar components matched.");
+          printFooter();
           return;
         }
 
+        printBrandHeader("Registry search");
+        printKeyValue("query", query || "(all)");
+        printKeyValue("results", components.length);
         for (const item of components) {
+          printSection(`${item.name}@${item.version}`);
           console.log(
             `${item.name}@${item.version} [${item.layer}, ${item.tier}, ${item.stability}] ${item.description}`,
           );
@@ -70,6 +84,13 @@ export function registerSearchCommand(program: Command) {
           console.log(`  Reasons: ${item.reasons.join("; ")}`);
           console.log(`  Install: ${item.installCommand}`);
         }
+        printSection("Next");
+        printCommand(
+          "ashlar view <component>",
+          "Inspect files, policy mappings, and evidence before install.",
+        );
+        printCommand("ashlar add <component>", "Install the capsule as source into your project.");
+        printFooter();
       } catch (error) {
         console.error(error instanceof Error ? error.message : String(error));
         process.exitCode = 1;
