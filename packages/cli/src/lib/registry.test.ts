@@ -55,7 +55,7 @@ describe("registry", () => {
       "textarea",
       "benefit-application",
     ];
-    const expectedVersions = new Map<string, string>([["banner", "0.0.2"]]);
+    const expectedVersions = new Map<string, string>([["banner", "0.0.3"]]);
 
     for (const name of names) {
       const detail = getComponent(repoRoot, name);

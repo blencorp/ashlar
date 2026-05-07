@@ -27,6 +27,7 @@ Run all framework examples through the workspace checks:
 ```bash
 pnpm check
 pnpm build
+pnpm examples:visual
 ```
 
 Vue and Svelte currently use rendered HTML audit fixtures because Ashlar's first-party component validator targets HTML, TSX, JSX, and CSS today. The language matrix is intentionally honest: Vue and Svelte grammar registration is tracked as opt-in validator work rather than silently claiming source scanning that does not exist yet.

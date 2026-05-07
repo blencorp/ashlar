@@ -4,30 +4,30 @@
   "registry": "../../registry",
   "components": {
     "banner": {
-      "version": "0.0.2",
-      "capsule_hash": "sha256:de275cf52609200a1f3afaace582c705d6254761b074c0c59fcbe267736bb0f5",
+      "version": "0.0.3",
+      "capsule_hash": "sha256:4c0afc8591b12186e9f9788da735f97f5261cd2ade4ecd6ff294797d5a7e0548",
       "stability": "experimental",
       "installed_at": "2026-05-06T18:08:29.092Z",
       "installed_via": "ashlar-cli@0.0.0",
       "files": {
         "src/ashlar/components/banner/banner.cem.json": {
-          "original_hash": "sha256:437c9d59b9e665e9e10541dc363a43499535b75104555b34ff40726bfe74e398",
-          "current_hash": "sha256:437c9d59b9e665e9e10541dc363a43499535b75104555b34ff40726bfe74e398",
+          "original_hash": "sha256:53ea18aa7d9a1fe29c9e4acbd17f8881a00657861ace10fbac9aceeeaf726f77",
+          "current_hash": "sha256:53ea18aa7d9a1fe29c9e4acbd17f8881a00657861ace10fbac9aceeeaf726f77",
           "critical_for_a11y": false
         },
         "src/ashlar/components/banner/banner.css": {
-          "original_hash": "sha256:5402ffd29474dfaab5e0224312febb56c1a7ddeb5a8e1881fa02533cade5915b",
-          "current_hash": "sha256:5402ffd29474dfaab5e0224312febb56c1a7ddeb5a8e1881fa02533cade5915b",
+          "original_hash": "sha256:dc57b3945e42045cc48efc224201323a93115c6e79efcff3de5e2746bc4ccb3b",
+          "current_hash": "sha256:dc57b3945e42045cc48efc224201323a93115c6e79efcff3de5e2746bc4ccb3b",
           "critical_for_a11y": true
         },
         "src/ashlar/components/banner/banner.evidence.json": {
-          "original_hash": "sha256:fa3ba53dca67909e371da0d07079a04b2ffef359e6cf6ff6aaf5170646880e65",
-          "current_hash": "sha256:fa3ba53dca67909e371da0d07079a04b2ffef359e6cf6ff6aaf5170646880e65",
+          "original_hash": "sha256:a645aedc676f2832eae10eed5eddac5c8915c4da0dcaa82d30bd1e4ffdd3adc3",
+          "current_hash": "sha256:a645aedc676f2832eae10eed5eddac5c8915c4da0dcaa82d30bd1e4ffdd3adc3",
           "critical_for_a11y": false
         },
         "src/ashlar/components/banner/banner.html": {
-          "original_hash": "sha256:8a4d5d6a5347204cc6cbabb3704a349458a8400ff0f30f3b3eb28c5b157b3b3a",
-          "current_hash": "sha256:8a4d5d6a5347204cc6cbabb3704a349458a8400ff0f30f3b3eb28c5b157b3b3a",
+          "original_hash": "sha256:ba0d5c4e2f9ce65f9e31f7a59ffc17cdcbb8942aa87a583434adcbb6bff960af",
+          "current_hash": "sha256:ba0d5c4e2f9ce65f9e31f7a59ffc17cdcbb8942aa87a583434adcbb6bff960af",
           "critical_for_a11y": true
         }
       }

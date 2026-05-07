@@ -5,7 +5,7 @@ This project uses Ashlar capsules: source-owned public-service UI with evidence,
 ## Installed Capsules
 
 - alert@0.0.1 (experimental)
-- banner@0.0.2 (experimental)
+- banner@0.0.3 (experimental)
 - button@0.0.1 (experimental)
 - checkbox@0.0.1 (experimental)
 - form-field@0.0.1 (experimental)

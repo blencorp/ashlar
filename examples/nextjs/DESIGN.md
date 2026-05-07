@@ -64,9 +64,9 @@ Derived from public USWDS token guidance and system-token values; not an officia
 - alert@0.0.1 (primitive, L0, experimental, evidence: not-reviewed)
   - Platform features: forced-colors
   - Policy mappings: WCAG
-- banner@0.0.2 (primitive, L0, experimental, evidence: not-reviewed)
+- banner@0.0.3 (primitive, L0, experimental, evidence: not-reviewed)
   - Platform features: details-summary, forced-colors
-  - Policy mappings: Federal Website Standards
+  - Policy mappings: USWDS Banner, Federal Website Standards
 - button@0.0.1 (primitive, L0, experimental, evidence: not-reviewed)
   - Platform features: forced-colors
   - Policy mappings: Section 508
