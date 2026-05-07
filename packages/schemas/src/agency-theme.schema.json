@@ -4,7 +4,7 @@
   "title": "Ashlar Agency Theme",
   "description": "DTCG-aligned theme document. Each agency theme lives in its own JSON file under packages/cli/themes/ (or in a downstream theme registry). The CLI's theme loader scans the directory and validates every file against this schema before compilation.",
   "type": "object",
-  "required": ["name", "title", "description", "tokens"],
+  "required": ["name", "title", "description", "sources", "tokens"],
   "properties": {
     "$schema": { "type": "string" },
     "name": {
@@ -28,7 +28,7 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["label", "url"],
+        "required": ["label", "url", "note"],
         "properties": {
           "label": {
             "type": "string",

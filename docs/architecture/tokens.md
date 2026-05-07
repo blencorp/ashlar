@@ -4,7 +4,7 @@ The token system is the framework-neutral contract that drives every other layer
 
 Source format: **DTCG 2025.10-shaped** JSON. The current prototype loads stock theme JSON files and emits CSS variables, a Tailwind v4 `@theme` companion file, and typed TypeScript token helpers. The target compiler still includes JSON and design-tool outputs.
 
-> **Status (2026-05-05)**: stock themes live under `packages/cli/themes/*.tokens.json`, `ashlar init` copies those JSON files and writes generated `theme.css`, `tailwind-theme.css`, and `tokens.ts`; `ashlar theme sync` regenerates those outputs from local theme JSON; and `ashlar theme validate` checks schema shape, required semantic token paths, and WCAG AA action contrast in light/dark modes. Tailwind `@theme` output is implemented as a companion stylesheet and is consumed by the Tailwind-enabled Vite example; typed token output is implemented as a generated TypeScript contract. See [STATUS.md](../../STATUS.md).
+> **Status (2026-05-07)**: stock themes live under `packages/cli/themes/*.tokens.json`, `ashlar init` copies those JSON files and writes generated `theme.css`, `tailwind-theme.css`, and `tokens.ts`; `ashlar theme sync` regenerates those outputs from local theme JSON; and `ashlar theme validate` checks schema shape, required source provenance, required semantic token paths, and WCAG AA action contrast in light/dark modes. Tailwind `@theme` output is implemented as a companion stylesheet and is consumed by the Tailwind-enabled Vite example; typed token output is implemented as a generated TypeScript contract; generated `DESIGN.md` exports theme source links for coding agents. See [STATUS.md](../../STATUS.md).
 
 ## Hierarchy
 
@@ -204,6 +204,7 @@ Used for IntelliSense in component code and in consumer applications.
 
 Agency themes extend the default theme by overriding allowed tokens. The target theme schema validates that:
 
+- Public source provenance is present for every theme. Each source must include a label, HTTPS URL, and note explaining which tokens or constraints it supports.
 - Required semantic tokens are present.
 - Aliases resolve.
 - Color values parse.
@@ -233,6 +234,12 @@ Agency themes extend the default theme by overriding allowed tokens. The target 
 ```
 
 Current `ashlar theme validate` enforces schema validity, required semantic token paths, alias resolution for those paths, and AA contrast for primary and secondary action foreground/background pairs. Current `ashlar theme sync` regenerates CSS variables, Tailwind `@theme` output, and typed TypeScript token helpers from local theme JSON. The broader compiler contract above remains the target for slice 6 completion.
+
+Stock source provenance is intentionally narrow:
+
+- `default` cites USWDS color guidance, USWDS system color tokens, and USWDS font tokens.
+- `va` cites the VA.gov color palette and VA.gov typography foundation pages.
+- `usda` cites USDA Design and Brand Plays plus USWDS color guidance, because USDA explicitly anchors logo colors while directing broader interface palettes back to USWDS colors.
 
 ## Contrast policy
 

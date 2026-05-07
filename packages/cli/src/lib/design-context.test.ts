@@ -20,6 +20,11 @@ describe("buildDesignContext", () => {
     );
 
     expect(context).toContain('action-primary: "#005ea8"');
+    expect(context).toContain("## Theme Provenance");
+    expect(context).toContain("USWDS system color tokens");
+    expect(context).toContain(
+      "https://designsystem.digital.gov/design-tokens/color/system-tokens/",
+    );
     expect(context).toContain("Primary action background: `--ashlar-color-action-primary-bg`");
     expect(context).toContain("Typed tokens: `src/ashlar/themes/tokens.ts`");
     expect(context).toContain("No Ashlar capsules are installed yet.");

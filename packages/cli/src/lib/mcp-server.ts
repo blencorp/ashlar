@@ -177,6 +177,7 @@ export function buildAshlarMcpServer(options: AshlarMcpServerOptions): McpServer
         return {
           theme: selectedTheme.name,
           title: selectedTheme.title,
+          sources: selectedTheme.sources,
           mode,
           count: tokens.length,
           tokens,
@@ -184,6 +185,7 @@ export function buildAshlarMcpServer(options: AshlarMcpServerOptions): McpServer
             name: item.name,
             title: item.title,
             description: item.description,
+            sources: item.sources,
           })),
         };
       }),
@@ -213,6 +215,11 @@ export function buildAshlarMcpServer(options: AshlarMcpServerOptions): McpServer
         return {
           requestedPath: path,
           requestedMode: mode,
+          theme: {
+            name: selectedTheme.name,
+            title: selectedTheme.title,
+            sources: selectedTheme.sources,
+          },
           token,
         };
       }),

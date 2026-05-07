@@ -88,4 +88,19 @@ describe("theme command", () => {
     expect(result.stdout).toContain("ERROR default/light theme/action-primary-contrast");
     expect(result.stdout).toContain("expected at least 4.5:1");
   });
+
+  it("rejects agency themes without source provenance", () => {
+    const themesDir = join(scratch, "themes");
+    cpSync(join(repoRoot, "packages", "cli", "themes"), themesDir, { recursive: true });
+    const defaultThemePath = join(themesDir, "default.tokens.json");
+    const theme = JSON.parse(readFileSync(defaultThemePath, "utf8")) as { sources?: unknown[] };
+    delete theme.sources;
+    writeFileSync(defaultThemePath, `${JSON.stringify(theme, null, 2)}\n`);
+
+    const result = runCli(["theme", "validate", "--themes-dir", themesDir]);
+
+    expect(result.status).toBe(1);
+    expect(result.stdout).toContain("Invalid agency theme");
+    expect(result.stdout).toContain("sources");
+  });
 });
