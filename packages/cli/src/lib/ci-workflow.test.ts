@@ -7,6 +7,25 @@ const here = fileURLToPath(new URL(".", import.meta.url));
 const repoRoot = resolve(here, "..", "..", "..", "..");
 
 describe("CI workflow", () => {
+  it("opts GitHub JavaScript actions into the Node 24 runtime", () => {
+    for (const workflowName of [
+      "changesets.yml",
+      "ci.yml",
+      "conventional-commits.yml",
+      "github-packages.yml",
+      "publish.yml",
+      "sigstore.yml",
+      "version-pr.yml",
+    ]) {
+      const workflow = readFileSync(
+        resolve(repoRoot, ".github", "workflows", workflowName),
+        "utf8",
+      );
+
+      expect(workflow).toContain("FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true");
+    }
+  });
+
   it("keeps no-emit typechecks from sharing emitted build info", () => {
     for (const packagePath of ["packages/cli", "packages/schemas"]) {
       const manifest = JSON.parse(
@@ -63,6 +82,8 @@ describe("CI workflow", () => {
       'node packages/cli/dist/index.js migrate uswds --registry ./registry --json "examples/uswds-project/**/*.{html,tsx,jsx}" > reports/ashlar-uswds-migration.json';
     const sarifAudit =
       "node packages/cli/dist/index.js audit --policy all --registry ./registry --sarif examples/plain-html/index.html > ashlar.sarif";
+    const codeScanningUploadCondition =
+      "if: $" + "{{ vars.ASHLAR_UPLOAD_CODE_SCANNING == 'true' }}";
 
     expect(workflow).toContain(evidenceCheck);
     expect(workflow).toContain(evidenceCollect);
@@ -117,6 +138,10 @@ describe("CI workflow", () => {
     expect(workflow).toContain("path: reports/ashlar-ai-eval-corpus.json");
     expect(workflow).toContain("name: ashlar-uswds-migration");
     expect(workflow).toContain("path: reports/ashlar-uswds-migration.json");
+    expect(workflow).toContain("name: ashlar-sarif");
+    expect(workflow).toContain("path: ashlar.sarif");
+    expect(workflow).toContain("uses: github/codeql-action/upload-sarif@v4");
+    expect(workflow).toContain(codeScanningUploadCondition);
     expect(workflow.indexOf(evidenceCheck)).toBeLessThan(workflow.indexOf(sarifAudit));
     expect(workflow.indexOf(evidenceCollect)).toBeLessThan(workflow.indexOf(sarifAudit));
     expect(workflow.indexOf(evidenceApply)).toBeLessThan(workflow.indexOf(sarifAudit));

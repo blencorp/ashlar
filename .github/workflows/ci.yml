@@ -11,6 +11,9 @@ permissions:
   actions: read
   security-events: write
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   checks:
     runs-on: ubuntu-latest
@@ -191,7 +194,7 @@ jobs:
           path: ashlar.sarif
 
       - uses: github/codeql-action/upload-sarif@v4
-        if: always()
+        if: ${{ vars.ASHLAR_UPLOAD_CODE_SCANNING == 'true' }}
         continue-on-error: true
         with:
           sarif_file: ashlar.sarif
