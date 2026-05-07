@@ -26,21 +26,27 @@
             {
               "kind": "field",
               "name": "size",
-              "type": { "text": "'sm' | 'md' | 'lg'" },
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
               "default": "'md'",
               "attribute": "size"
             },
             {
               "kind": "field",
               "name": "disabled",
-              "type": { "text": "boolean" },
+              "type": {
+                "text": "boolean"
+              },
               "default": "false",
               "attribute": "disabled"
             },
             {
               "kind": "field",
               "name": "loading",
-              "type": { "text": "boolean" },
+              "type": {
+                "text": "boolean"
+              },
               "default": "false",
               "attribute": "loading",
               "description": "Indicates a pending operation. Sets aria-busy=true; preserves accessible name."
@@ -48,7 +54,9 @@
             {
               "kind": "field",
               "name": "type",
-              "type": { "text": "'button' | 'submit' | 'reset'" },
+              "type": {
+                "text": "'button' | 'submit' | 'reset'"
+              },
               "default": "'button'",
               "attribute": "type"
             }
@@ -60,12 +68,29 @@
                 "text": "'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive'"
               }
             },
-            { "name": "size", "type": { "text": "'sm' | 'md' | 'lg'" } },
-            { "name": "disabled", "type": { "text": "boolean" } },
-            { "name": "loading", "type": { "text": "boolean" } },
+            {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              }
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "name": "loading",
+              "type": {
+                "text": "boolean"
+              }
+            },
             {
               "name": "type",
-              "type": { "text": "'button' | 'submit' | 'reset'" }
+              "type": {
+                "text": "'button' | 'submit' | 'reset'"
+              }
             }
           ],
           "events": [
@@ -78,7 +103,10 @@
             }
           ],
           "slots": [
-            { "name": "default", "description": "Button label content." },
+            {
+              "name": "default",
+              "description": "Button label content."
+            },
             {
               "name": "icon-start",
               "description": "Optional icon rendered before the label."
@@ -89,16 +117,31 @@
             }
           ],
           "cssProperties": [
-            { "name": "--ashlar-button-bg", "syntax": "<color>" },
-            { "name": "--ashlar-button-fg", "syntax": "<color>" },
-            { "name": "--ashlar-button-radius", "syntax": "<length>" },
-            { "name": "--ashlar-button-padding-x", "syntax": "<length>" },
-            { "name": "--ashlar-button-padding-y", "syntax": "<length>" }
+            {
+              "name": "--ashlar-button-bg",
+              "syntax": "<color>"
+            },
+            {
+              "name": "--ashlar-button-fg",
+              "syntax": "<color>"
+            },
+            {
+              "name": "--ashlar-button-radius",
+              "syntax": "<length>"
+            },
+            {
+              "name": "--ashlar-button-padding-x",
+              "syntax": "<length>"
+            },
+            {
+              "name": "--ashlar-button-padding-y",
+              "syntax": "<length>"
+            }
           ],
           "_ashlar": {
             "version": "1.2.3",
             "tier": "primitive",
-            "layer": "L0",
+            "layer": "markup-primitives",
             "stability": "stable",
             "selector": ".ashlar-button",
             "variants": ["primary", "secondary", "outline", "ghost", "destructive"],
@@ -178,9 +221,18 @@
               "Do not use disabled buttons as the only explanation of unavailable actions; provide context."
             ],
             "policyMapping": [
-              { "policy": "M-23-22", "section": "Accessibility" },
-              { "policy": "Section 508", "section": "WCAG 2.0 AA" },
-              { "policy": "WCAG 2.2 AA", "criteria": ["1.4.3", "2.1.1", "2.4.7", "4.1.2"] }
+              {
+                "policy": "M-23-22",
+                "section": "Accessibility"
+              },
+              {
+                "policy": "Section 508",
+                "section": "WCAG 2.0 AA"
+              },
+              {
+                "policy": "WCAG 2.2 AA",
+                "criteria": ["1.4.3", "2.1.1", "2.4.7", "4.1.2"]
+              }
             ]
           }
         }

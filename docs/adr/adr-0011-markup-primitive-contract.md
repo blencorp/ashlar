@@ -6,7 +6,7 @@ Accepted.
 
 ## Decision
 
-Ashlar markup primitive capsules, stored internally as layer `L0`, use semantic platform HTML plus Ashlar classes and data attributes as the canonical DOM contract.
+Ashlar markup primitive capsules, stored internally as layer `markup-primitives`, use semantic platform HTML plus Ashlar classes and data attributes as the canonical DOM contract.
 
 For example, Button is:
 
@@ -22,7 +22,7 @@ It is not:
 <ashlar-button variant="primary">Apply</ashlar-button>
 ```
 
-Interactive components, stored internally as layer `L1`, may use custom elements when JavaScript behavior is genuinely required.
+Interactive components, stored internally as layer `interactive-components`, may use custom elements when JavaScript behavior is genuinely required.
 
 ## Rationale
 

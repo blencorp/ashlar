@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { checkExternalReviewRecords } from "./external-review-record.js";
-import { formatRegistryLayer } from "./layers.js";
+import { formatRegistryLayerCapsules } from "./layers.js";
 import {
   defaultConfig,
   normalizeConfig,
@@ -43,9 +43,7 @@ export type ProjectStatusReport = {
   registry: {
     available: boolean;
     componentCount: number;
-    l0Count: number;
     markupPrimitiveCount: number;
-    stableEvidenceL0Count: number;
     stableEvidenceMarkupPrimitiveCount: number;
   };
   checks: ProjectStatusCheck[];
@@ -186,18 +184,20 @@ export function buildProjectStatus(input: ProjectStatusInput): ProjectStatusRepo
 
   let registryAvailable = false;
   let componentCount = 0;
-  let l0Count = 0;
-  let stableEvidenceL0Count = 0;
+  let markupPrimitiveCount = 0;
+  let stableEvidenceMarkupPrimitiveCount = 0;
   try {
     const components = listComponents(input.cwd, registryPath).map((component) =>
       getComponent(input.cwd, component.name, registryPath),
     );
     registryAvailable = true;
     componentCount = components.length;
-    l0Count = components.filter((component) => component.layer === "L0").length;
-    stableEvidenceL0Count = components.filter(
+    markupPrimitiveCount = components.filter(
+      (component) => component.layer === "markup-primitives",
+    ).length;
+    stableEvidenceMarkupPrimitiveCount = components.filter(
       (component) =>
-        component.layer === "L0" &&
+        component.layer === "markup-primitives" &&
         component.evidence.stability === "stable" &&
         component.evidence.accessibilityStatus === "stable-evidence",
     ).length;
@@ -211,36 +211,36 @@ export function buildProjectStatus(input: ProjectStatusInput): ProjectStatusRepo
       ),
     );
     checks.push(
-      l0Count >= 5
+      markupPrimitiveCount >= 5
         ? check(
-            "l0-coverage",
+            "markup-coverage",
             "pass",
-            `${l0Count} ${formatRegistryLayer("L0")} capsule(s) are available.`,
+            `${markupPrimitiveCount} ${formatRegistryLayerCapsules("markup-primitives")} are available.`,
           )
         : check(
-            "l0-coverage",
+            "markup-coverage",
             "action",
-            `Only ${l0Count} ${formatRegistryLayer("L0")} capsule(s) are available.`,
+            `Only ${markupPrimitiveCount} ${formatRegistryLayerCapsules("markup-primitives")} are available.`,
             ["Replacement-grade coverage needs a broader markup primitive surface."],
           ),
     );
     checks.push(
-      stableEvidenceL0Count > 0
+      stableEvidenceMarkupPrimitiveCount > 0
         ? check(
-            "stable-l0-evidence",
+            "stable-markup-evidence",
             "pass",
-            `${stableEvidenceL0Count} ${formatRegistryLayer("L0")} capsule(s) have stable evidence.`,
+            `${stableEvidenceMarkupPrimitiveCount} ${formatRegistryLayerCapsules("markup-primitives")} have stable evidence.`,
           )
         : check(
-            "stable-l0-evidence",
+            "stable-markup-evidence",
             "blocked",
-            `No ${formatRegistryLayer("L0")} capsule has stable evidence yet.`,
+            `No markup primitive capsule has stable evidence yet.`,
             [
               "Generated reviewer bundles are preparation only; real keyboard and screen-reader review remains required.",
             ],
           ),
     );
-    if (stableEvidenceL0Count === 0) {
+    if (stableEvidenceMarkupPrimitiveCount === 0) {
       addAction(
         nextActions,
         `ashlar evidence prepare-stable-all --registry ${registryPath} --output reports/markup-primitive-stable-review`,
@@ -302,10 +302,8 @@ export function buildProjectStatus(input: ProjectStatusInput): ProjectStatusRepo
     registry: {
       available: registryAvailable,
       componentCount,
-      l0Count,
-      markupPrimitiveCount: l0Count,
-      stableEvidenceL0Count,
-      stableEvidenceMarkupPrimitiveCount: stableEvidenceL0Count,
+      markupPrimitiveCount,
+      stableEvidenceMarkupPrimitiveCount,
     },
     checks,
     nextActions,

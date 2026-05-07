@@ -1,49 +1,56 @@
 import type { RegistryLayer } from "./registry.js";
 
 export const registryLayerNames: Record<RegistryLayer, string> = {
-  L0: "markup primitives",
-  L1: "interactive components",
-  L2: "framework adapters",
-  L3: "service patterns",
-  L4: "application blocks",
+  "markup-primitives": "markup primitives",
+  "interactive-components": "interactive components",
+  "framework-adapters": "framework adapters",
+  "service-patterns": "service patterns",
+  "application-blocks": "application blocks",
+};
+
+export const registryLayerCapsuleNames: Record<RegistryLayer, string> = {
+  "markup-primitives": "markup primitive capsules",
+  "interactive-components": "interactive component capsules",
+  "framework-adapters": "framework adapter capsules",
+  "service-patterns": "service pattern capsules",
+  "application-blocks": "application block capsules",
 };
 
 const registryLayerAliases: Record<string, RegistryLayer | "all"> = {
   all: "all",
-  l0: "L0",
-  base: "L0",
-  foundation: "L0",
-  markup: "L0",
-  "markup-primitive": "L0",
-  "markup-primitives": "L0",
-  primitive: "L0",
-  primitives: "L0",
-  l1: "L1",
-  interactive: "L1",
-  "interactive-component": "L1",
-  "interactive-components": "L1",
-  stateful: "L1",
-  l2: "L2",
-  adapter: "L2",
-  adapters: "L2",
-  "framework-adapter": "L2",
-  "framework-adapters": "L2",
-  l3: "L3",
-  pattern: "L3",
-  patterns: "L3",
-  "service-pattern": "L3",
-  "service-patterns": "L3",
-  l4: "L4",
-  block: "L4",
-  blocks: "L4",
-  "application-block": "L4",
-  "application-blocks": "L4",
-  template: "L4",
-  templates: "L4",
+  base: "markup-primitives",
+  foundation: "markup-primitives",
+  markup: "markup-primitives",
+  "markup-primitive": "markup-primitives",
+  "markup-primitives": "markup-primitives",
+  primitive: "markup-primitives",
+  primitives: "markup-primitives",
+  interactive: "interactive-components",
+  "interactive-component": "interactive-components",
+  "interactive-components": "interactive-components",
+  stateful: "interactive-components",
+  adapter: "framework-adapters",
+  adapters: "framework-adapters",
+  "framework-adapter": "framework-adapters",
+  "framework-adapters": "framework-adapters",
+  pattern: "service-patterns",
+  patterns: "service-patterns",
+  "service-pattern": "service-patterns",
+  "service-patterns": "service-patterns",
+  block: "application-blocks",
+  blocks: "application-blocks",
+  "application-block": "application-blocks",
+  "application-blocks": "application-blocks",
+  template: "application-blocks",
+  templates: "application-blocks",
 };
 
 export function formatRegistryLayer(layer: RegistryLayer): string {
-  return `${registryLayerNames[layer]} (${layer})`;
+  return registryLayerNames[layer];
+}
+
+export function formatRegistryLayerCapsules(layer: RegistryLayer): string {
+  return registryLayerCapsuleNames[layer];
 }
 
 export function parseRegistryLayerAlias(value: string | undefined): RegistryLayer | "all" {
@@ -51,7 +58,7 @@ export function parseRegistryLayerAlias(value: string | undefined): RegistryLaye
   const layer = registryLayerAliases[normalized];
   if (!layer) {
     throw new Error(
-      "Unknown Ashlar layer. Use markup-primitives, interactive-components, framework-adapters, service-patterns, application-blocks, all, or the internal aliases L0-L4.",
+      "Unknown Ashlar layer. Use markup-primitives, interactive-components, framework-adapters, service-patterns, application-blocks, or all.",
     );
   }
 

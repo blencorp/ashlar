@@ -85,7 +85,7 @@ export function buildReleaseProofPlan(input: ProofPlanInput): ReleaseProofPlan {
   );
   const packageSpecs = releasePackageSpecs(input.cwd);
 
-  const stableChecks = ["stable-l0-evidence", "external-review-proof"];
+  const stableChecks = ["stable-markup-evidence", "external-review-proof"];
   const releaseTrustChecks = [
     "npm-provenance-public",
     "sigstore-public-trust",

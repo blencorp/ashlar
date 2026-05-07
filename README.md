@@ -20,7 +20,7 @@ The accessibility evidence schema (automated results + manual keyboard + manual 
 
 Ashlar is in v0.0 prototype. **See [STATUS.md](STATUS.md) for the live, honest list of what is implemented, experimental, and planned.** Headline claims that are not yet code or not yet publicly proven (real public capsule Sigstore bundles, npm provenance, hosted/write MCP, full DTCG token compiler) are explicitly marked there.
 
-Ashlar uses human-readable layer names in product and docs. The registry schema still carries short internal layer codes for compatibility: **markup primitives** (`L0`) are semantic HTML/CSS capsules with zero JavaScript, **interactive components** (`L1`) are stateful Web Components, **framework adapters** (`L2`) are generated wrappers, **service patterns** (`L3`) compose flows, and **application blocks** (`L4`) are larger templates.
+Ashlar uses human-readable layer names in product and docs. **Markup primitives** are semantic HTML/CSS capsules with zero JavaScript, **interactive components** are stateful Web Components, **framework adapters** are generated wrappers, **service patterns** compose flows, and **application blocks** are larger templates. Compact layer codes still exist in registry schemas and legacy gate IDs for compatibility, but they are not the product language.
 
 The current prototype implements:
 

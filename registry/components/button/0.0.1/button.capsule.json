@@ -2,10 +2,10 @@
   "schemaVersion": "1.0",
   "name": "button",
   "version": "0.0.1",
-  "layer": "L0",
+  "layer": "markup-primitives",
   "stability": "experimental",
   "files": {
-    "button.cem.json": "sha256:5b396583eae16a9d6ba91e7d8b1cd6000b1e549f77405c3749f3476a533ab5bb",
+    "button.cem.json": "sha256:239d73de4112006a4500bf81dc31cf321aaece67e3ed9c706b52c4fb9b06327d",
     "button.css": "sha256:64481a544ee903342c5020b4557adc8fe6af5ef6b22619c9ae254eb13a6d88a4",
     "button.evidence.json": "sha256:e3beb627266aaad01fff29ca2a2be7e69bc8491a29e62e3f50c65862f27b020e",
     "button.html": "sha256:19348cfb50efc163c936ab1c4eb3a65cff71a2b3578ee9a95f3eb407cdfa10bd"
@@ -14,10 +14,10 @@
     "cssGzipBytes": 4096,
     "jsGzipBytes": 0
   },
-  "capsule_hash": "sha256:03b7e5971bc6b3150fe80180b1a2d2cd663057232299bef7eab6dc522da8a70f",
+  "capsule_hash": "sha256:8febe777cbedfb97bec3c1e1262b97a47105814a2f19d1e4eff4564667ff882e",
   "signature": {
-    "keyId": "ashlar-local-dev-2026-05-05",
+    "keyId": "ashlar-local-dev-layer-slugs-formatted-2026-05-07",
     "algorithm": "ed25519",
-    "value": "j6d8RcookN7LCFjvsAH8pXcBEHbeqg1YI5qr6nIbzA4MaG3ff0QKkVvKCel6LUPRahdCEhYogAqvANkQxfpxDQ=="
+    "value": "rjoCSqbTnWfOdW31GZyiSN6Qow1MkhFXie2tkUr1Tn9YIXlHJWxj6tzZYmI+5Wgm2G3xj7LwOmd+oBPCEKqmAg=="
   }
 }

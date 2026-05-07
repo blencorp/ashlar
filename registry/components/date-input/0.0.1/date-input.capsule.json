@@ -2,10 +2,10 @@
   "schemaVersion": "1.0",
   "name": "date-input",
   "version": "0.0.1",
-  "layer": "L0",
+  "layer": "markup-primitives",
   "stability": "experimental",
   "files": {
-    "date-input.cem.json": "sha256:7e1093ab148f2c94632ec0585e95b0d6ecadf3d9005f64f83ef045877359e586",
+    "date-input.cem.json": "sha256:3262af3e84b75293d64e6b448fff4d02b615da2461d8fb980c71cefadd4a847d",
     "date-input.css": "sha256:256ef1c6923c0886efe1c545550b220e012a49d9366c0ecd28eab9ac13d941d4",
     "date-input.evidence.json": "sha256:a4fe4c3fd6e782161a390111d318a584992947fc126c15f62eacc8ebd337f81f",
     "date-input.html": "sha256:dff19bee486eb49e02aea673ad53090d02f311c9a08420a72cef8affad815cde"
@@ -14,10 +14,10 @@
     "cssGzipBytes": 1536,
     "jsGzipBytes": 0
   },
-  "capsule_hash": "sha256:f724c67393b6be08d4bbe5862703c57a872340cb5fe7826ab26f55772a390b04",
+  "capsule_hash": "sha256:f0a47e7847df4917b14468a511ee297378875feb033ce80e4f6818d3f714698d",
   "signature": {
-    "keyId": "ashlar-local-dev-date-input-2026-05-06",
+    "keyId": "ashlar-local-dev-layer-slugs-formatted-2026-05-07",
     "algorithm": "ed25519",
-    "value": "w/GCrJaS2bAxtMzUI4O1ybLcL59HnnZLXHBmUn6I9HTtYIZX9g/u6xEkKRl8p4bJ3ljSIglHsrDLYfpT9E83AQ=="
+    "value": "fEvrCkO1zzMynaaXGcQo9/7kTrmf8mVt5Y6NEnEHWyiycjGMGRAdV06EMSi7yk8d2BpDJCzlNDd31tyoTkOPDQ=="
   }
 }

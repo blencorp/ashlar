@@ -10,10 +10,10 @@
       "latest": "0.0.1",
       "versions": ["0.0.1"],
       "capsuleHashes": {
-        "0.0.1": "sha256:10cd847a43dc3450add9352793233a1dc40d9e8da19b8411015ba35a3bea1ba4"
+        "0.0.1": "sha256:37ac1c8fa68439d075691464c1af70707526cc49653a9052523960095d876f4f"
       },
       "tier": "primitive",
-      "layer": "L0",
+      "layer": "markup-primitives",
       "stability": "experimental",
       "description": "Semantic status message for public-service feedback and validation states."
     },
@@ -21,12 +21,12 @@
       "latest": "0.0.3",
       "versions": ["0.0.1", "0.0.2", "0.0.3"],
       "capsuleHashes": {
-        "0.0.1": "sha256:1b7a4b3f5cd23e5a0c4b956947b73cab4c124483715d8393cba61e2daa89791b",
-        "0.0.2": "sha256:de275cf52609200a1f3afaace582c705d6254761b074c0c59fcbe267736bb0f5",
-        "0.0.3": "sha256:4c0afc8591b12186e9f9788da735f97f5261cd2ade4ecd6ff294797d5a7e0548"
+        "0.0.1": "sha256:fabcb58bafe345b338aeaf82e1d2c57234ebd91e3688de838e8140a24fa79684",
+        "0.0.2": "sha256:a2467888a6f483f43ca80131a7b69ee20337f6fdb84d9079836d18ddeba71b12",
+        "0.0.3": "sha256:07e8b459ae2fab11f4a26ecc2f0a62ddb9acb178451d911433ee922a0bf4b0d7"
       },
       "tier": "primitive",
-      "layer": "L0",
+      "layer": "markup-primitives",
       "stability": "experimental",
       "description": "Official-site trust marker for federal and public-service pages."
     },
@@ -34,10 +34,10 @@
       "latest": "0.0.1",
       "versions": ["0.0.1"],
       "capsuleHashes": {
-        "0.0.1": "sha256:b2582a2e5a0af8f0418099a5a63d2eaeaf2509803ebf45eb56c9c879fd57143a"
+        "0.0.1": "sha256:37dea060ce85dfb8c4b4a7665c2f5655b0cdca9d93806c9aab65574cab656245"
       },
       "tier": "pattern",
-      "layer": "L3",
+      "layer": "service-patterns",
       "stability": "proposal",
       "description": "Small public-service application flow that composes the first Ashlar capsules."
     },
@@ -45,10 +45,10 @@
       "latest": "0.0.1",
       "versions": ["0.0.1"],
       "capsuleHashes": {
-        "0.0.1": "sha256:03b7e5971bc6b3150fe80180b1a2d2cd663057232299bef7eab6dc522da8a70f"
+        "0.0.1": "sha256:8febe777cbedfb97bec3c1e1262b97a47105814a2f19d1e4eff4564667ff882e"
       },
       "tier": "primitive",
-      "layer": "L0",
+      "layer": "markup-primitives",
       "stability": "experimental",
       "description": "Accessible semantic action control for forms and workflows."
     },
@@ -56,10 +56,10 @@
       "latest": "0.0.1",
       "versions": ["0.0.1"],
       "capsuleHashes": {
-        "0.0.1": "sha256:120034cd4770864cf18b95cf91b32e98bd35c5a4194ebe2af179453b1f22dd63"
+        "0.0.1": "sha256:918b7cb9a92f4dbf2fa49dc1fb8a6fb72c3c15cf914130f2d5d559a8aabc8b56"
       },
       "tier": "primitive",
-      "layer": "L0",
+      "layer": "markup-primitives",
       "stability": "experimental",
       "description": "Native checkbox control for consent, confirmation, and multi-select form questions."
     },
@@ -67,10 +67,10 @@
       "latest": "0.0.1",
       "versions": ["0.0.1"],
       "capsuleHashes": {
-        "0.0.1": "sha256:f724c67393b6be08d4bbe5862703c57a872340cb5fe7826ab26f55772a390b04"
+        "0.0.1": "sha256:f0a47e7847df4917b14468a511ee297378875feb033ce80e4f6818d3f714698d"
       },
       "tier": "primitive",
-      "layer": "L0",
+      "layer": "markup-primitives",
       "stability": "experimental",
       "description": "Native single-date input for simple public-service date questions."
     },
@@ -78,10 +78,10 @@
       "latest": "0.0.1",
       "versions": ["0.0.1"],
       "capsuleHashes": {
-        "0.0.1": "sha256:ab516faf9e390321ac03cffca15a41e801c28e05c8f079a93d19ad25903d3ab0"
+        "0.0.1": "sha256:5334b0cfba9f10d89ac33942790ed9232fc29fd11d05e0d8f32663122da0a4ba"
       },
       "tier": "composite",
-      "layer": "L0",
+      "layer": "markup-primitives",
       "stability": "experimental",
       "description": "Linked validation summary that moves people directly to fields needing attention."
     },
@@ -89,10 +89,10 @@
       "latest": "0.0.1",
       "versions": ["0.0.1"],
       "capsuleHashes": {
-        "0.0.1": "sha256:bca26a8c40c96b4b28874ddc0b00365484a42ff6eae630c44ae8a5d3e5ea3c46"
+        "0.0.1": "sha256:d808697310262ab0a0caf314a1f5dea5d11034cc3f5cf190bc9068ed50a32685"
       },
       "tier": "composite",
-      "layer": "L0",
+      "layer": "markup-primitives",
       "stability": "experimental",
       "description": "Accessible label, hint, error, and control wrapper for public-service forms."
     },
@@ -100,10 +100,10 @@
       "latest": "0.0.1",
       "versions": ["0.0.1"],
       "capsuleHashes": {
-        "0.0.1": "sha256:2f28a72ae30123daf41d96cd0ec498c4999d4df863136f15cd15683612225a7c"
+        "0.0.1": "sha256:7f01e708cfc2a1da85df4f250c2a48d51d8a029af4f4fca00d50b9c7747a76f1"
       },
       "tier": "primitive",
-      "layer": "L0",
+      "layer": "markup-primitives",
       "stability": "experimental",
       "description": "Required agency identifier and trust-link footer for federal public-service pages."
     },
@@ -111,10 +111,10 @@
       "latest": "0.0.1",
       "versions": ["0.0.1"],
       "capsuleHashes": {
-        "0.0.1": "sha256:9e97889ffe073db171bed964a23fd2105e831255733f7e22c1ebf95e84d7501f"
+        "0.0.1": "sha256:f5bde22112129ae5bc551bc27bcb7cba314a46468c7109bc899079a09c0a6615"
       },
       "tier": "primitive",
-      "layer": "L0",
+      "layer": "markup-primitives",
       "stability": "experimental",
       "description": "Native radio group for mutually exclusive public-service form choices."
     },
@@ -122,10 +122,10 @@
       "latest": "0.0.1",
       "versions": ["0.0.1"],
       "capsuleHashes": {
-        "0.0.1": "sha256:c27d6a9f3a2a368ec8d4c6295f2bbf06e1613e7457b480284fecb030c60ebe27"
+        "0.0.1": "sha256:d5c41cd0930419f8dd185b66a33d95d5cdfe739dee2012f7ebfb0c3d1c514962"
       },
       "tier": "primitive",
-      "layer": "L0",
+      "layer": "markup-primitives",
       "stability": "experimental",
       "description": "Native select control for choosing one option from a bounded public-service list."
     },
@@ -133,10 +133,10 @@
       "latest": "0.0.1",
       "versions": ["0.0.1"],
       "capsuleHashes": {
-        "0.0.1": "sha256:3b4822051714d40746e60f79d2cb4d3f542562362bddc9a4188243c49332c7d5"
+        "0.0.1": "sha256:74c6e7efa8e6cb9e3ab1f72112e7bea66220adfa4813f21ebf86749a3267954c"
       },
       "tier": "primitive",
-      "layer": "L0",
+      "layer": "markup-primitives",
       "stability": "experimental",
       "description": "Semantic text entry control for forms that need labels, hints, and errors."
     },
@@ -144,10 +144,10 @@
       "latest": "0.0.1",
       "versions": ["0.0.1"],
       "capsuleHashes": {
-        "0.0.1": "sha256:1d9b6d44bdd4dfa72bc27f7690ca00ab39e8337445d433258c595b298d08029b"
+        "0.0.1": "sha256:19df738db6d5a35de218eb4dc7fdb77e96361308b4c80f4b86053979a3f16cf7"
       },
       "tier": "primitive",
-      "layer": "L0",
+      "layer": "markup-primitives",
       "stability": "experimental",
       "description": "Native multiline text control for public-service long-answer fields."
     }

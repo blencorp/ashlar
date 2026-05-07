@@ -2,10 +2,10 @@
   "schemaVersion": "1.0",
   "name": "select",
   "version": "0.0.1",
-  "layer": "L0",
+  "layer": "markup-primitives",
   "stability": "experimental",
   "files": {
-    "select.cem.json": "sha256:2f6b160acf2a5f5776abd6f6c8fa2b403c8d371b334f0e253c9b06466792d241",
+    "select.cem.json": "sha256:1c7bdc657f3df001dbbd7349f97e33d5a553f7c56835751b9ce5c55ca1e353de",
     "select.css": "sha256:fb7a3b52facb84342b2f7e09802aded89ee8a2690551a00a676866ba6e4d5ca2",
     "select.evidence.json": "sha256:b934c209952a02b387226f00a0f092713aacc2ca2df0e1ad2d06234428ef3be6",
     "select.html": "sha256:acf34714583560b24722179de71ee3bd92fbe943d5a889f4e7d8b68ac8dc6c7b"
@@ -14,10 +14,10 @@
     "cssGzipBytes": 1536,
     "jsGzipBytes": 0
   },
-  "capsule_hash": "sha256:c27d6a9f3a2a368ec8d4c6295f2bbf06e1613e7457b480284fecb030c60ebe27",
+  "capsule_hash": "sha256:d5c41cd0930419f8dd185b66a33d95d5cdfe739dee2012f7ebfb0c3d1c514962",
   "signature": {
-    "keyId": "ashlar-local-dev-select-2026-05-06b",
+    "keyId": "ashlar-local-dev-layer-slugs-formatted-2026-05-07",
     "algorithm": "ed25519",
-    "value": "C2oUty0XxOjjTkQ97S8EmTaKDbRpNELXdkMd+iRvHMmLnadRL9/E8c2jOhCk+LD7K8d4RzLQoDvd+disDprpBQ=="
+    "value": "7lkVJOWj8KWtUDv0IUiVuM2v3PmudjaNkdLHYOFC4jfP+NpyYLRVCIk7NRXsDojwJDXlYPivXhcTrZ2jXJTeDg=="
   }
 }

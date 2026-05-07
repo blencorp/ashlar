@@ -13,7 +13,7 @@
           "_ashlar": {
             "version": "0.0.1",
             "tier": "composite",
-            "layer": "L0",
+            "layer": "markup-primitives",
             "stability": "experimental",
             "selector": ".ashlar-form-field",
             "a11yRequirements": [
@@ -29,7 +29,12 @@
                 "id": "field-missing-label",
                 "pattern": "<div $$$ATTRS>$$$CHILDREN</div>",
                 "regex": "class=\"[^\"]*\\bashlar-form-field\\b",
-                "not": { "has": { "pattern": "<label $$$>$$$TEXT</label>", "stopBy": "end" } },
+                "not": {
+                  "has": {
+                    "pattern": "<label $$$>$$$TEXT</label>",
+                    "stopBy": "end"
+                  }
+                },
                 "message": "Ashlar Form Field with an input requires an associated label.",
                 "fix": "Add a label with for/id association inside the form field.",
                 "wcag": "3.3.2",

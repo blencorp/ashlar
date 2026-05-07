@@ -6,30 +6,30 @@ For the current implementation foundation, see [`toolchain.md`](./toolchain.md).
 
 ## The five adoption layers
 
-Ashlar is organized as five independently usable layers. Product docs use the names below; the short `L0`-`L4` codes remain in registry JSON and some gate IDs for compatibility.
+Ashlar is organized as five independently usable layers. Product docs, registry JSON, CLI gates, and generated examples use the names below.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│ L4 │ Application blocks                                 │
-│    │ Nunjucks / Twig / Jinja / ERB / HTML templates     │
+│ Application blocks                                      │
+│ Nunjucks / Twig / Jinja / ERB / HTML templates          │
 ├─────────────────────────────────────────────────────────┤
-│ L3 │ Service patterns                                   │
-│    │ Eligibility, upload, address form, identity shell  │
+│ Service patterns                                        │
+│ Eligibility, upload, address form, identity shell       │
 ├─────────────────────────────────────────────────────────┤
-│ L2 │ Framework adapters                                 │
-│    │ Auto-generated from CEM: React, Vue, Svelte, etc.  │
+│ Framework adapters                                      │
+│ Auto-generated from CEM: React, Vue, Svelte, etc.       │
 ├─────────────────────────────────────────────────────────┤
-│ L1 │ Interactive components                             │
-│    │ Lit custom elements wrapping statecharts/signals   │
+│ Interactive components                                  │
+│ Lit custom elements wrapping statecharts/signals        │
 ├─────────────────────────────────────────────────────────┤
-│ L0 │ Markup primitives                                  │
-│    │ Pure CSS + HTML capsules, zero JavaScript runtime  │
+│ Markup primitives                                       │
+│ Pure CSS + HTML capsules, zero JavaScript runtime       │
 ├─────────────────────────────────────────────────────────┤
 │      Tokens (DTCG 2025.10) → CSS vars / Tailwind / TS   │
 └─────────────────────────────────────────────────────────┘
 ```
 
-### Markup primitives (`L0`)
+### Markup Primitives
 
 Pure CSS and HTML. No JavaScript runtime dependency. Components are class-based with semantic data attributes. Styling is delivered via cascade layers and CSS variables.
 
@@ -44,7 +44,7 @@ This layer covers approximately 70% of typical design-system components in 2026,
 
 Markup primitive components work in any rendering environment: React, Vue, Astro, plain HTML, Drupal, Sitecore, AEM, server-rendered Django/Rails/PHP. The same CSS and the same DOM contract.
 
-### Interactive components (`L1`)
+### Interactive Components
 
 Lit-based custom elements. Each component wraps a Zag statechart (the behavior) and signals (the reactive data). The component is a thin shell that defines the custom element, handles SSR via Declarative Shadow DOM where needed, subscribes to the machine, and renders DOM updates.
 
@@ -61,7 +61,7 @@ Interactive components cover the components that genuinely need JavaScript state
 
 Light DOM is the default for theming compatibility; Shadow DOM is used only when encapsulation is genuinely required (and Declarative Shadow DOM serializes for SSR).
 
-### Framework adapters (`L2`)
+### Framework Adapters
 
 Thin per-framework wrappers generated from each component's Custom Elements Manifest:
 
@@ -73,7 +73,7 @@ Thin per-framework wrappers generated from each component's Custom Elements Mani
 
 Adapters are not hand-maintained. When the underlying machine or component changes, adapters regenerate. There is no parallel React tree drifting from the canonical implementation.
 
-### Service patterns (`L3`)
+### Service Patterns
 
 Composed service flows shipped as capsules. Each pattern includes the components it composes, plain-language content guidance, accessibility considerations specific to the flow, and user-research notes.
 
@@ -87,7 +87,7 @@ Initial patterns:
 - Emergency alert
 - Identity verification shell (the UX shell only — does not bind to Login.gov)
 
-### Application blocks (`L4`)
+### Application Blocks
 
 The same component rendered into multiple template languages. This is the answer to GOV.UK's empirical observation that government uses 24+ templating languages: instead of forcing teams to switch, ship the rendering they need.
 
@@ -98,7 +98,7 @@ Initial template targets:
 - Jinja (Python / Django / Flask)
 - ERB (Rails)
 - Plain HTML
-- React JSX (via L2)
+- React JSX (via framework adapters)
 
 Same CSS, same DOM contract, multiple renderings.
 
@@ -210,7 +210,7 @@ message: "Icon-only Button requires aria-label (WCAG 4.1.2)"
 fix: '<button class="ashlar-button" aria-label="TODO">$ICON</button>'
 ```
 
-Markup primitive components use the semantic `<button class="ashlar-button">` form per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md); the `<ashlar-button>` custom-element form is reserved for interactive components.
+Markup primitive components use the semantic `<button class="ashlar-button">` form per [ADR-0011](../adr/adr-0011-markup-primitive-contract.md); the `<ashlar-button>` custom-element form is reserved for interactive components.
 
 ast-grep is distributed as a single Rust binary (~3MB). No JS dependency tree, no framework coupling, no build-pipeline integration required. CI integration is one line; pre-commit hook integration is one line.
 

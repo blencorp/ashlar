@@ -19,7 +19,13 @@
       "enum": ["foundation", "primitive", "composite", "pattern", "block"]
     },
     "layer": {
-      "enum": ["L0", "L1", "L2", "L3", "L4"]
+      "enum": [
+        "markup-primitives",
+        "interactive-components",
+        "framework-adapters",
+        "service-patterns",
+        "application-blocks"
+      ]
     },
     "stability": {
       "enum": ["proposal", "experimental", "beta", "stable", "deprecated"]

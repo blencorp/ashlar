@@ -2,10 +2,10 @@
   "schemaVersion": "1.0",
   "name": "alert",
   "version": "0.0.1",
-  "layer": "L0",
+  "layer": "markup-primitives",
   "stability": "experimental",
   "files": {
-    "alert.cem.json": "sha256:15b2a5c2ec264b79c04e400712ed58c1e9a47eaa0f340c6260a895d0e7133a16",
+    "alert.cem.json": "sha256:a932253b545ba030d3002e46f47602f10c1fefd75ac65119e397e737058a2ba5",
     "alert.css": "sha256:b70e7398ca011e8f930e6175a60bd7abc3b96f7ab2b7474820c949b51c7560df",
     "alert.evidence.json": "sha256:0397bc273579d8a0852f8669da2917b4b8a9b21dbaa226d2b89fd5f9a0dfbbf1",
     "alert.html": "sha256:35c694c4c73ba8a68dba51ec128d161620a969a277df93097d777c905f7c1014"
@@ -14,10 +14,10 @@
     "cssGzipBytes": 1536,
     "jsGzipBytes": 0
   },
-  "capsule_hash": "sha256:10cd847a43dc3450add9352793233a1dc40d9e8da19b8411015ba35a3bea1ba4",
+  "capsule_hash": "sha256:37ac1c8fa68439d075691464c1af70707526cc49653a9052523960095d876f4f",
   "signature": {
-    "keyId": "ashlar-local-dev-2026-05-05",
+    "keyId": "ashlar-local-dev-layer-slugs-formatted-2026-05-07",
     "algorithm": "ed25519",
-    "value": "zImvL4trhSVxaRe9Z/nWCKAdLFmSgf4xVMy6LiAN3+xVEOBNrt7ESr7X6ANqSmOsGitXBYGkoDMlF21BRBubCA=="
+    "value": "0HbdDusDzPfqeIdr+kAHyg99mxOQSjXGKBn4OZLyti8XVhhJakI4JJYciPe1DJf3kup3aXKc6UZDDKW709W+AQ=="
   }
 }

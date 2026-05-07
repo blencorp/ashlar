@@ -23,8 +23,8 @@ import { buildReleaseProofPlan, buildReleaseProofPlanMarkdown } from "./release-
 export type ReleaseReviewPackInput = {
   aiEvalSuitePath: string;
   cwd: string;
-  minL0Components: number;
-  minStableL0Components: number;
+  minMarkupPrimitiveComponents: number;
+  minStableMarkupPrimitiveComponents: number;
   outputDir: string;
   registryPath: string;
   stableComponent: string;
@@ -151,8 +151,8 @@ export function writeReleaseReviewPack(input: ReleaseReviewPackInput): ReleaseRe
   const readiness = checkReleaseReadiness({
     aiEvalSuitePath: input.aiEvalSuitePath,
     cwd: input.cwd,
-    minL0Components: input.minL0Components,
-    minStableL0Components: input.minStableL0Components,
+    minMarkupPrimitiveComponents: input.minMarkupPrimitiveComponents,
+    minStableMarkupPrimitiveComponents: input.minStableMarkupPrimitiveComponents,
     registryPath: input.registryPath,
   });
   const readinessValidation = validate("releaseReadiness", readiness);
@@ -170,7 +170,7 @@ export function writeReleaseReviewPack(input: ReleaseReviewPackInput): ReleaseRe
 
   const stableBatch = prepareStableEvidenceReviewBatch({
     cwd: input.cwd,
-    layer: "L0",
+    layer: "markup-primitives",
     outputDir: stableEvidenceDir,
     registryPath: input.registryPath,
   });

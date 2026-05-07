@@ -44,11 +44,11 @@ type WeightedField = {
 };
 
 const layerOrder: Record<RegistryLayer, number> = {
-  L0: 0,
-  L1: 1,
-  L2: 2,
-  L3: 3,
-  L4: 4,
+  "markup-primitives": 0,
+  "interactive-components": 1,
+  "framework-adapters": 2,
+  "service-patterns": 3,
+  "application-blocks": 4,
 };
 
 function normalize(value: string): string {

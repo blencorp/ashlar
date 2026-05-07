@@ -38,7 +38,7 @@ export function registerSearchCommand(program: Command) {
     .option("-q, --query <text>", "Query string. Mirrors shadcn search -q.")
     .option(
       "--layer <layer>",
-      "Filter by layer, such as markup-primitives, service-patterns, or internal aliases L0-L4",
+      "Filter by layer: markup-primitives, interactive-components, framework-adapters, service-patterns, application-blocks",
     )
     .option("--tier <tier>", "Filter by tier: foundation, primitive, composite, pattern, or block")
     .option("--stability <stability>", "Filter by stability")

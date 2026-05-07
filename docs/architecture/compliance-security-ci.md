@@ -81,7 +81,7 @@ npx @blen/ashlar release verify-trust-bundle --registry ./registry --bundle repo
 npx @blen/ashlar release design-partner-checklist --output reports/ashlar-design-partner-checklist.md
 npx @blen/ashlar ai-eval --suite examples/ai-eval/ashlar-ai-eval.json --json > reports/ashlar-ai-eval.json
 npx @blen/ashlar bundle budget button --json > reports/ashlar-button-bundle-budget.json
-npx @blen/ashlar bundle budget --json > reports/ashlar-l0-bundle-budget.json
+npx @blen/ashlar bundle budget --json > reports/ashlar-markup-bundle-budget.json
 ```
 
 ### `ashlar audit`
@@ -276,7 +276,7 @@ Implemented locally. Aggregates the current replacement-grade gates into one sta
 - local keyless Sigstore workflow prerequisites;
 - public npm provenance and public Sigstore trust blockers.
 
-Strict defaults intentionally fail the current prototype. The command is designed to keep public claims honest: local signatures, unpublished packages, and not-reviewed capsules cannot satisfy a replacement-grade release gate. `--allow-unverified-public`, `--allow-local-signatures`, and `--min-stable-l0 0` can be used for local prototype smoke checks, but those flags should not be used to support public replacement claims.
+Strict defaults intentionally fail the current prototype. The command is designed to keep public claims honest: local signatures, unpublished packages, and not-reviewed capsules cannot satisfy a replacement-grade release gate. `--allow-unverified-public`, `--allow-local-signatures`, and `--min-stable-markup-primitives 0` can be used for local prototype smoke checks, but those flags should not be used to support public replacement claims.
 
 `--report <path>` writes the same strict status as a Markdown artifact for maintainers, procurement reviewers, and external reviewers. `--json-output <path>` writes the schema-backed automation report using `release-readiness.schema.json`. CI uploads these as `ashlar-release-readiness` and `ashlar-release-readiness-json` on every run and marks the step `continue-on-error` while the public-proof gates are intentionally incomplete; the artifacts should be read as the current replacement-grade blocker list, not as release approval.
 

@@ -76,22 +76,32 @@
           "enum": ["foundation", "primitive", "composite", "pattern", "block"]
         },
         "layer": {
-          "enum": ["L0", "L1", "L2", "L3", "L4"]
+          "enum": [
+            "markup-primitives",
+            "interactive-components",
+            "framework-adapters",
+            "service-patterns",
+            "application-blocks"
+          ]
         },
         "stability": {
           "enum": ["proposal", "experimental", "beta", "stable", "deprecated"]
         },
         "selector": {
           "type": "string",
-          "description": "CSS selector used by validator rules to anchor anti-pattern checks. For L0 components per ADR-0011, this is a class selector (e.g. `.ashlar-button`); for L1, it is a custom-element tag (e.g. `ashlar-combobox`)."
+          "description": "CSS selector used by validator rules to anchor anti-pattern checks. For markup primitives, this is a class selector (e.g. `.ashlar-button`); for interactive components, it is a custom-element tag (e.g. `ashlar-combobox`)."
         },
         "variants": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         },
         "sizes": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         },
         "a11yRequirements": {
           "type": "array",
@@ -99,10 +109,18 @@
             "type": "object",
             "required": ["id", "wcag", "severity"],
             "properties": {
-              "id": { "type": "string" },
-              "wcag": { "type": "string" },
-              "severity": { "enum": ["error", "warning", "note"] },
-              "description": { "type": "string" }
+              "id": {
+                "type": "string"
+              },
+              "wcag": {
+                "type": "string"
+              },
+              "severity": {
+                "enum": ["error", "warning", "note"]
+              },
+              "description": {
+                "type": "string"
+              }
             },
             "additionalProperties": false
           }
@@ -113,7 +131,9 @@
             "type": "object",
             "required": ["id", "pattern", "languages"],
             "properties": {
-              "id": { "type": "string" },
+              "id": {
+                "type": "string"
+              },
               "pattern": {
                 "type": "string",
                 "description": "ast-grep pattern string. Use $$$ for variadic captures, $NAME for named captures. See https://ast-grep.github.io/reference/yaml.html"
@@ -127,8 +147,12 @@
                 "description": "Optional descendant rule. The matched node must contain a sub-node satisfying this rule.",
                 "required": ["pattern"],
                 "properties": {
-                  "pattern": { "type": "string" },
-                  "stopBy": { "enum": ["neighbor", "end"] }
+                  "pattern": {
+                    "type": "string"
+                  },
+                  "stopBy": {
+                    "enum": ["neighbor", "end"]
+                  }
                 },
                 "additionalProperties": false
               },
@@ -137,8 +161,12 @@
                 "description": "Optional ancestor rule. The matched node must be inside a node satisfying this rule.",
                 "required": ["pattern"],
                 "properties": {
-                  "pattern": { "type": "string" },
-                  "stopBy": { "enum": ["neighbor", "end"] }
+                  "pattern": {
+                    "type": "string"
+                  },
+                  "stopBy": {
+                    "enum": ["neighbor", "end"]
+                  }
                 },
                 "additionalProperties": false
               },
@@ -146,14 +174,22 @@
                 "type": "object",
                 "description": "Optional negative rule. The matched node must NOT satisfy this rule.",
                 "properties": {
-                  "pattern": { "type": "string" },
-                  "regex": { "type": "string" },
+                  "pattern": {
+                    "type": "string"
+                  },
+                  "regex": {
+                    "type": "string"
+                  },
                   "has": {
                     "type": "object",
                     "required": ["pattern"],
                     "properties": {
-                      "pattern": { "type": "string" },
-                      "stopBy": { "enum": ["neighbor", "end"] }
+                      "pattern": {
+                        "type": "string"
+                      },
+                      "stopBy": {
+                        "enum": ["neighbor", "end"]
+                      }
                     },
                     "additionalProperties": false
                   }
@@ -172,21 +208,29 @@
                 "type": "string",
                 "description": "WCAG criterion citation (e.g. \"4.1.2\")."
               },
-              "severity": { "enum": ["error", "warning", "note"] },
+              "severity": {
+                "enum": ["error", "warning", "note"]
+              },
               "languages": {
                 "type": "array",
-                "items": { "type": "string" },
+                "items": {
+                  "type": "string"
+                },
                 "minItems": 1,
                 "description": "Target languages from the supported set in policy/languages.ts. Required so authors must pick a target language explicitly rather than inheriting an implicit default."
               },
-              "reason": { "type": "string" }
+              "reason": {
+                "type": "string"
+              }
             },
             "additionalProperties": false
           }
         },
         "tokensConsumed": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         },
         "platformFeatures": {
           "type": "array",
@@ -194,9 +238,15 @@
             "type": "object",
             "required": ["feature", "status", "fallback"],
             "properties": {
-              "feature": { "type": "string" },
-              "status": { "enum": ["required", "progressive", "not-used"] },
-              "fallback": { "type": "string" }
+              "feature": {
+                "type": "string"
+              },
+              "status": {
+                "enum": ["required", "progressive", "not-used"]
+              },
+              "fallback": {
+                "type": "string"
+              }
             },
             "additionalProperties": false
           }
@@ -207,9 +257,16 @@
             "type": "object",
             "required": ["source", "requirement"],
             "properties": {
-              "source": { "type": "string" },
-              "requirement": { "type": "string" },
-              "url": { "type": "string", "format": "uri" }
+              "source": {
+                "type": "string"
+              },
+              "requirement": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string",
+                "format": "uri"
+              }
             },
             "additionalProperties": false
           }
@@ -225,11 +282,15 @@
         },
         "examples": {
           "type": "object",
-          "additionalProperties": { "type": "string" }
+          "additionalProperties": {
+            "type": "string"
+          }
         },
         "doNot": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         }
       }
     }

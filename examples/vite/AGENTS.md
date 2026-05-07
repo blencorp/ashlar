@@ -4,7 +4,7 @@ This project uses Ashlar components. When generating UI code:
 
 - Use installed Ashlar capsules from ashlar-lock.json.
 - Preserve semantic HTML and accessible names.
-- For markup primitive capsules (internal layer L0), use semantic platform markup (e.g. `<button class="ashlar-button" data-variant="primary">`), not custom elements.
+- For markup primitive capsules, use semantic platform markup (e.g. `<button class="ashlar-button" data-variant="primary">`), not custom elements.
 - Do not remove focus-visible styles.
 - Use Ashlar CSS variables for styling (e.g. `var(--ashlar-color-action-primary-bg)`); do not hard-code brand colors.
 - Run `ashlar audit` before considering generated UI complete; resolve all errors.

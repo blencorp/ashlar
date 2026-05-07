@@ -40,7 +40,7 @@ describe("applyCapsuleCodemods", () => {
         schemaVersion: "1.0",
         name: "button",
         version: "0.0.2",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental",
         files: {
           "button.css": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -114,7 +114,7 @@ describe("applyCapsuleCodemods", () => {
         schemaVersion: "1.0",
         name: "button",
         version: "0.0.2",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental",
         files: {
           "button.css": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -174,7 +174,7 @@ describe("applyCapsuleCodemods", () => {
         schemaVersion: "1.0",
         name: "button",
         version: "0.0.2",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental",
         files: {
           "button.css": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",

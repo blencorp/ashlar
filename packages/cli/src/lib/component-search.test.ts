@@ -35,7 +35,7 @@ describe("component search", () => {
     const results = searchRegistryComponents({
       cwd: repoRoot,
       feature: "details-summary",
-      layer: "L0",
+      layer: "markup-primitives",
       registryPath: "./registry",
     });
 

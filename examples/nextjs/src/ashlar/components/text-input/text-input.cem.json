@@ -13,7 +13,7 @@
           "_ashlar": {
             "version": "0.0.1",
             "tier": "primitive",
-            "layer": "L0",
+            "layer": "markup-primitives",
             "stability": "experimental",
             "selector": ".ashlar-text-input",
             "a11yRequirements": [
@@ -35,7 +35,9 @@
                 "id": "invalid-input-needs-describedby",
                 "pattern": "<input $$$ATTRS>",
                 "regex": "class=\"[^\"]*\\bashlar-text-input\\b[\\s\\S]*aria-invalid=\"true\"",
-                "not": { "regex": "aria-describedby\\s*=" },
+                "not": {
+                  "regex": "aria-describedby\\s*="
+                },
                 "message": "Invalid Ashlar Text Input requires aria-describedby pointing to error text.",
                 "fix": "Add aria-describedby with the error message id.",
                 "wcag": "3.3.1",

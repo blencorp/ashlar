@@ -42,7 +42,7 @@ describe("status command", () => {
     expect(result.stdout).toContain("ACTION installed-capsules");
     expect(result.stdout).toContain("PASS registry-available");
     expect(result.stdout).toContain("markup primitives");
-    expect(result.stdout).toContain("BLOCKED stable-l0-evidence");
+    expect(result.stdout).toContain("BLOCKED stable-markup-evidence");
     expect(result.stdout).toContain("ashlar init --registry");
     expect(result.stdout).toContain('ashlar suggest "Build a benefits application form"');
     expect(result.stdout).toContain("ashlar migrate uswds <legacy-file-or-glob>");
@@ -61,9 +61,7 @@ describe("status command", () => {
       status: string;
       project: { initialized: boolean; installedComponents: Array<{ name: string }> };
       registry: {
-        l0Count: number;
         markupPrimitiveCount: number;
-        stableEvidenceL0Count: number;
         stableEvidenceMarkupPrimitiveCount: number;
       };
       checks: Array<{ id: string; status: string }>;
@@ -75,14 +73,12 @@ describe("status command", () => {
       "banner",
       "button",
     ]);
-    expect(report.registry.l0Count).toBe(12);
     expect(report.registry.markupPrimitiveCount).toBe(12);
-    expect(report.registry.stableEvidenceL0Count).toBe(0);
     expect(report.registry.stableEvidenceMarkupPrimitiveCount).toBe(0);
     expect(report.checks).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ id: "installed-capsules", status: "pass" }),
-        expect.objectContaining({ id: "stable-l0-evidence", status: "blocked" }),
+        expect.objectContaining({ id: "stable-markup-evidence", status: "blocked" }),
         expect.objectContaining({ id: "external-review-proof", status: "blocked" }),
       ]),
     );

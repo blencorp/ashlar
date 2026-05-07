@@ -13,7 +13,7 @@
           "_ashlar": {
             "version": "0.0.1",
             "tier": "primitive",
-            "layer": "L0",
+            "layer": "markup-primitives",
             "stability": "experimental",
             "selector": ".ashlar-button",
             "variants": ["primary"],
@@ -36,8 +36,13 @@
                 "id": "icon-only-needs-label",
                 "pattern": "<button $$$ATTRS>$$$CHILDREN</button>",
                 "regex": "class=\"[^\"]*\\bashlar-button\\b",
-                "has": { "pattern": "<svg $$$></svg>", "stopBy": "end" },
-                "not": { "regex": "aria-label\\s*=" },
+                "has": {
+                  "pattern": "<svg $$$></svg>",
+                  "stopBy": "end"
+                },
+                "not": {
+                  "regex": "aria-label\\s*="
+                },
                 "message": "Icon-only Ashlar Button requires aria-label (WCAG 4.1.2).",
                 "fix": "Add visible text or aria-label.",
                 "wcag": "4.1.2",

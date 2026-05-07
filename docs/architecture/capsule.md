@@ -37,7 +37,7 @@ The capsule's own manifest, distinct from the consumer's `ashlar-lock.json`. Rec
   "name": "button",
   "version": "1.2.3",
   "tier": "primitive",
-  "layer": "L0",
+  "layer": "markup-primitives",
   "stability": "stable",
   "files": {
     "button.css": "sha256:abc...",
@@ -176,7 +176,7 @@ See [`accessibility.md`](./accessibility.md) for the full schema; structurally:
 
 Prototype ast-grep JSON rules transform installed consumer capsule files from the previous version of the capsule to the current one. `ashlar update` loads files listed in `manifest.codemods` when `component`, `from`, and `to` match the current update step; skipped-version updates walk the registry `versions` list and apply intermediate codemods in order. `manifest.codemods` participates in the capsule hash/signature payload when present, codemod files must be listed in `manifest.files`, codemod files validate against `codemod.schema.json`, and rule targets must stay inside the installed component directory. The current runner supports a narrow one-file `pattern` / fixed `rewrite` subset before three-way merge; `confirm: true` rules require explicit `--yes` approval and report the rule ids plus targets before applying. `ashlar update --survival-report <path>` can record file-level update outcomes and codemod counts for scenario harnesses.
 
-Markup primitive codemods target the semantic markup form (`<button class="ashlar-button">`) per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md). Interactive component codemods target the custom-element form (`<ashlar-combobox>`).
+Markup primitive codemods target the semantic markup form (`<button class="ashlar-button">`) per [ADR-0011](../adr/adr-0011-markup-primitive-contract.md). Interactive component codemods target the custom-element form (`<ashlar-combobox>`).
 
 ```json
 {

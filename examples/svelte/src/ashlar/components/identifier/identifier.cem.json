@@ -13,7 +13,7 @@
           "_ashlar": {
             "version": "0.0.1",
             "tier": "primitive",
-            "layer": "L0",
+            "layer": "markup-primitives",
             "stability": "experimental",
             "selector": ".ashlar-identifier",
             "a11yRequirements": [
@@ -41,7 +41,9 @@
                 "id": "identifier-needs-label",
                 "pattern": "<footer $$$ATTRS>$$$CHILDREN</footer>",
                 "regex": "class=\"[^\"]*\\bashlar-identifier\\b",
-                "not": { "regex": "(aria-label|aria-labelledby)\\s*=" },
+                "not": {
+                  "regex": "(aria-label|aria-labelledby)\\s*="
+                },
                 "message": "Ashlar Identifier requires aria-label or aria-labelledby so the agency footer is identifiable.",
                 "fix": "Add aria-label=\"Agency identifier\" or point aria-labelledby at a visible heading.",
                 "wcag": "2.4.6",

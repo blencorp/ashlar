@@ -60,7 +60,7 @@ jobs:
       - run: node packages/cli/dist/index.js ai-eval --suite examples/ai-eval/generated-output-corpus/ashlar-generated-output-corpus.json --registry ./registry --json > reports/ashlar-ai-eval-corpus.json
       - run: node packages/cli/dist/index.js migrate uswds --registry ./registry --json "examples/uswds-project/**/*.{html,tsx,jsx}" > reports/ashlar-uswds-migration.json
       - run: node packages/cli/dist/index.js bundle budget button --registry ./registry --json > reports/ashlar-button-bundle-budget.json
-      - run: node packages/cli/dist/index.js bundle budget --registry ./registry --json > reports/ashlar-l0-bundle-budget.json
+      - run: node packages/cli/dist/index.js bundle budget --registry ./registry --json > reports/ashlar-markup-bundle-budget.json
       - run: node packages/cli/dist/index.js audit --policy federal --sarif examples/legacy-federal-project/index.html > reports/ashlar-legacy-federal-audit.sarif
       - run: node packages/cli/dist/index.js audit --policy all --registry ./registry --sarif examples/plain-html/index.html > ashlar.sarif
 

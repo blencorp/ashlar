@@ -116,7 +116,7 @@ function seedRegistry(root: string): string {
         versions: ["0.0.1"],
         capsuleHashes: { "0.0.1": manifest.capsule_hash },
         tier: "primitive",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental",
         description: "Accessible semantic action control for forms and workflows.",
       },
@@ -206,7 +206,7 @@ function publishButtonVersion(
     directory,
     name: "button",
     version: input.version,
-    layer: "L0",
+    layer: "markup-primitives",
     stability: "experimental",
     ...(input.codemod ? { codemods: ["button.codemods.json"] } : {}),
   });

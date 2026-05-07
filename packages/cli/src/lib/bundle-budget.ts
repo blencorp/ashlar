@@ -53,7 +53,7 @@ export function checkBundleBudget(input: {
     input.components.length > 0
       ? input.components.map((name) => getComponent(input.cwd, name, input.registryPath))
       : listComponents(input.cwd, input.registryPath)
-          .filter((component) => component.layer === "L0")
+          .filter((component) => component.layer === "markup-primitives")
           .map((component) => getComponent(input.cwd, component.name, input.registryPath));
   const reports = components.map((component) => componentBundleReport(component));
   const css = combinedAssetSummary(components, reports, "cssFiles");
