@@ -121,6 +121,11 @@ export const pages: DocPage[] = [
         note: "Maps a public-service task to available capsules and explicit capability gaps.",
       },
       {
+        label: "Preview installer writes",
+        command: "node packages/cli/dist/index.js add button --dry-run --diff",
+        note: "Verifies the capsule first, then shows planned writes and diffs without touching source.",
+      },
+      {
         label: "Install the core form path",
         command:
           "node packages/cli/dist/index.js add form-field text-input textarea date-input select radio-group checkbox button alert error-summary identifier",

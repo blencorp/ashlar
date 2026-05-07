@@ -23,7 +23,7 @@ Ashlar is in v0.0 prototype. **See [STATUS.md](STATUS.md) for the live, honest l
 The current prototype implements:
 
 - A federal HTML policy audit with seven page-shell rules, parser-backed, with SARIF output;
-- A local registry index and the `init`, `status`, `add`, `audit`, `verify`, `update`, `migrate uswds`, `mcp`, `evidence`, `evidence collect`, `evidence apply`, `evidence prepare-stable`, `evidence prepare-stable-all`, `evidence review-status`, `evidence finalize-stable`, `search`, `suggest`, `view`, `design sync`, `theme sync`, `theme validate`, `registry mirror`, `release sign-capsules`, and `release public-trust-verify` commands;
+- A local registry index and the `init`, `status`, `add` with `--view` / `--dry-run` / `--diff` preview flags, `audit`, `verify`, `update`, `migrate uswds`, `mcp`, `evidence`, `evidence collect`, `evidence apply`, `evidence prepare-stable`, `evidence prepare-stable-all`, `evidence review-status`, `evidence finalize-stable`, `search`, `suggest`, `view`, `design sync`, `theme sync`, `theme validate`, `registry mirror`, `release sign-capsules`, and `release public-trust-verify` commands;
 - A content-addressed capsule manifest and lockfile substrate (registry manifests verified against index-pinned hashes and local Ed25519 signatures on `add`, `update`, `verify`, and `registry mirror`; declared capsule Sigstore bundle metadata is checked against the registry trust policy and can require `cosign verify-blob`; `update` can run capsule-listed JSON codemods before merge; current registry capsules still need real public Sigstore bundles);
 - Experimental Button, Banner, Identifier, Alert, Form Field, Text Input, Select, Radio Group, Checkbox, Error Summary, and Benefit Application capsules with platform features, policy mappings, and ICT Baseline planned-test entries;
 - A first service-flow proof fixture that passes `audit --policy all`, plus a broken fixture that demonstrates explainable findings;
@@ -96,6 +96,9 @@ node /path/to/ashlar/packages/cli/dist/index.js migrate uswds --registry ./regis
 node /path/to/ashlar/packages/cli/dist/index.js migrate uswds --registry ./registry --json "examples/uswds-project/**/*.{html,tsx,jsx}"
 
 # Install capsules as source
+node /path/to/ashlar/packages/cli/dist/index.js add button --view
+node /path/to/ashlar/packages/cli/dist/index.js add button --dry-run
+node /path/to/ashlar/packages/cli/dist/index.js add button --diff
 node /path/to/ashlar/packages/cli/dist/index.js add form-field text-input textarea date-input select radio-group checkbox button alert error-summary identifier
 
 # Verify the install

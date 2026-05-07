@@ -47,7 +47,9 @@ program
 Core flow:
   ashlar init
   ashlar search "official website"
-  ashlar view button
+  ashlar add button --view
+  ashlar add button --dry-run
+  ashlar add button --diff
   ashlar add button
   ashlar verify
 
