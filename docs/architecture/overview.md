@@ -326,7 +326,7 @@ The "lightweight" claim must be backed by real numbers. Targets for a typical ma
 
 Ashlar is targeting 5–10× smaller than the alternatives for typical government pages. Not by cutting features — by exploiting the platform.
 
-`ashlar bundle budget` now makes the claim executable for current markup primitive capsules. It verifies capsule manifests before measuring CSS and JavaScript runtime assets, and the default CSS/JS budget numbers live in integrity-covered capsule `bundleBudget` metadata. Current local measurements are 649 B gzipped for Button CSS against the 4 KB v0.0 Button gate with 0 B JavaScript, and 1,993 B gzipped CSS for the twelve current markup primitive capsules against the 20,992 B page target with 0 B JavaScript.
+`ashlar bundle budget` now makes the claim executable for current markup primitive capsules. It verifies capsule manifests before measuring CSS and JavaScript runtime assets, and the default CSS/JS budget numbers live in integrity-covered capsule `bundleBudget` metadata. Current strict-readiness measurements are 649 B gzipped for Button CSS against the 4 KB v0.0 Button gate with 0 B JavaScript, and 2,094 B gzipped CSS for the twelve current markup primitive capsules against the 20,992 B page target with 0 B JavaScript.
 
 ## What follows
 
