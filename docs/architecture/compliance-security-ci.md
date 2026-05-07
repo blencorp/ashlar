@@ -417,7 +417,7 @@ Implemented locally. Verifies capsule manifests, reads the CSS and JavaScript ru
 - One interactive component added: target under 24 KiB gzipped.
 - Button v0.0 gate: under 4KB gzipped CSS.
 
-Current local measurements are 649 B gzipped for Button CSS with 0 B JavaScript, and 1,993 B gzipped CSS with 0 B JavaScript for the twelve current markup primitive capsules. Future interactive component work should use manifest `bundleBudget.jsGzipBytes` for runtime budgets.
+Current strict-readiness measurements are 649 B gzipped for Button CSS with 0 B JavaScript, and 2,094 B gzipped CSS with 0 B JavaScript for the twelve current markup primitive capsules. Future interactive component work should use manifest `bundleBudget.jsGzipBytes` for runtime budgets.
 
 ## SARIF output
 
