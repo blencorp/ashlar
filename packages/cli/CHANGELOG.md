@@ -1,5 +1,11 @@
 # @ashlar/cli
 
+## 0.3.1
+
+### Patch Changes
+
+- [#75](https://github.com/blencorp/ashlar/pull/75) [`77e4b3f`](https://github.com/blencorp/ashlar/commit/77e4b3f58df974dc2560ec09e9783341231d8cb7) Thanks [@naodya](https://github.com/naodya)! - Replace the Banner capsule's CSS-painted flag with a source-owned inline SVG flag and harden the example visual smoke so framework demos fail if the government banner regresses to a fake background block.
+
 ## 0.3.0
 
 ### Minor Changes
