@@ -362,11 +362,6 @@ em {
   opacity: 0;
   animation: v2-veil 2.4s ease-out 4s forwards;
 }
-.al-hero-wrap > .al-hero {
-  position: relative;
-  z-index: 1;
-}
-
 .v2-ashlar-svg {
   position: absolute;
   inset: 0;
@@ -382,6 +377,13 @@ em {
   stroke-width: 1;
   opacity: 0;
   vector-effect: non-scaling-stroke;
+}
+.v2-ashlar-svg .v2-line-sweep {
+  animation: v2-sweep var(--line-duration) cubic-bezier(0.22, 0.8, 0.2, 1) var(--line-delay)
+    forwards;
+}
+.v2-ashlar-svg .v2-line-rise {
+  animation: v2-rise var(--line-duration) cubic-bezier(0.34, 1.5, 0.5, 1) var(--line-delay) forwards;
 }
 
 @keyframes v2-sweep {
@@ -425,6 +427,10 @@ em {
   padding: 110px 32px 120px;
   text-align: center;
   position: relative;
+}
+.al-hero-wrap > .al-hero {
+  position: relative;
+  z-index: 1;
 }
 .al-mark {
   margin: 0 0 32px;
@@ -536,7 +542,7 @@ em {
   cursor: pointer;
   transition: color 0.15s ease;
 }
-.al-fedstrip a:hover {
+.al-fedstrip .inner a:hover {
   color: #ffffff;
 }
 .al-fedstrip .sep {
@@ -1019,10 +1025,13 @@ em {
   .al-foot .brandcol .gh {
     transition: none;
   }
+  .v2-ashlar-svg .v2-line-sweep,
+  .v2-ashlar-svg .v2-line-rise {
+    animation: none;
+  }
   .v2-ashlar-svg line {
-    animation: none !important;
-    stroke-dashoffset: 0 !important;
-    opacity: var(--line-op) !important;
+    stroke-dashoffset: 0;
+    opacity: var(--line-op);
   }
   .al-hero-wrap > .v2-ashlar-host::after {
     animation: none;

@@ -145,13 +145,15 @@ function buildAshlarHeroPattern(): SVGSVGElement {
   // Horizontal lines (one per course; sweep left-to-right)
   for (let y = 0; y < H; y += COURSE_H) {
     const line = document.createElementNS(ns, "line");
+    line.setAttribute("class", "v2-line-sweep");
     line.setAttribute("x1", "0");
     line.setAttribute("y1", String(y + 0.5));
     line.setAttribute("x2", String(W));
     line.setAttribute("y2", String(y + 0.5));
     line.setAttribute("stroke-dasharray", String(W));
     line.setAttribute("stroke-dashoffset", String(W));
-    line.style.animation = `v2-sweep ${SWEEP_DUR}s cubic-bezier(.22,.8,.2,1) ${courseStart(courseIdx).toFixed(3)}s forwards`;
+    line.style.setProperty("--line-duration", `${SWEEP_DUR}s`);
+    line.style.setProperty("--line-delay", `${courseStart(courseIdx).toFixed(3)}s`);
     svg.appendChild(line);
     courseIdx++;
   }
@@ -159,13 +161,15 @@ function buildAshlarHeroPattern(): SVGSVGElement {
   // Final bottom horizontal
   {
     const finalLine = document.createElementNS(ns, "line");
+    finalLine.setAttribute("class", "v2-line-sweep");
     finalLine.setAttribute("x1", "0");
     finalLine.setAttribute("y1", String(H + 0.5));
     finalLine.setAttribute("x2", String(W));
     finalLine.setAttribute("y2", String(H + 0.5));
     finalLine.setAttribute("stroke-dasharray", String(W));
     finalLine.setAttribute("stroke-dashoffset", String(W));
-    finalLine.style.animation = `v2-sweep ${SWEEP_DUR}s cubic-bezier(.22,.8,.2,1) ${courseStart(courseIdx).toFixed(3)}s forwards`;
+    finalLine.style.setProperty("--line-duration", `${SWEEP_DUR}s`);
+    finalLine.style.setProperty("--line-delay", `${courseStart(courseIdx).toFixed(3)}s`);
     svg.appendChild(finalLine);
   }
 
@@ -177,13 +181,15 @@ function buildAshlarHeroPattern(): SVGSVGElement {
       const wave = (x / W) * 0.45;
       const delay = courseStart(courseIdx) + 0.45 + wave;
       const line = document.createElementNS(ns, "line");
+      line.setAttribute("class", "v2-line-rise");
       line.setAttribute("x1", String(x + 0.5));
       line.setAttribute("y1", String(y));
       line.setAttribute("x2", String(x + 0.5));
       line.setAttribute("y2", String(y + COURSE_H));
       line.setAttribute("stroke-dasharray", String(COURSE_H));
       line.setAttribute("stroke-dashoffset", String(COURSE_H));
-      line.style.animation = `v2-rise ${RISE_DUR}s cubic-bezier(.34,1.5,.5,1) ${delay.toFixed(3)}s forwards`;
+      line.style.setProperty("--line-duration", `${RISE_DUR}s`);
+      line.style.setProperty("--line-delay", `${delay.toFixed(3)}s`);
       svg.appendChild(line);
     }
     courseIdx++;
@@ -327,7 +333,7 @@ function renderThemeToggle(host: HTMLElement): void {
       swatch.type = "button";
       swatch.setAttribute("role", "radio");
       swatch.setAttribute("aria-checked", palette === key ? "true" : "false");
-      swatch.className = "v2-swatch" + (palette === key ? " on" : "");
+      swatch.className = `v2-swatch${palette === key ? " on" : ""}`;
       swatch.title = p.label;
       swatch.style.background = p.page;
       swatch.style.borderColor = palette === key ? p.ink : "transparent";
@@ -420,7 +426,7 @@ function runTerminal(host: HTMLElement): void {
       div.appendChild(document.createTextNode(line.text));
     } else {
       const indented = line.text.startsWith("  ");
-      div.className = "line out" + (indented ? " plain" : "");
+      div.className = `line out${indented ? " plain" : ""}`;
       div.textContent = line.text;
     }
     return div;
