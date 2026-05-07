@@ -1,6 +1,6 @@
 {
   "name": "@ashlar/cli",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Ashlar component registry CLI.",
   "license": "Apache-2.0",
   "repository": {
