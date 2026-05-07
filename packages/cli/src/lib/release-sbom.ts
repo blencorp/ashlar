@@ -57,9 +57,7 @@ function spdxPackageId(name: string): string {
 }
 
 function packageUrl(name: string, version: string | undefined): string {
-  const encodedName = name.startsWith("@")
-    ? name.replace("/", "%2F").replace("@", "%40")
-    : name;
+  const encodedName = name.startsWith("@") ? name.replace("/", "%2F").replace("@", "%40") : name;
   return `pkg:npm/${encodedName}${version ? `@${version}` : ""}`;
 }
 

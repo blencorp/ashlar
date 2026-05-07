@@ -92,14 +92,14 @@
     },
     "form-field": {
       "version": "0.0.1",
-      "capsule_hash": "sha256:cf7b5defea4958e7af1278de582eadfa5bccfbaca2122967c4be88037283f8da",
+      "capsule_hash": "sha256:bca26a8c40c96b4b28874ddc0b00365484a42ff6eae630c44ae8a5d3e5ea3c46",
       "stability": "experimental",
       "installed_at": "2026-05-06T18:08:29.125Z",
       "installed_via": "ashlar-cli@0.0.0",
       "files": {
         "src/ashlar/components/form-field/form-field.cem.json": {
-          "original_hash": "sha256:b3df9ec46e58045576a9b0afea1aba1683ad6a25fe67f487a74b986d8ef9dc79",
-          "current_hash": "sha256:b3df9ec46e58045576a9b0afea1aba1683ad6a25fe67f487a74b986d8ef9dc79",
+          "original_hash": "sha256:ad737d4446f025127c4375e18b02e5a392c2e6e6196fa9fa455b6027d0879ebc",
+          "current_hash": "sha256:ad737d4446f025127c4375e18b02e5a392c2e6e6196fa9fa455b6027d0879ebc",
           "critical_for_a11y": false
         },
         "src/ashlar/components/form-field/form-field.css": {

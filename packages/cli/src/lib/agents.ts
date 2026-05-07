@@ -32,7 +32,9 @@ function installedCapsuleLines(lockfile: AshlarLockfile): string {
   }
 
   return entries
-    .map(([name, component]) => `- ${name}@${component.version} (${component.stability ?? "unknown"})`)
+    .map(
+      ([name, component]) => `- ${name}@${component.version} (${component.stability ?? "unknown"})`,
+    )
     .join("\n");
 }
 
@@ -146,7 +148,9 @@ function syncAgentInstructionFile(
   }
 }
 
-function readExisting(path: string):
+function readExisting(
+  path: string,
+):
   | { kind: "file"; contents: string }
   | { kind: "symlink"; link: string }
   | { kind: "other" }

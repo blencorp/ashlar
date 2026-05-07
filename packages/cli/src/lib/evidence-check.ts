@@ -202,10 +202,14 @@ function hasPassingKeyboardTest(value: unknown): boolean {
 
 function hasPlaceholderText(value: unknown): boolean {
   const normalized = JSON.stringify(value).toLowerCase();
-  return normalized.includes("todo") || normalized.includes("tbd") || normalized.includes("placeholder");
+  return (
+    normalized.includes("todo") || normalized.includes("tbd") || normalized.includes("placeholder")
+  );
 }
 
-function transcriptTypeForManualTest(item: Record<string, unknown>): "keyboard" | "screen-reader" | null {
+function transcriptTypeForManualTest(
+  item: Record<string, unknown>,
+): "keyboard" | "screen-reader" | null {
   if (isKeyboardTech(item.tech)) {
     return "keyboard";
   }
@@ -227,7 +231,11 @@ function validateManualTranscriptReferences(
   const findings: EvidenceCheckFinding[] = [];
 
   for (const item of component.evidence.manualTests) {
-    if (!isObjectWithKeys(item) || typeof item.result !== "string" || !item.result.startsWith("pass")) {
+    if (
+      !isObjectWithKeys(item) ||
+      typeof item.result !== "string" ||
+      !item.result.startsWith("pass")
+    ) {
       continue;
     }
 
@@ -242,7 +250,9 @@ function validateManualTranscriptReferences(
     }
 
     for (const reference of references) {
-      const path = isAbsolute(reference.path) ? reference.path : resolve(evidenceRoot, reference.path);
+      const path = isAbsolute(reference.path)
+        ? reference.path
+        : resolve(evidenceRoot, reference.path);
       if (!existsSync(path)) {
         continue;
       }
@@ -322,7 +332,10 @@ function validateManualTranscriptReferences(
           ),
         );
       }
-      if (expectedType === "screen-reader" && !isScreenReaderTech(record.environment.assistiveTechnology)) {
+      if (
+        expectedType === "screen-reader" &&
+        !isScreenReaderTech(record.environment.assistiveTechnology)
+      ) {
         findings.push(
           finding(
             component,
@@ -378,7 +391,9 @@ function checkComponentEvidence(
   }
 
   if (!Array.isArray(evidence.wcag) || evidence.wcag.length === 0) {
-    findings.push(finding(component, "evidence/stable-wcag-status", "Stable evidence requires WCAG mappings."));
+    findings.push(
+      finding(component, "evidence/stable-wcag-status", "Stable evidence requires WCAG mappings."),
+    );
   } else {
     const weakWcag = evidence.wcag.filter(
       (item) => !passingStatuses.has(item.status) || !hasActionableEvidenceReference(item.evidence),
@@ -396,7 +411,11 @@ function checkComponentEvidence(
 
   if (!Array.isArray(evidence.baselineTests) || evidence.baselineTests.length === 0) {
     findings.push(
-      finding(component, "evidence/stable-baseline-tests", "Stable evidence requires ICT Baseline mappings."),
+      finding(
+        component,
+        "evidence/stable-baseline-tests",
+        "Stable evidence requires ICT Baseline mappings.",
+      ),
     );
   } else {
     const weakBaseline = evidence.baselineTests.filter(

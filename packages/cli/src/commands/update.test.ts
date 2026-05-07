@@ -5,11 +5,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import {
-  buildCapsuleManifest,
-  signCapsuleManifest,
-  type CapsuleManifest,
-} from "../lib/capsule.js";
+import { buildCapsuleManifest, signCapsuleManifest, type CapsuleManifest } from "../lib/capsule.js";
 
 const here = fileURLToPath(new URL(".", import.meta.url));
 const cliEntry = join(here, "..", "..", "dist", "index.js");
@@ -25,11 +21,7 @@ const registrySigningPrivateKey = registrySigningKey.privateKey.export({
 let scratch: string;
 let registry: string;
 
-function runCli(
-  args: string[],
-  cwd = scratch,
-  input?: string,
-): { stdout: string; status: number } {
+function runCli(args: string[], cwd = scratch, input?: string): { stdout: string; status: number } {
   const result = spawnSync(process.execPath, [cliEntry, ...args], {
     cwd,
     encoding: "utf8",
@@ -71,7 +63,11 @@ function signManifest(manifest: CapsuleManifest): CapsuleManifest {
   });
 }
 
-function writeSignedManifest(directory: string, component: string, manifest: CapsuleManifest): void {
+function writeSignedManifest(
+  directory: string,
+  component: string,
+  manifest: CapsuleManifest,
+): void {
   writeJson(join(directory, `${component}.capsule.json`), signManifest(manifest));
 }
 
@@ -379,10 +375,7 @@ describe("update command", () => {
       `${readFileSync(installedButtonCss(), "utf8")}\n.local-action { color: var(--ashlar-color-action-primary-bg); }\n`,
     );
     publishButtonV2WithCodemod((css) =>
-      css.replaceAll(
-        "--ashlar-color-action-primary-bg",
-        "--ashlar-color-action-primary-surface",
-      ),
+      css.replaceAll("--ashlar-color-action-primary-bg", "--ashlar-color-action-primary-surface"),
     );
 
     const result = runCli(["update", "button", "--yes"]);
@@ -401,10 +394,7 @@ describe("update command", () => {
       `${readFileSync(installedButtonCss(), "utf8")}\n.local-action { color: var(--ashlar-color-action-primary-bg); }\n`,
     );
     publishButtonV2WithCodemod((css) =>
-      css.replaceAll(
-        "--ashlar-color-action-primary-bg",
-        "--ashlar-color-action-primary-surface",
-      ),
+      css.replaceAll("--ashlar-color-action-primary-bg", "--ashlar-color-action-primary-surface"),
     );
 
     const result = runCli([
@@ -456,10 +446,7 @@ describe("update command", () => {
       previousVersion: "0.0.1",
       versions: ["0.0.1", "0.0.2"],
       cssTransform: (css) =>
-        css.replaceAll(
-          "--ashlar-color-action-primary-bg",
-          "--ashlar-color-action-primary-surface",
-        ),
+        css.replaceAll("--ashlar-color-action-primary-bg", "--ashlar-color-action-primary-surface"),
       codemod: {
         pattern: "color: var(--ashlar-color-action-primary-bg);",
         rewrite: "color: var(--ashlar-color-action-primary-surface);",
@@ -470,10 +457,7 @@ describe("update command", () => {
       previousVersion: "0.0.2",
       versions: ["0.0.1", "0.0.2", "0.0.3"],
       cssTransform: (css) =>
-        css.replaceAll(
-          "--ashlar-color-action-primary-bg",
-          "--ashlar-color-action-primary-fill",
-        ),
+        css.replaceAll("--ashlar-color-action-primary-bg", "--ashlar-color-action-primary-fill"),
       codemod: {
         pattern: "color: var(--ashlar-color-action-primary-surface);",
         rewrite: "color: var(--ashlar-color-action-primary-fill);",
@@ -504,8 +488,10 @@ describe("update command", () => {
 
     writeFileSync(
       installedButtonCss(),
-      readFileSync(installedButtonCss(), "utf8")
-        .replace(/<<<<<<<[\s\S]*?>>>>>>>[^\n]*\n?/, "    font-weight: 800;\n"),
+      readFileSync(installedButtonCss(), "utf8").replace(
+        /<<<<<<<[\s\S]*?>>>>>>>[^\n]*\n?/,
+        "    font-weight: 800;\n",
+      ),
     );
 
     const resolved = runCli(["update", "--resolved", "button"]);

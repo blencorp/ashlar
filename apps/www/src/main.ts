@@ -198,15 +198,13 @@ function buildAshlarHeroPattern(): SVGSVGElement {
 
 type PaletteKey = "slate" | "warm" | "navy" | "mono";
 
-const DARK_PALETTES: Record<
-  PaletteKey,
-  { label: string; page: string; ink: string; red: string }
-> = {
-  slate: { label: "Slate", page: "#101216", ink: "#F2F4F7", red: "#E54B5B" },
-  warm: { label: "Warm", page: "#161412", ink: "#F5F1EA", red: "#E66B57" },
-  navy: { label: "Navy", page: "#0B1220", ink: "#F2F4F7", red: "#E54B5B" },
-  mono: { label: "Mono", page: "#0A0A0A", ink: "#F5F5F5", red: "#E54B5B" },
-};
+const DARK_PALETTES: Record<PaletteKey, { label: string; page: string; ink: string; red: string }> =
+  {
+    slate: { label: "Slate", page: "#101216", ink: "#F2F4F7", red: "#E54B5B" },
+    warm: { label: "Warm", page: "#161412", ink: "#F5F1EA", red: "#E66B57" },
+    navy: { label: "Navy", page: "#0B1220", ink: "#F2F4F7", red: "#E54B5B" },
+    mono: { label: "Mono", page: "#0A0A0A", ink: "#F5F5F5", red: "#E54B5B" },
+  };
 
 const STORAGE_THEME = "ashlar-www/theme";
 const STORAGE_PALETTE = "ashlar-www/palette";

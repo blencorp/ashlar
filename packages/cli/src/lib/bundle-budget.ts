@@ -155,7 +155,9 @@ function componentAssetSummary(
   component: RegistryComponent,
   files: string[],
 ): { gzipBytes: number; rawBytes: number } {
-  const text = files.map((file) => readFileSync(join(component.directory, file), "utf8")).join("\n");
+  const text = files
+    .map((file) => readFileSync(join(component.directory, file), "utf8"))
+    .join("\n");
 
   return {
     rawBytes: Buffer.byteLength(text, "utf8"),

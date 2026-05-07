@@ -134,7 +134,10 @@ export function buildReleaseTrustReviewChecklist(input: {
   sbomPath: string;
 }): string {
   const artifacts = input.bundle.artifacts
-    .map((artifact) => `- ${artifact.type}: ${artifact.name} (${artifact.size} bytes, ${artifact.sha256})`)
+    .map(
+      (artifact) =>
+        `- ${artifact.type}: ${artifact.name} (${artifact.size} bytes, ${artifact.sha256})`,
+    )
     .join("\n");
   const notes = input.bundle.verification.notes.map((note) => `- ${note}`).join("\n");
 

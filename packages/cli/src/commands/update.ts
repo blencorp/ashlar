@@ -33,9 +33,7 @@ type UpdateOptions = {
   yes?: boolean;
 };
 
-type MergeResult =
-  | { status: "clean"; contents: string }
-  | { status: "conflict"; contents: string };
+type MergeResult = { status: "clean"; contents: string } | { status: "conflict"; contents: string };
 
 type UpdateFileCounts = {
   added: number;
@@ -168,10 +166,14 @@ async function confirmReviewedUpdate(forcePrompt: boolean): Promise<boolean> {
 
 function diffPreview(basePath: string, upstreamPath: string): string[] {
   try {
-    execFileSync("git", ["diff", "--no-index", "--no-color", "--unified=3", basePath, upstreamPath], {
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "pipe"],
-    });
+    execFileSync(
+      "git",
+      ["diff", "--no-index", "--no-color", "--unified=3", basePath, upstreamPath],
+      {
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "pipe"],
+      },
+    );
     return [];
   } catch (error) {
     const failed = error as { status?: number; stdout?: Buffer | string };
@@ -378,7 +380,12 @@ async function updateComponent(
     return { code: 1 };
   }
 
-  const locked = getComponentVersion(options.cwd, componentName, installed.version, config.registry);
+  const locked = getComponentVersion(
+    options.cwd,
+    componentName,
+    installed.version,
+    config.registry,
+  );
   const latest = getComponent(options.cwd, componentName, config.registry);
 
   refreshCurrentHashes(lockfile);
@@ -449,7 +456,9 @@ async function updateComponent(
       }),
     );
     if (!(await confirmReviewedUpdate(options.prompt))) {
-      console.error("Update not applied. Re-run with --yes after review or answer yes at the prompt.");
+      console.error(
+        "Update not applied. Re-run with --yes after review or answer yes at the prompt.",
+      );
       return { code: 1 };
     }
   }

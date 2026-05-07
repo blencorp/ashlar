@@ -1,5 +1,10 @@
 import { readCapsuleManifest, readVerifiedCapsuleManifest } from "./capsule.js";
-import { getComponent, listComponents, readRegistryTrustRoot, type RegistryComponent } from "./registry.js";
+import {
+  getComponent,
+  listComponents,
+  readRegistryTrustRoot,
+  type RegistryComponent,
+} from "./registry.js";
 
 export type PublicCapsuleTrustInput = {
   components?: string[];
@@ -30,12 +35,12 @@ function selectedComponents(input: PublicCapsuleTrustInput): RegistryComponent[]
     );
   }
 
-  return input.components.map((component) => getComponent(input.cwd, component, input.registryPath));
+  return input.components.map((component) =>
+    getComponent(input.cwd, component, input.registryPath),
+  );
 }
 
-export function verifyPublicCapsuleTrust(
-  input: PublicCapsuleTrustInput,
-): PublicCapsuleTrustResult {
+export function verifyPublicCapsuleTrust(input: PublicCapsuleTrustInput): PublicCapsuleTrustResult {
   const errors: string[] = [];
   const capsules: PublicCapsuleTrustCapsule[] = [];
   const trustRoot = readRegistryTrustRoot(input.cwd, input.registryPath);
@@ -70,7 +75,9 @@ export function verifyPublicCapsuleTrust(
     try {
       const manifest = readCapsuleManifest(component.directory, component.name);
       if (!manifest.sigstore) {
-        errors.push(`${component.name}@${component.version}: missing capsule Sigstore bundle metadata`);
+        errors.push(
+          `${component.name}@${component.version}: missing capsule Sigstore bundle metadata`,
+        );
         continue;
       }
 
@@ -85,7 +92,9 @@ export function verifyPublicCapsuleTrust(
         cosignPath: input.cosignPath,
       });
       if (!verified.sigstore) {
-        errors.push(`${component.name}@${component.version}: missing capsule Sigstore bundle metadata`);
+        errors.push(
+          `${component.name}@${component.version}: missing capsule Sigstore bundle metadata`,
+        );
         continue;
       }
 

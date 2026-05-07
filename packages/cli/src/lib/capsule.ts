@@ -87,12 +87,17 @@ export function buildCapsuleManifest(input: {
   fileTextOverrides?: Record<string, string>;
 }): CapsuleManifest {
   const sourceFiles = Array.from(
-    new Set([...capsuleSourceFiles(input.directory), ...Object.keys(input.fileTextOverrides ?? {})]),
+    new Set([
+      ...capsuleSourceFiles(input.directory),
+      ...Object.keys(input.fileTextOverrides ?? {}),
+    ]),
   ).sort();
   const files = Object.fromEntries(
     sourceFiles.map((file) => [
       file,
-      sha256Text(input.fileTextOverrides?.[file] ?? readFileSync(join(input.directory, file), "utf8")),
+      sha256Text(
+        input.fileTextOverrides?.[file] ?? readFileSync(join(input.directory, file), "utf8"),
+      ),
     ]),
   );
   const codemods = input.codemods && input.codemods.length > 0 ? input.codemods : undefined;
@@ -148,9 +153,7 @@ export function capsuleSignaturePayload(manifest: CapsuleManifest): string {
     stability: manifest.stability,
     files: manifest.files,
     capsule_hash: manifest.capsule_hash,
-    ...(manifest.codemods && manifest.codemods.length > 0
-      ? { codemods: manifest.codemods }
-      : {}),
+    ...(manifest.codemods && manifest.codemods.length > 0 ? { codemods: manifest.codemods } : {}),
     ...(manifest.bundleBudget ? { bundleBudget: manifest.bundleBudget } : {}),
   });
 }
@@ -164,7 +167,9 @@ export function readCapsuleManifest(directory: string, name: string): CapsuleMan
   const manifest = JSON.parse(readFileSync(manifestPath, "utf8")) as CapsuleManifest;
   const result = validate("capsule", manifest);
   if (!result.ok) {
-    throw new Error(`Invalid Ashlar capsule manifest at ${manifestPath}:\n${describeErrors(result)}`);
+    throw new Error(
+      `Invalid Ashlar capsule manifest at ${manifestPath}:\n${describeErrors(result)}`,
+    );
   }
 
   return manifest;
@@ -301,7 +306,7 @@ function verifySigstoreCapsuleBundle(
     errors.push("Sigstore trust policy is not configured in the registry trust root");
   } else {
     if (trustRoot.sigstore.bundleVerification !== "cosign") {
-      errors.push('Sigstore bundle verification must use cosign for capsule Sigstore bundles');
+      errors.push("Sigstore bundle verification must use cosign for capsule Sigstore bundles");
     }
     if (!trustRoot.sigstore.certificateIdentities.includes(sigstore.certificateIdentity)) {
       errors.push(`Sigstore certificate identity is not trusted: ${sigstore.certificateIdentity}`);
@@ -397,9 +402,7 @@ function verifySigstoreBundleWithCosign(input: {
     }
     if (result.status !== 0) {
       const output = `${result.stdout ?? ""}${result.stderr ?? ""}`.trim();
-      return [
-        `Sigstore cosign verification failed${output ? `: ${output}` : ""}`,
-      ];
+      return [`Sigstore cosign verification failed${output ? `: ${output}` : ""}`];
     }
 
     return [];

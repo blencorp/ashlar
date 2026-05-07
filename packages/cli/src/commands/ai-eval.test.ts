@@ -143,7 +143,13 @@ describe("ai-eval command", () => {
     writeGeneratedOutputs();
     writeSuite(suitePath, defaultCases());
 
-    const result = runCli(["ai-eval", "--suite", suitePath, "--registry", join(repoRoot, "registry")]);
+    const result = runCli([
+      "ai-eval",
+      "--suite",
+      suitePath,
+      "--registry",
+      join(repoRoot, "registry"),
+    ]);
 
     expect(result.status, result.stdout).toBe(0);
     expect(result.stdout).toContain("AI eval passed: 2 case(s)");
@@ -203,7 +209,13 @@ describe("ai-eval command", () => {
       },
     ]);
 
-    const result = runCli(["ai-eval", "--suite", suitePath, "--registry", join(repoRoot, "registry")]);
+    const result = runCli([
+      "ai-eval",
+      "--suite",
+      suitePath,
+      "--registry",
+      join(repoRoot, "registry"),
+    ]);
 
     expect(result.status, result.stdout).toBe(1);
     expect(result.stdout).toContain("AI eval failed: 1 case(s)");
@@ -248,7 +260,13 @@ describe("ai-eval command", () => {
       },
     ]);
 
-    const result = runCli(["ai-eval", "--suite", suitePath, "--registry", join(repoRoot, "registry")]);
+    const result = runCli([
+      "ai-eval",
+      "--suite",
+      suitePath,
+      "--registry",
+      join(repoRoot, "registry"),
+    ]);
 
     expect(result.status, result.stdout).toBe(1);
     expect(result.stdout).toContain("Invalid Ashlar AI eval suite");

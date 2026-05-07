@@ -161,10 +161,14 @@ function compareExpectations(
     failures.push(`expected ${expected.warnings} warning finding(s), found ${summary.warnings}`);
   }
   if (typeof expected.minErrors === "number" && summary.errors < expected.minErrors) {
-    failures.push(`expected at least ${expected.minErrors} error finding(s), found ${summary.errors}`);
+    failures.push(
+      `expected at least ${expected.minErrors} error finding(s), found ${summary.errors}`,
+    );
   }
   if (typeof expected.maxErrors === "number" && summary.errors > expected.maxErrors) {
-    failures.push(`expected at most ${expected.maxErrors} error finding(s), found ${summary.errors}`);
+    failures.push(
+      `expected at most ${expected.maxErrors} error finding(s), found ${summary.errors}`,
+    );
   }
   for (const ruleId of expected.includesRuleIds ?? []) {
     if (!ruleIds.has(ruleId)) {

@@ -156,7 +156,10 @@ export function writeReleaseReviewPack(input: ReleaseReviewPackInput): ReleaseRe
   }
   writeJson(releaseReadinessJson, readiness);
   writeFileSync(releaseReadinessMarkdown, buildReleaseReadinessReport(readiness));
-  writeJson(projectStatus, buildProjectStatus({ cwd: input.cwd, registryPath: input.registryPath }));
+  writeJson(
+    projectStatus,
+    buildProjectStatus({ cwd: input.cwd, registryPath: input.registryPath }),
+  );
 
   const stableBatch = prepareStableEvidenceReviewBatch({
     cwd: input.cwd,
@@ -191,7 +194,9 @@ export function writeReleaseReviewPack(input: ReleaseReviewPackInput): ReleaseRe
   const components = listComponents(input.cwd, input.registryPath).map((component) =>
     getComponent(input.cwd, component.name, input.registryPath),
   );
-  const evidenceCheck = checkEvidence(components, { evidenceRoot: (component) => component.directory });
+  const evidenceCheck = checkEvidence(components, {
+    evidenceRoot: (component) => component.directory,
+  });
   writeFileSync(evidenceReport, buildEvidenceReport(components, evidenceCheck, input.registryPath));
   writeJson(
     bundleBudget,

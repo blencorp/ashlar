@@ -58,8 +58,7 @@ export function applyEvidenceArtifact(input: ApplyEvidenceArtifactInput): Eviden
     ...(evidence.automatedResults ?? {}),
     ashlarAudit: auditResult,
   };
-  evidence.accessibilityStatus =
-    artifact.status === "pass" ? "automated-tested" : "known-issue";
+  evidence.accessibilityStatus = artifact.status === "pass" ? "automated-tested" : "known-issue";
 
   const result = validate("evidence", evidence);
   if (!result.ok) {

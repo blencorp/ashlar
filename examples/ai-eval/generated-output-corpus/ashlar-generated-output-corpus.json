@@ -5,7 +5,16 @@
     {
       "id": "benefit-eligibility-grounded",
       "prompt": "Generate a benefit eligibility screening page for emergency housing assistance using Ashlar form capsules and a federal trust shell.",
-      "components": ["banner", "identifier", "form-field", "text-input", "checkbox", "radio-group", "select", "button"],
+      "components": [
+        "banner",
+        "identifier",
+        "form-field",
+        "text-input",
+        "checkbox",
+        "radio-group",
+        "select",
+        "button"
+      ],
       "outputFile": "fixtures/benefit-eligibility.grounded.pass.html",
       "policy": "all",
       "expect": {
@@ -94,7 +103,15 @@
     {
       "id": "account-profile-grounded",
       "prompt": "Generate an account profile update form for a public benefits portal with contact preferences and consent.",
-      "components": ["banner", "identifier", "form-field", "text-input", "textarea", "checkbox", "button"],
+      "components": [
+        "banner",
+        "identifier",
+        "form-field",
+        "text-input",
+        "textarea",
+        "checkbox",
+        "button"
+      ],
       "outputFile": "fixtures/account-profile.grounded.pass.html",
       "policy": "all",
       "expect": {
@@ -122,7 +139,15 @@
     {
       "id": "error-remediation-grounded",
       "prompt": "Generate an error remediation page after an applicant submits invalid contact information, including an error summary and corrected field.",
-      "components": ["banner", "identifier", "alert", "error-summary", "form-field", "text-input", "button"],
+      "components": [
+        "banner",
+        "identifier",
+        "alert",
+        "error-summary",
+        "form-field",
+        "text-input",
+        "button"
+      ],
       "outputFile": "fixtures/error-remediation.grounded.pass.html",
       "policy": "all",
       "expect": {

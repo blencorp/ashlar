@@ -5,7 +5,7 @@
   "layer": "L0",
   "stability": "experimental",
   "files": {
-    "form-field.cem.json": "sha256:b3df9ec46e58045576a9b0afea1aba1683ad6a25fe67f487a74b986d8ef9dc79",
+    "form-field.cem.json": "sha256:ad737d4446f025127c4375e18b02e5a392c2e6e6196fa9fa455b6027d0879ebc",
     "form-field.css": "sha256:6b8bba9c3b0943a1902f36b5461cd2b45792a0106684b855a728c9f7df3e3757",
     "form-field.evidence.json": "sha256:6f76d6f8cd4ee6530116c4e2c95460fb2eb310a6b8ca093803ccd883910bb734",
     "form-field.html": "sha256:11b520bf5ca530c1f1b70c125238340a33655716373b549440779e1e7ba293d6"
@@ -14,10 +14,10 @@
     "cssGzipBytes": 1536,
     "jsGzipBytes": 0
   },
-  "capsule_hash": "sha256:cf7b5defea4958e7af1278de582eadfa5bccfbaca2122967c4be88037283f8da",
+  "capsule_hash": "sha256:bca26a8c40c96b4b28874ddc0b00365484a42ff6eae630c44ae8a5d3e5ea3c46",
   "signature": {
-    "keyId": "ashlar-local-dev-2026-05-05",
+    "keyId": "ashlar-local-dev-form-field-format-2026-05-07",
     "algorithm": "ed25519",
-    "value": "WE17XzhUV3GgV1E88PNtHtMmMiwfX5iSSGjpuC8vtcH5U/ggfKKwVCvwXTj0pcb1SHmxOJFXpsAafGnQ0pnzDA=="
+    "value": "qUVjb4Ix6edfBGFXx49xy5+smUpztIwxXCwuEd5STKo+3JAI+Celtzi+QA6zFuMr0GvBerd22Z5xE04N7CtfDA=="
   }
 }

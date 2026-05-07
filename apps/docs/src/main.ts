@@ -12,7 +12,7 @@ const root = app;
 
 function activePageId(): string {
   const hash = window.location.hash.replace(/^#\/?/, "");
-  return pages.some((page) => page.id === hash) ? hash : pages[0]?.id ?? "install";
+  return pages.some((page) => page.id === hash) ? hash : (pages[0]?.id ?? "install");
 }
 
 function render(): void {

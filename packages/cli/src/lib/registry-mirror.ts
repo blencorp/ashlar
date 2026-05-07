@@ -21,7 +21,10 @@ function isSameOrInside(parent: string, child: string): boolean {
   return path === "" || (!path.startsWith("..") && !isAbsolute(path));
 }
 
-function verifyRegistry(cwd: string, registryPath: string): { components: number; versions: number } {
+function verifyRegistry(
+  cwd: string,
+  registryPath: string,
+): { components: number; versions: number } {
   const components = listComponents(cwd, registryPath);
   let versions = 0;
 

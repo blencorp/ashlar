@@ -82,7 +82,8 @@ export function buildAshlarMcpServer(options: AshlarMcpServerOptions): McpServer
     "get_component",
     {
       title: "Get Ashlar Capsule",
-      description: "Return registry metadata, files, evidence status, and CEM metadata for a capsule.",
+      description:
+        "Return registry metadata, files, evidence status, and CEM metadata for a capsule.",
       inputSchema: z.object({
         name: z.string().min(1),
       }),

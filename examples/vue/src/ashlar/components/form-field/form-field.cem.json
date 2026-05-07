@@ -37,11 +37,7 @@
                 "languages": ["html"]
               }
             ],
-            "tokensConsumed": [
-              "color.text",
-              "color.text-muted",
-              "color.status.error.fg"
-            ],
+            "tokensConsumed": ["color.text", "color.text-muted", "color.status.error.fg"],
             "platformFeatures": [
               {
                 "feature": "semantic-label",

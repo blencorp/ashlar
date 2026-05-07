@@ -66,7 +66,9 @@ function readManualEvidence(path: string): ManualEvidenceArtifact {
   const artifact = JSON.parse(readFileSync(path, "utf8")) as ManualEvidenceArtifact;
   const result = validate("manualEvidence", artifact);
   if (!result.ok) {
-    throw new Error(`Invalid Ashlar manual evidence artifact at ${path}:\n${describeErrors(result)}`);
+    throw new Error(
+      `Invalid Ashlar manual evidence artifact at ${path}:\n${describeErrors(result)}`,
+    );
   }
 
   return artifact;
