@@ -1,5 +1,11 @@
 # @ashlar/example-nextjs
 
+## 0.0.2
+
+### Patch Changes
+
+- [#81](https://github.com/blencorp/ashlar/pull/81) [`be61708`](https://github.com/blencorp/ashlar/commit/be6170844d41f541d16b72cbe7f959c497755c9c) Thanks [@naodya](https://github.com/naodya)! - Polish example app agency-theme copy and mobile audit-command wrapping.
+
 ## 0.0.1
 
 ### Patch Changes
