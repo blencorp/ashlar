@@ -659,198 +659,210 @@ describe("evidence command", () => {
     CLI_SMOKE_TIMEOUT_MS,
   );
 
-  it("writes a Markdown evidence report for procurement and CI review", () => {
-    const reportPath = join(scratch, "reports", "ashlar-evidence.md");
+  it(
+    "writes a Markdown evidence report for procurement and CI review",
+    () => {
+      const reportPath = join(scratch, "reports", "ashlar-evidence.md");
 
-    const result = runCli([
-      "evidence",
-      "--report",
-      reportPath,
-      "--registry",
-      join(repoRoot, "registry"),
-    ]);
+      const result = runCli([
+        "evidence",
+        "--report",
+        reportPath,
+        "--registry",
+        join(repoRoot, "registry"),
+      ]);
 
-    expect(result.status).toBe(0);
-    expect(result.stdout).toContain(`Wrote evidence report to ${reportPath}`);
+      expect(result.status).toBe(0);
+      expect(result.stdout).toContain(`Wrote evidence report to ${reportPath}`);
 
-    const report = readFileSync(reportPath, "utf8");
-    expect(report).toContain("# Ashlar Evidence Report");
-    expect(report).toContain("Generated from registry:");
-    expect(report).toContain("## Summary");
-    expect(report).toContain("- Evidence check: passed");
-    expect(report).toContain("### button@0.0.1");
-    expect(report).toContain("- accessibility: not-reviewed");
-  });
+      const report = readFileSync(reportPath, "utf8");
+      expect(report).toContain("# Ashlar Evidence Report");
+      expect(report).toContain("Generated from registry:");
+      expect(report).toContain("## Summary");
+      expect(report).toContain("- Evidence check: passed");
+      expect(report).toContain("### button@0.0.1");
+      expect(report).toContain("- accessibility: not-reviewed");
+    },
+    CLI_SMOKE_TIMEOUT_MS,
+  );
 
-  it("writes a manual evidence template for reviewer completion", () => {
-    const outputPath = join(scratch, "reports", "button-manual-review.json");
+  it(
+    "writes a manual evidence template for reviewer completion",
+    () => {
+      const outputPath = join(scratch, "reports", "button-manual-review.json");
 
-    const result = runCli([
-      "evidence",
-      "manual-template",
-      "button",
-      "--output",
-      outputPath,
-      "--registry",
-      join(repoRoot, "registry"),
-    ]);
+      const result = runCli([
+        "evidence",
+        "manual-template",
+        "button",
+        "--output",
+        outputPath,
+        "--registry",
+        join(repoRoot, "registry"),
+      ]);
 
-    expect(result.status).toBe(0);
-    expect(result.stdout).toContain("Wrote manual evidence template for button@0.0.1");
+      expect(result.status).toBe(0);
+      expect(result.stdout).toContain("Wrote manual evidence template for button@0.0.1");
 
-    const artifact = JSON.parse(readFileSync(outputPath, "utf8")) as {
-      $schema: string;
-      component: string;
-      version: string;
-      reviewer: string;
-      wcag?: Array<{ criterion: string; evidence: string; status: string }>;
-      baselineTests?: Array<{ evidence: string; status: string; test: string }>;
-      manualTests: Array<{ result: string; tech: string }>;
-      knownLimitations: unknown[];
-    };
+      const artifact = JSON.parse(readFileSync(outputPath, "utf8")) as {
+        $schema: string;
+        component: string;
+        version: string;
+        reviewer: string;
+        wcag?: Array<{ criterion: string; evidence: string; status: string }>;
+        baselineTests?: Array<{ evidence: string; status: string; test: string }>;
+        manualTests: Array<{ result: string; tech: string }>;
+        knownLimitations: unknown[];
+      };
 
-    expect(artifact.$schema).toBe("https://ashlar.dev/schemas/manual-evidence.schema.json");
-    expect(artifact.component).toBe("button");
-    expect(artifact.version).toBe("0.0.1");
-    expect(artifact.reviewer).toBe("TODO: reviewer name or email");
-    expect(artifact.wcag).toEqual(
-      expect.arrayContaining([
+      expect(artifact.$schema).toBe("https://ashlar.dev/schemas/manual-evidence.schema.json");
+      expect(artifact.component).toBe("button");
+      expect(artifact.version).toBe("0.0.1");
+      expect(artifact.reviewer).toBe("TODO: reviewer name or email");
+      expect(artifact.wcag).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            criterion: "2.4.7",
+            evidence: "TODO: document manual evidence for WCAG 2.4.7 (Focus Visible).",
+            status: "known-issue",
+          }),
+        ]),
+      );
+      expect(artifact.baselineTests).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            evidence: "TODO: document manual evidence for ICT Baseline test: Keyboard Accessible.",
+            status: "known-issue",
+            test: "Keyboard Accessible",
+          }),
+        ]),
+      );
+      expect(artifact.manualTests).toEqual([
         expect.objectContaining({
-          criterion: "2.4.7",
-          evidence: "TODO: document manual evidence for WCAG 2.4.7 (Focus Visible).",
-          status: "known-issue",
+          result: "blocked",
+          tech: "Keyboard",
         }),
-      ]),
-    );
-    expect(artifact.baselineTests).toEqual(
-      expect.arrayContaining([
         expect.objectContaining({
-          evidence: "TODO: document manual evidence for ICT Baseline test: Keyboard Accessible.",
-          status: "known-issue",
-          test: "Keyboard Accessible",
+          result: "blocked",
+          tech: "TODO: screen reader (NVDA, JAWS, VoiceOver, Narrator, or equivalent)",
         }),
-      ]),
-    );
-    expect(artifact.manualTests).toEqual([
-      expect.objectContaining({
+      ]);
+      expect(artifact.knownLimitations).toEqual([]);
+    },
+    CLI_SMOKE_TIMEOUT_MS,
+  );
+
+  it(
+    "writes schema-backed manual transcript templates for reviewer completion",
+    () => {
+      const keyboardPath = join(scratch, "reports", "button-keyboard-transcript.json");
+      const screenReaderPath = join(scratch, "reports", "button-screen-reader-transcript.json");
+
+      const keyboardResult = runCli([
+        "evidence",
+        "transcript-template",
+        "button",
+        "--type",
+        "keyboard",
+        "--output",
+        keyboardPath,
+        "--registry",
+        join(repoRoot, "registry"),
+      ]);
+      const screenReaderResult = runCli([
+        "evidence",
+        "transcript-template",
+        "button",
+        "--type",
+        "screen-reader",
+        "--output",
+        screenReaderPath,
+        "--registry",
+        join(repoRoot, "registry"),
+      ]);
+
+      expect(keyboardResult.status).toBe(0);
+      expect(keyboardResult.stdout).toContain(
+        "Wrote keyboard manual transcript template for button@0.0.1",
+      );
+      expect(screenReaderResult.status).toBe(0);
+      expect(screenReaderResult.stdout).toContain(
+        "Wrote screen-reader manual transcript template for button@0.0.1",
+      );
+
+      const keyboardArtifact = JSON.parse(readFileSync(keyboardPath, "utf8")) as {
+        $schema: string;
+        component: string;
+        version: string;
+        transcriptType: string;
+        environment: { inputDevice?: string };
+        result: string;
+        steps: Array<{ expected: string; id: string; result: string }>;
+      };
+      const screenReaderArtifact = JSON.parse(readFileSync(screenReaderPath, "utf8")) as {
+        $schema: string;
+        component: string;
+        version: string;
+        transcriptType: string;
+        environment: { assistiveTechnology?: string };
+        result: string;
+        steps: Array<{ expected: string; id: string; result: string }>;
+      };
+
+      expect(keyboardArtifact).toMatchObject({
+        $schema: "https://ashlar.dev/schemas/manual-transcript.schema.json",
+        component: "button",
+        version: "0.0.1",
+        transcriptType: "keyboard",
         result: "blocked",
-        tech: "Keyboard",
-      }),
-      expect.objectContaining({
+      });
+      expect(keyboardArtifact.environment.inputDevice).toBe("Keyboard");
+      expect(keyboardArtifact.steps).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            id: "button-focus-visible",
+            result: "blocked",
+          }),
+          expect.objectContaining({
+            id: "button-enter-activation",
+            expected: "The native button activation fires once without requiring pointer input.",
+            result: "blocked",
+          }),
+          expect.objectContaining({
+            id: "button-space-activation",
+            result: "blocked",
+          }),
+        ]),
+      );
+      expect(screenReaderArtifact).toMatchObject({
+        $schema: "https://ashlar.dev/schemas/manual-transcript.schema.json",
+        component: "button",
+        version: "0.0.1",
+        transcriptType: "screen-reader",
         result: "blocked",
-        tech: "TODO: screen reader (NVDA, JAWS, VoiceOver, Narrator, or equivalent)",
-      }),
-    ]);
-    expect(artifact.knownLimitations).toEqual([]);
-  });
-
-  it("writes schema-backed manual transcript templates for reviewer completion", () => {
-    const keyboardPath = join(scratch, "reports", "button-keyboard-transcript.json");
-    const screenReaderPath = join(scratch, "reports", "button-screen-reader-transcript.json");
-
-    const keyboardResult = runCli([
-      "evidence",
-      "transcript-template",
-      "button",
-      "--type",
-      "keyboard",
-      "--output",
-      keyboardPath,
-      "--registry",
-      join(repoRoot, "registry"),
-    ]);
-    const screenReaderResult = runCli([
-      "evidence",
-      "transcript-template",
-      "button",
-      "--type",
-      "screen-reader",
-      "--output",
-      screenReaderPath,
-      "--registry",
-      join(repoRoot, "registry"),
-    ]);
-
-    expect(keyboardResult.status).toBe(0);
-    expect(keyboardResult.stdout).toContain(
-      "Wrote keyboard manual transcript template for button@0.0.1",
-    );
-    expect(screenReaderResult.status).toBe(0);
-    expect(screenReaderResult.stdout).toContain(
-      "Wrote screen-reader manual transcript template for button@0.0.1",
-    );
-
-    const keyboardArtifact = JSON.parse(readFileSync(keyboardPath, "utf8")) as {
-      $schema: string;
-      component: string;
-      version: string;
-      transcriptType: string;
-      environment: { inputDevice?: string };
-      result: string;
-      steps: Array<{ expected: string; id: string; result: string }>;
-    };
-    const screenReaderArtifact = JSON.parse(readFileSync(screenReaderPath, "utf8")) as {
-      $schema: string;
-      component: string;
-      version: string;
-      transcriptType: string;
-      environment: { assistiveTechnology?: string };
-      result: string;
-      steps: Array<{ expected: string; id: string; result: string }>;
-    };
-
-    expect(keyboardArtifact).toMatchObject({
-      $schema: "https://ashlar.dev/schemas/manual-transcript.schema.json",
-      component: "button",
-      version: "0.0.1",
-      transcriptType: "keyboard",
-      result: "blocked",
-    });
-    expect(keyboardArtifact.environment.inputDevice).toBe("Keyboard");
-    expect(keyboardArtifact.steps).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          id: "button-focus-visible",
-          result: "blocked",
-        }),
-        expect.objectContaining({
-          id: "button-enter-activation",
-          expected: "The native button activation fires once without requiring pointer input.",
-          result: "blocked",
-        }),
-        expect.objectContaining({
-          id: "button-space-activation",
-          result: "blocked",
-        }),
-      ]),
-    );
-    expect(screenReaderArtifact).toMatchObject({
-      $schema: "https://ashlar.dev/schemas/manual-transcript.schema.json",
-      component: "button",
-      version: "0.0.1",
-      transcriptType: "screen-reader",
-      result: "blocked",
-    });
-    expect(screenReaderArtifact.environment.assistiveTechnology).toContain("TODO: screen reader");
-    expect(screenReaderArtifact.steps).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          id: "button-screen-reader-name-role",
-          expected:
-            "The screen reader announces the button's accessible name and native button role.",
-          result: "blocked",
-        }),
-        expect.objectContaining({
-          id: "button-screen-reader-enter-activation",
-          result: "blocked",
-        }),
-        expect.objectContaining({
-          id: "button-screen-reader-space-activation",
-          result: "blocked",
-        }),
-      ]),
-    );
-  });
+      });
+      expect(screenReaderArtifact.environment.assistiveTechnology).toContain("TODO: screen reader");
+      expect(screenReaderArtifact.steps).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            id: "button-screen-reader-name-role",
+            expected:
+              "The screen reader announces the button's accessible name and native button role.",
+            result: "blocked",
+          }),
+          expect.objectContaining({
+            id: "button-screen-reader-enter-activation",
+            result: "blocked",
+          }),
+          expect.objectContaining({
+            id: "button-screen-reader-space-activation",
+            result: "blocked",
+          }),
+        ]),
+      );
+    },
+    CLI_SMOKE_TIMEOUT_MS,
+  );
 
   it("validates manual transcript artifacts against the registry component", () => {
     writeManualEvidenceFiles();
