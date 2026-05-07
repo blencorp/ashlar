@@ -14,7 +14,7 @@ These examples prove the source-capsule flow across the stacks government teams 
 
 ## Theme Grounding
 
-The example agency themes are illustrative, but they are not invented palettes.
+The example agency themes are source-derived implementation examples, not official agency design specifications or endorsements. Each theme records reviewed provenance metadata (`status`, `reviewedAt`, `reviewedBy`, and summary) plus source-level retrieval dates and token-path notes so consumers can audit where the token choices came from.
 
 - **Default** uses USWDS design-token conventions for color, typography, focus, and contrast-oriented semantic roles.
 - **VA** follows VA.gov Design System color-token guidance, including `vads-color-primary` `#005ea2`, the `#face00` focus outline, and Source Sans Pro typography.

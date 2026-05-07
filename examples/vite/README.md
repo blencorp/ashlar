@@ -110,5 +110,5 @@ The CLI validates every theme file against the schema before compilation, so a m
 
 ## Disclaimers
 
-- Default, VA, and USDA are illustrative agency theme contracts, not official agency design specifications. Real agency adoption replaces colors and typography with the agency's authoritative brand source.
+- Default, VA, and USDA are source-derived theme examples with reviewed provenance metadata and source retrieval dates. They are not official agency design specifications; real agency adoption should replace or extend tokens from the agency's authoritative brand source.
 - Ashlar is independent open-source research and is not affiliated with USWDS, GSA, the U.S. federal government, the Department of Veterans Affairs, or the Department of Agriculture.

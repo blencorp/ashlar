@@ -3,21 +3,33 @@
   "name": "default",
   "title": "Default",
   "description": "Default public-service baseline grounded in USWDS design-token conventions. Selected when no agency theme is applied.",
+  "provenance": {
+    "status": "source-derived",
+    "reviewedAt": "2026-05-07",
+    "reviewedBy": "BLEN",
+    "summary": "Derived from public USWDS token guidance and system-token values; not an official USWDS theme or government endorsement."
+  },
   "sources": [
     {
       "label": "USWDS color guidance",
       "url": "https://designsystem.digital.gov/design-tokens/color/overview/",
-      "note": "Uses the USWDS theme/system token model and contrast-first color guidance."
+      "note": "Uses the USWDS theme/system token model and contrast-first color guidance.",
+      "retrievedAt": "2026-05-07",
+      "tokenPaths": ["color.page", "color.surface", "color.action.*", "color.status.*"]
     },
     {
       "label": "USWDS system color tokens",
       "url": "https://designsystem.digital.gov/design-tokens/color/system-tokens/",
-      "note": "Maps the default blue and neutral values to USWDS system token families."
+      "note": "Maps the default blue and neutral values to USWDS system token families.",
+      "retrievedAt": "2026-05-07",
+      "tokenPaths": ["color.action.primary.bg", "color.action.primary.hover", "color.text.*"]
     },
     {
       "label": "USWDS font tokens",
       "url": "https://designsystem.digital.gov/design-tokens/typesetting/font/",
-      "note": "Keeps Public Sans and system fallback alignment with USWDS type settings."
+      "note": "Keeps Public Sans and system fallback alignment with USWDS type settings.",
+      "retrievedAt": "2026-05-07",
+      "tokenPaths": ["font.sans"]
     }
   ],
   "order": 0,

@@ -21,6 +21,9 @@ describe("buildDesignContext", () => {
 
     expect(context).toContain('action-primary: "#005ea8"');
     expect(context).toContain("## Theme Provenance");
+    expect(context).toContain('status: "source-derived"');
+    expect(context).toContain("Reviewed: 2026-05-07 by BLEN");
+    expect(context).toContain("retrieved 2026-05-07");
     expect(context).toContain("USWDS system color tokens");
     expect(context).toContain(
       "https://designsystem.digital.gov/design-tokens/color/system-tokens/",

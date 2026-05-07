@@ -137,10 +137,12 @@ describe("ashlar mcp server", () => {
       const list = parseToolJson<{
         theme: string;
         tokens: Array<{ path: string; cssVariable: string; value: string; resolvedValue: string }>;
-        sources: Array<{ label: string; url: string; note: string }>;
+        provenance: { status: string; reviewedAt: string };
+        sources: Array<{ label: string; url: string; note: string; retrievedAt: string }>;
         availableThemes: Array<{
           name: string;
-          sources: Array<{ label: string; url: string; note: string }>;
+          provenance: { status: string; reviewedAt: string };
+          sources: Array<{ label: string; url: string; note: string; retrievedAt: string }>;
         }>;
       }>(
         await client.callTool({
@@ -149,8 +151,13 @@ describe("ashlar mcp server", () => {
         }),
       );
       expect(list.theme).toBe("default");
+      expect(list.provenance).toMatchObject({
+        status: "source-derived",
+        reviewedAt: "2026-05-07",
+      });
       expect(list.availableThemes.map((theme) => theme.name)).toEqual(["default", "va", "usda"]);
       expect(list.sources.map((source) => source.label)).toContain("USWDS system color tokens");
+      expect(list.sources.every((source) => source.retrievedAt === "2026-05-07")).toBe(true);
       expect(list.availableThemes.every((theme) => theme.sources.length > 0)).toBe(true);
       expect(list.tokens.map((token) => token.cssVariable)).toContain(
         "--ashlar-color-action-primary-bg",
@@ -158,7 +165,11 @@ describe("ashlar mcp server", () => {
 
       const token = parseToolJson<{
         requestedPath: string;
-        theme: { name: string; sources: Array<{ label: string; url: string; note: string }> };
+        theme: {
+          name: string;
+          provenance: { status: string };
+          sources: Array<{ label: string; url: string; note: string; retrievedAt: string }>;
+        };
         token: { path: string; cssVariable: string; value: string; resolvedValue: string };
       }>(
         await client.callTool({
@@ -168,6 +179,7 @@ describe("ashlar mcp server", () => {
       );
       expect(token.requestedPath).toBe("--ashlar-button-radius");
       expect(token.theme.name).toBe("default");
+      expect(token.theme.provenance.status).toBe("source-derived");
       expect(token.theme.sources.map((source) => source.label)).toContain("USWDS color guidance");
       expect(token.token.path).toBe("component.button.radius");
       expect(token.token.cssVariable).toBe("--ashlar-button-radius");

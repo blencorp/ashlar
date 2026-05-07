@@ -2,17 +2,27 @@
   "$schema": "https://ashlar.dev/schemas/agency-theme.schema.json",
   "name": "usda",
   "title": "USDA",
-  "description": "USDA-inspired theme using official USDA dark green and dark blue anchors. Illustrative; not an official USDA brand specification.",
+  "description": "USDA source-derived service theme using official USDA dark green/dark blue anchors with USWDS color guidance for interface roles. Not an official USDA brand specification or endorsement.",
+  "provenance": {
+    "status": "source-derived",
+    "reviewedAt": "2026-05-07",
+    "reviewedBy": "BLEN",
+    "summary": "Derived from public USDA digital brand guidance and USWDS token guidance; not published or endorsed by the Department of Agriculture."
+  },
   "sources": [
     {
       "label": "USDA Design and Brand Plays",
       "url": "https://www.usda.gov/about-usda/policies-and-links/digital/digital-strategy/design-and-brand/design-and-brand-plays",
-      "note": "Uses official USDA dark green and dark blue anchors, while following USDA's guidance to use USWDS colors beyond logo colors."
+      "note": "Uses official USDA dark green and dark blue anchors, while following USDA's guidance to use USWDS colors beyond logo colors.",
+      "retrievedAt": "2026-05-07",
+      "tokenPaths": ["color.action.primary.bg", "color.action.secondary.fg", "color.link"]
     },
     {
       "label": "USWDS color guidance",
       "url": "https://designsystem.digital.gov/design-tokens/color/overview/",
-      "note": "Keeps USDA-adjacent interface colors aligned with USWDS contrast and readability guidance."
+      "note": "Keeps USDA-adjacent interface colors aligned with USWDS contrast and readability guidance.",
+      "retrievedAt": "2026-05-07",
+      "tokenPaths": ["color.page", "color.surface", "color.status.*", "color.text.*"]
     }
   ],
   "order": 20,
