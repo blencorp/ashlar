@@ -79,6 +79,45 @@ describe("add command", () => {
     expect(verifyTampered.stdout).toContain("Verified with 1 warning(s)");
   });
 
+  it("previews verified installs with shadcn-style dry-run, view, and diff flags without writing files", () => {
+    const localScratch = mkdtempSync(join(tmpdir(), "ashlar-add-preview-test-"));
+    const registry = join(repoRoot, "registry");
+
+    try {
+      expect(runCli(["init", "--registry", registry], localScratch).status).toBe(0);
+      const lockfileBefore = readFileSync(join(localScratch, "ashlar-lock.json"), "utf8");
+      const buttonTarget = join(localScratch, "src/ashlar/components/button/button.css");
+
+      const dryRun = runCli(["add", "button", "--dry-run"], localScratch);
+      expect(dryRun.status).toBe(0);
+      expect(dryRun.stdout).toContain("Previewing source-owned capsule installs");
+      expect(dryRun.stdout).toContain("create src/ashlar/components/button/button.css");
+      expect(dryRun.stdout).toContain("No files changed on disk");
+      expect(existsSync(buttonTarget)).toBe(false);
+      expect(readFileSync(join(localScratch, "ashlar-lock.json"), "utf8")).toBe(lockfileBefore);
+
+      const view = runCli(["add", "button", "--view"], localScratch);
+      expect(view.status).toBe(0);
+      expect(view.stdout).toContain("Capsule install preview");
+      expect(view.stdout).toContain("button@0.0.1");
+      expect(view.stdout).toContain("Capsule hash:");
+      expect(view.stdout).toContain("src/ashlar/components/button/button.css");
+      expect(existsSync(buttonTarget)).toBe(false);
+
+      const diff = runCli(["add", "button", "--diff"], localScratch);
+      expect(diff.status).toBe(0);
+      expect(diff.stdout).toContain("Capsule install diff");
+      expect(diff.stdout).toContain(
+        "diff --ashlar /dev/null b/src/ashlar/components/button/button.css",
+      );
+      expect(diff.stdout).toContain("+  .ashlar-button");
+      expect(diff.stdout).toContain("No files changed on disk");
+      expect(existsSync(buttonTarget)).toBe(false);
+    } finally {
+      rmSync(localScratch, { recursive: true, force: true });
+    }
+  });
+
   it("refuses to install a capsule with a stale registry manifest", () => {
     const localScratch = mkdtempSync(join(tmpdir(), "ashlar-add-test-"));
     const registry = join(localScratch, "registry");
