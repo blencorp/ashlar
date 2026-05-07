@@ -1,5 +1,11 @@
 # @ashlar/schemas
 
+## 0.1.3
+
+### Patch Changes
+
+- [#69](https://github.com/blencorp/ashlar/pull/69) [`f551c83`](https://github.com/blencorp/ashlar/commit/f551c83c021cede314d7c6268aa6b5903efc3fd0) Thanks [@naodya](https://github.com/naodya)! - Require reviewed agency-theme provenance metadata, expose it through theme validation, DESIGN.md, and MCP token tools, and refresh stock theme source records with retrieval dates.
+
 ## 0.1.2
 
 ### Patch Changes
