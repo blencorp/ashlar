@@ -1,0 +1,51 @@
+name: GitHub Packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: Type "publish-github-packages" to publish versioned packages to GitHub Packages.
+        required: true
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency: github-packages-${{ github.ref }}
+
+jobs:
+  npm:
+    if: github.repository == 'blencorp/ashlar' && github.ref == 'refs/heads/main' && inputs.confirm == 'publish-github-packages'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.2
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.15.0
+          registry-url: https://npm.pkg.github.com
+          scope: "@blen"
+          package-manager-cache: false
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm build
+      - run: pnpm release:smoke
+
+      - name: Configure BLEN scope for GitHub Packages
+        run: |
+          printf '@blen:registry=https://npm.pkg.github.com\n' >> .npmrc
+          printf '//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}\n' >> .npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: pnpm release:github-packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_CONFIG_PROVENANCE: "false"
