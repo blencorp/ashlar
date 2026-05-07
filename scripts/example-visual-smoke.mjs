@@ -179,14 +179,13 @@ async function inspectCaseBoardModal(context, example, url) {
     );
     return {
       hasAgencyTrigger: Boolean(document.querySelector(".agency-trigger")),
-      hasAgencyPanel: Boolean(document.querySelector(".agency-panel")),
       nestedBoardCards,
       nestedCardSurface,
     };
   });
 
-  if (!structure.hasAgencyTrigger || !structure.hasAgencyPanel) {
-    throw new Error("case-board agency picker trigger or panel is missing");
+  if (!structure.hasAgencyTrigger) {
+    throw new Error("case-board agency switcher trigger is missing");
   }
   if (structure.nestedBoardCards) {
     throw new Error("case-board columns still render as nested cards");
@@ -196,14 +195,21 @@ async function inspectCaseBoardModal(context, example, url) {
   }
 
   await page.click(".agency-trigger");
+  await page.waitForSelector('.agency-panel[role="dialog"]', { timeout: 5000 });
   await page.waitForTimeout(150);
   const modal = await page.evaluate(() => {
-    const panel = document.querySelector(".agency-panel")?.getBoundingClientRect();
+    const panelElement = document.querySelector(".agency-panel");
+    const panel = panelElement?.getBoundingClientRect();
     return panel
       ? {
+          agencyMarks: document.querySelectorAll(".agency-panel .agency-mark").length,
+          ariaModal: panelElement.getAttribute("aria-modal"),
           bottom: panel.bottom,
+          closeButton: Boolean(document.querySelector(".agency-close")),
           left: panel.left,
           right: panel.right,
+          role: panelElement.getAttribute("role"),
+          sourceBadges: document.querySelectorAll(".agency-card__source").length,
           top: panel.top,
           viewportHeight: window.innerHeight,
           viewportWidth: window.innerWidth,
@@ -214,6 +220,15 @@ async function inspectCaseBoardModal(context, example, url) {
   if (!modal) {
     throw new Error("agency panel did not open");
   }
+  if (modal.role !== "dialog" || modal.ariaModal !== "true") {
+    throw new Error("agency switcher does not expose a modal dialog contract");
+  }
+  if (!modal.closeButton) {
+    throw new Error("agency switcher dialog is missing a close button");
+  }
+  if (modal.agencyMarks < 3 || modal.sourceBadges < 3) {
+    throw new Error("agency switcher dialog is missing agency marks or source badges");
+  }
   if (
     modal.left < 0 ||
     modal.top < 0 ||
@@ -221,6 +236,11 @@ async function inspectCaseBoardModal(context, example, url) {
     modal.bottom > modal.viewportHeight
   ) {
     throw new Error("agency panel opens outside the viewport");
+  }
+  const panelCenter = (modal.left + modal.right) / 2;
+  const viewportCenter = modal.viewportWidth / 2;
+  if (Math.abs(panelCenter - viewportCenter) > 24) {
+    throw new Error("agency switcher dialog is not centered in the viewport");
   }
 
   const darkButton = page.getByRole("button", { name: /^Dark$/ });
@@ -245,6 +265,22 @@ async function inspectCaseBoardModal(context, example, url) {
 
   const screenshot = `${example.name}-agency-modal.png`;
   await page.screenshot({ fullPage: true, path: resolve(outputDir, screenshot) });
+
+  await page.click('[data-theme="va"]');
+  await page.waitForTimeout(150);
+  const selected = await page.evaluate(() => ({
+    dialogOpen: Boolean(
+      document.querySelector(".agency-dialog-backdrop:not([hidden]) .agency-panel"),
+    ),
+    selectedAgency: document.querySelector(".agency-trigger__name")?.textContent?.trim() ?? "",
+    theme: document.documentElement.dataset.ashlarTheme,
+  }));
+  if (selected.dialogOpen) {
+    throw new Error("agency switcher dialog did not close after selecting a theme");
+  }
+  if (selected.theme !== "va" || selected.selectedAgency !== "VA") {
+    throw new Error("agency switcher did not apply the selected VA theme");
+  }
 
   if (runtimeIssues.length > 0) {
     throw new Error(`agency modal browser runtime issue(s): ${runtimeIssues.join(" | ")}`);

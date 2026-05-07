@@ -4,27 +4,41 @@ import { useEffect, useState } from "react";
 
 type Theme = "default" | "va" | "usda";
 type Mode = "light" | "dark" | "system";
+type ThemeOption = {
+  value: Theme;
+  label: string;
+  sigil: string;
+  word: string;
+  note: string;
+  source: string;
+};
 
-const themes: Array<{ value: Theme; label: string; logo: string; note: string }> = [
+const themes = [
   {
     value: "default",
     label: "Default",
-    logo: "US",
+    sigil: "Base",
+    word: "Default",
     note: "USWDS color and type sources.",
+    source: "USWDS",
   },
   {
     value: "va",
     label: "VA",
-    logo: "VA",
+    sigil: "VA",
+    word: "VA.gov",
     note: "VA.gov color and typography.",
+    source: "VA.gov",
   },
   {
     value: "usda",
     label: "USDA",
-    logo: "USDA",
+    sigil: "USDA",
+    word: "Brand plays",
     note: "USDA brand plays plus USWDS.",
+    source: "USDA",
   },
-];
+] satisfies [ThemeOption, ...ThemeOption[]];
 
 const modes: Array<{ value: Mode; label: string }> = [
   { value: "light", label: "Light" },
@@ -116,12 +130,26 @@ const columns = [
 export default function Page() {
   const [theme, setTheme] = useState<Theme>("default");
   const [mode, setMode] = useState<Mode>("light");
+  const [dialogOpen, setDialogOpen] = useState(false);
   const selectedTheme = themes.find((option) => option.value === theme) ?? themes[0];
 
   useEffect(() => {
     document.documentElement.dataset.ashlarTheme = theme;
     document.documentElement.dataset.ashlarMode = mode;
   }, [theme, mode]);
+
+  useEffect(() => {
+    if (!dialogOpen) {
+      return;
+    }
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setDialogOpen(false);
+      }
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [dialogOpen]);
 
   return (
     <>
@@ -163,64 +191,103 @@ export default function Page() {
               queue moving across agency themes.
             </p>
           </div>
-          <details className="agency-picker">
-            <summary className="agency-trigger">
-              <span className="agency-trigger__body">
-                <span className="agency-logo" data-agency={selectedTheme?.value} aria-hidden="true">
-                  {selectedTheme?.logo}
-                </span>
-                <span>
-                  <span className="agency-trigger__label">Agency</span>
-                  <span className="agency-trigger__name">{selectedTheme?.label}</span>
-                </span>
+          <fieldset className="agency-switcher">
+            <legend className="visually-hidden">Agency theme</legend>
+            <span className="agency-status">
+              <AgencyMark theme={selectedTheme} />
+              <span>
+                <span className="agency-trigger__label">Agency theme</span>
+                <span className="agency-trigger__name">{selectedTheme?.label}</span>
               </span>
-            </summary>
-            <div className="agency-panel">
-              <div className="agency-panel__header">
-                <div>
-                  <span className="agency-panel__kicker">Theme</span>
-                  <h2 className="agency-panel__title">Choose agency theme</h2>
+            </span>
+            <button
+              aria-controls="agency-switcher-dialog"
+              aria-expanded={dialogOpen}
+              aria-haspopup="dialog"
+              className="agency-trigger"
+              onClick={() => setDialogOpen(true)}
+              type="button"
+            >
+              Switch agency
+            </button>
+          </fieldset>
+          {dialogOpen ? (
+            <div className="agency-dialog-backdrop" data-agency-dialog>
+              <button
+                aria-label="Close agency theme menu"
+                className="agency-dialog-scrim"
+                onClick={() => setDialogOpen(false)}
+                type="button"
+              />
+              <div
+                aria-describedby="agency-switcher-copy"
+                aria-labelledby="agency-switcher-title"
+                aria-modal="true"
+                className="agency-panel"
+                id="agency-switcher-dialog"
+                role="dialog"
+                tabIndex={-1}
+              >
+                <div className="agency-panel__header">
+                  <div>
+                    <span className="agency-panel__kicker">Theme</span>
+                    <h2 className="agency-panel__title" id="agency-switcher-title">
+                      Choose agency theme
+                    </h2>
+                    <p className="agency-panel__copy" id="agency-switcher-copy">
+                      Apply a source-backed theme to preview how the same Ashlar components adapt
+                      across agency systems.
+                    </p>
+                  </div>
+                  <button
+                    aria-label="Close agency theme menu"
+                    className="agency-close"
+                    onClick={() => setDialogOpen(false)}
+                    type="button"
+                  >
+                    x
+                  </button>
                 </div>
+                <fieldset className="agency-grid">
+                  <legend className="visually-hidden">Agency theme</legend>
+                  {themes.map((option) => (
+                    <button
+                      aria-pressed={theme === option.value}
+                      className="agency-card"
+                      data-theme={option.value}
+                      key={option.value}
+                      onClick={() => {
+                        setTheme(option.value);
+                        setDialogOpen(false);
+                      }}
+                      type="button"
+                    >
+                      <span>
+                        <AgencyMark theme={option} />
+                        <span className="agency-card__name">{option.label}</span>
+                        <span className="agency-card__note">{option.note}</span>
+                      </span>
+                      <span className="agency-card__source">{option.source}</span>
+                    </button>
+                  ))}
+                </fieldset>
+                <fieldset className="mode-switch">
+                  <legend className="visually-hidden">Color mode</legend>
+                  {modes.map((option) => (
+                    <button
+                      aria-pressed={mode === option.value}
+                      className="control-button"
+                      key={option.value}
+                      onClick={() => setMode(option.value)}
+                      type="button"
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </fieldset>
               </div>
-              <fieldset className="agency-grid">
-                <legend className="visually-hidden">Agency theme</legend>
-                {themes.map((option) => (
-                  <button
-                    aria-pressed={theme === option.value}
-                    className="agency-card"
-                    key={option.value}
-                    onClick={(event) => {
-                      setTheme(option.value);
-                      event.currentTarget.closest("details")?.removeAttribute("open");
-                    }}
-                    type="button"
-                  >
-                    <span className="agency-logo" data-agency={option.value} aria-hidden="true">
-                      {option.logo}
-                    </span>
-                    <span>
-                      <span className="agency-card__name">{option.label}</span>
-                      <span className="agency-card__note">{option.note}</span>
-                    </span>
-                  </button>
-                ))}
-              </fieldset>
-              <fieldset className="mode-switch">
-                <legend className="visually-hidden">Color mode</legend>
-                {modes.map((option) => (
-                  <button
-                    aria-pressed={mode === option.value}
-                    className="control-button"
-                    key={option.value}
-                    onClick={() => setMode(option.value)}
-                    type="button"
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </fieldset>
             </div>
-          </details>
+          ) : null}
         </header>
 
         <section className="metrics" aria-label="Queue metrics">
@@ -367,5 +434,14 @@ export default function Page() {
         </div>
       </footer>
     </>
+  );
+}
+
+function AgencyMark({ theme }: { theme: { value: Theme; sigil: string; word: string } }) {
+  return (
+    <span className="agency-mark" data-agency={theme.value} aria-hidden="true">
+      <span className="agency-mark__sigil">{theme.sigil}</span>
+      <span className="agency-mark__word">{theme.word}</span>
+    </span>
   );
 }

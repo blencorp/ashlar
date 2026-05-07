@@ -22,7 +22,7 @@
     "lint": "turbo run lint",
     "check": "turbo run lint typecheck test",
     "commitlint": "commitlint",
-    "examples:visual": "node scripts/example-visual-smoke.mjs",
+    "examples:visual": "pnpm build && node scripts/example-visual-smoke.mjs",
     "format": "biome format --write .",
     "format:check": "biome format .",
     "changeset": "changeset",
