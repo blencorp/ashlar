@@ -8,7 +8,7 @@ For the next session picking up Ashlar work. Read this first; it should orient y
 - **Phase**: v0.0 prototype.
 - **Slices shipped/prototyped**: 1 (Standards & Evidence), 2 (Validator Wedge), 3 (Drift Management prototype), plus started substrate for 4 (Supply-chain Hardening), 5 (AI Contracts), and 6 (Token Pipeline).
 - **Current posture**: coherent standards/evidence foundation, not replacement-grade yet.
-- **Strict readiness blockers**: `stable-l0-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
+- **Strict readiness blockers**: `stable-markup-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
 - **Proof tracking**: milestone [Replacement-grade proof gates](https://github.com/blencorp/ashlar/milestone/1), issues [#22](https://github.com/blencorp/ashlar/issues/22), [#23](https://github.com/blencorp/ashlar/issues/23), and [#24](https://github.com/blencorp/ashlar/issues/24).
 - **Next real work**: collect external proof for Button stable evidence, public release trust/provenance, and one design-partner validation. Do not create placeholder `docs/reviews/*.md` records.
 - **Apps surface**: `examples/plain-html/` (CI audit target), `examples/vite/` (theme picker reference), `apps/www/` (marketing landing).
@@ -39,7 +39,7 @@ Three trains. Most recent first:
 
 ```
 1253135 feat(examples/vite): rebuild as a federal-compliant data-driven theme picker
-b0bec08 feat(cli,schemas): theme system loads per-file JSON; rename Federal to Default
+b0bec08 feat(cli,schemas): theme system loads per-file JSON; make Default the baseline theme
 fb55810 feat(cli): aggregate generated entrypoint and component-subdir install layout
 08ac780 docs: handoff note for the next session
 a5c4078 chore: harden slice 2 — CI exercises components; standalone audit regression test
@@ -59,7 +59,7 @@ ea5ba9f docs: sharpen positioning and add STATUS.md as honest claims index
 
 **Train B — validator wedge (5 commits, `a259456` → `a5c4078`)**: ast-grep via `@ast-grep/napi`, CEM-to-rule compiler, `audit --policy components` and `--policy all`. Button's `icon-only-needs-label` rule is executable.
 
-**Train C — example rebuild (3 commits, `fb55810` → `1253135`)**: landed the previously-uncommitted CLI infrastructure (`styles.ts`, component-subdir install layout, ResolvedAshlarConfig types); refactored the theme system so themes live in per-file DTCG JSON under `packages/cli/themes/`, validated by a new `agency-theme.schema.json`; rebuilt `examples/vite/` from a fresh `pnpm create vite@latest --template vanilla-ts` scaffold into a federal-compliant data-driven theme picker. The "Federal" stock theme was renamed to "Default" everywhere.
+**Train C — example rebuild (3 commits, `fb55810` → `1253135`)**: landed the previously-uncommitted CLI infrastructure (`styles.ts`, component-subdir install layout, ResolvedAshlarConfig types); refactored the theme system so themes live in per-file DTCG JSON under `packages/cli/themes/`, validated by a new `agency-theme.schema.json`; rebuilt `examples/vite/` from a fresh `pnpm create vite@latest --template vanilla-ts` scaffold into a federal-compliant data-driven theme picker. The stock baseline theme is now named "Default" everywhere.
 
 **Train D — marketing site v1 (1 commit)**: deleted stale `output/` PNG screenshots, gitignored the directory; rebuilt `apps/www/` from `pnpm create vite@latest` into a marketing landing page. First pass dogfooded Ashlar tokens. Superseded by Train E.
 

@@ -87,7 +87,7 @@ Important baseline gaps this proof targeted:
 
 ### Out of Scope
 
-- Date Picker, Data Grid, ComboBox, File Upload, Stepper, or other complex L1 components.
+- Date Picker, Data Grid, ComboBox, File Upload, Stepper, or other complex interactive components.
 - USWDS parity.
 - React, Vue, Svelte, or Solid adapters.
 - Public registry hosting.

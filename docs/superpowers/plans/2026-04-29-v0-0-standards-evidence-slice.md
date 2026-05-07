@@ -152,7 +152,7 @@ Create `registry/index.json`:
     "button": {
       "latest": "0.0.1",
       "versions": ["0.0.1"],
-      "layer": "L0",
+      "layer": "markup-primitives",
       "stability": "experimental",
       "description": "Accessible semantic action control for forms and workflows."
     }
@@ -352,7 +352,7 @@ node packages/cli/dist/index.js view button --json
 Expected:
 
 ```text
-button@0.0.1 [L0, experimental] - Accessible semantic action control for forms and workflows.
+button@0.0.1 [markup primitives, experimental] - Accessible semantic action control for forms and workflows.
 ```
 
 The `view` output includes `Evidence: not-reviewed`.

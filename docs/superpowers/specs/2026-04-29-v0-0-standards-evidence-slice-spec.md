@@ -19,7 +19,7 @@ This slice must be boring in implementation and ambitious in guarantees.
 - Source-owned: installed component source remains visible and editable by consumers.
 - Evidence-backed: every claim about accessibility support must point to evidence status, WCAG mapping, or an explicit planned/unknown state.
 - Standards-aware: federal website checks must cite the current standard status and avoid implying legal compliance certification.
-- Cross-stack by design: L0 component contracts remain HTML/CSS-first, not React-first or Tailwind-only.
+- Cross-stack by design: markup primitive contracts remain HTML/CSS-first, not React-first or Tailwind-only.
 - No production overclaiming: Button stays `experimental` and `not-reviewed` until tests and manual evidence exist.
 
 The implementation plan that follows this spec must not trade these guarantees for speed. If a requirement cannot be implemented cleanly in the current slice, the plan should cut scope rather than add brittle shortcuts.
@@ -130,7 +130,7 @@ Create `registry/index.json` as the local catalog:
       "latest": "0.0.1",
       "versions": ["0.0.1"],
       "tier": "primitive",
-      "layer": "L0",
+      "layer": "markup-primitives",
       "stability": "experimental",
       "description": "Accessible semantic action control for forms and workflows."
     }
@@ -214,7 +214,7 @@ node packages/cli/dist/index.js search button
 Human output:
 
 ```text
-button@0.0.1 [L0, experimental] Accessible semantic action control for forms and workflows.
+button@0.0.1 [markup primitives, experimental] Accessible semantic action control for forms and workflows.
 ```
 
 JSON output must include at least:

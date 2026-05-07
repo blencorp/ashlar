@@ -232,7 +232,7 @@ CISA-flagged contemporary threats: the September 2025 Shai-Hulud worm (~500 npm 
 
 **Mitigations**:
 - Hardware-key signing on the maintainer publisher account.
-- npm trusted publishing with OIDC; SLSA L3 provenance attestations on every release.
+- npm trusted publishing with OIDC; SLSA level 3 provenance attestations on every release.
 - Lockfile-recorded signatures so consumers can detect a hijacked version against an embedded chain of trust.
 - SBOM published with every release.
 - Documented incident-response playbook: detection (SIEM-friendly indicators), rotation/revocation process, `verify` failure mode and remediation guidance, public disclosure timeline, key compromise recovery.
