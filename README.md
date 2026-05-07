@@ -188,6 +188,7 @@ node /path/to/ashlar/packages/cli/dist/index.js release readiness --registry ./r
 node /path/to/ashlar/packages/cli/dist/index.js release readiness --registry ./registry --report ./reports/release-readiness.md --json-output ./reports/release-readiness.json
 
 # Prepare external review checklists, then write guarded top-level records after real reviews
+node /path/to/ashlar/packages/cli/dist/index.js release proof-plan --registry ./registry --output ./reports/proof-action-plan.md
 node /path/to/ashlar/packages/cli/dist/index.js release review-pack --registry ./registry --output ./reports/review-pack
 node /path/to/ashlar/packages/cli/dist/index.js release design-partner-checklist --output ./reports/ashlar-design-partner-checklist.md
 node /path/to/ashlar/packages/cli/dist/index.js release review-record stable-evidence --output docs/reviews/stable-evidence-button-2026-05-05.md --reviewer "<reviewer>" --affiliation "<organization>" --review-date 2026-05-05 --source-issue "<issue-url>" --repo-commit "<commit-sha>" --rationale "<why the review passed>" --component button --registry ./registry --review-dir ./reports/l0-stable-review/button --publication-receipt ./reports/button-evidence-publication.json

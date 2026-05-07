@@ -280,6 +280,16 @@ Strict defaults intentionally fail the current prototype. The command is designe
 
 `--report <path>` writes the same strict status as a Markdown artifact for maintainers, procurement reviewers, and external reviewers. `--json-output <path>` writes the schema-backed automation report using `release-readiness.schema.json`. CI uploads these as `ashlar-release-readiness` and `ashlar-release-readiness-json` on every run and marks the step `continue-on-error` while the public-proof gates are intentionally incomplete; the artifacts should be read as the current replacement-grade blocker list, not as release approval.
 
+### `ashlar release proof-plan`
+
+Implemented locally. Turns the strict readiness blockers into a concrete external-review action plan. The plan is organized around the three proof tracks that currently matter for replacement-grade credibility:
+
+- Button stable evidence;
+- public release trust, including npm provenance and capsule Sigstore material;
+- design partner validation of the validator wedge and service-flow proof.
+
+The Markdown and JSON outputs link the tracking issues, list required artifacts, and provide exact commands for reviewer intake, public provenance verification, public trust verification, and guarded `review-record` creation. The command is planning output only. It does not create `docs/reviews/*.md` proof records and it does not satisfy release readiness by itself.
+
 ### `ashlar release design-partner-checklist`
 
 Implemented locally. Writes a Markdown reviewer checklist for the validator wedge and first service-flow proof. The default checklist points reviewers at:

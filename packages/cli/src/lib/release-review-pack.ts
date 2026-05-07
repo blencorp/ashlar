@@ -18,6 +18,7 @@ import {
   writeReleaseTrustReviewChecklist,
 } from "./release-trust-bundle.js";
 import { describeErrors, validate } from "./schema-validate.js";
+import { buildReleaseProofPlan, buildReleaseProofPlanMarkdown } from "./release-proof-plan.js";
 
 export type ReleaseReviewPackInput = {
   aiEvalSuitePath: string;
@@ -40,6 +41,7 @@ export type ReleaseReviewPackResult = {
     designPartnerChecklist: string;
     evidenceReport: string;
     projectStatus: string;
+    proofActionPlan: string;
     readme: string;
     releaseReadinessJson: string;
     releaseReadinessMarkdown: string;
@@ -106,6 +108,10 @@ If you download the artifact as a zip in the browser, extract its contents into 
 2. Release trust reviewer: start with \`${packRelative(result.outputDir, result.files.releaseTrustChecklist)}\`; public npm provenance and public capsule Sigstore trust still require GitHub Actions and npm artifacts.
 3. Design partner reviewer: start with \`${packRelative(result.outputDir, result.files.designPartnerChecklist)}\` and record actual adoption blockers, not maintainer intent.
 
+## Next Action Plan
+
+Read \`${packRelative(result.outputDir, result.files.proofActionPlan)}\` for the track-by-track map from current readiness blockers to GitHub review issues, required artifacts, and exact commands. The action plan is still intake material; it does not count as proof.
+
 ## Claim Boundary
 
 - Do not copy templates into \`docs/reviews/\` as proof.
@@ -139,6 +145,7 @@ export function writeReleaseReviewPack(input: ReleaseReviewPackInput): ReleaseRe
     "design-partner",
     "ashlar-design-partner-checklist.md",
   );
+  const proofActionPlan = join(outputDir, "proof-action-plan.md");
   const readme = join(outputDir, "README.md");
 
   const readiness = checkReleaseReadiness({
@@ -235,6 +242,13 @@ export function writeReleaseReviewPack(input: ReleaseReviewPackInput): ReleaseRe
     serviceFlowFixture: "examples/service-flow/benefit-application.pass.html",
     task: "Build a benefits application form",
   });
+  const proofPlan = buildReleaseProofPlan({
+    cwd: input.cwd,
+    readiness,
+    registryPath: input.registryPath,
+    stableComponent: stableTarget.component,
+  });
+  writeFileSync(proofActionPlan, buildReleaseProofPlanMarkdown(proofPlan));
 
   const result: ReleaseReviewPackResult = {
     outputDir,
@@ -250,6 +264,7 @@ export function writeReleaseReviewPack(input: ReleaseReviewPackInput): ReleaseRe
       designPartnerChecklist,
       evidenceReport,
       projectStatus,
+      proofActionPlan,
       readme,
       releaseReadinessJson,
       releaseReadinessMarkdown,

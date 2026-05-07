@@ -13,6 +13,7 @@ import {
   verifyPublicNpmProvenance,
 } from "../lib/release-provenance.js";
 import { verifyPublicCapsuleTrust } from "../lib/release-public-trust.js";
+import { buildReleaseProofPlan, buildReleaseProofPlanMarkdown } from "../lib/release-proof-plan.js";
 import { checkReleaseReadiness } from "../lib/release-readiness.js";
 import { buildReleaseReadinessReport } from "../lib/release-readiness-report.js";
 import { writeReleaseReviewPack } from "../lib/release-review-pack.js";
@@ -79,6 +80,16 @@ type ReleaseReviewPackOptions = {
   minL0: string;
   minStableL0: string;
   output: string;
+  registry?: string;
+  stableComponent: string;
+};
+
+type ReleaseProofPlanOptions = {
+  aiEvalSuite: string;
+  json?: boolean;
+  minL0: string;
+  minStableL0: string;
+  output?: string;
   registry?: string;
   stableComponent: string;
 };
@@ -381,6 +392,55 @@ export function registerReleaseCommand(program: Command) {
         }
 
         if (report.status === "fail") {
+          process.exitCode = 1;
+        }
+      } catch (error) {
+        console.error(error instanceof Error ? error.message : String(error));
+        process.exitCode = 1;
+      }
+    });
+
+  release
+    .command("proof-plan")
+    .description("Show the next external-proof actions for replacement-grade readiness")
+    .option("--registry <path>", "Registry path (defaults to ./registry)")
+    .option("--stable-component <name>", "Stable evidence target component", "button")
+    .option("--ai-eval-suite <path>", "AI eval suite path", "examples/ai-eval/ashlar-ai-eval.json")
+    .option("--min-l0 <count>", "Minimum L0 components required", "5")
+    .option("--min-stable-l0 <count>", "Minimum stable-evidence L0 components required", "1")
+    .option("--output <path>", "Write a Markdown proof action plan")
+    .option("--json", "Print JSON proof action plan")
+    .action((options: ReleaseProofPlanOptions) => {
+      try {
+        const registryPath = options.registry ?? "./registry";
+        const readiness = checkReleaseReadiness({
+          aiEvalSuitePath: options.aiEvalSuite,
+          cwd: process.cwd(),
+          minL0Components: integerOption(options.minL0, "--min-l0"),
+          minStableL0Components: integerOption(options.minStableL0, "--min-stable-l0"),
+          registryPath,
+        });
+        const plan = buildReleaseProofPlan({
+          cwd: process.cwd(),
+          readiness,
+          registryPath,
+          stableComponent: options.stableComponent,
+        });
+        const markdown = buildReleaseProofPlanMarkdown(plan);
+
+        if (options.output) {
+          mkdirSync(dirname(options.output), { recursive: true });
+          writeFileSync(options.output, markdown);
+          console.log(`Wrote release proof action plan to ${options.output}`);
+        }
+
+        if (options.json) {
+          console.log(JSON.stringify(plan, null, 2));
+        } else if (!options.output) {
+          console.log(markdown.trimEnd());
+        }
+
+        if (readiness.status === "fail") {
           process.exitCode = 1;
         }
       } catch (error) {

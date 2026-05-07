@@ -1328,6 +1328,7 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(reviewStatus.status).toBe("blocked");
     expect(existsSync(join(output, "stable-evidence", "INDEX.md"))).toBe(true);
     expect(existsSync(join(output, "stable-evidence", "button", "ISSUE.md"))).toBe(true);
+    expect(existsSync(join(output, "proof-action-plan.md"))).toBe(true);
     expect(existsSync(join(output, "release-trust", "ashlar-release-trust-checklist.md"))).toBe(
       true,
     );
@@ -1344,7 +1345,64 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(readme).toContain("stable-evidence/INDEX.md");
     expect(readme).toContain("release-trust/ashlar-release-trust-checklist.md");
     expect(readme).toContain("design-partner/ashlar-design-partner-checklist.md");
+    expect(readme).toContain("proof-action-plan.md");
     expect(readme).not.toContain(output);
+
+    const actionPlan = readFileSync(join(output, "proof-action-plan.md"), "utf8");
+    expect(actionPlan).toContain("# Ashlar Replacement Proof Action Plan");
+    expect(actionPlan).toContain("https://github.com/blencorp/ashlar/issues/22");
+    expect(actionPlan).toContain("https://github.com/blencorp/ashlar/issues/23");
+    expect(actionPlan).toContain("https://github.com/blencorp/ashlar/issues/24");
+    expect(actionPlan).toContain("ashlar release review-record stable-evidence");
+    expect(actionPlan).toContain("ashlar release review-record release-trust");
+    expect(actionPlan).toContain("ashlar release review-record design-partner");
+  });
+
+  it("writes a proof action plan that maps readiness blockers to external review tracks", () => {
+    const result = runCli(["release", "proof-plan", "--registry", "./registry", "--json"]);
+
+    expect(result.status).toBe(1);
+    const plan = JSON.parse(result.stdout) as {
+      readiness: { status: string };
+      tracks: Array<{
+        blockedBy: string[];
+        commands: string[];
+        issue: string;
+        name: string;
+        status: string;
+      }>;
+    };
+
+    expect(plan.readiness.status).toBe("fail");
+    expect(plan.tracks).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          issue: "https://github.com/blencorp/ashlar/issues/22",
+          name: "Button stable evidence",
+          status: "action-needed",
+        }),
+        expect.objectContaining({
+          issue: "https://github.com/blencorp/ashlar/issues/23",
+          name: "Public release trust",
+          status: "action-needed",
+        }),
+        expect.objectContaining({
+          issue: "https://github.com/blencorp/ashlar/issues/24",
+          name: "Design partner validation",
+          status: "action-needed",
+        }),
+      ]),
+    );
+    expect(plan.tracks[0]?.blockedBy).toEqual(
+      expect.arrayContaining([expect.stringContaining("stable-l0-evidence")]),
+    );
+    expect(plan.tracks.flatMap((track) => track.commands)).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("ashlar evidence prepare-stable button"),
+        expect.stringContaining("ashlar release provenance-verify-public"),
+        expect.stringContaining("ashlar release design-partner-checklist"),
+      ]),
+    );
   });
 
   it("writes checkout-relative release-trust checklist paths for relative review pack output", () => {
