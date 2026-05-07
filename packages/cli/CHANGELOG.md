@@ -1,5 +1,11 @@
 # @blen/ashlar-cli
 
+## 0.3.7
+
+### Patch Changes
+
+- [#93](https://github.com/blencorp/ashlar/pull/93) [`33e37bb`](https://github.com/blencorp/ashlar/commit/33e37bb04650d4d034719685438c0c22ee9116ac) Thanks [@naodya](https://github.com/naodya)! - Require the npm trusted-publishing workflow to be restricted to `main` during release provenance preflight.
+
 ## 0.3.6
 
 ### Patch Changes
