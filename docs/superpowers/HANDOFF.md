@@ -63,7 +63,7 @@ ea5ba9f docs: sharpen positioning and add STATUS.md as honest claims index
 
 **Train D — marketing site v1 (1 commit)**: deleted stale `output/` PNG screenshots, gitignored the directory; rebuilt `apps/www/` from `pnpm create vite@latest` into a marketing landing page. First pass dogfooded Ashlar tokens. Superseded by Train E.
 
-**Train E — marketing site v2, pixel-perfect from Claude Design handoff (current pass)**: replaced the v1 landing with a vanilla-TS implementation of the "Ashlar Landing v2.html" prototype the design tool produced. Massive "Ashlar" wordmark hero (clamp 112–232px) with animated running-bond ashlar pattern (programmatic SVG: 13 horizontal courses sweep left-to-right, vertical stones rise course-by-course on a wave, then a radial veil fades in centered on the wordmark). Federal disclosure strip with real US flag SVG. Compare grid contrasting "federal stack today" with "with Ashlar". Animated terminal that loops `ashlar init / add field button alert / verify`. Four pillars (own / signed / two render targets / receipts). Navy footer with beating-heart "BLEN" attribution. Geist + Geist Mono fonts. Civic palette is the page's own (`#0A2240` navy, `#B22234` red), not Ashlar agency tokens — the marketing site has its own visual identity. Dropped `@ashlar/cli` workspace devDep + `ashlar init`/`add` artifacts from `apps/www/` since the design uses native button styling, not the Ashlar Button capsule. Dark-mode toggle from the design is implemented in CSS (data-theme + 4 dark palettes) but hidden from the UI for now per user direction. Bundle: ~10.6 kB gzipped (3.3 HTML + 3.7 CSS + 3.6 JS).
+**Train E — marketing site v2, pixel-perfect from Claude Design handoff (current pass)**: replaced the v1 landing with a vanilla-TS implementation of the "Ashlar Landing v2.html" prototype the design tool produced. Massive "Ashlar" wordmark hero (clamp 112–232px) with animated running-bond ashlar pattern (programmatic SVG: 13 horizontal courses sweep left-to-right, vertical stones rise course-by-course on a wave, then a radial veil fades in centered on the wordmark). Federal disclosure strip with real US flag SVG. Compare grid contrasting "federal stack today" with "with Ashlar". Animated terminal that loops `ashlar init / add field button alert / verify`. Four pillars (own / signed / two render targets / receipts). Navy footer with beating-heart "BLEN" attribution. Geist + Geist Mono fonts. Civic palette is the page's own (`#0A2240` navy, `#B22234` red), not Ashlar agency tokens — the marketing site has its own visual identity. Dropped `@blen/ashlar-cli` workspace devDep + `ashlar init`/`add` artifacts from `apps/www/` since the design uses native button styling, not the Ashlar Button capsule. Dark-mode toggle from the design is implemented in CSS (data-theme + 4 dark palettes) but hidden from the UI for now per user direction. Bundle: ~10.6 kB gzipped (3.3 HTML + 3.7 CSS + 3.6 JS).
 
 ## What is on the working tree
 
@@ -78,9 +78,9 @@ Two useful tracks remain; user picks the order.
 The active PR stack is the product substrate. Get it reviewed/merged before opening more broad implementation surfaces, then close the gates that make the "replacement-grade" language true.
 
 Scope:
-- Keep the current PR stack green and mergeable: foundation, review-pack docs, release-trust path portability/typecheck isolation, and the unscoped `ashlar` npx entrypoint.
+- Keep the current PR stack green and mergeable: foundation, review-pack docs, release-trust path portability/typecheck isolation, and the scoped `@blen/ashlar` npx entrypoint.
 - Collect and publish one real Button stable-evidence packet: automated run, keyboard transcript, screen-reader transcript, reviewed packet, graduated packet, local publication receipt, and `docs/reviews/stable-evidence-*.md`.
-- Run the first real npm trusted-publishing release for `ashlar`, `@ashlar/cli`, and `@ashlar/schemas`, then attach `ashlar-npm-provenance.json`.
+- Run the first real npm trusted-publishing release for `@blen/ashlar`, `@blen/ashlar-cli`, and `@blen/ashlar-schemas`, then attach `ashlar-npm-provenance.json`.
 - Run the Sigstore workflow on release artifacts and attach `ashlar-public-trust.json`.
 - Create the completed release-trust and design-partner review records, then require strict `ashlar release readiness` without local escape hatches.
 
@@ -90,7 +90,7 @@ Stand up the docs site so the project has a public-facing surface beyond `apps/w
 
 Scope (proposed for one session):
 1. `cd apps && pnpm create astro@latest docs -- --template starlight` (or the modern equivalent — verify against `https://starlight.astro.build/`).
-2. Workspace-ify the package (`@ashlar/docs`, devDeps via catalog where possible, dev port 4175 to avoid clashing with vite=4173 and www=4174).
+2. Workspace-ify the package (`@blen/ashlar-docs`, devDeps via catalog where possible, dev port 4175 to avoid clashing with vite=4173 and www=4174).
 3. Customize:
    - Override `Header.astro` to inject the federal banner above content.
    - Override `Footer.astro` to add the identifier-style links.
@@ -104,7 +104,7 @@ Scope (proposed for one session):
 5. Component pages auto-generated from `registry/components/*/{cem,evidence}.json` via Astro Content Collections + `getStaticPaths` walking the registry.
 6. Live theme picker as a `client:visible` island; reuse the patterns from `examples/vite/src/main.ts`.
 7. Pagefind search (Starlight default).
-8. Verify: `pnpm --filter @ashlar/docs build` produces static HTML in `dist/`.
+8. Verify: `pnpm --filter @blen/ashlar-docs build` produces static HTML in `dist/`.
 
 Wait for user green light before starting either track.
 
@@ -113,7 +113,7 @@ Wait for user green light before starting either track.
 ```bash
 # Confirm clean state
 pnpm check                                             # 17 tasks pass
-pnpm --filter @ashlar/cli test                         # 48 tests pass
+pnpm --filter @blen/ashlar-cli test                         # 48 tests pass
 
 # Validator wedge end-to-end
 echo '<button class="ashlar-button"><svg></svg></button>' > /tmp/icon.html
@@ -121,7 +121,7 @@ node packages/cli/dist/index.js audit --policy components --registry ./registry 
 # Expected: ERROR ... ashlar/button/icon-only-needs-label
 
 # Example boots cleanly
-pnpm --filter @ashlar/example-vite dev &
+pnpm --filter @blen/ashlar-example-vite dev &
 sleep 3
 curl -sf http://127.0.0.1:4173/ | grep -E "Ashlar Vite Example|ashlar-button" | head -3
 kill %1
@@ -154,7 +154,7 @@ cd -
 - [packages/cli/src/lib/policy/component.ts](../../packages/cli/src/lib/policy/component.ts) — CEM-to-rule compiler.
 - [packages/cli/src/lib/policy/languages.ts](../../packages/cli/src/lib/policy/languages.ts) — per-language support matrix.
 - [packages/cli/src/lib/astgrep.ts](../../packages/cli/src/lib/astgrep.ts) — ast-grep wrapper.
-- [examples/vite/](../../examples/vite/) — federal-compliant Vite reference. `pnpm --filter @ashlar/example-vite dev` boots it on `127.0.0.1:4173`.
+- [examples/vite/](../../examples/vite/) — federal-compliant Vite reference. `pnpm --filter @blen/ashlar-example-vite dev` boots it on `127.0.0.1:4173`.
 - [examples/plain-html/](../../examples/plain-html/) — federal-compliant static reference; CI audit target.
 
 ## Operational notes
@@ -169,7 +169,7 @@ cd -
 
 ## Honest gotchas
 
-- Strategy framing ("federal contractor runs `npx ashlar audit`") describes target state. The validator *code* works; the *delivery path* via npm is gated on slice 4 (supply-chain hardening). STATUS.md flags this with a "Distribution caveat."
+- Strategy framing ("federal contractor runs `npx @blen/ashlar audit`") describes target state. The validator *code* works; the *delivery path* via npm is gated on slice 4 (supply-chain hardening). STATUS.md flags this with a "Distribution caveat."
 - `theme.ts` now reads from JSON files (one per theme). `init` copies the stock themes into the consumer project. Editing the consumer copies works for that project; editing `packages/cli/themes/<name>.tokens.json` is the upstream source.
 - `verify` re-hashes installed files, checks registry capsule hashes and local signatures, validates declared capsule Sigstore bundle metadata when present, and runs `cosign verify-blob` when the trust root requires it. Real public bundle publication is still slice 4 work.
 - `audit` exits non-zero on error-level findings only. Federal findings are warnings; component findings are errors by default.

@@ -1,5 +1,5 @@
 {
-  "name": "@ashlar/example-nextjs",
+  "name": "@blen/ashlar-example-nextjs",
   "version": "0.0.2",
   "private": true,
   "description": "Next.js App Router Ashlar reference app.",
@@ -18,7 +18,7 @@
     "react-dom": "catalog:"
   },
   "devDependencies": {
-    "@ashlar/cli": "workspace:*",
+    "@blen/ashlar-cli": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "typescript": "catalog:"

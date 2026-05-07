@@ -11,11 +11,11 @@ Build a government-first UI library that can credibly replace day-to-day USWDS u
 
 Not achieved yet.
 
-Ashlar has a real substrate now: signed source capsules, federal and component audits, migration planning, update survival tests, local MCP, first-run docs, evidence tooling, release readiness gates, bundle budgets, framework examples, a memorable `npx ashlar` package entrypoint, banner visual regression tests, and shadcn-v4-compatible CLI ergonomics in the current branch. The remaining blockers are not implementation effort proxies; they are proof gates:
+Ashlar has a real substrate now: signed source capsules, federal and component audits, migration planning, update survival tests, local MCP, first-run docs, evidence tooling, release readiness gates, bundle budgets, framework examples, a memorable `npx @blen/ashlar` package entrypoint, banner visual regression tests, and shadcn-v4-compatible CLI ergonomics in the current branch. The remaining blockers are not implementation effort proxies; they are proof gates:
 
 - one stable-evidence L0 component with real manual accessibility evidence;
 - completed external review records;
-- public npm trusted-publishing provenance for `ashlar`, `@ashlar/cli`, and `@ashlar/schemas`;
+- public npm trusted-publishing provenance for `@blen/ashlar`, `@blen/ashlar-cli`, and `@blen/ashlar-schemas`;
 - public capsule Sigstore trust material.
 
 Strict readiness evidence: `node packages/cli/dist/index.js release readiness --registry ./registry --json-output /tmp/ashlar-readiness.json --report /tmp/ashlar-readiness.md` returned `status: "fail"` on 2026-05-07 with 9 passing checks and 4 failing checks: `stable-l0-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
@@ -25,7 +25,7 @@ Strict readiness evidence: `node packages/cli/dist/index.js release readiness --
 | Requirement | Current evidence | Coverage judgment | Missing proof |
 | --- | --- | --- | --- |
 | Replace day-to-day USWDS usage | `ashlar audit --policy federal`, `ashlar migrate uswds`, 12 L0 capsules in `registry/components`, `benefit-application` service-flow capsule, `examples/uswds-project` migration fixture, `examples/legacy-federal-project` audit fixture, `docs/roadmap/uswds-coverage-matrix.md`, framework case-board examples, banner visual smoke | Strong prototype, not replacement-grade. Coverage gaps are now explicit. | Stable accessibility evidence, external design-partner validation, wider component/pattern coverage, public release |
-| Become memorable like shadcn/ui | Unscoped `ashlar` package, `npx ashlar` docs/status alignment, source-capsule distribution model, `apps/www` marketing surface, and `apps/docs` first-run docs app are merged to `main` | Good naming/DX direction with a first-run docs surface. | Package name must be reserved by real npm publish; public docs deployment and community launch still missing |
+| Become memorable like shadcn/ui | Unscoped `ashlar` package, `npx @blen/ashlar` docs/status alignment, source-capsule distribution model, `apps/www` marketing surface, and `apps/docs` first-run docs app are merged to `main` | Good naming/DX direction with a first-run docs surface. | Package name must be reserved by real npm publish; public docs deployment and community launch still missing |
 | Address shadcn gaps | `ashlar update`, `ashlar verify`, capsule lockfile hashes, update survival tests, signed capsule manifests, release readiness, SBOM/trust-bundle/provenance tooling | Strongest product wedge in repo | Needs real release traffic, public Sigstore bundles, npm provenance, external security review |
 | AI-native gov app workflow | `ashlar mcp`, MCP `validate_usage`, `search_components`, `suggest_for_task`, `list_tokens`, `get_token`, `ashlar ai-eval`, generated `AGENTS.md` and `DESIGN.md`, and `examples/ai-eval/generated-output-corpus` | Useful local AI-native substrate with a small seed corpus | Independent model/tool outputs beyond the Codex seed corpus, hosted/remote MCP decision, write-tool threat model if write tools are ever added |
 | Amazing DX and easy integration | `ashlar init|create`, `status|info`, `add --all --view --dry-run --diff`, `search|list -q -l`, `suggest`, `view|docs`, `-c/--cwd` on common commands, `audit`, `theme sync`, `theme validate`, release smoke installing packed CLI into a clean consumer, `apps/docs` first-run path for install/audit/add/verify/theme/AI/trust, and real framework examples for vanilla TypeScript, React SPA, Next.js App Router, Svelte, and Vue | Good local DX and first-run guidance; current branch adds shadcn-v4-compatible ergonomics without claiming template/preset support. | Public npm install path, public docs deployment, real user feedback, real template/preset system if Ashlar chooses to mirror that shadcn surface |
@@ -88,7 +88,7 @@ Current Button reviewer intake and release-review artifacts are produced by gree
 
 1. Merge the CLI parity branch after full local checks and PR CI.
 2. Produce the first real Button stable-evidence packet: automated artifact, manual keyboard transcript, manual screen-reader transcript, reviewed packet, graduated packet, local publication receipt, and completed `docs/reviews/stable-evidence-*.md`.
-3. Run the first real trusted-publishing release for `ashlar`, `@ashlar/cli`, and `@ashlar/schemas`; attach `ashlar-npm-provenance.json`.
+3. Run the first real trusted-publishing release for `@blen/ashlar`, `@blen/ashlar-cli`, and `@blen/ashlar-schemas`; attach `ashlar-npm-provenance.json`.
 4. Run the Sigstore workflow for capsule/release artifacts and attach `ashlar-public-trust.json`.
 5. Expand the AI eval generated-output corpus with independent model/tool outputs and real user prompts.
 6. Review the USWDS coverage matrix and turn the v0.1 public-alpha set into explicit capsule/evidence issues.

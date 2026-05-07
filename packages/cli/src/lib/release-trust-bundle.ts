@@ -158,8 +158,8 @@ ${artifacts}
 
 \`\`\`bash
 ashlar release readiness --registry ${input.registryPath}
-ashlar release provenance-verify-public --package ashlar@<version> @ashlar/cli@<version> @ashlar/schemas@<version>
-ashlar release provenance-verify-public --package ashlar@<version> @ashlar/cli@<version> @ashlar/schemas@<version> --json > reports/ashlar-npm-provenance.json
+ashlar release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version>
+ashlar release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version> --json > reports/ashlar-npm-provenance.json
 ashlar release public-trust-verify --registry ${input.registryPath}
 ashlar release public-trust-verify --registry ${input.registryPath} --json > reports/ashlar-public-trust.json
 ashlar release verify-trust-bundle --registry ${input.registryPath} --bundle ${input.bundlePath} --sbom ${input.sbomPath} --attestation ${input.attestationPath}
@@ -167,7 +167,7 @@ ashlar release verify-trust-bundle --registry ${input.registryPath} --bundle ${i
 
 ## Required Checks
 
-- [ ] npm trusted publisher settings are configured for \`ashlar\`, \`@ashlar/cli\`, and \`@ashlar/schemas\` without long-lived npm tokens.
+- [ ] npm trusted publisher settings are configured for \`@blen/ashlar\`, \`@blen/ashlar-cli\`, and \`@blen/ashlar-schemas\` without long-lived npm tokens.
 - [ ] Public npm provenance verification passes for the exact published package versions.
 - [ ] The local \`npm provenance verification\` review-record artifact is JSON from \`ashlar release provenance-verify-public --json\` and matches the reviewed package versions.
 - [ ] Capsule Sigstore bundles verify with the expected GitHub Actions workflow identity and OIDC issuer.

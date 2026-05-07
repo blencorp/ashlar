@@ -1,4 +1,4 @@
-# @ashlar/cli
+# @blen/ashlar-cli
 
 ## 0.3.4
 
@@ -43,7 +43,7 @@
 - [#69](https://github.com/blencorp/ashlar/pull/69) [`f551c83`](https://github.com/blencorp/ashlar/commit/f551c83c021cede314d7c6268aa6b5903efc3fd0) Thanks [@naodya](https://github.com/naodya)! - Require reviewed agency-theme provenance metadata, expose it through theme validation, DESIGN.md, and MCP token tools, and refresh stock theme source records with retrieval dates.
 
 - Updated dependencies [[`f551c83`](https://github.com/blencorp/ashlar/commit/f551c83c021cede314d7c6268aa6b5903efc3fd0)]:
-  - @ashlar/schemas@0.1.3
+  - @blen/ashlar-schemas@0.1.3
 
 ## 0.1.4
 
@@ -58,7 +58,7 @@
 - [#64](https://github.com/blencorp/ashlar/pull/64) [`181b359`](https://github.com/blencorp/ashlar/commit/181b3596d096a6603277c88c13847a97bba92d5e) Thanks [@naodya](https://github.com/naodya)! - Require agency theme source provenance, expose theme sources through generated DESIGN.md and MCP token tools, and document source-backed stock themes.
 
 - Updated dependencies [[`181b359`](https://github.com/blencorp/ashlar/commit/181b3596d096a6603277c88c13847a97bba92d5e)]:
-  - @ashlar/schemas@0.1.2
+  - @blen/ashlar-schemas@0.1.2
 
 ## 0.1.2
 
@@ -73,7 +73,7 @@
 - [#57](https://github.com/blencorp/ashlar/pull/57) [`51c247f`](https://github.com/blencorp/ashlar/commit/51c247ffe367ff491a0f02d9c6f6f9a39a8ec00a) Thanks [@naodya](https://github.com/naodya)! - Add source provenance to agency theme JSON and clean up agency-theme example UIs.
 
 - Updated dependencies [[`51c247f`](https://github.com/blencorp/ashlar/commit/51c247ffe367ff491a0f02d9c6f6f9a39a8ec00a)]:
-  - @ashlar/schemas@0.1.1
+  - @blen/ashlar-schemas@0.1.1
 
 ## 0.1.0
 
@@ -84,4 +84,4 @@
 ### Patch Changes
 
 - Updated dependencies [[`22bf011`](https://github.com/blencorp/ashlar/commit/22bf011885378b87707c2ea80da9998285d7270d)]:
-  - @ashlar/schemas@0.1.0
+  - @blen/ashlar-schemas@0.1.0

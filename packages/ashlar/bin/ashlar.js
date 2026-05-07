@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-import "@ashlar/cli";
+import "@blen/ashlar-cli";

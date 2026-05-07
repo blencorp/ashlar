@@ -377,9 +377,9 @@ function writeReadyReleaseTrustArtifacts(): {
     "--npm",
     npmPath,
     "--package",
-    "ashlar@0.1.0",
-    "@ashlar/cli@0.1.0",
-    "@ashlar/schemas@0.1.0",
+    "@blen/ashlar@0.1.0",
+    "@blen/ashlar-cli@0.1.0",
+    "@blen/ashlar-schemas@0.1.0",
     "--json",
   ]);
   expect(publicProvenance.status, publicProvenance.stdout).toBe(0);
@@ -530,7 +530,7 @@ Release candidate: 0.1.0
 
 ## Scope
 
-- Packages reviewed: ashlar@0.1.0, @ashlar/cli@0.1.0, and @ashlar/schemas@0.1.0
+- Packages reviewed: @blen/ashlar@0.1.0, @blen/ashlar-cli@0.1.0, and @blen/ashlar-schemas@0.1.0
 - Registry artifacts reviewed: ${releaseArtifacts.registryArtifact}
 - Workflows reviewed: publish.yml and sigstore.yml
 - Trust-root policy reviewed: registry/trust-root.json
@@ -548,7 +548,7 @@ Release candidate: 0.1.0
 ## Command Output
 
 \`\`\`text
-ashlar release provenance-verify-public --package ashlar@0.1.0 @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0
+ashlar release provenance-verify-public --package @blen/ashlar@0.1.0 @blen/ashlar-cli@0.1.0 @blen/ashlar-schemas@0.1.0
 ashlar release public-trust-verify --registry ${releaseArtifacts.registryArtifact}
 ashlar release verify-trust-bundle --bundle ${releaseArtifacts.trustBundle} --registry ${releaseArtifacts.registryArtifact} --sbom ${releaseArtifacts.sbom} --attestation ${releaseArtifacts.attestation}
 \`\`\`
@@ -571,7 +571,7 @@ Rationale: Public provenance, capsule signing, and trust-bundle verification all
 
 - GitHub issue: https://github.com/blencorp/ashlar/issues/101
 - Pull request: https://github.com/blencorp/ashlar/pull/101
-- Published npm package: https://www.npmjs.com/package/@ashlar/cli/v/0.1.0
+- Published npm package: https://www.npmjs.com/package/@blen/ashlar-cli/v/0.1.0
 - Workflow artifact: https://github.com/blencorp/ashlar/actions/runs/101
 `,
   );
@@ -672,9 +672,9 @@ function releaseTrustRecordArgs(output: string): string[] {
     "--workflow-run",
     "https://github.com/blencorp/ashlar/actions/runs/101",
     "--package",
-    "ashlar@0.1.0",
-    "@ashlar/cli@0.1.0",
-    "@ashlar/schemas@0.1.0",
+    "@blen/ashlar@0.1.0",
+    "@blen/ashlar-cli@0.1.0",
+    "@blen/ashlar-schemas@0.1.0",
   ];
 }
 
@@ -790,7 +790,7 @@ if (args[0] === "audit" && args[1] === "signatures") {
     },
     verified: [
       {
-        name: "@ashlar/cli",
+        name: "@blen/ashlar-cli",
         version: "0.0.0",
         attestation: {
           bundle: {
@@ -1018,20 +1018,20 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(sbom.packages).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          SPDXID: "SPDXRef-Package-ashlar",
-          name: "ashlar",
+          SPDXID: "SPDXRef-Package-blen-ashlar",
+          name: "@blen/ashlar",
           supplier: "Organization: BLEN",
           versionInfo: ashlarVersion,
         }),
         expect.objectContaining({
-          SPDXID: "SPDXRef-Package-ashlar-cli",
-          name: "@ashlar/cli",
+          SPDXID: "SPDXRef-Package-blen-ashlar-cli",
+          name: "@blen/ashlar-cli",
           supplier: "Organization: BLEN",
           versionInfo: cliVersion,
         }),
         expect.objectContaining({
-          SPDXID: "SPDXRef-Package-ashlar-schemas",
-          name: "@ashlar/schemas",
+          SPDXID: "SPDXRef-Package-blen-ashlar-schemas",
+          name: "@blen/ashlar-schemas",
           versionInfo: schemasVersion,
         }),
         expect.objectContaining({
@@ -1048,7 +1048,7 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
         }),
         expect.objectContaining({
           relationshipType: "DEPENDS_ON",
-          spdxElementId: "SPDXRef-Package-ashlar-cli",
+          spdxElementId: "SPDXRef-Package-blen-ashlar-cli",
         }),
       ]),
     );
@@ -1116,8 +1116,8 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(result.status).toBe(0);
     expect(result.stdout).toContain("npm provenance readiness verified");
     expect(result.stdout).toContain("ashlar");
-    expect(result.stdout).toContain("@ashlar/cli");
-    expect(result.stdout).toContain("@ashlar/schemas");
+    expect(result.stdout).toContain("@blen/ashlar-cli");
+    expect(result.stdout).toContain("@blen/ashlar-schemas");
   });
 
   it("verifies public npm provenance for exact published package versions", () => {
@@ -1129,16 +1129,16 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
       "--npm",
       npmPath,
       "--package",
-      "ashlar@0.0.0",
-      "@ashlar/cli@0.0.0",
-      "@ashlar/schemas@0.0.0",
+      "@blen/ashlar@0.0.0",
+      "@blen/ashlar-cli@0.0.0",
+      "@blen/ashlar-schemas@0.0.0",
     ]);
 
     expect(result.status, result.stdout).toBe(0);
     expect(result.stdout).toContain("Public npm provenance verified");
-    expect(result.stdout).toContain("ashlar@0.0.0");
-    expect(result.stdout).toContain("@ashlar/cli@0.0.0");
-    expect(result.stdout).toContain("@ashlar/schemas@0.0.0");
+    expect(result.stdout).toContain("@blen/ashlar@0.0.0");
+    expect(result.stdout).toContain("@blen/ashlar-cli@0.0.0");
+    expect(result.stdout).toContain("@blen/ashlar-schemas@0.0.0");
   });
 
   it("fails public npm provenance verification when an expected package is missing", () => {
@@ -1150,14 +1150,16 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
       "--npm",
       npmPath,
       "--package",
-      "ashlar@0.0.0",
-      "@ashlar/cli@0.0.0",
-      "@ashlar/schemas@0.0.0",
+      "@blen/ashlar@0.0.0",
+      "@blen/ashlar-cli@0.0.0",
+      "@blen/ashlar-schemas@0.0.0",
     ]);
 
     expect(result.status).toBe(1);
     expect(result.stdout).toContain("Public npm provenance verification failed");
-    expect(result.stdout).toContain("npm provenance output does not include @ashlar/schemas@0.0.0");
+    expect(result.stdout).toContain(
+      "npm provenance output does not include @blen/ashlar-schemas@0.0.0",
+    );
   });
 
   it("ignores untrusted npm audit metadata when checking public provenance", () => {
@@ -1169,8 +1171,8 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
       "--npm",
       npmPath,
       "--package",
-      "@ashlar/cli@0.0.0",
-      "@ashlar/schemas@0.0.0",
+      "@blen/ashlar-cli@0.0.0",
+      "@blen/ashlar-schemas@0.0.0",
     ]);
 
     expect(result.status).toBe(1);
@@ -1181,7 +1183,9 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(result.stdout).toContain(
       "npm provenance output does not reference the publish.yml workflow.",
     );
-    expect(result.stdout).toContain("npm provenance output does not include @ashlar/cli@0.0.0.");
+    expect(result.stdout).toContain(
+      "npm provenance output does not include @blen/ashlar-cli@0.0.0.",
+    );
   });
 
   it("reports replacement-grade readiness blockers for the current prototype", () => {
@@ -1765,7 +1769,7 @@ Release candidate: 0.1.0
 
 ## Scope
 
-- Packages reviewed: ashlar@0.1.0, @ashlar/cli@0.1.0, and @ashlar/schemas@0.1.0
+- Packages reviewed: @blen/ashlar@0.1.0, @blen/ashlar-cli@0.1.0, and @blen/ashlar-schemas@0.1.0
 - Registry artifacts reviewed: ${artifacts.registryArtifact}
 - Workflows reviewed: publish.yml and sigstore.yml
 - Trust-root policy reviewed: registry/trust-root.json
@@ -1783,7 +1787,7 @@ Release candidate: 0.1.0
 ## Command Output
 
 \`\`\`text
-ashlar release provenance-verify-public --package ashlar@0.1.0 @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0
+ashlar release provenance-verify-public --package @blen/ashlar@0.1.0 @blen/ashlar-cli@0.1.0 @blen/ashlar-schemas@0.1.0
 ashlar release public-trust-verify --registry ${artifacts.registryArtifact}
 ashlar release verify-trust-bundle --bundle ${artifacts.trustBundle} --registry ${artifacts.registryArtifact} --sbom ${artifacts.sbom} --attestation ${artifacts.attestation}
 \`\`\`
@@ -1853,7 +1857,7 @@ Release candidate: 0.1.0
 
 ## Scope
 
-- Packages reviewed: ashlar@0.1.0, @ashlar/cli@0.1.0, and @ashlar/schemas@0.1.0
+- Packages reviewed: @blen/ashlar@0.1.0, @blen/ashlar-cli@0.1.0, and @blen/ashlar-schemas@0.1.0
 - Registry artifacts reviewed: ${artifacts.registryArtifact}
 - Workflows reviewed: publish.yml and sigstore.yml
 - Trust-root policy reviewed: registry/trust-root.json
@@ -1871,7 +1875,7 @@ Release candidate: 0.1.0
 ## Command Output
 
 \`\`\`text
-ashlar release provenance-verify-public --package ashlar@0.1.0 @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0
+ashlar release provenance-verify-public --package @blen/ashlar@0.1.0 @blen/ashlar-cli@0.1.0 @blen/ashlar-schemas@0.1.0
 ashlar release public-trust-verify --registry ${artifacts.registryArtifact}
 ashlar release verify-trust-bundle --bundle ${artifacts.trustBundle} --registry ${artifacts.registryArtifact} --sbom ${artifacts.sbom} --attestation ${artifacts.attestation}
 \`\`\`
@@ -1941,7 +1945,7 @@ Release candidate: 0.1.0
 
 ## Scope
 
-- Packages reviewed: ashlar@0.1.0, @ashlar/cli@0.1.0, and @ashlar/schemas@0.1.0
+- Packages reviewed: @blen/ashlar@0.1.0, @blen/ashlar-cli@0.1.0, and @blen/ashlar-schemas@0.1.0
 - Registry artifacts reviewed: ${artifacts.registryArtifact}
 - Workflows reviewed: publish.yml and sigstore.yml
 - Trust-root policy reviewed: registry/trust-root.json
@@ -1959,7 +1963,7 @@ Release candidate: 0.1.0
 ## Command Output
 
 \`\`\`text
-ashlar release provenance-verify-public --package ashlar@0.1.0 @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0
+ashlar release provenance-verify-public --package @blen/ashlar@0.1.0 @blen/ashlar-cli@0.1.0 @blen/ashlar-schemas@0.1.0
 ashlar release public-trust-verify --registry ${artifacts.registryArtifact}
 ashlar release verify-trust-bundle --bundle ${artifacts.trustBundle} --registry ${artifacts.registryArtifact} --sbom ${artifacts.sbom} --attestation ${artifacts.attestation}
 \`\`\`
@@ -2156,7 +2160,7 @@ Rationale: The reviewer found the wedge credible for a public-service pilot afte
     expect(record).toContain("Record status: completed external review only");
     expect(record).toContain("Decision: pass");
     expect(record).toContain(
-      "ashlar release provenance-verify-public --package ashlar@0.1.0 @ashlar/cli@0.1.0 @ashlar/schemas@0.1.0",
+      "ashlar release provenance-verify-public --package @blen/ashlar@0.1.0 @blen/ashlar-cli@0.1.0 @blen/ashlar-schemas@0.1.0",
     );
     expect(record).toContain("- Release SBOM attestation:");
     expect(record).toContain("ashlar release verify-trust-bundle --bundle");

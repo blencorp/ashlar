@@ -52,7 +52,7 @@ Ashlar can make stronger replacement language only when these pass without local
 pnpm check
 pnpm build
 node packages/cli/dist/index.js release readiness --registry ./registry
-node packages/cli/dist/index.js release provenance-verify-public --package ashlar@<version> @ashlar/cli@<version> @ashlar/schemas@<version>
+node packages/cli/dist/index.js release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version>
 node packages/cli/dist/index.js release public-trust-verify --registry <signed-registry-artifact>
 node packages/cli/dist/index.js evidence --check --registry ./registry
 node packages/cli/dist/index.js audit --policy all --registry ./registry examples/service-flow/benefit-application.pass.html

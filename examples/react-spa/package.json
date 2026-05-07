@@ -1,5 +1,5 @@
 {
-  "name": "@ashlar/example-react-spa",
+  "name": "@blen/ashlar-example-react-spa",
   "version": "0.0.2",
   "private": true,
   "description": "React SPA Ashlar reference app.",
@@ -14,7 +14,7 @@
     "audit": "node ../../packages/cli/dist/index.js audit --policy federal --registry ../../registry public/audit.html && node ../../packages/cli/dist/index.js audit --policy components --registry ../../registry public/audit.html src/App.tsx src/styles.css"
   },
   "devDependencies": {
-    "@ashlar/cli": "workspace:*",
+    "@blen/ashlar-cli": "workspace:*",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",

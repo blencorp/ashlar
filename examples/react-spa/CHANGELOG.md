@@ -1,4 +1,4 @@
-# @ashlar/example-react-spa
+# @blen/ashlar-example-react-spa
 
 ## 0.0.2
 

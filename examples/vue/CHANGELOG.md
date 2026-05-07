@@ -1,4 +1,4 @@
-# @ashlar/example-vue
+# @blen/ashlar-example-vue
 
 ## 0.0.2
 

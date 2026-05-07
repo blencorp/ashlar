@@ -48,10 +48,10 @@ Important gaps this slice closes:
 5. Per-language support table in code (`policy/languages.ts`): { html: built-in, tsx: built-in, jsx: built-in, css: built-in, vue: opt-in-with-grammar, svelte: opt-in-with-grammar, astro: opt-in-with-grammar, twig: unsupported, jinja: unsupported, erb: opt-in-with-grammar, nunjucks: unsupported }. Defaults are conservative; opt-in via `ashlar.config.json`.
 6. `--explain` extends to component findings: WCAG criterion citation, federal-standards link where applicable, link to the capsule's evidence packet.
 7. SARIF carries `region.startLine`, `startColumn`, `endLine`, `endColumn` from parse5 source offsets (federal policy) and ast-grep ranges (component policy). Each rule entry includes `fullDescription`, `helpUri`, and `properties.tags` (one of: `accessibility`, `federal-standard`, `usability`, `security`).
-8. `_ashlar` JSON Schema published in `@ashlar/schemas/src/ashlar-cem.schema.json`. Validates `antiPatterns`, `a11yRequirements`, `tokensConsumed`, `platformFeatures`, `policyMappings`, `criticalForA11y`, `rendering`, `hydrationCost`, `selector`, `variants`. CI validates every capsule's CEM against it.
+8. `_ashlar` JSON Schema published in `@blen/ashlar-schemas/src/ashlar-cem.schema.json`. Validates `antiPatterns`, `a11yRequirements`, `tokensConsumed`, `platformFeatures`, `policyMappings`, `criticalForA11y`, `rendering`, `hydrationCost`, `selector`, `variants`. CI validates every capsule's CEM against it.
 9. CI workflow runs `audit --policy federal --sarif examples/plain-html/index.html` and `audit --policy federal --sarif examples/vite/index.html` and uploads non-empty SARIF.
 10. Vite example annotated: a top-of-file comment in `examples/vite/index.html` explains that the example is the audit's *punching bag* and lists which rules it deliberately fails (or, alternatively, the example becomes compliant by adding a banner and identifier — the spec leaves this choice to the implementation plan).
-11. Standalone audit distribution: `npx ashlar audit --policy federal --sarif <file>` works in a fresh empty project with no `ashlar.config.json` or `ashlar-lock.json`.
+11. Standalone audit distribution: `npx @blen/ashlar audit --policy federal --sarif <file>` works in a fresh empty project with no `ashlar.config.json` or `ashlar-lock.json`.
 12. `hasClassToken` substring bug fixed (`packages/cli/src/lib/html.ts:44`): use whole-token equality.
 13. `ashlar.config.json` schema (`packages/schemas/src/config.schema.json`) published; the `$schema` URL in generated configs becomes a real pointer.
 
@@ -70,12 +70,12 @@ Important gaps this slice closes:
 
 ### Package boundaries
 
-`@ashlar/schemas`:
+`@blen/ashlar-schemas`:
 - New: `ashlar-cem.schema.json` (validates the `_ashlar` namespace).
 - New: `config.schema.json` (validates `ashlar.config.json`).
 - Index exports the new schema IDs.
 
-`@ashlar/cli`:
+`@blen/ashlar-cli`:
 - New: `src/lib/policy/component.ts` — CEM → ast-grep rule compiler.
 - New: `src/lib/policy/languages.ts` — per-language support matrix.
 - New: `src/lib/astgrep.ts` — wrapper around the bundled ast-grep binary.
@@ -85,7 +85,7 @@ Important gaps this slice closes:
 - Modify: `src/lib/html.ts` — `hasClassToken` whole-token match.
 - New: `src/lib/policy/component.test.ts`, `src/lib/astgrep.test.ts`, `src/lib/policy/languages.test.ts`.
 
-`@ashlar/cli` package.json:
+`@blen/ashlar-cli` package.json:
 - Add `optionalDependencies` for `@ast-grep/cli-darwin-arm64`, `@ast-grep/cli-linux-x64`, `@ast-grep/cli-win32-x64` (subject to actual ast-grep distribution names).
 - Postinstall script that asserts a usable binary is present on supported platforms.
 
@@ -93,7 +93,7 @@ Important gaps this slice closes:
 
 - `ast-grep` distributed via npm optionalDependencies (the same pattern shadcn, Esbuild, swc use).
 - `js-yaml` for emitting ast-grep YAML rule files.
-- `ajv` and `ajv-formats` for runtime schema validation in CI (`pnpm --filter @ashlar/schemas validate`).
+- `ajv` and `ajv-formats` for runtime schema validation in CI (`pnpm --filter @blen/ashlar-schemas validate`).
 
 No browser automation. No new runtime dependencies on the consumer side.
 
@@ -168,7 +168,7 @@ The federal audit must work without an `ashlar.config.json` or `ashlar-lock.json
 ```bash
 mkdir scratch && cd scratch
 echo "<html><body></body></html>" > index.html
-npx ashlar audit --policy federal --sarif index.html
+npx @blen/ashlar audit --policy federal --sarif index.html
 ```
 
 This is the federal contractor adoption path. The CLI must not assume the consumer ran `init` first; it must not crash on missing config; it must use safe defaults. This behavior is unit-tested.
@@ -221,7 +221,7 @@ ashlar audit --policy components --explain --sarif <files...>
 ashlar audit --policy all --explain --sarif <files...>
 
 # Standalone, no install required
-npx ashlar audit --policy federal --sarif <files...>
+npx @blen/ashlar audit --policy federal --sarif <files...>
 
 # Languages opt-in via config (only docs change here; runtime support is wired)
 { "audit": { "languages": { "vue": { "grammar": "tree-sitter-vue" } } } }
@@ -252,7 +252,7 @@ CI:
 
 ## Acceptance criteria
 
-- ast-grep is bundled and invokable from `@ashlar/cli`.
+- ast-grep is bundled and invokable from `@blen/ashlar-cli`.
 - `audit --policy components` flags Button's `icon-only-needs-label` against an HTML and a TSX fixture.
 - `--explain` shows WCAG 4.1.2 citation for the button anti-pattern and a federal-standards link for federal findings.
 - SARIF line/column appear in GitHub Code Scanning inline annotations (verified by uploading to a test repo).

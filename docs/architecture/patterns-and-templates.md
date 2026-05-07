@@ -153,7 +153,7 @@ Each template renders the same DOM contract — same class names, same data attr
 
 For Drupal sites, Ashlar publishes a companion module/theme:
 
-- `@ashlar/drupal-theme` — installs Ashlar tokens and Twig partials.
+- `@blen/ashlar-drupal-theme` — installs Ashlar tokens and Twig partials.
 - Theme functions/preprocess hooks make Ashlar components feel native to Drupal.
 - Compatible with USWDS's Drupal theme migration path (token mapping, class-name compatibility shim).
 
@@ -175,7 +175,7 @@ Snapshot equality is enforced — the same input must produce the same DOM contr
 
 A pattern shipped as both rendered HTML (L4) and as a Lit element (L1) can serve:
 
-- Drupal site: `{% include '@ashlar/eligibility-check' with {...} %}`.
+- Drupal site: `{% include '@blen/ashlar-eligibility-check' with {...} %}`.
 - Rails site: `<%= render 'ashlar/eligibility_check', ... %>`.
 - Next.js: `<EligibilityCheck options={...} />`.
 - Plain HTML: include CSS + JS; use `<ashlar-eligibility-check>`.

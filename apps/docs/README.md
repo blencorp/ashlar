@@ -3,8 +3,8 @@
 Static first-run documentation app for Ashlar adoption.
 
 ```bash
-pnpm --filter @ashlar/docs dev
-pnpm --filter @ashlar/docs build
+pnpm --filter @blen/ashlar-docs dev
+pnpm --filter @blen/ashlar-docs build
 ```
 
 The app is intentionally custom Vite rather than a full docs framework for this

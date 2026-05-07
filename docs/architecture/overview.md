@@ -16,7 +16,7 @@ Ashlar is organized as five independently usable layers. Each layer has a clear 
 │    │              address-form, identity-shell, etc.    │
 ├─────────────────────────────────────────────────────────┤
 │ L2 │ Adapters     Auto-generated from CEM:              │
-│    │              @ashlar/react, @ashlar/vue, …          │
+│    │              @blen/ashlar-react, @blen/ashlar-vue, …          │
 ├─────────────────────────────────────────────────────────┤
 │ L1 │ Components   Lit custom elements wrapping Zag      │
 │    │              statecharts + signals (~30% of items) │
@@ -64,11 +64,11 @@ Light DOM is the default for theming compatibility; Shadow DOM is used only when
 
 Thin per-framework wrappers generated from each component's Custom Elements Manifest:
 
-- `@ashlar/react` — idiomatic React props, event handlers, refs
-- `@ashlar/vue` — Vue 3.5+ composition API + slots
-- `@ashlar/svelte` — Svelte 5 runes
-- `@ashlar/solid` — Solid signals
-- `@ashlar/element` — the Lit custom element itself, for plain HTML / Drupal / Sitecore consumers
+- `@blen/ashlar-react` — idiomatic React props, event handlers, refs
+- `@blen/ashlar-vue` — Vue 3.5+ composition API + slots
+- `@blen/ashlar-svelte` — Svelte 5 runes
+- `@blen/ashlar-solid` — Solid signals
+- `@blen/ashlar-element` — the Lit custom element itself, for plain HTML / Drupal / Sitecore consumers
 
 Adapters are not hand-maintained. When the underlying machine or component changes, adapters regenerate. There is no parallel React tree drifting from the canonical implementation.
 
@@ -136,21 +136,21 @@ The CLI is a pure Node + ESM tool, distributed via npm and runnable via `npx`, `
 
 ```bash
 # Initial install
-npx ashlar init                       # writes ashlar.config.json + tokens + lockfile
-npx ashlar status                     # read-only adoption snapshot and next commands
-npx ashlar add button alert dialog    # adds L0 capsules — pure CSS, zero JS
-npx ashlar add combobox               # adds an L1 capsule (Lit + Zag)
-npx ashlar migrate uswds "./src/**/*.{html,tsx,jsx}" # read-only USWDS replacement map
+npx @blen/ashlar init                       # writes ashlar.config.json + tokens + lockfile
+npx @blen/ashlar status                     # read-only adoption snapshot and next commands
+npx @blen/ashlar add button alert dialog    # adds L0 capsules — pure CSS, zero JS
+npx @blen/ashlar add combobox               # adds an L1 capsule (Lit + Zag)
+npx @blen/ashlar migrate uswds "./src/**/*.{html,tsx,jsx}" # read-only USWDS replacement map
 
 # After local customization
-npx ashlar update                     # safe 3-way merge for any drift
-npx ashlar audit                      # ast-grep validation across the project
-npx ashlar evidence button            # show me the a11y evidence
+npx @blen/ashlar update                     # safe 3-way merge for any drift
+npx @blen/ashlar audit                      # ast-grep validation across the project
+npx @blen/ashlar evidence button            # show me the a11y evidence
 
 # When adopting a theme or AI tooling
-npx ashlar theme new my-agency        # scaffold custom DTCG theme
-npx ashlar verify                     # signature/supply-chain check
-npx ashlar mcp                        # start MCP server for Cursor/Claude/etc.
+npx @blen/ashlar theme new my-agency        # scaffold custom DTCG theme
+npx @blen/ashlar verify                     # signature/supply-chain check
+npx @blen/ashlar mcp                        # start MCP server for Cursor/Claude/etc.
 ```
 
 ## Drift management — the lockfile and three-way merge
@@ -223,7 +223,7 @@ Three artifacts, each does one thing:
 
 2. **AGENTS.md** in the project root — coding-agent instructions for using Ashlar correctly in the user's codebase. Symlinked from `CLAUDE.md`, `.cursor/rules/ashlar.mdc`, and `.windsurfrules` to cover the editor fragmentation.
 
-3. **MCP server** at `npx ashlar mcp` — exposes tools that go beyond shadcn's install-only MCP:
+3. **MCP server** at `npx @blen/ashlar mcp` — exposes tools that go beyond shadcn's install-only MCP:
    - `search_components(query, filters)` — ranked component, policy, feature, token, evidence, and layer search
    - `get_component(name)` — full extended CEM
    - `validate_usage(file_or_glob)` — runs ast-grep rules, returns violations

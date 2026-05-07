@@ -73,14 +73,14 @@ This is the product surface that can become memorable. "AI-native gov UI library
 The command surface must stay quiet:
 
 ```bash
-npx ashlar audit
-npx ashlar view button
-npx ashlar add button
-npx ashlar verify
-npx ashlar update
-npx ashlar theme sync
-npx ashlar theme validate
-npx ashlar mcp
+npx @blen/ashlar audit
+npx @blen/ashlar view button
+npx @blen/ashlar add button
+npx @blen/ashlar verify
+npx @blen/ashlar update
+npx @blen/ashlar theme sync
+npx @blen/ashlar theme validate
+npx @blen/ashlar mcp
 ```
 
 The first useful path should be:

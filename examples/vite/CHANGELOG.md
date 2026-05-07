@@ -1,4 +1,4 @@
-# @ashlar/example-vite
+# @blen/ashlar-example-vite
 
 ## 0.0.3
 

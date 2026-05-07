@@ -41,19 +41,19 @@ Each stable capsule must ship:
 Evidence should be queryable:
 
 ```bash
-npx ashlar evidence dialog
-npx ashlar evidence --format json dialog
-npx ashlar evidence collect button --fixture registry/components/button/0.0.1/button.html --output reports/button-evidence.json
-npx ashlar evidence apply button --artifact reports/button-evidence.json --output reports/button.evidence.proposed.json
-npx ashlar evidence prepare-stable button --fixture registry/components/button/0.0.1/button.html --output reports/button-stable-review
-npx ashlar evidence prepare-stable-all --output reports/l0-stable-review
-npx ashlar evidence manual-template button --output reports/button-manual-review.json
-npx ashlar evidence finalize-stable button --review-dir reports/button-stable-review
-npx ashlar evidence review button --evidence-file reports/button.evidence.proposed.json --manual-file reports/button-manual-review.json --output reports/button.evidence.reviewed.json
-npx ashlar evidence graduate button --evidence-file reports/button.evidence.reviewed.json --output reports/button.evidence.stable.json
-npx ashlar evidence button --check --evidence-file reports/button.evidence.proposed.json
-npx ashlar evidence --check
-npx ashlar evidence --report ./reports/ashlar-a11y.md
+npx @blen/ashlar evidence dialog
+npx @blen/ashlar evidence --format json dialog
+npx @blen/ashlar evidence collect button --fixture registry/components/button/0.0.1/button.html --output reports/button-evidence.json
+npx @blen/ashlar evidence apply button --artifact reports/button-evidence.json --output reports/button.evidence.proposed.json
+npx @blen/ashlar evidence prepare-stable button --fixture registry/components/button/0.0.1/button.html --output reports/button-stable-review
+npx @blen/ashlar evidence prepare-stable-all --output reports/l0-stable-review
+npx @blen/ashlar evidence manual-template button --output reports/button-manual-review.json
+npx @blen/ashlar evidence finalize-stable button --review-dir reports/button-stable-review
+npx @blen/ashlar evidence review button --evidence-file reports/button.evidence.proposed.json --manual-file reports/button-manual-review.json --output reports/button.evidence.reviewed.json
+npx @blen/ashlar evidence graduate button --evidence-file reports/button.evidence.reviewed.json --output reports/button.evidence.stable.json
+npx @blen/ashlar evidence button --check --evidence-file reports/button.evidence.proposed.json
+npx @blen/ashlar evidence --check
+npx @blen/ashlar evidence --report ./reports/ashlar-a11y.md
 ```
 
 ## CI commands
@@ -61,27 +61,27 @@ npx ashlar evidence --report ./reports/ashlar-a11y.md
 The first CI surface should include:
 
 ```bash
-npx ashlar audit --severity error
-npx ashlar audit --sarif > ashlar.sarif
-npx ashlar verify
-npx ashlar theme validate
-npx ashlar evidence --check
+npx @blen/ashlar audit --severity error
+npx @blen/ashlar audit --sarif > ashlar.sarif
+npx @blen/ashlar verify
+npx @blen/ashlar theme validate
+npx @blen/ashlar evidence --check
 pnpm release:smoke
-npx ashlar release provenance-check
-npx ashlar release provenance-verify-public
-npx ashlar release provenance-verify-public --json > reports/ashlar-npm-provenance.json
-npx ashlar release sbom --output reports/ashlar-sbom.spdx.json
-npx ashlar release attest --subject reports/ashlar-sbom.spdx.json --output reports/ashlar-sbom.attestation.json
-npx ashlar release verify-attestation --subject reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json
-npx ashlar release sign-capsules --registry ./registry
-npx ashlar release public-trust-verify --registry ./registry
-npx ashlar release public-trust-verify --registry ./registry --json > reports/ashlar-public-trust.json
-npx ashlar release trust-bundle --registry ./registry --sbom reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json --output reports/ashlar-trust-bundle.json --checklist reports/ashlar-release-trust-checklist.md
-npx ashlar release verify-trust-bundle --registry ./registry --bundle reports/ashlar-trust-bundle.json --sbom reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json
-npx ashlar release design-partner-checklist --output reports/ashlar-design-partner-checklist.md
-npx ashlar ai-eval --suite examples/ai-eval/ashlar-ai-eval.json --json > reports/ashlar-ai-eval.json
-npx ashlar bundle budget button --json > reports/ashlar-button-bundle-budget.json
-npx ashlar bundle budget --json > reports/ashlar-l0-bundle-budget.json
+npx @blen/ashlar release provenance-check
+npx @blen/ashlar release provenance-verify-public
+npx @blen/ashlar release provenance-verify-public --json > reports/ashlar-npm-provenance.json
+npx @blen/ashlar release sbom --output reports/ashlar-sbom.spdx.json
+npx @blen/ashlar release attest --subject reports/ashlar-sbom.spdx.json --output reports/ashlar-sbom.attestation.json
+npx @blen/ashlar release verify-attestation --subject reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json
+npx @blen/ashlar release sign-capsules --registry ./registry
+npx @blen/ashlar release public-trust-verify --registry ./registry
+npx @blen/ashlar release public-trust-verify --registry ./registry --json > reports/ashlar-public-trust.json
+npx @blen/ashlar release trust-bundle --registry ./registry --sbom reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json --output reports/ashlar-trust-bundle.json --checklist reports/ashlar-release-trust-checklist.md
+npx @blen/ashlar release verify-trust-bundle --registry ./registry --bundle reports/ashlar-trust-bundle.json --sbom reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json
+npx @blen/ashlar release design-partner-checklist --output reports/ashlar-design-partner-checklist.md
+npx @blen/ashlar ai-eval --suite examples/ai-eval/ashlar-ai-eval.json --json > reports/ashlar-ai-eval.json
+npx @blen/ashlar bundle budget button --json > reports/ashlar-button-bundle-budget.json
+npx @blen/ashlar bundle budget --json > reports/ashlar-l0-bundle-budget.json
 ```
 
 ### `ashlar audit`
@@ -307,7 +307,7 @@ Implemented locally. Writes an SPDX 2.3 JSON SBOM for the release packages and d
 
 The generated document includes:
 
-- `ashlar`, `@ashlar/cli`, and `@ashlar/schemas` release package entries;
+- `@blen/ashlar`, `@blen/ashlar-cli`, and `@blen/ashlar-schemas` release package entries;
 - runtime dependency entries with package URLs where versions are known;
 - `DESCRIBES` relationships for release packages;
 - `DEPENDS_ON` relationships from release packages to runtime dependencies.
@@ -383,7 +383,7 @@ Implemented locally as a guarded manual workflow for release-review artifacts. T
 
 Implemented locally. Checks the repository-side prerequisites for provenance-capable npm publishing:
 
-- `ashlar`, `@ashlar/cli`, and `@ashlar/schemas` are publishable public packages;
+- `@blen/ashlar`, `@blen/ashlar-cli`, and `@blen/ashlar-schemas` are publishable public packages;
 - each package has `publishConfig.provenance: true`;
 - each package has repository metadata pointing to `https://github.com/blencorp/ashlar.git` and its monorepo directory;
 - CI grants `id-token: write`;
@@ -457,17 +457,17 @@ jobs:
         with:
           node-version: 24.15.0
       - run: npm ci
-      - run: npx ashlar verify
-      - run: npx ashlar theme validate
-      - run: npx ashlar evidence --check
-      - run: npx ashlar release readiness --report reports/ashlar-release-readiness.md --json-output reports/ashlar-release-readiness.json
+      - run: npx @blen/ashlar verify
+      - run: npx @blen/ashlar theme validate
+      - run: npx @blen/ashlar evidence --check
+      - run: npx @blen/ashlar release readiness --report reports/ashlar-release-readiness.md --json-output reports/ashlar-release-readiness.json
         continue-on-error: true
-      - run: npx ashlar evidence prepare-stable-all --output reports/l0-stable-review
-      - run: npx ashlar evidence review-status button --review-dir reports/l0-stable-review/button --format json --output reports/button-stable-review-status.json
+      - run: npx @blen/ashlar evidence prepare-stable-all --output reports/l0-stable-review
+      - run: npx @blen/ashlar evidence review-status button --review-dir reports/l0-stable-review/button --format json --output reports/button-stable-review-status.json
         continue-on-error: true
-      - run: npx ashlar evidence --report reports/ashlar-evidence.md
+      - run: npx @blen/ashlar evidence --report reports/ashlar-evidence.md
         if: always()
-      - run: npx ashlar audit --severity error --sarif > ashlar.sarif
+      - run: npx @blen/ashlar audit --severity error --sarif > ashlar.sarif
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -540,7 +540,7 @@ Ashlar should not generate a final VPAT for a consuming application. It can gene
 Future command:
 
 ```bash
-npx ashlar evidence --acr-input --components button,dialog,form-field
+npx @blen/ashlar evidence --acr-input --components button,dialog,form-field
 ```
 
 Output should include:

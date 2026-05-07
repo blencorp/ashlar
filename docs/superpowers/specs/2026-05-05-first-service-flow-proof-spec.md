@@ -102,12 +102,12 @@ Important baseline gaps this proof targeted:
 The proof should support this exact path from a fresh app directory:
 
 ```bash
-npx ashlar init
-npx ashlar search form
-npx ashlar view banner form-field text-input button alert error-summary
-npx ashlar add banner form-field text-input button alert error-summary
-npx ashlar audit --policy all index.html
-npx ashlar verify
+npx @blen/ashlar init
+npx @blen/ashlar search form
+npx @blen/ashlar view banner form-field text-input button alert error-summary
+npx @blen/ashlar add banner form-field text-input button alert error-summary
+npx @blen/ashlar audit --policy all index.html
+npx @blen/ashlar verify
 ```
 
 For the local repo before npm publishing, the equivalent path can use:

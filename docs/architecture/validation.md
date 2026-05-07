@@ -152,7 +152,7 @@ src/templates/article.html.twig:12:5
 ```bash
 #!/usr/bin/env bash
 # .githooks/pre-commit
-npx ashlar audit --staged --severity error
+npx @blen/ashlar audit --staged --severity error
 ```
 
 Fails commit if any error-level rule fires on staged files.
@@ -162,7 +162,7 @@ Fails commit if any error-level rule fires on staged files.
 ```yaml
 # .github/workflows/ci.yml
 - name: Ashlar audit
-  run: npx ashlar audit --severity error --output sarif > ashlar.sarif
+  run: npx @blen/ashlar audit --severity error --output sarif > ashlar.sarif
 - uses: actions/upload-artifact@v4
   if: always()
   with: { name: ashlar-sarif, path: ashlar.sarif }
@@ -179,7 +179,7 @@ For teams with existing ESLint workflows:
 
 ```js
 // eslint.config.js
-import ashlarESLint from "@ashlar/eslint-shim";
+import ashlarESLint from "@blen/ashlar-eslint-shim";
 
 export default [
   ...ashlarESLint.configs.recommended  // delegates to ast-grep under the hood
@@ -196,8 +196,8 @@ ast-grep is Rust; processes ~50k LOC per second on typical hardware. A full audi
 
 ast-grep is a single Rust binary, ~3MB. Ashlar ships:
 
-- `@ashlar/cli` (Node) — invokes the bundled ast-grep binary.
-- `@ashlar/cli` ships ast-grep as a postinstall download (npm `optionalDependencies` for platform-specific binaries; `nypm` handles cross-PM compatibility).
+- `@blen/ashlar-cli` (Node) — invokes the bundled ast-grep binary.
+- `@blen/ashlar-cli` ships ast-grep as a postinstall download (npm `optionalDependencies` for platform-specific binaries; `nypm` handles cross-PM compatibility).
 - For air-gapped environments, the binary can be vendored separately.
 
 ## Authoring custom rules

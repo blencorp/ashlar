@@ -118,8 +118,8 @@ export const evidenceFormatVersion = "1.0";
 Run:
 
 ```bash
-pnpm --filter @ashlar/schemas typecheck
-pnpm --filter @ashlar/schemas build
+pnpm --filter @blen/ashlar-schemas typecheck
+pnpm --filter @blen/ashlar-schemas build
 ```
 
 Expected: both commands pass.
@@ -250,7 +250,7 @@ export function getComponent(cwd: string, name: string): RegistryComponent {
 Run:
 
 ```bash
-pnpm --filter @ashlar/cli test -- src/lib/registry.test.ts
+pnpm --filter @blen/ashlar-cli test -- src/lib/registry.test.ts
 ```
 
 Expected: registry tests pass.
@@ -478,7 +478,7 @@ For this slice, scan `examples/plain-html/index.html` when `--policy federal` is
 Run:
 
 ```bash
-pnpm --filter @ashlar/cli test -- src/lib/policy.test.ts
+pnpm --filter @blen/ashlar-cli test -- src/lib/policy.test.ts
 pnpm build
 node packages/cli/dist/index.js audit --policy federal --explain
 node packages/cli/dist/index.js audit --policy federal --sarif > ashlar.sarif
@@ -574,10 +574,10 @@ git commit -m "docs: enrich button capsule metadata"
 Add examples for:
 
 ```bash
-npx ashlar search button
-npx ashlar view button
-npx ashlar audit --policy federal --explain
-npx ashlar design sync
+npx @blen/ashlar search button
+npx @blen/ashlar view button
+npx @blen/ashlar audit --policy federal --explain
+npx @blen/ashlar design sync
 ```
 
 - [ ] **Step 2: Add DESIGN.md generation**

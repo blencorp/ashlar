@@ -43,7 +43,7 @@ Authoring in semantic CSS instead of Tailwind classes is essential for the ~70% 
 
 **Mitigations**
 
-- Ship a Tailwind v4 preset (`@ashlar/tailwind`) that wires `@theme` and ensures cascade-layer compatibility with utility classes.
+- Ship a Tailwind v4 preset (`@blen/ashlar-tailwind`) that wires `@theme` and ensures cascade-layer compatibility with utility classes.
 - Document cascade-layer ordering and override patterns extensively.
 - `@scope` graceful degradation by hoisting the ruleset to the document scope without `@scope` (no breakage, slightly broader specificity).
 

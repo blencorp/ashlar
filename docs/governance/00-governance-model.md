@@ -24,7 +24,7 @@ The project name is **Ashlar**. Naming criteria:
 - Available as an npm package name and `.dev` / `.org` domain.
 - Trademark-clear in the design-system / open-source space.
 - Memorable; pronounceable internationally.
-- Short enough to read in a CLI prompt (`npx ashlar ...`).
+- Short enough to read in a CLI prompt (`npx @blen/ashlar ...`).
 
 If a trademark or package-namespace review later finds a blocking conflict, the project will rename before public release; backup names are tracked privately.
 
@@ -151,7 +151,7 @@ Themes ship in the same registry as components, with their own versioning and ev
 
 Agencies and regulated-industry consumers can run their own registries:
 
-- Ashlar registry build tooling (`@ashlar/registry-build`) is open-source.
+- Ashlar registry build tooling (`@blen/ashlar-registry-build`) is open-source.
 - Custom registries bring their own signing keys.
 - Custom registries can mirror the canonical registry plus add agency-specific capsules.
 - The Ashlar core team does not gate-keep custom-registry contents.

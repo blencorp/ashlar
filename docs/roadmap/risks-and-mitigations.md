@@ -79,7 +79,7 @@ A poorly-designed MCP server could allow malicious prompts to install or modify 
 
 **Mitigations**:
 - Read-only by default; install/update gated behind explicit user approval.
-- Local-by-default (`npx ashlar mcp` runs in consumer's process).
+- Local-by-default (`npx @blen/ashlar mcp` runs in consumer's process).
 - Signed manifests verified before any registry interaction.
 - No hidden prompts — tool descriptions and resource contents are exactly the published CEM and capsule files.
 - Security review before v0.1 public alpha.
@@ -128,7 +128,7 @@ Two override mental models (cascade-layer-aware Tailwind utilities vs direct CSS
 
 **Mitigations**:
 - Documentation includes a "two override paths" guide with worked examples.
-- `@ashlar/tailwind` companion in v0.2 provides Tailwind-source variants for shadcn-style consumers.
+- `@blen/ashlar-tailwind` companion in v0.2 provides Tailwind-source variants for shadcn-style consumers.
 - Cascade-layer ordering is explicit and validated by `ashlar audit`.
 
 ### R8 — DTCG / Terrazzo immaturity
@@ -228,7 +228,7 @@ The most likely failure mode for a useful federal-adjacent OSS project is not be
 **Severity**: High.
 **Phase exposure**: v0.1 onwards (when Ashlar is publicly publishable).
 
-CISA-flagged contemporary threats: the September 2025 Shai-Hulud worm (~500 npm packages compromised) and the April 2026 Axios npm package compromise attributed to UNC1069 (North Korean threat actor). A federal-grade tool that recommends or installs code is a high-value target. The current `npm install ashlar` or `npx ashlar` path is exposed to the same threat surface. R14 covers Sigstore service availability; this risk covers what happens when Ashlar itself is compromised.
+CISA-flagged contemporary threats: the September 2025 Shai-Hulud worm (~500 npm packages compromised) and the April 2026 Axios npm package compromise attributed to UNC1069 (North Korean threat actor). A federal-grade tool that recommends or installs code is a high-value target. The current `npm install @blen/ashlar` or `npx @blen/ashlar` path is exposed to the same threat surface. R14 covers Sigstore service availability; this risk covers what happens when Ashlar itself is compromised.
 
 **Mitigations**:
 - Hardware-key signing on the maintainer publisher account.
@@ -275,9 +275,9 @@ Manual screen-reader testing on NVDA + JAWS + VoiceOver across Firefox/Safari/Ch
 
 If Sigstore signing infrastructure goes down, registry publication blocks. Mitigation: signing is async; we can buffer releases. Sigstore has good uptime; not a primary concern.
 
-### R15 — `npx ashlar` package-name collision
+### R15 — `npx @blen/ashlar` package-name collision
 
-If `ashlar` is taken on npm before public alpha, we rename. Mitigation: the release package set now includes a tiny publishable `ashlar` entrypoint that owns the memorable `npx ashlar` command and delegates to `@ashlar/cli`; final reservation still depends on the first trusted-publishing release. Keep backup names ready until that release exists.
+If `ashlar` is taken on npm before public alpha, we rename. Mitigation: the release package set now includes a tiny publishable `ashlar` entrypoint that owns the memorable `npx @blen/ashlar` command and delegates to `@blen/ashlar-cli`; final reservation still depends on the first trusted-publishing release. Keep backup names ready until that release exists.
 
 ## Kill criteria summary
 

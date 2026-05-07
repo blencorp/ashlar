@@ -1,5 +1,5 @@
 {
-  "name": "@ashlar/example-svelte",
+  "name": "@blen/ashlar-example-svelte",
   "version": "0.0.2",
   "private": true,
   "description": "Svelte Ashlar reference app.",
@@ -14,7 +14,7 @@
     "audit": "node ../../packages/cli/dist/index.js audit --policy all --registry ../../registry public/audit.html"
   },
   "devDependencies": {
-    "@ashlar/cli": "workspace:*",
+    "@blen/ashlar-cli": "workspace:*",
     "@sveltejs/vite-plugin-svelte": "catalog:",
     "@tsconfig/svelte": "catalog:",
     "svelte": "catalog:",

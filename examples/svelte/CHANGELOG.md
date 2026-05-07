@@ -1,4 +1,4 @@
-# @ashlar/example-svelte
+# @blen/ashlar-example-svelte
 
 ## 0.0.2
 

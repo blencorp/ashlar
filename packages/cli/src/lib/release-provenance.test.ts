@@ -12,9 +12,9 @@ function writeJson(path: string, value: unknown) {
 
 function writeValidFixture() {
   const packages = new Map([
-    ["packages/schemas", "@ashlar/schemas"],
-    ["packages/cli", "@ashlar/cli"],
-    ["packages/ashlar", "ashlar"],
+    ["packages/schemas", "@blen/ashlar-schemas"],
+    ["packages/cli", "@blen/ashlar-cli"],
+    ["packages/ashlar", "@blen/ashlar"],
   ]);
 
   for (const [directory, name] of packages) {
@@ -95,16 +95,16 @@ describe("checkReleaseProvenanceReadiness", () => {
 
     expect(result.errors).toEqual([]);
     expect(result.packages).toEqual([
-      { directory: "packages/schemas", name: "@ashlar/schemas", version: "0.0.0" },
-      { directory: "packages/cli", name: "@ashlar/cli", version: "0.0.0" },
-      { directory: "packages/ashlar", name: "ashlar", version: "0.0.0" },
+      { directory: "packages/schemas", name: "@blen/ashlar-schemas", version: "0.0.0" },
+      { directory: "packages/cli", name: "@blen/ashlar-cli", version: "0.0.0" },
+      { directory: "packages/ashlar", name: "@blen/ashlar", version: "0.0.0" },
     ]);
   });
 
   it("reports package and CI gaps that would block npm provenance", () => {
     writeValidFixture();
     writeJson(join(scratch, "packages", "cli", "package.json"), {
-      name: "@ashlar/cli",
+      name: "@blen/ashlar-cli",
       private: true,
       publishConfig: {
         access: "restricted",

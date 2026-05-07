@@ -57,9 +57,9 @@ function packageVersion(cwd: string, packagePath: string): string {
 
 function releasePackageSpecs(cwd: string): string {
   return [
-    `ashlar@${packageVersion(cwd, "packages/ashlar")}`,
-    `@ashlar/cli@${packageVersion(cwd, "packages/cli")}`,
-    `@ashlar/schemas@${packageVersion(cwd, "packages/schemas")}`,
+    `@blen/ashlar@${packageVersion(cwd, "packages/ashlar")}`,
+    `@blen/ashlar-cli@${packageVersion(cwd, "packages/cli")}`,
+    `@blen/ashlar-schemas@${packageVersion(cwd, "packages/schemas")}`,
   ].join(" ");
 }
 

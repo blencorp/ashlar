@@ -1,5 +1,5 @@
 {
-  "name": "@ashlar/example-vite",
+  "name": "@blen/ashlar-example-vite",
   "version": "0.0.3",
   "private": true,
   "description": "Public-service page-shell Vite reference app for Ashlar. Demonstrates live agency theme switching driven by DTCG tokens.",
@@ -13,7 +13,7 @@
     "lint": "biome lint src"
   },
   "devDependencies": {
-    "@ashlar/cli": "workspace:*",
+    "@blen/ashlar-cli": "workspace:*",
     "@tailwindcss/vite": "catalog:",
     "@types/node": "catalog:",
     "tailwindcss": "catalog:",
