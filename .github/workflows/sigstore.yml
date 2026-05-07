@@ -77,7 +77,4 @@ jobs:
             reports/ashlar-public-trust.json
             reports/ashlar-release-trust-checklist.md
             reports/*.sigstore.json
-            registry/**/*.capsule.json
-            registry/**/*.sigstore.json
-            registry/trust-root.json
-            registry/index.json
+            registry
