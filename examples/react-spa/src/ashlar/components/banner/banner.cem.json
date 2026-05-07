@@ -11,7 +11,7 @@
           "tagName": "section",
           "description": "Official-site trust marker for federal and public-service pages.",
           "_ashlar": {
-            "version": "0.0.2",
+            "version": "0.0.3",
             "tier": "primitive",
             "layer": "L0",
             "stability": "experimental",
@@ -63,6 +63,11 @@
               }
             ],
             "policyMappings": [
+              {
+                "source": "USWDS Banner",
+                "requirement": "The banner header uses a decorative U.S. flag image and the official-site text pattern.",
+                "url": "https://designsystem.digital.gov/components/banner/"
+              },
               {
                 "source": "Federal Website Standards",
                 "requirement": "Federal public-service pages should identify official government websites with a recognizable banner near the top of the page.",

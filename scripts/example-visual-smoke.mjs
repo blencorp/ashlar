@@ -121,7 +121,11 @@ async function inspectExample(browserInstance, example, url) {
         return {
           ariaHidden: flag.getAttribute("aria-hidden"),
           backgroundImage: style.backgroundImage,
+          hasCanton: Boolean(flag.querySelector("[data-flag-canton]")),
           height: Number.parseFloat(style.height),
+          starCount: flag.querySelectorAll("[data-flag-star]").length,
+          stripeCount: flag.querySelectorAll("[data-flag-stripe]").length,
+          tagName: flag.tagName.toLowerCase(),
           width: Number.parseFloat(style.width),
         };
       });
@@ -131,14 +135,18 @@ async function inspectExample(browserInstance, example, url) {
       if (bannerFlag.ariaHidden !== "true") {
         throw new Error(`${viewport.name} banner flag must be hidden from assistive technology`);
       }
-      if (
-        bannerFlag.backgroundImage === "none" ||
-        !bannerFlag.backgroundImage.includes("linear-gradient") ||
-        !bannerFlag.backgroundImage.includes("repeating-linear-gradient")
-      ) {
-        throw new Error(`${viewport.name} banner flag is not rendering as a multi-color flag`);
+      if (bannerFlag.tagName !== "svg") {
+        throw new Error(`${viewport.name} banner flag must render as a real SVG image`);
       }
-      if (bannerFlag.width < 18 || bannerFlag.height < 10) {
+      if (bannerFlag.backgroundImage !== "none") {
+        throw new Error(`${viewport.name} banner flag must not be a CSS background image`);
+      }
+      if (!bannerFlag.hasCanton || bannerFlag.stripeCount < 7 || bannerFlag.starCount < 12) {
+        throw new Error(
+          `${viewport.name} banner flag is missing flag geometry: ${bannerFlag.stripeCount} stripe(s), ${bannerFlag.starCount} star(s), canton=${bannerFlag.hasCanton}`,
+        );
+      }
+      if (bannerFlag.width < 14 || bannerFlag.height < 9) {
         throw new Error(
           `${viewport.name} banner flag is too small: ${bannerFlag.width}px x ${bannerFlag.height}px`,
         );

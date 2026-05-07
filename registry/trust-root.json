@@ -51,6 +51,11 @@
       "keyId": "ashlar-local-dev-banner-2026-05-07b",
       "algorithm": "ed25519",
       "publicKey": "MCowBQYDK2VwAyEANJU3salarX5Oh6d6r+piTo9Fr/kIaoEnQIfrOLd4YhE="
+    },
+    {
+      "keyId": "ashlar-local-dev-banner-flag-2026-05-07",
+      "algorithm": "ed25519",
+      "publicKey": "MCowBQYDK2VwAyEALhgEEcVgughqkwnjrwGq8ZIW7uh0ng5kKCQvCa3m7ws="
     }
   ],
   "sigstore": {
