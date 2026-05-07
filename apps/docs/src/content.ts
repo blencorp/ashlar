@@ -266,6 +266,12 @@ export const pages: DocPage[] = [
         note: "Expected today: fail on stable evidence, external review proof, npm provenance, and public Sigstore trust.",
       },
       {
+        label: "Map the proof actions",
+        command:
+          "node packages/cli/dist/index.js release proof-plan --registry ./registry --output reports/proof-action-plan.md",
+        note: "Turns the current blockers into issue-linked reviewer tracks and exact artifact commands.",
+      },
+      {
         label: "Prepare Button review intake",
         command:
           "node packages/cli/dist/index.js evidence prepare-stable button --registry ./registry --fixture registry/components/button/0.0.1/button.html --output reports/button-stable-review",

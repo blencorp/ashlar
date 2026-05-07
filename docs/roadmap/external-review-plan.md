@@ -20,6 +20,9 @@ Maintainer prep:
 
 ```bash
 pnpm build
+node packages/cli/dist/index.js release proof-plan \
+  --registry ./registry \
+  --output reports/proof-action-plan.md
 node packages/cli/dist/index.js release review-pack \
   --registry ./registry \
   --output reports/review-pack
@@ -31,7 +34,7 @@ node packages/cli/dist/index.js evidence review-status button \
   --review-dir reports/l0-stable-review/button
 ```
 
-The review pack is a convenience bundle for reviewers. It does not create completed proof records and it does not replace the specific acceptance commands below.
+The proof action plan maps the current readiness blockers to the three review tracks and tracking issues. The review pack is a convenience bundle for reviewers. Neither artifact creates completed proof records, and neither replaces the specific acceptance commands below.
 
 Reviewer output must include:
 
