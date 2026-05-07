@@ -1,5 +1,11 @@
 # @ashlar/cli
 
+## 0.1.2
+
+### Patch Changes
+
+- [#62](https://github.com/blencorp/ashlar/pull/62) [`e39bc6d`](https://github.com/blencorp/ashlar/commit/e39bc6d5013fcf7643c5d0fa7792482298adacad) Thanks [@naodya](https://github.com/naodya)! - Add flat workflow-surface guidance to generated DESIGN.md files so AI-assisted edits avoid nested cards.
+
 ## 0.1.1
 
 ### Patch Changes
