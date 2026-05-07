@@ -1,5 +1,14 @@
 # ashlar
 
+## 0.1.4
+
+### Patch Changes
+
+- [#67](https://github.com/blencorp/ashlar/pull/67) [`f74a0d8`](https://github.com/blencorp/ashlar/commit/f74a0d801b941659a172f68c5e5ccc47f4e8c0e8) Thanks [@naodya](https://github.com/naodya)! - Polish the CLI TUI with branded help, BLEN attribution, shadcn-style aliases, and structured command output while preserving JSON-safe agent modes.
+
+- Updated dependencies [[`f74a0d8`](https://github.com/blencorp/ashlar/commit/f74a0d801b941659a172f68c5e5ccc47f4e8c0e8)]:
+  - @ashlar/cli@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes
