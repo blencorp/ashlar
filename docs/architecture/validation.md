@@ -33,7 +33,7 @@ fix: |
   <button class="ashlar-button" aria-label="TODO">$ICON</button>
 ```
 
-Markup primitive components use the semantic markup (`<button class="ashlar-button">`) per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md). The custom-element form (`<ashlar-button>`) is reserved for interactive components and never used in markup primitive anti-pattern rules.
+Markup primitive components use the semantic markup (`<button class="ashlar-button">`) per [ADR-0011](../adr/adr-0011-markup-primitive-contract.md). The custom-element form (`<ashlar-button>`) is reserved for interactive components and never used in markup primitive anti-pattern rules.
 
 ## Generating rules from CEM
 

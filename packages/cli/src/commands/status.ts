@@ -31,10 +31,10 @@ function printText(report: ReturnType<typeof buildProjectStatus>): void {
   printSection("Registry");
   printKeyValue("available", report.registry.available ? "yes" : "no");
   printKeyValue("capsules", report.registry.componentCount);
-  printKeyValue("markup primitives", `${report.registry.markupPrimitiveCount} (internal L0)`);
+  printKeyValue("markup primitives", report.registry.markupPrimitiveCount);
   printKeyValue(
     "stable-evidence markup primitives",
-    `${report.registry.stableEvidenceMarkupPrimitiveCount} (internal L0)`,
+    report.registry.stableEvidenceMarkupPrimitiveCount,
   );
   printSection("Checks");
   for (const check of report.checks) {

@@ -61,8 +61,8 @@ type ReleaseReadinessOptions = {
   allowUnverifiedPublic?: boolean;
   json?: boolean;
   jsonOutput?: string;
-  minL0: string;
-  minStableL0: string;
+  minMarkupPrimitives: string;
+  minStableMarkupPrimitives: string;
   report?: string;
   registry?: string;
 };
@@ -77,8 +77,8 @@ type ReleaseDesignPartnerChecklistOptions = {
 
 type ReleaseReviewPackOptions = {
   aiEvalSuite: string;
-  minL0: string;
-  minStableL0: string;
+  minMarkupPrimitives: string;
+  minStableMarkupPrimitives: string;
   output: string;
   registry?: string;
   stableComponent: string;
@@ -87,8 +87,8 @@ type ReleaseReviewPackOptions = {
 type ReleaseProofPlanOptions = {
   aiEvalSuite: string;
   json?: boolean;
-  minL0: string;
-  minStableL0: string;
+  minMarkupPrimitives: string;
+  minStableMarkupPrimitives: string;
   output?: string;
   registry?: string;
   stableComponent: string;
@@ -334,10 +334,10 @@ export function registerReleaseCommand(program: Command) {
     .description("Check replacement-grade release readiness")
     .option("--registry <path>", "Registry path (defaults to ./registry)")
     .option("--ai-eval-suite <path>", "AI eval suite path", "examples/ai-eval/ashlar-ai-eval.json")
-    .option("--min-l0 <count>", "Minimum markup primitive capsules required (internal L0)", "5")
+    .option("--min-markup-primitives <count>", "Minimum markup primitive capsules required", "5")
     .option(
-      "--min-stable-l0 <count>",
-      "Minimum stable-evidence markup primitive capsules required (internal L0)",
+      "--min-stable-markup-primitives <count>",
+      "Minimum stable-evidence markup primitive capsules required",
       "1",
     )
     .option(
@@ -358,8 +358,14 @@ export function registerReleaseCommand(program: Command) {
           allowLocalSignatures: options.allowLocalSignatures,
           allowUnverifiedPublic: options.allowUnverifiedPublic,
           cwd: process.cwd(),
-          minL0Components: integerOption(options.minL0, "--min-l0"),
-          minStableL0Components: integerOption(options.minStableL0, "--min-stable-l0"),
+          minMarkupPrimitiveComponents: integerOption(
+            options.minMarkupPrimitives,
+            "--min-markup-primitives",
+          ),
+          minStableMarkupPrimitiveComponents: integerOption(
+            options.minStableMarkupPrimitives,
+            "--min-stable-markup-primitives",
+          ),
           registryPath: options.registry ?? "./registry",
         });
         const validation = validate("releaseReadiness", report);
@@ -410,10 +416,10 @@ export function registerReleaseCommand(program: Command) {
     .option("--registry <path>", "Registry path (defaults to ./registry)")
     .option("--stable-component <name>", "Stable evidence target component", "button")
     .option("--ai-eval-suite <path>", "AI eval suite path", "examples/ai-eval/ashlar-ai-eval.json")
-    .option("--min-l0 <count>", "Minimum markup primitive capsules required (internal L0)", "5")
+    .option("--min-markup-primitives <count>", "Minimum markup primitive capsules required", "5")
     .option(
-      "--min-stable-l0 <count>",
-      "Minimum stable-evidence markup primitive capsules required (internal L0)",
+      "--min-stable-markup-primitives <count>",
+      "Minimum stable-evidence markup primitive capsules required",
       "1",
     )
     .option("--output <path>", "Write a Markdown proof action plan")
@@ -424,8 +430,14 @@ export function registerReleaseCommand(program: Command) {
         const readiness = checkReleaseReadiness({
           aiEvalSuitePath: options.aiEvalSuite,
           cwd: process.cwd(),
-          minL0Components: integerOption(options.minL0, "--min-l0"),
-          minStableL0Components: integerOption(options.minStableL0, "--min-stable-l0"),
+          minMarkupPrimitiveComponents: integerOption(
+            options.minMarkupPrimitives,
+            "--min-markup-primitives",
+          ),
+          minStableMarkupPrimitiveComponents: integerOption(
+            options.minStableMarkupPrimitives,
+            "--min-stable-markup-primitives",
+          ),
           registryPath,
         });
         const plan = buildReleaseProofPlan({
@@ -464,10 +476,10 @@ export function registerReleaseCommand(program: Command) {
     .option("--registry <path>", "Registry path (defaults to ./registry)")
     .option("--stable-component <name>", "Stable evidence target component", "button")
     .option("--ai-eval-suite <path>", "AI eval suite path", "examples/ai-eval/ashlar-ai-eval.json")
-    .option("--min-l0 <count>", "Minimum markup primitive capsules required (internal L0)", "5")
+    .option("--min-markup-primitives <count>", "Minimum markup primitive capsules required", "5")
     .option(
-      "--min-stable-l0 <count>",
-      "Minimum stable-evidence markup primitive capsules required (internal L0)",
+      "--min-stable-markup-primitives <count>",
+      "Minimum stable-evidence markup primitive capsules required",
       "1",
     )
     .action((options: ReleaseReviewPackOptions) => {
@@ -475,8 +487,14 @@ export function registerReleaseCommand(program: Command) {
         const result = writeReleaseReviewPack({
           aiEvalSuitePath: options.aiEvalSuite,
           cwd: process.cwd(),
-          minL0Components: integerOption(options.minL0, "--min-l0"),
-          minStableL0Components: integerOption(options.minStableL0, "--min-stable-l0"),
+          minMarkupPrimitiveComponents: integerOption(
+            options.minMarkupPrimitives,
+            "--min-markup-primitives",
+          ),
+          minStableMarkupPrimitiveComponents: integerOption(
+            options.minStableMarkupPrimitives,
+            "--min-stable-markup-primitives",
+          ),
           outputDir: options.output,
           registryPath: options.registry ?? "./registry",
           stableComponent: options.stableComponent,

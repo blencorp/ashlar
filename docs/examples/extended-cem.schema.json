@@ -5,10 +5,14 @@
   "description": "JSON Schema for the _ashlar namespace extension to W3C-CG Custom Elements Manifest.",
   "type": "object",
   "properties": {
-    "schemaVersion": { "type": "string" },
+    "schemaVersion": {
+      "type": "string"
+    },
     "modules": {
       "type": "array",
-      "items": { "$ref": "#/$defs/module" }
+      "items": {
+        "$ref": "#/$defs/module"
+      }
     }
   },
   "required": ["schemaVersion", "modules"],
@@ -16,22 +20,38 @@
     "module": {
       "type": "object",
       "properties": {
-        "kind": { "type": "string" },
-        "path": { "type": "string" },
+        "kind": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
         "declarations": {
           "type": "array",
-          "items": { "$ref": "#/$defs/declaration" }
+          "items": {
+            "$ref": "#/$defs/declaration"
+          }
         }
       }
     },
     "declaration": {
       "type": "object",
       "properties": {
-        "kind": { "type": "string" },
-        "name": { "type": "string" },
-        "tagName": { "type": "string" },
-        "description": { "type": "string" },
-        "_ashlar": { "$ref": "#/$defs/ashlarExtension" }
+        "kind": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tagName": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "_ashlar": {
+          "$ref": "#/$defs/ashlarExtension"
+        }
       }
     },
     "ashlarExtension": {
@@ -46,31 +66,47 @@
           "enum": ["foundation", "primitive", "composite", "pattern", "block"]
         },
         "layer": {
-          "enum": ["L0", "L1", "L2", "L3", "L4"]
+          "enum": [
+            "markup-primitives",
+            "interactive-components",
+            "framework-adapters",
+            "service-patterns",
+            "application-blocks"
+          ]
         },
         "stability": {
           "enum": ["proposal", "experimental", "beta", "stable", "deprecated"]
         },
         "variants": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Allowed values for the variant prop (or equivalent)."
         },
         "sizes": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         },
         "a11yRequirements": {
           "type": "array",
-          "items": { "$ref": "#/$defs/a11yRequirement" }
+          "items": {
+            "$ref": "#/$defs/a11yRequirement"
+          }
         },
         "antiPatterns": {
           "type": "array",
-          "items": { "$ref": "#/$defs/antiPattern" }
+          "items": {
+            "$ref": "#/$defs/antiPattern"
+          }
         },
         "tokensConsumed": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Ashlar semantic token names consumed by this component."
         },
         "rendering": {
@@ -86,7 +122,9 @@
         },
         "firefoxFallbacks": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Documented Firefox-specific ARIA fallbacks for ElementInternals gaps."
         },
         "examples": {
@@ -98,11 +136,15 @@
         },
         "doNot": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         },
         "policyMapping": {
           "type": "array",
-          "items": { "$ref": "#/$defs/policyMapping" }
+          "items": {
+            "$ref": "#/$defs/policyMapping"
+          }
         }
       },
       "required": ["version", "tier", "layer", "stability"]
@@ -110,17 +152,28 @@
     "a11yRequirement": {
       "type": "object",
       "properties": {
-        "id": { "type": "string" },
-        "wcag": { "type": "string", "description": "WCAG 2.x criterion id (e.g., 4.1.2)." },
-        "severity": { "enum": ["error", "warning", "info"] },
-        "description": { "type": "string" }
+        "id": {
+          "type": "string"
+        },
+        "wcag": {
+          "type": "string",
+          "description": "WCAG 2.x criterion id (e.g., 4.1.2)."
+        },
+        "severity": {
+          "enum": ["error", "warning", "info"]
+        },
+        "description": {
+          "type": "string"
+        }
       },
       "required": ["id", "severity"]
     },
     "antiPattern": {
       "type": "object",
       "properties": {
-        "id": { "type": "string" },
+        "id": {
+          "type": "string"
+        },
         "pattern": {
           "type": "string",
           "description": "ast-grep-compatible pattern used to generate validation rules."
@@ -136,8 +189,12 @@
         "reason": {
           "type": "string"
         },
-        "wcag": { "type": "string" },
-        "severity": { "enum": ["error", "warning", "info"] }
+        "wcag": {
+          "type": "string"
+        },
+        "severity": {
+          "enum": ["error", "warning", "info"]
+        }
       },
       "required": ["id", "pattern", "severity"]
     },
@@ -154,7 +211,9 @@
         },
         "criteria": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": {
+            "type": "string"
+          }
         }
       },
       "required": ["policy"]

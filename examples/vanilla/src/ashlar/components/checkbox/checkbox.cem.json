@@ -13,7 +13,7 @@
           "_ashlar": {
             "version": "0.0.1",
             "tier": "primitive",
-            "layer": "L0",
+            "layer": "markup-primitives",
             "stability": "experimental",
             "selector": ".ashlar-checkbox",
             "a11yRequirements": [
@@ -41,7 +41,9 @@
                 "id": "checkbox-needs-associated-label",
                 "pattern": "<input $$$ATTRS>",
                 "regex": "class=\"[^\"]*\\bashlar-checkbox\\b[\\s\\S]*type=\"checkbox\"",
-                "not": { "regex": "(id|aria-label|aria-labelledby)\\s*=" },
+                "not": {
+                  "regex": "(id|aria-label|aria-labelledby)\\s*="
+                },
                 "message": "Ashlar Checkbox requires an id plus associated label, aria-label, or aria-labelledby.",
                 "fix": "Add an id and a visible label with matching for, or provide aria-labelledby.",
                 "wcag": "3.3.2",

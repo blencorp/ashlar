@@ -92,7 +92,7 @@ export function registerEvidenceCommand(program: Command) {
     .option("--key-id <id>", "Trusted local signing key id for evidence publish")
     .option(
       "--layer <layer>",
-      "Layer for evidence prepare-stable-all: markup-primitives, interactive-components, framework-adapters, service-patterns, application-blocks, all, or L0-L4",
+      "Layer for evidence prepare-stable-all: markup-primitives, interactive-components, framework-adapters, service-patterns, application-blocks, or all",
       "markup-primitives",
     )
     .option("--manual-file <path>", "Manual evidence artifact path for evidence review")

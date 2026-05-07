@@ -13,7 +13,7 @@
           "_ashlar": {
             "version": "0.0.1",
             "tier": "primitive",
-            "layer": "L0",
+            "layer": "markup-primitives",
             "stability": "experimental",
             "selector": ".ashlar-select",
             "a11yRequirements": [
@@ -47,7 +47,9 @@
                 "id": "select-needs-associated-label",
                 "pattern": "<select $$$ATTRS>$$$CHILDREN</select>",
                 "regex": "class=\"[^\"]*\\bashlar-select\\b",
-                "not": { "regex": "\\b(id|aria-label|aria-labelledby)\\s*=" },
+                "not": {
+                  "regex": "\\b(id|aria-label|aria-labelledby)\\s*="
+                },
                 "message": "Ashlar Select requires an id plus associated label, aria-label, or aria-labelledby.",
                 "fix": "Add an id and a visible label with matching for, or provide aria-labelledby.",
                 "wcag": "3.3.2",
@@ -58,7 +60,9 @@
                 "id": "invalid-select-needs-describedby",
                 "pattern": "<select $$$ATTRS>$$$CHILDREN</select>",
                 "regex": "class=\"[^\"]*\\bashlar-select\\b[\\s\\S]*aria-invalid=\"true\"",
-                "not": { "regex": "aria-describedby\\s*=" },
+                "not": {
+                  "regex": "aria-describedby\\s*="
+                },
                 "message": "Invalid Ashlar Select requires aria-describedby pointing to error text.",
                 "fix": "Add aria-describedby with the error message id.",
                 "wcag": "3.3.1",

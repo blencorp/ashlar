@@ -17,7 +17,7 @@ export function registerBundleCommand(program: Command) {
     .description("Check component runtime asset gzip sizes against configured budgets")
     .argument(
       "[components...]",
-      "Component names; defaults to all markup primitive registry capsules (internal L0)",
+      "Component names; defaults to all markup primitive registry capsules",
     )
     .option("--max-css-gzip <bytes>", "Maximum combined gzipped CSS bytes")
     .option("--max-js-gzip <bytes>", "Maximum combined gzipped JavaScript bytes")

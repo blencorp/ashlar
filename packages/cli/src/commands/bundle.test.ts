@@ -200,7 +200,7 @@ describe("bundle command", () => {
         directory: componentDirectory,
         name: "button",
         version: "0.0.1",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental",
       });
       writeJson(join(componentDirectory, "button.capsule.json"), signManifest(manifest, signing));

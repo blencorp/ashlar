@@ -82,7 +82,7 @@ For each installed capsule:
 
 ### Codemod application
 
-Codemods currently ship in the capsule as JSON files referenced by `manifest.codemods`. That list is part of the capsule hash/signature payload when present, codemod files must also be listed in `manifest.files`, and codemod files validate against `codemod.schema.json` before any rewrite runs. The prototype runner supports a deliberately small ast-grep subset: one target file, one `language`, one `pattern`, and one fixed `rewrite`. Rule targets must stay inside the installed component directory and be listed in the capsule manifest. Markup primitive codemods target the semantic markup form (`<button class="ashlar-button">`) per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md); interactive component codemods target the custom-element form (`<ashlar-combobox>`).
+Codemods currently ship in the capsule as JSON files referenced by `manifest.codemods`. That list is part of the capsule hash/signature payload when present, codemod files must also be listed in `manifest.files`, and codemod files validate against `codemod.schema.json` before any rewrite runs. The prototype runner supports a deliberately small ast-grep subset: one target file, one `language`, one `pattern`, and one fixed `rewrite`. Rule targets must stay inside the installed component directory and be listed in the capsule manifest. Markup primitive codemods target the semantic markup form (`<button class="ashlar-button">`) per [ADR-0011](../adr/adr-0011-markup-primitive-contract.md); interactive component codemods target the custom-element form (`<ashlar-combobox>`).
 
 ```json
 {

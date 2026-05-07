@@ -4,7 +4,7 @@ import { readCapsuleManifest, readVerifiedCapsuleManifest } from "./capsule.js";
 import { checkBundleBudget } from "./bundle-budget.js";
 import { checkEvidence } from "./evidence-check.js";
 import { checkExternalReviewRecords } from "./external-review-record.js";
-import { formatRegistryLayer } from "./layers.js";
+import { formatRegistryLayer, formatRegistryLayerCapsules } from "./layers.js";
 import { runAiEvalSuite } from "./ai-eval.js";
 import { checkReleaseProvenanceReadiness } from "./release-provenance.js";
 import {
@@ -42,8 +42,8 @@ type ReleaseReadinessInput = {
   allowLocalSignatures?: boolean;
   allowUnverifiedPublic?: boolean;
   cwd: string;
-  minL0Components: number;
-  minStableL0Components: number;
+  minMarkupPrimitiveComponents: number;
+  minStableMarkupPrimitiveComponents: number;
   registryPath: string;
 };
 
@@ -112,51 +112,61 @@ function registryCapsuleCheck(input: {
 
 function componentCoverageCheck(input: {
   components: RegistryComponent[];
-  minL0Components: number;
+  minMarkupPrimitiveComponents: number;
 }): ReleaseReadinessCheck {
-  const l0 = input.components.filter((component) => component.layer === "L0");
-  if (l0.length < input.minL0Components) {
+  const markupPrimitives = input.components.filter(
+    (component) => component.layer === "markup-primitives",
+  );
+  if (markupPrimitives.length < input.minMarkupPrimitiveComponents) {
     return check(
       "component-coverage",
       "fail",
-      `Requires at least ${input.minL0Components} ${formatRegistryLayer("L0")} capsule(s); found ${l0.length}.`,
-      componentDetails(l0),
+      `Requires at least ${input.minMarkupPrimitiveComponents} ${formatRegistryLayerCapsules(
+        "markup-primitives",
+      )}; found ${markupPrimitives.length}.`,
+      componentDetails(markupPrimitives),
     );
   }
 
   return check(
     "component-coverage",
     "pass",
-    `Found ${l0.length} ${formatRegistryLayer("L0")} capsule(s), meeting the ${input.minL0Components} component gate.`,
-    componentDetails(l0),
+    `Found ${markupPrimitives.length} ${formatRegistryLayerCapsules(
+      "markup-primitives",
+    )}, meeting the ${input.minMarkupPrimitiveComponents} component gate.`,
+    componentDetails(markupPrimitives),
   );
 }
 
 function stableEvidenceCheck(input: {
   components: RegistryComponent[];
-  minStableL0Components: number;
+  minStableMarkupPrimitiveComponents: number;
 }): ReleaseReadinessCheck {
-  const stableL0 = input.components.filter(
+  const stableMarkupPrimitives = input.components.filter(
     (component) =>
-      component.layer === "L0" &&
+      component.layer === "markup-primitives" &&
       component.evidence.stability === "stable" &&
       component.evidence.accessibilityStatus === "stable-evidence",
   );
 
-  if (stableL0.length < input.minStableL0Components) {
+  if (stableMarkupPrimitives.length < input.minStableMarkupPrimitiveComponents) {
     return check(
-      "stable-l0-evidence",
+      "stable-markup-evidence",
       "fail",
-      `Requires at least ${input.minStableL0Components} stable-evidence ${formatRegistryLayer("L0")} capsule(s); found ${stableL0.length}.`,
-      componentDetails(input.components.filter((component) => component.layer === "L0")),
+      `Requires stable evidence for at least ${input.minStableMarkupPrimitiveComponents} markup primitive capsule; found ${stableMarkupPrimitives.length}.`,
+      componentDetails(
+        input.components.filter((component) => component.layer === "markup-primitives"),
+      ),
     );
   }
 
   return check(
-    "stable-l0-evidence",
+    "stable-markup-evidence",
     "pass",
-    `Found ${stableL0.length} stable-evidence ${formatRegistryLayer("L0")} capsule(s).`,
-    componentDetails(stableL0),
+    `Found ${stableMarkupPrimitives.length} stable-evidence ${formatRegistryLayerCapsules(
+      "markup-primitives",
+    )}.`,
+    componentDetails(stableMarkupPrimitives),
   );
 }
 
@@ -189,7 +199,7 @@ function bundleBudgetCheck(input: { cwd: string; registryPath: string }): Releas
       registryPath: input.registryPath,
     });
     const details = [
-      `${report.summary.componentCount} ${formatRegistryLayer("L0")} capsule(s)`,
+      `${report.summary.componentCount} ${formatRegistryLayerCapsules("markup-primitives")}`,
       `${report.summary.cssGzipBytes} B CSS gzip / ${report.summary.maxCssGzipBytes} B budget`,
       `${report.summary.jsGzipBytes} B JS gzip / ${report.summary.maxJsGzipBytes ?? "unbounded"} B budget`,
     ];
@@ -611,8 +621,14 @@ export function checkReleaseReadiness(input: ReleaseReadinessInput): ReleaseRead
   );
   const checks = [
     registryCapsuleCheck({ components, cwd: input.cwd, registryPath: input.registryPath }),
-    componentCoverageCheck({ components, minL0Components: input.minL0Components }),
-    stableEvidenceCheck({ components, minStableL0Components: input.minStableL0Components }),
+    componentCoverageCheck({
+      components,
+      minMarkupPrimitiveComponents: input.minMarkupPrimitiveComponents,
+    }),
+    stableEvidenceCheck({
+      components,
+      minStableMarkupPrimitiveComponents: input.minStableMarkupPrimitiveComponents,
+    }),
     evidenceGateCheck(components),
     bundleBudgetCheck({ cwd: input.cwd, registryPath: input.registryPath }),
     aiEvalCheck({

@@ -1,6 +1,6 @@
 # Service patterns and application blocks
 
-Markup primitives (`L0`) and interactive components (`L1`) are the building blocks. **Service patterns** (`L3`) compose them into service flows that solve real government UX problems. **Application blocks** (`L4`) ship the same components rendered as Nunjucks, Twig, Jinja, ERB, and plain HTML so non-JS stacks can consume them without a build step.
+Markup primitives and interactive components are the building blocks. **Service patterns** compose them into service flows that solve real government UX problems. **Application blocks** ship the same components rendered as Nunjucks, Twig, Jinja, ERB, and plain HTML so non-JS stacks can consume them without a build step.
 
 ## Service Patterns
 
@@ -49,7 +49,7 @@ Patterns reference component capsules as registry dependencies:
 {
   "name": "eligibility-check",
   "tier": "pattern",
-  "layer": "L3",
+  "layer": "service-patterns",
   "stability": "beta",
   "registryDependencies": [
     "form-field@^1",

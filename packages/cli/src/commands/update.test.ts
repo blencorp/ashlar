@@ -94,7 +94,7 @@ function createRegistry(): void {
           "0.0.1": manifest.capsule_hash,
         },
         tier: "primitive",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental",
         description: "Accessible semantic action control for forms and workflows.",
       },
@@ -117,7 +117,7 @@ function publishButtonV2(cssTransform: (css: string) => string): void {
     directory: buttonV2,
     name: "button",
     version: "0.0.2",
-    layer: "L0",
+    layer: "markup-primitives",
     stability: "experimental",
   });
   writeSignedManifest(buttonV2, "button", manifest);
@@ -164,7 +164,7 @@ function publishButtonV2WithCodemod(cssTransform: (css: string) => string): void
     directory: buttonV2,
     name: "button",
     version: "0.0.2",
-    layer: "L0" as const,
+    layer: "markup-primitives" as const,
     stability: "experimental" as const,
     codemods: ["button.codemods.json"],
   });
@@ -222,7 +222,7 @@ function publishButtonVersionWithCodemod(input: {
     directory: buttonVersion,
     name: "button",
     version: input.version,
-    layer: "L0" as const,
+    layer: "markup-primitives" as const,
     stability: "experimental" as const,
     codemods: ["button.codemods.json"],
   });

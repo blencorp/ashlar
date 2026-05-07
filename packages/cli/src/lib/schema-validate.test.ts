@@ -216,11 +216,10 @@ describe("schema-validate", () => {
       },
       checks: [
         {
-          id: "stable-l0-evidence",
+          id: "stable-markup-evidence",
           status: "fail",
-          summary:
-            "Requires at least 1 stable-evidence markup primitives (L0) capsule(s); found 0.",
-          details: ["button@0.0.1 markup primitives (L0) experimental evidence:not-reviewed"],
+          summary: "Requires stable evidence for at least 1 markup primitive capsule; found 0.",
+          details: ["button@0.0.1 markup primitives experimental evidence:not-reviewed"],
         },
       ],
     });
@@ -473,7 +472,7 @@ describe("schema-validate", () => {
           {
             name: "button",
             version: "0.0.1",
-            layer: "L0",
+            layer: "markup-primitives",
             stability: "experimental",
             capsuleHash: "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
             signatureKeyId: "ashlar-local-dev-2026-05-05",

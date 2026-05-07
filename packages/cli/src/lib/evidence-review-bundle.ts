@@ -6,7 +6,7 @@ import { applyEvidenceArtifact } from "./evidence-apply.js";
 import { collectAutomatedEvidence } from "./evidence-collect.js";
 import { buildManualEvidenceTemplate } from "./evidence-manual-template.js";
 import { buildManualTranscriptTemplate } from "./evidence-transcript.js";
-import { formatRegistryLayer } from "./layers.js";
+import { formatRegistryLayer, formatRegistryLayerCapsules } from "./layers.js";
 import { getComponent, listComponents, type RegistryLayer } from "./registry.js";
 import { describeErrors, validate } from "./schema-validate.js";
 
@@ -184,7 +184,7 @@ ashlar evidence ${bundle.component} --check --registry ${registryPath} --evidenc
 
 function batchReviewerIndex(batch: StableEvidenceReviewBatch, cwd: string, registryPath: string) {
   const layerLabel =
-    batch.layer === "all" ? "all registry layers" : `${formatRegistryLayer(batch.layer)} capsules`;
+    batch.layer === "all" ? "all registry layers" : formatRegistryLayerCapsules(batch.layer);
   const rows = batch.bundles
     .map((bundle) => {
       const reviewDir = cwdRelative(cwd, bundle.outputDir);
@@ -588,7 +588,7 @@ export function prepareStableEvidenceReviewBundle(
 export function prepareStableEvidenceReviewBatch(
   input: PrepareStableEvidenceBatchInput,
 ): StableEvidenceReviewBatch {
-  const layer = input.layer ?? "L0";
+  const layer = input.layer ?? "markup-primitives";
   const outputDir = resolve(input.cwd, input.outputDir);
   mkdirSync(outputDir, { recursive: true });
 

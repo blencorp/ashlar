@@ -2,10 +2,10 @@
   "schemaVersion": "1.0",
   "name": "banner",
   "version": "0.0.2",
-  "layer": "L0",
+  "layer": "markup-primitives",
   "stability": "experimental",
   "files": {
-    "banner.cem.json": "sha256:437c9d59b9e665e9e10541dc363a43499535b75104555b34ff40726bfe74e398",
+    "banner.cem.json": "sha256:e3938921e230750ed2199dcc7abcd2dc3911971b2f4b955db36b2614adf947e2",
     "banner.css": "sha256:5402ffd29474dfaab5e0224312febb56c1a7ddeb5a8e1881fa02533cade5915b",
     "banner.evidence.json": "sha256:fa3ba53dca67909e371da0d07079a04b2ffef359e6cf6ff6aaf5170646880e65",
     "banner.html": "sha256:8a4d5d6a5347204cc6cbabb3704a349458a8400ff0f30f3b3eb28c5b157b3b3a"
@@ -14,10 +14,10 @@
     "cssGzipBytes": 1536,
     "jsGzipBytes": 0
   },
-  "capsule_hash": "sha256:de275cf52609200a1f3afaace582c705d6254761b074c0c59fcbe267736bb0f5",
+  "capsule_hash": "sha256:a2467888a6f483f43ca80131a7b69ee20337f6fdb84d9079836d18ddeba71b12",
   "signature": {
-    "keyId": "ashlar-local-dev-banner-2026-05-07b",
+    "keyId": "ashlar-local-dev-layer-slugs-formatted-2026-05-07",
     "algorithm": "ed25519",
-    "value": "TgWPRT197H/GiubPc/gHqsz/EBwGxqkFvMsaIr9ddgQKeUkyFMUYUwWyA36LZIEIQbjfa5MFACWPooh+gzKUBA=="
+    "value": "5ecaC0WDxat2uZnnrOkPR5HwnPlMqIHGKTX6rV5C3PCyvrx+7WU13/zxXs5C5Lp57WL6l6FNkNwxz25scxySCA=="
   }
 }

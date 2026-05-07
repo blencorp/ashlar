@@ -36,7 +36,7 @@ Default to the platform. Reach for JavaScript only where the platform genuinely 
 
 ### 3. Markup primitives ship semantic HTML, not custom elements
 
-Markup primitive capsules, stored internally as layer `L0`, use platform HTML plus Ashlar classes and data attributes as the canonical DOM contract: `<button class="ashlar-button" data-variant="primary">`, not `<ashlar-button>`. This is the contract that survives across React, Vue, Astro, plain HTML, Drupal, Sitecore, Rails, Django, and other server-rendered stacks. Custom elements are reserved for interactive components that genuinely need JavaScript behavior. See [ADR 0011](adr/adr-0011-l0-semantic-contract.md).
+Markup primitive capsules use platform HTML plus Ashlar classes and data attributes as the canonical DOM contract: `<button class="ashlar-button" data-variant="primary">`, not `<ashlar-button>`. This is the contract that survives across React, Vue, Astro, plain HTML, Drupal, Sitecore, Rails, Django, and other server-rendered stacks. Custom elements are reserved for interactive components that genuinely need JavaScript behavior. See [ADR 0011](adr/adr-0011-markup-primitive-contract.md).
 
 ### 4. Source ownership requires safe updates
 
@@ -91,11 +91,11 @@ Every claim links to STATUS.md or a versioned status field. We do not write "Car
 - **Evidence schema** — machine-readable accessibility evidence (axe + keyboard + manual SR + WCAG + ICT Baseline), stable-component gate, queryable by tools and auditors.
 - **AI contract** — extended Custom Elements Manifest with `_ashlar` namespace; MCP server exposing search, evidence retrieval, validation, and migration; AGENTS.md sync for editor coverage.
 - **Layered architecture**:
-  - **Markup primitives** (`L0`): semantic HTML + CSS capsules; zero or trivial JavaScript; ~70% of typical components.
-  - **Interactive components** (`L1`): custom elements wrapping statecharts and signals, for components that genuinely need behavior; ~30% of components. The statechart library choice is a research bet (see risks).
-  - **Framework adapters** (`L2`): auto-generated from extended CEM (React first; Vue/Svelte/Solid in v0.2).
-  - **Service patterns** (`L3`): flows like eligibility check, document upload, address verification.
-  - **Application blocks** (`L4`): the same component rendered as Nunjucks, Twig, Jinja, ERB, plain HTML.
+  - **Markup primitives**: semantic HTML + CSS capsules; zero or trivial JavaScript; ~70% of typical components.
+  - **Interactive components**: custom elements wrapping statecharts and signals, for components that genuinely need behavior; ~30% of components. The statechart library choice is a research bet (see risks).
+  - **Framework adapters**: auto-generated from extended CEM (React first; Vue/Svelte/Solid in v0.2).
+  - **Service patterns**: flows like eligibility check, document upload, address verification.
+  - **Application blocks**: the same component rendered as Nunjucks, Twig, Jinja, ERB, plain HTML.
 - **Tokens** — DTCG-format source compiled to CSS variables, Tailwind v4 `@theme`, and typed TypeScript today, with Figma/design-tool output planned.
 
 ## What Ashlar is not

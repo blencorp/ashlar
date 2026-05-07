@@ -13,7 +13,7 @@
           "_ashlar": {
             "version": "0.0.1",
             "tier": "pattern",
-            "layer": "L3",
+            "layer": "service-patterns",
             "stability": "proposal",
             "selector": ".ashlar-benefit-application",
             "a11yRequirements": [

@@ -20,7 +20,7 @@ node packages/cli/dist/index.js release readiness --registry ./registry
 
 Current strict gate status:
 
-- `stable-l0-evidence`: fails because 0 markup primitive capsules have published stable evidence.
+- `stable-markup-evidence`: fails because 0 markup primitive capsules have published stable evidence.
 - `external-review-proof`: fails until real stable-evidence, release-trust, and design-partner review records exist under `docs/reviews/`.
 - `npm-provenance-public`: fails until a real npm trusted-publishing release exists and `release provenance-verify-public` passes.
 - `sigstore-public-trust`: fails until real capsule Sigstore bundles are produced, published, and verified with `release public-trust-verify`.

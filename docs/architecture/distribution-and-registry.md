@@ -47,7 +47,7 @@ registry/
       },
       "stability": "stable",
       "tier": "primitive",
-      "layer": "L0"
+      "layer": "markup-primitives"
     },
     "combobox": { /* ... */ }
   },

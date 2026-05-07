@@ -40,7 +40,7 @@ describe("buildCapsuleManifest", () => {
         directory: dir,
         name: "button",
         version: "0.0.1",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental",
       });
 
@@ -61,7 +61,7 @@ describe("buildCapsuleManifest", () => {
         directory: dir,
         name: "button",
         version: "0.0.1",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental",
       });
       writeJson(join(dir, "button.capsule.json"), manifest);
@@ -71,7 +71,7 @@ describe("buildCapsuleManifest", () => {
           directory: dir,
           name: "button",
           version: "0.0.1",
-          layer: "L0",
+          layer: "markup-primitives",
           stability: "experimental",
         }),
       ).toThrow(/capsule trust root is required/i);
@@ -90,7 +90,7 @@ describe("buildCapsuleManifest", () => {
         directory: dir,
         name: "button",
         version: "0.0.1",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental",
         bundleBudget: {
           cssGzipBytes: 4096,
@@ -111,7 +111,7 @@ describe("buildCapsuleManifest", () => {
           directory: dir,
           name: "button",
           version: "0.0.1",
-          layer: "L0",
+          layer: "markup-primitives",
           stability: "experimental",
         }),
       ).toThrow(/capsule_hash mismatch/i);
@@ -138,7 +138,7 @@ describe("buildCapsuleManifest", () => {
         directory: dir,
         name: "button",
         version: "0.0.1",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental",
       });
       const signature = sign(null, Buffer.from(signedPayload(manifest)), privateKey).toString(
@@ -154,7 +154,7 @@ describe("buildCapsuleManifest", () => {
           directory: dir,
           name: "button",
           version: "0.0.1",
-          layer: "L0",
+          layer: "markup-primitives",
           stability: "experimental",
           trustRoot,
         }),
@@ -173,7 +173,7 @@ describe("buildCapsuleManifest", () => {
           directory: dir,
           name: "button",
           version: "0.0.1",
-          layer: "L0",
+          layer: "markup-primitives",
           stability: "experimental",
           trustRoot,
         }),
@@ -206,7 +206,7 @@ describe("buildCapsuleManifest", () => {
         directory: dir,
         name: "button",
         version: "0.0.1",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental",
       });
       writeFileSync(
@@ -232,7 +232,7 @@ describe("buildCapsuleManifest", () => {
           directory: dir,
           name: "button",
           version: "0.0.1",
-          layer: "L0",
+          layer: "markup-primitives",
           stability: "experimental",
           trustRoot,
         }),
@@ -268,7 +268,7 @@ describe("buildCapsuleManifest", () => {
         directory: dir,
         name: "button",
         version: "0.0.1",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental",
       });
       const sigstore = {
@@ -299,7 +299,7 @@ process.exit(0);
         directory: dir,
         name: "button",
         version: "0.0.1",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental",
         trustRoot,
         cosignPath: fakeCosignPath,
@@ -352,7 +352,7 @@ process.exit(0);
         directory: dir,
         name: "button",
         version: "0.0.1",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental",
       });
       const signature = sign(null, Buffer.from(signedPayload(manifest)), privateKey).toString(
@@ -370,7 +370,7 @@ process.exit(0);
           directory: dir,
           name: "button",
           version: "0.0.1",
-          layer: "L0",
+          layer: "markup-primitives",
           stability: "experimental",
           trustRoot,
         }),
@@ -385,7 +385,7 @@ process.exit(0);
       schemaVersion: "1.0",
       name: "button",
       version: "0.0.1",
-      layer: "L0",
+      layer: "markup-primitives",
       stability: "experimental",
       files: {
         "button.css": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",

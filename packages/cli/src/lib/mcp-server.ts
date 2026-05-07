@@ -43,7 +43,15 @@ export function buildAshlarMcpServer(options: AshlarMcpServerOptions): McpServer
         "Search the local Ashlar registry by component, policy, platform feature, token, layer, stability, or evidence metadata.",
       inputSchema: z.object({
         query: z.string().optional().default(""),
-        layer: z.enum(["L0", "L1", "L2", "L3", "L4"]).optional(),
+        layer: z
+          .enum([
+            "markup-primitives",
+            "interactive-components",
+            "framework-adapters",
+            "service-patterns",
+            "application-blocks",
+          ])
+          .optional(),
         tier: z.enum(["foundation", "primitive", "composite", "pattern", "block"]).optional(),
         stability: z.enum(["proposal", "experimental", "beta", "stable", "deprecated"]).optional(),
         evidence: z.string().optional(),

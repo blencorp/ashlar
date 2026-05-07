@@ -8,11 +8,11 @@ Proposed.
 
 Ashlar is organized as five layers, each independently usable:
 
-- **Markup primitives** (`L0`) — Pure CSS and HTML capsules; exploits the modern web platform; zero or trivial JavaScript. Targets ~70% of typical components.
-- **Interactive components** (`L1`) — Web Components (Lit) wrapping Zag statecharts and signals. Targets the ~30% of components that legitimately need JavaScript state.
-- **Framework adapters** (`L2`) — `@blen/ashlar-react`, `@blen/ashlar-vue`, `@blen/ashlar-svelte`, and `@blen/ashlar-solid` auto-generated from extended Custom Elements Manifests.
-- **Service patterns** (`L3`) — composed service flows such as eligibility check, document upload, and address form.
-- **Application blocks** (`L4`) — same components rendered as Nunjucks, Twig, Jinja, ERB, and plain HTML.
+- **Markup primitives** (`markup-primitives`) — Pure CSS and HTML capsules; exploits the modern web platform; zero or trivial JavaScript. Targets ~70% of typical components.
+- **Interactive components** (`interactive-components`) — Web Components (Lit) wrapping Zag statecharts and signals. Targets the ~30% of components that legitimately need JavaScript state.
+- **Framework adapters** (`framework-adapters`) — `@blen/ashlar-react`, `@blen/ashlar-vue`, `@blen/ashlar-svelte`, and `@blen/ashlar-solid` auto-generated from extended Custom Elements Manifests.
+- **Service patterns** (`service-patterns`) — composed service flows such as eligibility check, document upload, and address form.
+- **Application blocks** (`application-blocks`) — same components rendered as Nunjucks, Twig, Jinja, ERB, and plain HTML.
 
 Tokens (DTCG 2025.10) sit beneath all layers as a framework-neutral contract.
 

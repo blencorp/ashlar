@@ -2,10 +2,10 @@
   "schemaVersion": "1.0",
   "name": "banner",
   "version": "0.0.1",
-  "layer": "L0",
+  "layer": "markup-primitives",
   "stability": "experimental",
   "files": {
-    "banner.cem.json": "sha256:7b5f4878a4ee2228d8c4adbc525f2c46e159d9884e87595f977ca1f7321aec06",
+    "banner.cem.json": "sha256:53306a292df152dc372cb50e9d4bff96218092993b9606e9231748cb940e858a",
     "banner.css": "sha256:eb2779f5f23299a11e327a0e19fb3f156dfccdda98eee1ec8e1bdda351e4e1e3",
     "banner.evidence.json": "sha256:c803285dfe726eed209ffba2c7aeae2bd63942404a75fb90b46e91a67e4a0bd2",
     "banner.html": "sha256:362685431b00c92363c163909f8446dfe6e0e60d6c530ceefd860f7b9cea4d3d"
@@ -14,10 +14,10 @@
     "cssGzipBytes": 1536,
     "jsGzipBytes": 0
   },
-  "capsule_hash": "sha256:1b7a4b3f5cd23e5a0c4b956947b73cab4c124483715d8393cba61e2daa89791b",
+  "capsule_hash": "sha256:fabcb58bafe345b338aeaf82e1d2c57234ebd91e3688de838e8140a24fa79684",
   "signature": {
-    "keyId": "ashlar-local-dev-2026-05-05",
+    "keyId": "ashlar-local-dev-layer-slugs-formatted-2026-05-07",
     "algorithm": "ed25519",
-    "value": "Tav+l0oz+9WcO8dvJk4xrky8ainEQ4U8l4E+SfluqsfFMc1n97uQlk6W9MG+GN7z5yHW8BoE/I9OpM8AQ+pWBQ=="
+    "value": "wm7SHysOF/B3+/iQk0d5WpQciU/7SP1At1OiwRVrTqs4bz0lrUIb623m9o0mYiim588B4J9IhzAGGvN9xAC6AA=="
   }
 }

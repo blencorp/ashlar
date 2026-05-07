@@ -59,7 +59,7 @@ Every capsule emits `*.cem.json` conforming to the W3C-CG Custom Elements Manife
       "_ashlar": {
         "version": "1.2.3",
         "tier": "primitive",
-        "layer": "L0",
+        "layer": "markup-primitives",
         "stability": "stable",
         "selector": ".ashlar-button",
 
@@ -140,7 +140,7 @@ The `_ashlar` namespace is forward-compatible: tools that don't recognize it ign
 // Read-only tools (v0.0 slice 5):
 search_components({
   query?: string,
-  layer?: "L0" | "L1" | "L2" | "L3" | "L4",
+  layer?: "markup-primitives" | "interactive-components" | "framework-adapters" | "service-patterns" | "application-blocks",
   tier?: "foundation" | "primitive" | "composite" | "pattern" | "block",
   stability?: string,
   evidence?: string,
@@ -273,7 +273,7 @@ This project uses Ashlar capsules: source-owned public-service UI with evidence,
 - Use only installed Ashlar capsules unless the user explicitly asks to add a new capsule.
 - Do not invent props, variants, classes, or behaviors that are absent from installed CEM files.
 - Preserve semantic HTML, accessible names, label associations, focus-visible styles, and forced-colors behavior.
-- For markup primitive capsules (internal layer L0), use semantic platform markup such as `<button class="ashlar-button" data-variant="primary">`, not custom elements.
+- For markup primitive capsules, use semantic platform markup such as `<button class="ashlar-button" data-variant="primary">`, not custom elements.
 - Use Ashlar CSS variables for styling; do not hard-code agency colors into capsule source.
 - After editing Ashlar markup, run `ashlar audit --policy all`.
 - Before claiming installed capsule integrity, run `ashlar verify`.

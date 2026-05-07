@@ -3,7 +3,12 @@ import { isAbsolute, join, resolve } from "node:path";
 import type { CapsuleTrustRoot } from "./capsule.js";
 import { describeErrors, validate } from "./schema-validate.js";
 
-export type RegistryLayer = "L0" | "L1" | "L2" | "L3" | "L4";
+export type RegistryLayer =
+  | "markup-primitives"
+  | "interactive-components"
+  | "framework-adapters"
+  | "service-patterns"
+  | "application-blocks";
 export type RegistryStability = "proposal" | "experimental" | "beta" | "stable" | "deprecated";
 export type RegistryTier = "foundation" | "primitive" | "composite" | "pattern" | "block";
 

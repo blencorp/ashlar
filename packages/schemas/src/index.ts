@@ -33,6 +33,11 @@ export const releaseReadinessFormatVersion = "1.0";
 export const stableEvidenceReviewManifestFormatVersion = "1.0";
 export const stableEvidenceReviewStatusFormatVersion = "1.0";
 
-export type CapsuleLayer = "L0" | "L1" | "L2" | "L3" | "L4";
+export type CapsuleLayer =
+  | "markup-primitives"
+  | "interactive-components"
+  | "framework-adapters"
+  | "service-patterns"
+  | "application-blocks";
 export type CapsuleStability = "proposal" | "experimental" | "beta" | "stable" | "deprecated";
 export type CapsuleTier = "foundation" | "primitive" | "composite" | "pattern" | "block";

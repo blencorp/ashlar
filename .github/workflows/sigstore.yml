@@ -41,7 +41,7 @@ jobs:
       - run: node packages/cli/dist/index.js release sign-capsules --registry ./registry
       - run: node packages/cli/dist/index.js release public-trust-verify --registry ./registry
       - run: mkdir -p reports && node packages/cli/dist/index.js release public-trust-verify --registry ./registry --json > reports/ashlar-public-trust.json
-      - run: node packages/cli/dist/index.js release readiness --registry ./registry --min-stable-l0 0 --allow-unverified-public --allow-local-signatures
+      - run: node packages/cli/dist/index.js release readiness --registry ./registry --min-stable-markup-primitives 0 --allow-unverified-public --allow-local-signatures
       - run: node packages/cli/dist/index.js release sbom --output reports/ashlar-sbom.spdx.json
       - run: node packages/cli/dist/index.js release attest --subject reports/ashlar-sbom.spdx.json --output reports/ashlar-sbom.attestation.json
       - run: node packages/cli/dist/index.js release trust-bundle --registry ./registry --sbom reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json --output reports/ashlar-trust-bundle.json --checklist reports/ashlar-release-trust-checklist.md

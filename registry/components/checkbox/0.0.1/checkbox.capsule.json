@@ -2,10 +2,10 @@
   "schemaVersion": "1.0",
   "name": "checkbox",
   "version": "0.0.1",
-  "layer": "L0",
+  "layer": "markup-primitives",
   "stability": "experimental",
   "files": {
-    "checkbox.cem.json": "sha256:6f836fd6e12ea7404a49ca95d7741fe613298e0556fff581dc67f432ce2bdac1",
+    "checkbox.cem.json": "sha256:338bd673f405357ada9149d35266fa81f1b763fc0cbbe7651ab0b16daae9be1b",
     "checkbox.css": "sha256:6871f7b967dff94a67067007c3371da5fac3604918edac2d0b86c7826b84da47",
     "checkbox.evidence.json": "sha256:5f76ae493a139c2402a6439ab3a367398585ad2854109d15b4359054b769d317",
     "checkbox.html": "sha256:e9747a2829c19bb15679c10deb75d99e937ff5876769acf71645e1a5a3d33302"
@@ -14,10 +14,10 @@
     "cssGzipBytes": 1536,
     "jsGzipBytes": 0
   },
-  "capsule_hash": "sha256:120034cd4770864cf18b95cf91b32e98bd35c5a4194ebe2af179453b1f22dd63",
+  "capsule_hash": "sha256:918b7cb9a92f4dbf2fa49dc1fb8a6fb72c3c15cf914130f2d5d559a8aabc8b56",
   "signature": {
-    "keyId": "ashlar-local-dev-checkbox-2026-05-06",
+    "keyId": "ashlar-local-dev-layer-slugs-formatted-2026-05-07",
     "algorithm": "ed25519",
-    "value": "XAhO7tqioGOBiE+DHfKcHy+/IIymFEoe1478efwcZs02TRcmcXOTkpMoSZbZvD1axBcLXVFPDYkrjZQvr+jKBA=="
+    "value": "vAW+Zc7GednriXYrv5q59FR95nR1IAC6xgTqmb3qyyd9dG1FqtpqPZD1ANqDydNlDnvi0OEdpCtJmeK/Z1bZBA=="
   }
 }

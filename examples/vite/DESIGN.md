@@ -61,7 +61,7 @@ Derived from public USWDS token guidance and system-token values; not an officia
 
 ## Installed Capsules
 
-- button@0.0.1 (primitive, markup primitives (L0), experimental, evidence: not-reviewed)
+- button@0.0.1 (primitive, markup primitives, experimental, evidence: not-reviewed)
   - Platform features: forced-colors
   - Policy mappings: Section 508
 

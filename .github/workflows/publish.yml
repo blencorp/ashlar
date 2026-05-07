@@ -37,7 +37,7 @@ jobs:
       - run: pnpm build
       - run: pnpm release:smoke
       - run: node packages/cli/dist/index.js release provenance-check
-      - run: node packages/cli/dist/index.js release readiness --registry ./registry --min-stable-l0 0 --allow-unverified-public --allow-local-signatures
+      - run: node packages/cli/dist/index.js release readiness --registry ./registry --min-stable-markup-primitives 0 --allow-unverified-public --allow-local-signatures
       - run: pnpm release
         env:
           NPM_CONFIG_PROVENANCE: "true"

@@ -13,7 +13,7 @@
           "_ashlar": {
             "version": "0.0.1",
             "tier": "primitive",
-            "layer": "L0",
+            "layer": "markup-primitives",
             "stability": "experimental",
             "selector": ".ashlar-banner",
             "a11yRequirements": [
@@ -35,7 +35,9 @@
                 "id": "banner-needs-label",
                 "pattern": "<section $$$ATTRS>$$$CHILDREN</section>",
                 "regex": "class=\"[^\"]*\\bashlar-banner\\b",
-                "not": { "regex": "aria-label\\s*=" },
+                "not": {
+                  "regex": "aria-label\\s*="
+                },
                 "message": "Ashlar Banner requires aria-label so the trust marker is identifiable.",
                 "fix": "Add aria-label=\"Official website of the United States government\" to the banner section.",
                 "wcag": "2.4.6",

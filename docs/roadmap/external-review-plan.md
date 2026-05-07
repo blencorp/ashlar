@@ -8,7 +8,7 @@ Ashlar cannot become replacement-grade through local implementation alone. The r
 
 | Track | Purpose | GitHub template | Blocking gate |
 |---|---|---|---|
-| Stable evidence review | Produce real keyboard, screen-reader, WCAG, and ICT Baseline evidence for one markup primitive capsule. | `stable_evidence_review.yml` | `stable-l0-evidence` |
+| Stable evidence review | Produce real keyboard, screen-reader, WCAG, and ICT Baseline evidence for one markup primitive capsule. | `stable_evidence_review.yml` | `stable-markup-evidence` |
 | Release trust review | Verify npm trusted publishing, package provenance, capsule Sigstore bundles, SBOM, and trust bundle artifacts. | `release_trust_review.yml` | `npm-provenance-public`, `sigstore-public-trust` |
 | Design partner review | Validate that the wedge is understandable and useful in a real public-service context. | `design_partner_review.yml` | External credibility |
 

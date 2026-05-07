@@ -18,7 +18,7 @@ Ashlar has a real substrate now: signed source capsules, federal and component a
 - public npm trusted-publishing provenance for `@blen/ashlar`, `@blen/ashlar-cli`, and `@blen/ashlar-schemas`;
 - public capsule Sigstore trust material.
 
-Strict readiness evidence: `node packages/cli/dist/index.js release readiness --registry ./registry --json-output /tmp/ashlar-readiness.json --report /tmp/ashlar-readiness.md` returned `status: "fail"` on 2026-05-07 with 9 passing checks and 4 failing checks: `stable-l0-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
+Strict readiness evidence: `node packages/cli/dist/index.js release readiness --registry ./registry --json-output /tmp/ashlar-readiness.json --report /tmp/ashlar-readiness.md` returned `status: "fail"` on 2026-05-07 with 9 passing checks and 4 failing checks: `stable-markup-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
 
 ## Prompt-To-Artifact Checklist
 
@@ -77,7 +77,7 @@ The following release-readiness checks pass today:
 
 The following release-readiness checks fail today:
 
-- `stable-l0-evidence`: requires at least one stable-evidence markup primitive component; found 0.
+- `stable-markup-evidence`: requires at least one stable-evidence markup primitive component; found 0.
 - `external-review-proof`: missing `stable-evidence-*.md`, `release-trust-*.md`, and `design-partner-*.md`.
 - `npm-provenance-public`: requires real npm trusted publishing and `ashlar release provenance-verify-public` against published versions.
 - `sigstore-public-trust`: 0/13 capsule manifests include public Sigstore bundle metadata; current capsules still use local Ed25519 signatures.

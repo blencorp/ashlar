@@ -13,7 +13,7 @@
           "_ashlar": {
             "version": "0.0.1",
             "tier": "composite",
-            "layer": "L0",
+            "layer": "markup-primitives",
             "stability": "experimental",
             "selector": ".ashlar-error-summary",
             "a11yRequirements": [

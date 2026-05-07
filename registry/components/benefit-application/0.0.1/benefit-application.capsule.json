@@ -2,10 +2,10 @@
   "schemaVersion": "1.0",
   "name": "benefit-application",
   "version": "0.0.1",
-  "layer": "L3",
+  "layer": "service-patterns",
   "stability": "proposal",
   "files": {
-    "benefit-application.cem.json": "sha256:14155ef148601a2e0c93c8e6d02701713bb5d3119bd9d6a2dcfe141f4951b405",
+    "benefit-application.cem.json": "sha256:f5946798a3ccce998fe2a40c6f81cb5945ed2c23f0f87567ff18f2aae83be137",
     "benefit-application.css": "sha256:b09825a7bd49d356b875d53bed1019a3b2d220292371ae453640e087a2f78129",
     "benefit-application.evidence.json": "sha256:f57b0e76f98ea8d95ca5a2045954232929b5ea08d49799936a4f378d91a568be",
     "benefit-application.html": "sha256:a2591012fc9d832d074590a5cb7ed1c8a6832fca66e327c166adbf2d7f6487e1"
@@ -14,10 +14,10 @@
     "cssGzipBytes": 2048,
     "jsGzipBytes": 0
   },
-  "capsule_hash": "sha256:b2582a2e5a0af8f0418099a5a63d2eaeaf2509803ebf45eb56c9c879fd57143a",
+  "capsule_hash": "sha256:37dea060ce85dfb8c4b4a7665c2f5655b0cdca9d93806c9aab65574cab656245",
   "signature": {
-    "keyId": "ashlar-local-dev-2026-05-05",
+    "keyId": "ashlar-local-dev-layer-slugs-formatted-2026-05-07",
     "algorithm": "ed25519",
-    "value": "YBfzyhjm/KxNRERcb1hZqe2WnnUgw1g7eVbv1immxrKa9EB7NE58jG/5STSFYMIRKWoYZxmPIPkWbW2BPoS8BQ=="
+    "value": "x2wVN93wjql3hgNxUXt/6zkNoohNe2xcB5JOspIuOLaSeBKquS4E6Uzw2rINilljsWx/ldF92plabGoHYvg5DQ=="
   }
 }

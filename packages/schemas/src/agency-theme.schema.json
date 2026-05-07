@@ -6,7 +6,9 @@
   "type": "object",
   "required": ["name", "title", "description", "provenance", "sources", "tokens"],
   "properties": {
-    "$schema": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
     "name": {
       "type": "string",
       "pattern": "^[a-z0-9-]+$",
@@ -100,7 +102,9 @@
       "type": "object",
       "description": "Mode-specific token overrides. Currently only `dark` is defined; additional modes (high-contrast, forced-colors) may follow.",
       "properties": {
-        "dark": { "$ref": "#/$defs/tokenGroup" }
+        "dark": {
+          "$ref": "#/$defs/tokenGroup"
+        }
       },
       "additionalProperties": false
     }
@@ -110,7 +114,14 @@
     "tokenGroup": {
       "type": "object",
       "additionalProperties": {
-        "anyOf": [{ "$ref": "#/$defs/tokenLeaf" }, { "$ref": "#/$defs/tokenGroup" }]
+        "anyOf": [
+          {
+            "$ref": "#/$defs/tokenLeaf"
+          },
+          {
+            "$ref": "#/$defs/tokenGroup"
+          }
+        ]
       }
     },
     "tokenLeaf": {
@@ -129,8 +140,12 @@
             "string"
           ]
         },
-        "$value": { "type": "string" },
-        "$description": { "type": "string" }
+        "$value": {
+          "type": "string"
+        },
+        "$description": {
+          "type": "string"
+        }
       },
       "additionalProperties": false
     }

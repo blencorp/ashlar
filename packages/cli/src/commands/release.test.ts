@@ -1205,7 +1205,7 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(report.checks).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          id: "stable-l0-evidence",
+          id: "stable-markup-evidence",
           status: "fail",
         }),
         expect.objectContaining({
@@ -1251,7 +1251,7 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(report).toContain("- Status: fail");
     expect(report).toContain("## Blocking Checks");
     expect(report).toContain(
-      "- stable-l0-evidence: Requires at least 1 stable-evidence markup primitives (L0) capsule(s); found 0.",
+      "- stable-markup-evidence: Requires stable evidence for at least 1 markup primitive capsule; found 0.",
     );
     expect(report).toContain(
       "- external-review-proof: External review proof records are incomplete.",
@@ -1290,7 +1290,7 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(report.summary.failed).toBeGreaterThanOrEqual(1);
     expect(report.checks).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ id: "stable-l0-evidence", status: "fail" }),
+        expect.objectContaining({ id: "stable-markup-evidence", status: "fail" }),
         expect.objectContaining({ id: "external-review-proof", status: "fail" }),
         expect.objectContaining({ id: "npm-provenance-public", status: "fail" }),
         expect.objectContaining({ id: "sigstore-public-trust", status: "fail" }),
@@ -1322,7 +1322,7 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(readiness.checks).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ id: "external-review-proof", status: "fail" }),
-        expect.objectContaining({ id: "stable-l0-evidence", status: "fail" }),
+        expect.objectContaining({ id: "stable-markup-evidence", status: "fail" }),
       ]),
     );
 
@@ -1398,7 +1398,7 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
       ]),
     );
     expect(plan.tracks[0]?.blockedBy).toEqual(
-      expect.arrayContaining([expect.stringContaining("stable-l0-evidence")]),
+      expect.arrayContaining([expect.stringContaining("stable-markup-evidence")]),
     );
     expect(plan.tracks.flatMap((track) => track.commands)).toEqual(
       expect.arrayContaining([
@@ -1511,7 +1511,7 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
       "readiness",
       "--registry",
       "./registry",
-      "--min-stable-l0",
+      "--min-stable-markup-primitives",
       "0",
       "--allow-unverified-public",
       "--allow-local-signatures",
@@ -2089,7 +2089,7 @@ Rationale: The reviewer found the wedge credible for a public-service pilot afte
       "readiness",
       "--registry",
       "./registry",
-      "--min-stable-l0",
+      "--min-stable-markup-primitives",
       "0",
       "--allow-unverified-public",
       "--allow-local-signatures",
@@ -2333,7 +2333,7 @@ Rationale: The reviewer found the wedge credible for a public-service pilot afte
       "readiness",
       "--registry",
       "./registry",
-      "--min-stable-l0",
+      "--min-stable-markup-primitives",
       "0",
       "--allow-unverified-public",
       "--allow-local-signatures",

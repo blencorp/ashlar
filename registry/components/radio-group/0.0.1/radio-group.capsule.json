@@ -2,10 +2,10 @@
   "schemaVersion": "1.0",
   "name": "radio-group",
   "version": "0.0.1",
-  "layer": "L0",
+  "layer": "markup-primitives",
   "stability": "experimental",
   "files": {
-    "radio-group.cem.json": "sha256:101f3269a09b02cbb0056cb3f22d7a3a1165bc160794eff8a60706ca62e6a728",
+    "radio-group.cem.json": "sha256:011505b3b6328a662e750d8ef84c4268526bca16169630316e599821448d4f80",
     "radio-group.css": "sha256:f4b465aa8b8671885e2f34fd4e986aed043bd5f16a5759e83e99caaaf3c802b7",
     "radio-group.evidence.json": "sha256:94d72fc144e286cd19644087ba5aac55b867a898d1eefa5e15d8c041a06bb9cd",
     "radio-group.html": "sha256:455197fb2d614047bb52e73581936d9bbaf6b8b6dcbf8fe5b39664120a19e3f8"
@@ -14,10 +14,10 @@
     "cssGzipBytes": 1536,
     "jsGzipBytes": 0
   },
-  "capsule_hash": "sha256:9e97889ffe073db171bed964a23fd2105e831255733f7e22c1ebf95e84d7501f",
+  "capsule_hash": "sha256:f5bde22112129ae5bc551bc27bcb7cba314a46468c7109bc899079a09c0a6615",
   "signature": {
-    "keyId": "ashlar-local-dev-radio-group-2026-05-06",
+    "keyId": "ashlar-local-dev-layer-slugs-formatted-2026-05-07",
     "algorithm": "ed25519",
-    "value": "UHiqxSi28G4AjIUG9sSae3O/jdVvI/J5dJn0LQnD3+h64LjfC5DXQt1Gwwl6i29PVX4+VmXfMJWoBOXBWKEjCQ=="
+    "value": "g3/Q8zPwpGmYkJeK1R8zFgtzbmC++3j73aXjHWj+irBnH2yvpstJKZn4X7mcbYyExJ9iRN25A2DFdEtG8qPODw=="
   }
 }

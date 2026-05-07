@@ -5,6 +5,7 @@ import { tmpdir } from "node:os";
 import { isAbsolute, join, relative, resolve, sep } from "node:path";
 import { sha256File, sha256Text } from "./hash.js";
 import { describeErrors, validate } from "./schema-validate.js";
+import type { RegistryLayer } from "./registry.js";
 
 export type CapsuleSignature = {
   keyId: string;
@@ -48,7 +49,7 @@ export type CapsuleManifest = {
   schemaVersion: "1.0";
   name: string;
   version: string;
-  layer: "L0" | "L1" | "L2" | "L3" | "L4";
+  layer: RegistryLayer;
   stability: "proposal" | "experimental" | "beta" | "stable" | "deprecated";
   files: Record<string, string>;
   capsule_hash: string;
