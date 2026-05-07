@@ -1,6 +1,6 @@
 {
   "name": "ashlar",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Memorable npx entrypoint for the Ashlar CLI.",
   "license": "Apache-2.0",
   "repository": {
