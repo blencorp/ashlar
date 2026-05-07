@@ -1,4 +1,4 @@
-# ADR 0002 — Runtime architecture: five-layer model with platform-first foundation
+# ADR 0002 — Runtime architecture: five-layer model with platform-first markup primitives
 
 ## Status
 
@@ -8,11 +8,11 @@ Proposed.
 
 Ashlar is organized as five layers, each independently usable:
 
-- **L0** — Pure CSS and HTML capsules; exploits the modern web platform; zero or trivial JavaScript. Targets ~70% of typical components.
-- **L1** — Web Components (Lit) wrapping Zag statecharts and signals. Targets the ~30% of components that legitimately need JavaScript state.
-- **L2** — Framework adapters (`@blen/ashlar-react`, `@blen/ashlar-vue`, `@blen/ashlar-svelte`, `@blen/ashlar-solid`) auto-generated from extended Custom Elements Manifests.
-- **L3** — Patterns: composed service flows (eligibility check, document upload, address form, etc.).
-- **L4** — Templates: same components rendered as Nunjucks, Twig, Jinja, ERB, plain HTML.
+- **Markup primitives** (`L0`) — Pure CSS and HTML capsules; exploits the modern web platform; zero or trivial JavaScript. Targets ~70% of typical components.
+- **Interactive components** (`L1`) — Web Components (Lit) wrapping Zag statecharts and signals. Targets the ~30% of components that legitimately need JavaScript state.
+- **Framework adapters** (`L2`) — `@blen/ashlar-react`, `@blen/ashlar-vue`, `@blen/ashlar-svelte`, and `@blen/ashlar-solid` auto-generated from extended Custom Elements Manifests.
+- **Service patterns** (`L3`) — composed service flows such as eligibility check, document upload, and address form.
+- **Application blocks** (`L4`) — same components rendered as Nunjucks, Twig, Jinja, ERB, and plain HTML.
 
 Tokens (DTCG 2025.10) sit beneath all layers as a framework-neutral contract.
 
@@ -22,28 +22,28 @@ The 2026 web platform delivers what 2022 design systems shipped JavaScript for: 
 
 For the remaining ~30% of components (Combobox, Date Picker, Data Table, File Upload, Toast stack, Tree, complex Menu, multi-step wizards), JavaScript state and ARIA orchestration are unavoidable. Web Components are the framework-agnostic delivery mechanism: GC Design System (Canada) proved the WC-with-adapters pattern at federal scale (exited alpha March 2026, eight federal entities). Custom Elements Everywhere shows React 19, Vue 3, Svelte 5, Solid, Angular, Preact all score 100% interop.
 
-GOV.UK Frontend's empirical observation that UK government runs 24+ template languages applies analogously to US federal agencies. L4 templates address this by shipping multiple renderings of the same component, sharing CSS and DOM contracts.
+GOV.UK Frontend's empirical observation that UK government runs 24+ template languages applies analogously to US federal agencies. Application blocks address this by shipping multiple renderings of the same component, sharing CSS and DOM contracts.
 
 ## Consequences
 
 **Positive**
 
-- Bundle is materially smaller (under 12KB gzipped for a typical L0 public-service page; vs 40–55KB for shadcn equivalent).
-- L0 works in any rendering environment without JavaScript runtime dependency.
-- L1 is framework-agnostic via custom elements plus auto-generated adapters.
-- L2 adapters are not hand-maintained; CEM regenerates them.
-- L4 templates remove the "we don't have a build pipeline" objection from server-rendered/CMS shops (Drupal, Sitecore, AEM, server-rendered Django/Rails/PHP).
+- Bundle is materially smaller (under 12KB gzipped for a typical markup primitive public-service page; vs 40–55KB for shadcn equivalent).
+- Markup primitives work in any rendering environment without JavaScript runtime dependency.
+- Interactive components are framework-agnostic via custom elements plus auto-generated adapters.
+- Framework adapters are not hand-maintained; CEM regenerates them.
+- Application blocks remove the "we don't have a build pipeline" objection from server-rendered/CMS shops (Drupal, Sitecore, AEM, server-rendered Django/Rails/PHP).
 
 **Negative**
 
 - More architectural surface than a single-framework library.
 - Five layers is more to document and explain.
-- L1 introduces dependencies on Lit and Zag.
+- Interactive components introduce dependencies on Lit and Zag.
 - Custom-element ARIA reflection is incomplete in Firefox; explicit ARIA fallbacks required.
 
 **Mitigations**
 
-- L0/L1/L2/L3/L4 are independently consumable. Teams adopt only what they need.
+- Markup primitives, interactive components, framework adapters, service patterns, and application blocks are independently consumable. Teams adopt only what they need.
 - Lit (~5KB) and Zag (~3–5KB) are mature, minimal dependencies.
 - Firefox ARIA fallback is documented per-component.
 

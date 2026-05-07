@@ -20,7 +20,7 @@ node packages/cli/dist/index.js release readiness --registry ./registry
 
 Current strict gate status:
 
-- `stable-l0-evidence`: fails because 0 L0 capsules have published stable evidence.
+- `stable-l0-evidence`: fails because 0 markup primitive capsules have published stable evidence.
 - `external-review-proof`: fails until real stable-evidence, release-trust, and design-partner review records exist under `docs/reviews/`.
 - `npm-provenance-public`: fails until a real npm trusted-publishing release exists and `release provenance-verify-public` passes.
 - `sigstore-public-trust`: fails until real capsule Sigstore bundles are produced, published, and verified with `release public-trust-verify`.
@@ -36,7 +36,7 @@ Current strict gate status:
 | Address shadcn gap: registry trust and provenance | `packages/cli/src/lib/capsule.ts`, `packages/cli/src/lib/release-provenance.ts`, `packages/cli/src/lib/release-public-trust.ts`, `.github/workflows/publish.yml`, `.github/workflows/sigstore.yml` | Local manifest signatures, npm provenance readiness, public npm verifier, capsule signing, and public trust verifier exist. | Tooling met; public proof missing |
 | Easy first integration | `ashlar audit --policy federal`, `examples/legacy-federal-project/`, `packages/cli/src/commands/audit.test.ts` | Validator runs against non-Ashlar legacy markup and emits useful findings without installed capsules. | Met for validator wedge |
 | Source-owned install path | `ashlar init`, `ashlar add`, `ashlar verify`, `packages/cli/src/commands/add.test.ts` | Capsules install as source, lockfile records hashes, verify detects tampering and stale registry state. | Prototype met |
-| Light footprint | `ashlar bundle budget`, `packages/cli/src/lib/bundle-budget.ts`, capsule `bundleBudget` metadata | Current local measurements: 12 L0 capsules, 1,993 B CSS gzip, 0 B JS, under the 20,992 B L0 gate. | Met for current L0 set |
+| Light footprint | `ashlar bundle budget`, `packages/cli/src/lib/bundle-budget.ts`, capsule `bundleBudget` metadata | Current local measurements: 12 markup primitive capsules, 1,993 B CSS gzip, 0 B JS, under the 20,992 B markup primitive gate. | Met for current markup primitive set |
 | Federal policy coverage | `packages/cli/src/lib/policy/federal.ts`, `examples/plain-html/`, `examples/legacy-federal-project/` | Page title, meta description, banner, identifier, and required links are covered with SARIF and explain output. | Partial policy pack |
 | Service-flow proof, not gallery-only | `examples/service-flow/`, `docs/superpowers/specs/2026-05-05-first-service-flow-proof-spec.md` | Benefit-application flow exists with pass/fail fixtures and audit coverage. | Prototype met |
 | AI-native DX for agents | Generated `AGENTS.md` fanout, generated `DESIGN.md`, MCP `suggest_for_task`, `search_components`, `validate_usage` | Agent-facing docs and read-only MCP expose installed capsules, evidence, tokens, and validation. | Prototype met |
@@ -63,7 +63,7 @@ The third and fourth commands require real public release artifacts. They cannot
 
 ## Next Required Work
 
-1. **Publish one stable-evidence L0 capsule.** Use `evidence prepare-stable`, complete real keyboard and screen-reader transcripts, run `evidence review-status`, graduate, then publish through the signed registry path.
+1. **Publish one stable-evidence markup primitive capsule.** Use `evidence prepare-stable`, complete real keyboard and screen-reader transcripts, run `evidence review-status`, graduate, then publish through the signed registry path.
 2. **Produce real public release trust.** Run `sigstore.yml` from `main`, publish the signed registry artifact, then verify it with `release public-trust-verify`.
 3. **Produce real npm provenance.** Configure npm trusted publishers, publish from `publish.yml`, then verify exact package versions with `release provenance-verify-public`.
 4. **Recruit external review.** At minimum: one accessibility reviewer for Button stable evidence, one security reviewer for the signing/provenance flow, and one design partner for the service-flow wedge.

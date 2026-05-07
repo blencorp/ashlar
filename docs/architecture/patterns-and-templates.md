@@ -1,8 +1,8 @@
-# Patterns and templates (L3 + L4)
+# Service patterns and application blocks
 
-L0 (CSS+HTML primitives) and L1 (stateful Web Components) are the building blocks. **L3 (patterns)** composes them into service flows that solve real government UX problems. **L4 (templates)** ships the same components rendered as Nunjucks, Twig, Jinja, ERB, and plain HTML so non-JS stacks can consume them without a build step.
+Markup primitives (`L0`) and interactive components (`L1`) are the building blocks. **Service patterns** (`L3`) compose them into service flows that solve real government UX problems. **Application blocks** (`L4`) ship the same components rendered as Nunjucks, Twig, Jinja, ERB, and plain HTML so non-JS stacks can consume them without a build step.
 
-## L3 — Patterns
+## Service Patterns
 
 A pattern is a capsule that composes components into a complete service flow, ships content guidance (plain-language defaults), accessibility considerations specific to the flow, and links to the user research that informed it.
 
@@ -106,9 +106,9 @@ Some flows have flow-level a11y requirements beyond per-component:
 
 These are tested in pattern evidence packets in addition to component-level evidence.
 
-## L4 — Templates
+## Application Blocks
 
-The L4 layer answers GOV.UK Frontend's empirical observation that government runs 24+ template languages. Ashlar ships the same component as multiple templates so server-rendered, CMS, and framework-less stacks can consume without a build step.
+The application block layer answers GOV.UK Frontend's empirical observation that government runs 24+ template languages. Ashlar ships the same component as multiple templates so server-rendered, CMS, and framework-less stacks can consume without a build step.
 
 ### Supported template languages
 
@@ -129,7 +129,7 @@ Additional targets considered for v0.2+:
 
 ### Template structure
 
-Each template renders the same DOM contract — same class names, same data attributes, same ARIA — so the CSS and any L1 enhancement work identically.
+Each template renders the same DOM contract — same class names, same data attributes, same ARIA — so the CSS and any interactive enhancement work identically.
 
 ```twig
 {# button.html.twig #}
@@ -157,9 +157,9 @@ For Drupal sites, Ashlar publishes a companion module/theme:
 - Theme functions/preprocess hooks make Ashlar components feel native to Drupal.
 - Compatible with USWDS's Drupal theme migration path (token mapping, class-name compatibility shim).
 
-### Server-side rendering of L1
+### Server-Side Rendering Of Interactive Components
 
-For L1 components (stateful WC), templates render the initial DOM with attributes (machine state serialized to `data-ashlar-state`/`data-ashlar-context`); the custom element upgrades on the client. See [`web-components.md`](./web-components.md) for the resumability discipline.
+For interactive components, templates render the initial DOM with attributes (machine state serialized to `data-ashlar-state`/`data-ashlar-context`); the custom element upgrades on the client. See [`web-components.md`](./web-components.md) for the resumability discipline.
 
 ### Template generation pipeline
 
@@ -173,7 +173,7 @@ Snapshot equality is enforced — the same input must produce the same DOM contr
 
 ## Pattern + template combination
 
-A pattern shipped as both rendered HTML (L4) and as a Lit element (L1) can serve:
+A pattern shipped as both rendered HTML and as a Lit element can serve:
 
 - Drupal site: `{% include '@blen/ashlar-eligibility-check' with {...} %}`.
 - Rails site: `<%= render 'ashlar/eligibility_check', ... %>`.
@@ -184,12 +184,12 @@ All four render the same DOM, share the same CSS, share the same accessibility e
 
 ## Why this matters
 
-USWDS components are HTML snippets. Teams either copy-paste (drift), wrap in their framework (parallel ecosystem), or struggle. Ashlar's L3+L4 model meets each stack where it lives:
+USWDS components are HTML snippets. Teams either copy-paste (drift), wrap in their framework (parallel ecosystem), or struggle. Ashlar's service pattern and application block model meets each stack where it lives:
 
-- React/Vue teams: framework adapters (L2).
-- Drupal teams: Twig partial (L4).
-- Rails teams: ERB partial (L4).
-- Plain HTML pages: include CSS + the WC delivery (L1) or just CSS+HTML (L0).
+- React/Vue teams: framework adapters.
+- Drupal teams: Twig partial.
+- Rails teams: ERB partial.
+- Plain HTML pages: include CSS plus interactive components, or just markup primitive CSS/HTML.
 
 Same component, same evidence, multiple universes.
 

@@ -86,9 +86,9 @@ The target distribution model is content-addressed capsules (SHA-256), signed wi
 
 ast-grep with tree-sitter grammars validates the same component-usage rule across the languages where ast-grep has real coverage today (TSX, JSX, HTML, CSS, ERB). Vue, Svelte, and Astro are supported via custom-language registration with third-party grammars. Twig, Jinja, and Nunjucks ship when maintained tree-sitter grammars exist; until then, the validator fails honestly rather than pretending. ESLint cannot validate any non-JS template language uniformly; that is the structural advantage Ashlar holds, scoped to what actually works.
 
-### Cross-stack reach via L0 semantic markup
+### Cross-stack reach via markup primitive semantics
 
-L0 capsules ship semantic HTML and CSS — `<button class="ashlar-button" data-variant="primary">`, not `<ashlar-button>`. The same DOM contract works in React, Vue, Astro, plain HTML, Drupal, Sitecore, Rails, Django, and other server-rendered stacks. L1 components (the ~30% that genuinely need state machines) ship as custom elements; L4 templates (Nunjucks, Twig, Jinja, ERB) emit the same markup the custom element would emit, so non-JS environments get markup that looks right and behaves passively until JavaScript loads.
+Markup primitive capsules ship semantic HTML and CSS — `<button class="ashlar-button" data-variant="primary">`, not `<ashlar-button>`. The same DOM contract works in React, Vue, Astro, plain HTML, Drupal, Sitecore, Rails, Django, and other server-rendered stacks. Interactive components (the ~30% that genuinely need state machines) ship as custom elements; application templates emit the same markup the custom element would emit, so non-JS environments get markup that looks right and behaves passively until JavaScript loads.
 
 ### AI-grounded development
 

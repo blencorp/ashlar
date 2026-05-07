@@ -75,7 +75,7 @@ Use this stack for v0/v1:
 - **Validation**: ast-grep + tree-sitter, with SARIF output.
 - **Tokens**: DTCG 2025.10, compiled with Terrazzo first and Style Dictionary as fallback.
 - **CSS**: semantic CSS with cascade layers, CSS variables, container queries, `:has()`, `light-dark()`, `forced-colors`, and progressive platform features.
-- **Components**: L0 HTML/CSS first; L1 Lit Web Components where JS behavior is truly required.
+- **Components**: markup primitives use HTML/CSS first; interactive components use Lit Web Components where JavaScript behavior is truly required.
 - **Framework adapters**: generated from extended CEM.
 - **Security**: Sigstore, SLSA provenance, SBOM, signed Git tags, lockfile verification, offline registry mirror.
 - **AI**: extended CEM, AGENTS.md, MCP tools for search, validation, evidence, and migration.

@@ -1,6 +1,6 @@
 # Web Components architecture
 
-L1 components are delivered as **Lit-based Web Components** that wrap Zag statecharts (see [`state-management.md`](./state-management.md)). This document covers the Lit shell architecture, Light DOM versus Shadow DOM choices, SSR via Declarative Shadow DOM, form-associated custom elements, and the framework-adapter generation pipeline.
+interactive components are delivered as **Lit-based Web Components** that wrap Zag statecharts (see [`state-management.md`](./state-management.md)). This document covers the Lit shell architecture, Light DOM versus Shadow DOM choices, SSR via Declarative Shadow DOM, form-associated custom elements, and the framework-adapter generation pipeline.
 
 ## Why Lit
 
@@ -80,13 +80,13 @@ DSD support: Chrome 111+, Firefox 123+, Safari 16.4+, Edge 111+. Global ~94.6% (
 
 ## SSR strategy
 
-L1 components render server-side via two paths:
+interactive components render server-side via two paths:
 
-1. **L4 templates (preferred)** — Nunjucks/Twig/Jinja/ERB partials emit the same HTML the WC would emit, including ARIA attributes resolved from initial machine state. The custom element upgrades to behavior on the client.
+1. **application-block templates (preferred)** — Nunjucks/Twig/Jinja/ERB partials emit the same HTML the WC would emit, including ARIA attributes resolved from initial machine state. The custom element upgrades to behavior on the client.
 
 2. **Lit SSR (escape hatch)** — `@lit-labs/ssr` renders Lit components to HTML strings (with DSD where used). This is **labs/experimental** and not promised as streaming SSR. Use for Node-rendered apps that need component-level SSR.
 
-The L4 template path is preferred because:
+The application-block template path is preferred because:
 
 - It works without Lit installed on the server.
 - Drupal/Sitecore/AEM/Rails/Django integrators get the rendering they expect.
@@ -94,7 +94,7 @@ The L4 template path is preferred because:
 
 ## Form-associated custom elements
 
-L1 input components (custom inputs, custom selects) participate in `<form>` via `ElementInternals`:
+interactive input components (custom inputs, custom selects) participate in `<form>` via `ElementInternals`:
 
 ```ts
 @customElement("ashlar-input")
@@ -236,7 +236,7 @@ Adapters never drift from the canonical implementation because they are not hand
 
 ## Bundle math
 
-For a typical L1 component (Combobox), gzipped:
+For a typical interactive component (Combobox), gzipped:
 
 - Lit runtime (shared): ~5KB
 - Zag core (shared): ~4KB
@@ -244,7 +244,7 @@ For a typical L1 component (Combobox), gzipped:
 - Lit shell: ~1.5KB
 - React adapter (if used): ~1KB
 
-**Total for first L1 component**: ~13KB. Each additional L1 component on top: ~3KB (machine + shell only). Compared to shadcn's Combobox at ~30KB and Carbon WC's at ~35KB, Ashlar ships materially smaller.
+**Total for first interactive component**: ~13KB. Each additional interactive component on top: ~3KB (machine + shell only). Compared to shadcn's Combobox at ~30KB and Carbon WC's at ~35KB, Ashlar ships materially smaller.
 
 ## References
 

@@ -14,8 +14,8 @@ button/
 ├── button.html.twig          # Twig template (Drupal)
 ├── button.html.jinja         # Jinja template
 ├── button.html.erb           # ERB template (Rails)
-├── button.element.ts         # Lit custom element (L1 only)
-├── button.machine.ts         # Zag statechart (L1 only)
+├── button.element.ts         # Lit custom element (interactive only)
+├── button.machine.ts         # Zag statechart (interactive only)
 ├── button.cem.json           # Custom Elements Manifest (extended)
 ├── button.evidence.json      # accessibility evidence packet
 ├── button.codemods.json      # ast-grep migration rules
@@ -24,7 +24,7 @@ button/
 └── button.capsule.json       # capsule manifest + content hashes
 ```
 
-Files are optional except for `*.cem.json`, `*.evidence.json`, `*.capsule.json` (the per-capsule manifest with content hashes), and at least one renderable target (`*.css` for L0, `*.element.ts` for L1). Human docs and multi-template renderings become mandatory at higher stability tiers.
+Files are optional except for `*.cem.json`, `*.evidence.json`, `*.capsule.json` (the per-capsule manifest with content hashes), and at least one renderable target (`*.css` for markup primitives, `*.element.ts` for interactive components). Human docs and multi-template renderings become mandatory at higher stability tiers.
 
 > **Status (2026-05-05)**: the current Button and first service-flow capsules ship `*.css`, `*.html`, `*.cem.json`, `*.evidence.json`, and signed `*.capsule.json` manifests. `registry/index.json` pins each manifest's `capsule_hash`, `registry/trust-root.json` publishes the local Ed25519 verification key plus expected Sigstore identity/issuer policy and `bundleVerification: "cosign"`, and `ashlar add` / `ashlar update` / `ashlar verify` validate hashes, local signatures, declared Sigstore bundle metadata, and trust-root-required `cosign verify-blob` before trusting registry source. `ashlar update` can also run prototype JSON codemods listed from `manifest.codemods`; that list is covered by capsule integrity when present, codemod files validate against `codemod.schema.json`, and skipped-version updates run intermediate codemods in registry version order. Multi-template renderings, Lit machine files, and real public Sigstore bundles remain planned per the [v0.0 slice graph](../roadmap/01-v0.0-foundation.md).
 
@@ -93,8 +93,8 @@ Cross-cuts the layer model:
 - **`foundation`** — tokens, layout primitives, focus ring, motion, icons.
 - **`primitive`** — single-purpose controls (Button, Link, Checkbox, Dialog, Tooltip).
 - **`composite`** — multiple primitives (Form Field, Search, Header, Identifier, Table).
-- **`pattern`** — service flows (eligibility, document upload, address). L3.
-- **`block`** — full UI sections (landing hero, application step, dashboard). L3.
+- **`pattern`** — service flows (eligibility, document upload, address); the service-pattern layer.
+- **`block`** — full UI sections (landing hero, application step, dashboard); the application-block layer.
 
 ## Extended Custom Elements Manifest
 
@@ -176,7 +176,7 @@ See [`accessibility.md`](./accessibility.md) for the full schema; structurally:
 
 Prototype ast-grep JSON rules transform installed consumer capsule files from the previous version of the capsule to the current one. `ashlar update` loads files listed in `manifest.codemods` when `component`, `from`, and `to` match the current update step; skipped-version updates walk the registry `versions` list and apply intermediate codemods in order. `manifest.codemods` participates in the capsule hash/signature payload when present, codemod files must be listed in `manifest.files`, codemod files validate against `codemod.schema.json`, and rule targets must stay inside the installed component directory. The current runner supports a narrow one-file `pattern` / fixed `rewrite` subset before three-way merge; `confirm: true` rules require explicit `--yes` approval and report the rule ids plus targets before applying. `ashlar update --survival-report <path>` can record file-level update outcomes and codemod counts for scenario harnesses.
 
-L0 codemods target the semantic markup form (`<button class="ashlar-button">`) per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md). L1 codemods target the custom-element form (`<ashlar-combobox>`).
+Markup primitive codemods target the semantic markup form (`<button class="ashlar-button">`) per [ADR-0011](../adr/adr-0011-l0-semantic-contract.md). Interactive component codemods target the custom-element form (`<ashlar-combobox>`).
 
 ```json
 {

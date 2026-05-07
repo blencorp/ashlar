@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { applyEvidenceArtifact } from "../lib/evidence-apply.js";
 import { collectAutomatedEvidence } from "../lib/evidence-collect.js";
 import { graduateEvidence, graduateEvidencePacket } from "../lib/evidence-graduate.js";
+import { formatRegistryLayer, parseRegistryLayerAlias } from "../lib/layers.js";
 import { buildManualEvidenceTemplate } from "../lib/evidence-manual-template.js";
 import { publishEvidence } from "../lib/evidence-publish.js";
 import { applyManualReview } from "../lib/evidence-review.js";
@@ -48,8 +49,6 @@ type EvidenceOptions = {
   type?: string;
 };
 
-const stableEvidenceBatchLayers = new Set(["L0", "L1", "L2", "L3", "L4", "all"]);
-
 function collectComponents(component: string | undefined, registry: string) {
   return component
     ? [getComponent(process.cwd(), component, registry)]
@@ -74,12 +73,7 @@ function componentWithEvidenceFile(component: string | undefined, registry: stri
 }
 
 function stableEvidenceBatchLayer(value: string | undefined): RegistryLayer | "all" {
-  const layer = value ?? "L0";
-  if (!stableEvidenceBatchLayers.has(layer)) {
-    throw new Error("Unknown stable evidence review layer. Expected L0, L1, L2, L3, L4, or all.");
-  }
-
-  return layer as RegistryLayer | "all";
+  return parseRegistryLayerAlias(value);
 }
 
 export function registerEvidenceCommand(program: Command) {
@@ -98,8 +92,8 @@ export function registerEvidenceCommand(program: Command) {
     .option("--key-id <id>", "Trusted local signing key id for evidence publish")
     .option(
       "--layer <layer>",
-      "Layer for evidence prepare-stable-all: L0, L1, L2, L3, L4, or all",
-      "L0",
+      "Layer for evidence prepare-stable-all: markup-primitives, interactive-components, framework-adapters, service-patterns, application-blocks, all, or L0-L4",
+      "markup-primitives",
     )
     .option("--manual-file <path>", "Manual evidence artifact path for evidence review")
     .option(
@@ -211,8 +205,10 @@ export function registerEvidenceCommand(program: Command) {
             registryPath: registry,
           });
 
+          const layerLabel =
+            batch.layer === "all" ? "all registry layers" : formatRegistryLayer(batch.layer);
           console.log(
-            `Prepared ${batch.bundles.length} stable evidence review bundle(s) for ${batch.layer}: ${batch.automatedStatus}`,
+            `Prepared ${batch.bundles.length} stable evidence review bundle(s) for ${layerLabel}: ${batch.automatedStatus}`,
           );
           for (const bundle of batch.bundles) {
             console.log(`  - ${bundle.component}@${bundle.version}: ${bundle.automatedStatus}`);

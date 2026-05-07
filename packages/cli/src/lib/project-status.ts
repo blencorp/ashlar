@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { checkExternalReviewRecords } from "./external-review-record.js";
+import { formatRegistryLayer } from "./layers.js";
 import {
   defaultConfig,
   normalizeConfig,
@@ -43,7 +44,9 @@ export type ProjectStatusReport = {
     available: boolean;
     componentCount: number;
     l0Count: number;
+    markupPrimitiveCount: number;
     stableEvidenceL0Count: number;
+    stableEvidenceMarkupPrimitiveCount: number;
   };
   checks: ProjectStatusCheck[];
   nextActions: ProjectStatusAction[];
@@ -209,27 +212,39 @@ export function buildProjectStatus(input: ProjectStatusInput): ProjectStatusRepo
     );
     checks.push(
       l0Count >= 5
-        ? check("l0-coverage", "pass", `${l0Count} L0 capsule(s) are available.`)
-        : check("l0-coverage", "action", `Only ${l0Count} L0 capsule(s) are available.`, [
-            "Replacement-grade coverage needs a broader L0 surface.",
-          ]),
+        ? check(
+            "l0-coverage",
+            "pass",
+            `${l0Count} ${formatRegistryLayer("L0")} capsule(s) are available.`,
+          )
+        : check(
+            "l0-coverage",
+            "action",
+            `Only ${l0Count} ${formatRegistryLayer("L0")} capsule(s) are available.`,
+            ["Replacement-grade coverage needs a broader markup primitive surface."],
+          ),
     );
     checks.push(
       stableEvidenceL0Count > 0
         ? check(
             "stable-l0-evidence",
             "pass",
-            `${stableEvidenceL0Count} L0 capsule(s) have stable evidence.`,
+            `${stableEvidenceL0Count} ${formatRegistryLayer("L0")} capsule(s) have stable evidence.`,
           )
-        : check("stable-l0-evidence", "blocked", "No L0 capsule has stable evidence yet.", [
-            "Generated reviewer bundles are preparation only; real keyboard and screen-reader review remains required.",
-          ]),
+        : check(
+            "stable-l0-evidence",
+            "blocked",
+            `No ${formatRegistryLayer("L0")} capsule has stable evidence yet.`,
+            [
+              "Generated reviewer bundles are preparation only; real keyboard and screen-reader review remains required.",
+            ],
+          ),
     );
     if (stableEvidenceL0Count === 0) {
       addAction(
         nextActions,
-        `ashlar evidence prepare-stable-all --registry ${registryPath} --output reports/l0-stable-review`,
-        "Prepare reviewer intake bundles for all L0 capsules without claiming stable evidence.",
+        `ashlar evidence prepare-stable-all --registry ${registryPath} --output reports/markup-primitive-stable-review`,
+        "Prepare reviewer intake bundles for all markup primitive capsules without claiming stable evidence.",
       );
     }
   } catch (error) {
@@ -288,7 +303,9 @@ export function buildProjectStatus(input: ProjectStatusInput): ProjectStatusRepo
       available: registryAvailable,
       componentCount,
       l0Count,
+      markupPrimitiveCount: l0Count,
       stableEvidenceL0Count,
+      stableEvidenceMarkupPrimitiveCount: stableEvidenceL0Count,
     },
     checks,
     nextActions,

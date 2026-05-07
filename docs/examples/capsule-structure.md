@@ -27,7 +27,7 @@ registry/
         └── latest -> 1.2.4                # symlink to current
 ```
 
-For an L0-only capsule like Button, there is no `button.element.ts` and no `button.machine.ts` — those exist only in L1 capsules.
+For a markup primitive-only capsule like Button, there is no `button.element.ts` and no `button.machine.ts` — those exist only in interactive component capsules.
 
 ## In the consumer's project
 
@@ -255,9 +255,9 @@ See [`button.cem.json`](./button.cem.json) for the full extended CEM example.
 }
 ```
 
-## L1 capsule additions (Combobox example sketch)
+## Interactive component capsule additions (Combobox example sketch)
 
-For an L1 capsule, additional files appear:
+For an interactive component capsule, additional files appear:
 
 ```
 combobox/

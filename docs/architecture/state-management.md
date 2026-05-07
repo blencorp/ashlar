@@ -1,6 +1,6 @@
 # State management
 
-L1 components express behavior as **statecharts** (via Zag.js) plus **signals** (TC39-aligned reactive primitives). The Lit shell is a thin renderer that subscribes to the machine and reflects state to DOM.
+interactive components express behavior as **statecharts** (via Zag.js) plus **signals** (TC39-aligned reactive primitives). The Lit shell is a thin renderer that subscribes to the machine and reflects state to DOM.
 
 This document describes how machines are authored, how signals integrate, and how the same machine drives the Lit custom element and every framework adapter.
 
@@ -17,7 +17,7 @@ The pairing is complementary:
 
 ## Authoring a machine
 
-A capsule's L1 implementation has two key files: `*.machine.ts` (the statechart) and `*.element.ts` (the Lit shell that consumes it).
+A capsule's interactive component implementation has two key files: `*.machine.ts` (the statechart) and `*.element.ts` (the Lit shell that consumes it).
 
 ### Example: ComboBox machine (sketch)
 
@@ -218,7 +218,7 @@ The visualizer shows states, transitions, guards, actions, and ARIA implications
 
 ## Resumability discipline
 
-L1 components serialize machine state into data attributes on the rendered DOM, so a server-rendered component can be "resumed" on the client without re-running setup logic.
+interactive components serialize machine state into data attributes on the rendered DOM, so a server-rendered component can be "resumed" on the client without re-running setup logic.
 
 ```html
 <ashlar-combobox
@@ -233,7 +233,7 @@ On client-side connect, the machine reads `data-ashlar-state` and `data-ashlar-c
 
 ## Firefox ARIA reflection fallback
 
-`ElementInternals.aria*` reflection has incomplete support in Firefox as of April 2026. L1 components must set ARIA attributes directly on the host element (or on the relevant inner DOM) rather than rely on `internals.ariaLabel` etc.
+`ElementInternals.aria*` reflection has incomplete support in Firefox as of April 2026. interactive components must set ARIA attributes directly on the host element (or on the relevant inner DOM) rather than rely on `internals.ariaLabel` etc.
 
 ```ts
 // In the Lit shell:

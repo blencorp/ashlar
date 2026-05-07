@@ -334,8 +334,12 @@ export function registerReleaseCommand(program: Command) {
     .description("Check replacement-grade release readiness")
     .option("--registry <path>", "Registry path (defaults to ./registry)")
     .option("--ai-eval-suite <path>", "AI eval suite path", "examples/ai-eval/ashlar-ai-eval.json")
-    .option("--min-l0 <count>", "Minimum L0 components required", "5")
-    .option("--min-stable-l0 <count>", "Minimum stable-evidence L0 components required", "1")
+    .option("--min-l0 <count>", "Minimum markup primitive capsules required (internal L0)", "5")
+    .option(
+      "--min-stable-l0 <count>",
+      "Minimum stable-evidence markup primitive capsules required (internal L0)",
+      "1",
+    )
     .option(
       "--allow-unverified-public",
       "Warn instead of failing on public npm provenance that cannot be verified locally",
@@ -406,8 +410,12 @@ export function registerReleaseCommand(program: Command) {
     .option("--registry <path>", "Registry path (defaults to ./registry)")
     .option("--stable-component <name>", "Stable evidence target component", "button")
     .option("--ai-eval-suite <path>", "AI eval suite path", "examples/ai-eval/ashlar-ai-eval.json")
-    .option("--min-l0 <count>", "Minimum L0 components required", "5")
-    .option("--min-stable-l0 <count>", "Minimum stable-evidence L0 components required", "1")
+    .option("--min-l0 <count>", "Minimum markup primitive capsules required (internal L0)", "5")
+    .option(
+      "--min-stable-l0 <count>",
+      "Minimum stable-evidence markup primitive capsules required (internal L0)",
+      "1",
+    )
     .option("--output <path>", "Write a Markdown proof action plan")
     .option("--json", "Print JSON proof action plan")
     .action((options: ReleaseProofPlanOptions) => {
@@ -456,8 +464,12 @@ export function registerReleaseCommand(program: Command) {
     .option("--registry <path>", "Registry path (defaults to ./registry)")
     .option("--stable-component <name>", "Stable evidence target component", "button")
     .option("--ai-eval-suite <path>", "AI eval suite path", "examples/ai-eval/ashlar-ai-eval.json")
-    .option("--min-l0 <count>", "Minimum L0 components required", "5")
-    .option("--min-stable-l0 <count>", "Minimum stable-evidence L0 components required", "1")
+    .option("--min-l0 <count>", "Minimum markup primitive capsules required (internal L0)", "5")
+    .option(
+      "--min-stable-l0 <count>",
+      "Minimum stable-evidence markup primitive capsules required (internal L0)",
+      "1",
+    )
     .action((options: ReleaseReviewPackOptions) => {
       try {
         const result = writeReleaseReviewPack({

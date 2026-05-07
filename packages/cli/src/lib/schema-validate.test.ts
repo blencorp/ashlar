@@ -218,8 +218,9 @@ describe("schema-validate", () => {
         {
           id: "stable-l0-evidence",
           status: "fail",
-          summary: "Requires at least 1 stable-evidence L0 component(s); found 0.",
-          details: ["button@0.0.1 L0 experimental evidence:not-reviewed"],
+          summary:
+            "Requires at least 1 stable-evidence markup primitives (L0) capsule(s); found 0.",
+          details: ["button@0.0.1 markup primitives (L0) experimental evidence:not-reviewed"],
         },
       ],
     });

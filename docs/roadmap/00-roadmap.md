@@ -17,7 +17,7 @@ The central rule is:
 | **GitHub launch readiness** | Public repo credibility gate | Public readers, design partners | Make the repository credible before code lands. |
 | **v0.0 — Foundation** | Architecture proof gate | Internal alpha + 2–3 design partners | Prove capsules, evidence, policy packs, and drift with the smallest viable service slice. |
 | **v0.1 — Public alpha** | Public evaluation gate | Public alpha; ~10 design-partner teams | Expand component coverage; validate AI integration; harden drift. |
-| **v0.2 — Multi-framework + patterns** | Cross-stack adoption gate | Public beta; broader gov-tech adoption | Vue / Svelte / Solid adapters; L3 patterns; codemods; templates. |
+| **v0.2 — Multi-framework + patterns** | Cross-stack adoption gate | Public beta; broader gov-tech adoption | Vue / Svelte / Solid adapters; service patterns; codemods; templates. |
 | **v0.3+ — Research frontier** | Validated-demand gate | Selective | Resumability, CRDT-aware patterns, typed accessibility research. |
 | **v1.0 — Stable** | Production-evaluation gate | Production evaluators | Evidence-backed stable component and pattern set. |
 
@@ -42,7 +42,7 @@ See [research/08-gap-analysis-2026-04-29.md](../research/08-gap-analysis-2026-04
 
 If Ashlar does these, it succeeds. If it cannot, we redesign before scaling.
 
-- **Bundle target met**: a typical L0 public-service page under 12KB gzipped (versus shadcn's 40–55KB).
+- **Bundle target met**: a typical markup primitive public-service page under 12KB gzipped (versus shadcn's 40–55KB).
 - **Drift solved**: `ashlar update` works on 50+ real updates with under 10% conflict rate.
 - **AI integration meaningful**: Cursor/Claude/Copilot generate Ashlar code with zero hallucinated props when grounded by extended CEM and AGENTS.md; `ashlar audit` catches violations.
 - **Cross-stack proven**: same component capsule renders in Next.js, Drupal Twig, plain HTML, and a Vite SPA — all with passing accessibility evidence.
@@ -72,7 +72,7 @@ These are deliberate omissions:
 
 - **All 47 USWDS components.** v0.x ships a focused subset; comprehensive parity is a v1.x ambition.
 - **AI Assistant Panel.** A full AI-UX research project disguised as a component. v1.0+ at earliest.
-- **Vue / Svelte / Solid adapters in v0.0–v0.1.** L1 ships as Lit custom elements + React adapter only. Multi-framework lands in v0.2.
+- **Vue / Svelte / Solid adapters in v0.0–v0.1.** Interactive components ship as Lit custom elements + React adapter only. Multi-framework lands in v0.2.
 - **Date Picker, Data Grid, full ComboBox in v0.0.** v0.1 ships the simpler ComboBox; complex date and table land in v0.2.
 - **Effect systems, event-sourced patterns, CRDT-friendly patterns.** Architecture stays compatible; exploitation is v0.3+.
 - **Native mobile (iOS/Android).** Web first; native ports are a v1.x consideration only if demand exists.
@@ -103,7 +103,7 @@ Every release — v0.0 through v0.3+ — ships:
 
 | Metric | Tool | Target |
 |---|---|---|
-| Bundle size | `ashlar bundle budget` | <10KB L0-only CSS with 0 B JS, <15KB with one L1 |
+| Bundle size | `ashlar bundle budget` | <10KB markup-primitive-only CSS with 0 B JS, <15KB with one interactive component |
 | Drift conflict rate | `ashlar update` telemetry (opt-in) | <10% |
 | AI generation accuracy | Eval suite against Cursor/Claude/Copilot | 0 hallucinated props |
 | First useful slice | Fresh-project smoke test | Deterministic init/add/audit flow |
@@ -127,9 +127,9 @@ After v0.0:
 When v1.0 ships, Ashlar has:
 
 - 25–30 stable components covering primary federal-service UI needs.
-- L3 patterns for at least 6 service flows.
-- L4 templates for Nunjucks, Twig, Jinja, ERB, plain HTML.
-- L2 adapters for React, Vue, Svelte, Solid.
+- service patterns for at least 6 service flows.
+- Application templates for Nunjucks, Twig, Jinja, ERB, plain HTML.
+- Framework adapters for React, Vue, Svelte, Solid.
 - A signed registry, lockfile, drift management, validator.
 - Extended CEM and MCP server consumed by Cursor, Claude, Windsurf, Copilot.
 - Independent third-party accessibility audit completed.

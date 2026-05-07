@@ -1,6 +1,6 @@
 # 06 — Statecharts and the architectural frontier
 
-This document records the conceptual lineage behind Ashlar's L1 state-management decisions and surveys the architectural primitives — beyond statecharts — that may shape the long-term direction.
+This document records the conceptual lineage behind Ashlar's interactive component state-management decisions and surveys the architectural primitives beyond statecharts that may shape the long-term direction.
 
 It is reference material for the architecture, not a delivery plan. The actionable subset is captured in the [`architecture/state-management.md`](../architecture/state-management.md) document and in the [`adr/`](../adr/) folder.
 
@@ -59,7 +59,7 @@ Standard SSR runs the component logic on the server, sends HTML, then re-runs th
 
 For government services on slow devices, poor connections, kiosks, or rural-area sites, this is materially better than hydration. Qwik proved it works. The idea is not Qwik-specific — it is an architectural pattern.
 
-**For Ashlar**: L1 components should serialize their machine state to data attributes so the entire SSR plus client-takeover flow can resume without re-execution. This is a design discipline, not a runtime requirement. The cost is small; the future option is large.
+**For Ashlar**: interactive components should serialize their machine state to data attributes so the entire SSR plus client-takeover flow can resume without re-execution. This is a design discipline, not a runtime requirement. The cost is small; the future option is large.
 
 ### 4. CRDTs and local-first sync
 
@@ -67,7 +67,7 @@ Government services are increasingly collaborative: case management with multipl
 
 **CRDTs (Conflict-Free Replicated Data Types)** — Yjs, Automerge — let multiple clients edit shared state without coordination, with mathematically guaranteed convergence. **Local-first** sync engines — Replicache, ElectricSQL, RxDB, PowerSync — let apps work offline and sync when connected.
 
-**For Ashlar**: not a v0.x bet. A pattern category we should design **for** in L3 (patterns). An eligibility flow that works in flight mode and syncs back on reconnect is genuinely transformative for federal field services. Ashlar does not need to ship the sync engine; Ashlar's patterns must work with one.
+**For Ashlar**: not a v0.x bet. A category we should design **for** in service patterns. An eligibility flow that works in flight mode and syncs back on reconnect is genuinely transformative for federal field services. Ashlar does not need to ship the sync engine; Ashlar's patterns must work with one.
 
 ### 5. Event sourcing
 
@@ -75,7 +75,7 @@ Every state change is an event; current state is a fold over the event log. Time
 
 Government has hard audit requirements — every form submission, every eligibility determination, every benefits decision must be reconstructible from logs. **Event sourcing is the natural architecture for this**, and statecharts compose with it cleanly (every transition is an event).
 
-**For Ashlar**: a design system that ships an "event-sourced form" pattern in L3 would be uniquely useful for federal benefits, eligibility, and case-management contexts. **Realistic v0.2+ deliverable**, after the L3 patterns infrastructure exists.
+**For Ashlar**: a design system that ships an "event-sourced form" service pattern would be uniquely useful for federal benefits, eligibility, and case-management contexts. **Realistic v0.2+ deliverable**, after the service patterns infrastructure exists.
 
 ## Other primitives worth knowing about
 
@@ -94,11 +94,11 @@ Most of these are background context, not active bets.
 
 | Primitive | Status in Ashlar | Phase |
 |---|---|---|
-| Statecharts via Zag | Adopted | v0.0 (L1) |
-| Signals (Solid-style or Preact-aligned with TC39) | Adopted | v0.0 (L1, paired with Zag) |
-| Resumability-friendly serialization | Design discipline | v0.0 (L1 design constraint) |
-| Event-sourced patterns | Pattern category | v0.2 (L3) |
-| CRDT-friendly patterns | Pattern category | v0.3 (L3) |
+| Statecharts via Zag | Adopted | v0.0 interactive components |
+| Signals (Solid-style or Preact-aligned with TC39) | Adopted | v0.0 interactive components, paired with Zag |
+| Resumability-friendly serialization | Design discipline | v0.0 interactive component design constraint |
+| Event-sourced patterns | Pattern category | v0.2 service patterns |
+| CRDT-friendly patterns | Pattern category | v0.3 service patterns |
 | Effect systems for typed accessibility | Research track | v0.3+ |
 | TLA+ specs for critical invariants | Research track | v0.3+ |
 

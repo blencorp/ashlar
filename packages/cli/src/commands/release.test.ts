@@ -1251,7 +1251,7 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(report).toContain("- Status: fail");
     expect(report).toContain("## Blocking Checks");
     expect(report).toContain(
-      "- stable-l0-evidence: Requires at least 1 stable-evidence L0 component(s); found 0.",
+      "- stable-l0-evidence: Requires at least 1 stable-evidence markup primitives (L0) capsule(s); found 0.",
     );
     expect(report).toContain(
       "- external-review-proof: External review proof records are incomplete.",

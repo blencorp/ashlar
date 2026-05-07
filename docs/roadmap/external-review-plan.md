@@ -8,7 +8,7 @@ Ashlar cannot become replacement-grade through local implementation alone. The r
 
 | Track | Purpose | GitHub template | Blocking gate |
 |---|---|---|---|
-| Stable evidence review | Produce real keyboard, screen-reader, WCAG, and ICT Baseline evidence for one L0 capsule. | `stable_evidence_review.yml` | `stable-l0-evidence` |
+| Stable evidence review | Produce real keyboard, screen-reader, WCAG, and ICT Baseline evidence for one markup primitive capsule. | `stable_evidence_review.yml` | `stable-l0-evidence` |
 | Release trust review | Verify npm trusted publishing, package provenance, capsule Sigstore bundles, SBOM, and trust bundle artifacts. | `release_trust_review.yml` | `npm-provenance-public`, `sigstore-public-trust` |
 | Design partner review | Validate that the wedge is understandable and useful in a real public-service context. | `design_partner_review.yml` | External credibility |
 
@@ -28,19 +28,19 @@ node packages/cli/dist/index.js release review-pack \
   --output reports/review-pack
 node packages/cli/dist/index.js evidence prepare-stable-all \
   --registry ./registry \
-  --output reports/l0-stable-review
+  --output reports/markup-primitive-stable-review
 node packages/cli/dist/index.js evidence review-status button \
   --registry ./registry \
-  --review-dir reports/l0-stable-review/button
+  --review-dir reports/markup-primitive-stable-review/button
 ```
 
 The proof action plan maps the current readiness blockers to the three review tracks and tracking issues. The review pack is a convenience bundle for reviewers. Neither artifact creates completed proof records, and neither replaces the specific acceptance commands below.
 
 Reviewer output must include:
 
-- the generated `reports/l0-stable-review/INDEX.md` used to select the L0 target;
-- the generated `reports/l0-stable-review/button/ISSUE.md` body pasted into the stable evidence review issue;
-- the generated `reports/l0-stable-review/button/REVIEWER_CHECKLIST.md` used as the reviewer acceptance checklist;
+- the generated `reports/markup-primitive-stable-review/INDEX.md` used to select the markup primitive target;
+- the generated `reports/markup-primitive-stable-review/button/ISSUE.md` body pasted into the stable evidence review issue;
+- the generated `reports/markup-primitive-stable-review/button/REVIEWER_CHECKLIST.md` used as the reviewer acceptance checklist;
 - completed manual review artifact;
 - keyboard transcript artifact;
 - screen-reader transcript artifact;
@@ -52,17 +52,17 @@ Maintainer acceptance:
 ```bash
 node packages/cli/dist/index.js evidence review-status button \
   --registry ./registry \
-  --review-dir reports/l0-stable-review/button
+  --review-dir reports/markup-primitive-stable-review/button
 node packages/cli/dist/index.js evidence finalize-stable button \
   --registry ./registry \
-  --review-dir reports/l0-stable-review/button
+  --review-dir reports/markup-primitive-stable-review/button
 node packages/cli/dist/index.js evidence button \
   --check \
   --registry ./registry \
-  --evidence-file reports/l0-stable-review/button/button.evidence.stable.json
+  --evidence-file reports/markup-primitive-stable-review/button/button.evidence.stable.json
 node packages/cli/dist/index.js evidence publish button \
   --registry ./registry \
-  --evidence-file reports/l0-stable-review/button/button.evidence.stable.json \
+  --evidence-file reports/markup-primitive-stable-review/button/button.evidence.stable.json \
   --signing-key <trusted-local-signing-key> \
   --key-id <trusted-key-id> \
   --output reports/button-evidence-publication.json
@@ -136,7 +136,7 @@ node packages/cli/dist/index.js release review-record stable-evidence \
   --rationale "<why the review passed>" \
   --component button \
   --registry ./registry \
-  --review-dir reports/l0-stable-review/button \
+  --review-dir reports/markup-primitive-stable-review/button \
   --publication-receipt reports/button-evidence-publication.json
 ```
 
@@ -188,7 +188,7 @@ Questions to answer:
 
 Do not strengthen public replacement language until:
 
-- at least one stable-evidence L0 capsule is published;
+- at least one stable-evidence markup primitive capsule is published;
 - public npm provenance has been verified for exact package versions;
 - public capsule Sigstore trust has been verified from a downloaded signed registry artifact;
 - at least one external design partner review is recorded;

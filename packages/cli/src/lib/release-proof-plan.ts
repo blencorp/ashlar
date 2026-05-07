@@ -78,7 +78,7 @@ function trackStatus(
 export function buildReleaseProofPlan(input: ProofPlanInput): ReleaseProofPlan {
   const registry = input.registryPath;
   const stableComponent = getComponent(input.cwd, input.stableComponent, input.registryPath);
-  const stableReviewDir = `reports/l0-stable-review/${input.stableComponent}`;
+  const stableReviewDir = `reports/markup-primitive-stable-review/${input.stableComponent}`;
   const stableFixture = registryChild(
     registry,
     `components/${input.stableComponent}/${stableComponent.version}/${input.stableComponent}.html`,
@@ -104,7 +104,7 @@ export function buildReleaseProofPlan(input: ProofPlanInput): ReleaseProofPlan {
       {
         name: "Button stable evidence",
         description:
-          "Produce real keyboard, screen-reader, WCAG, and ICT Baseline evidence for one L0 capsule.",
+          "Produce real keyboard, screen-reader, WCAG, and ICT Baseline evidence for one markup primitive capsule.",
         issue: "https://github.com/blencorp/ashlar/issues/22",
         readinessChecks: stableChecks,
         status: trackStatus(input.readiness, stableChecks),

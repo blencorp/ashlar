@@ -96,7 +96,7 @@ shadcn discussion **#790 ("Need easy way to update components") is the canonical
 
 3. **Git-based diff merges** — the `git merge-file` approach in (1) is the cheapest implementation. No dependencies.
 
-4. **Polyglot AST refactors** — ast-grep YAML rules can rewrite TSX, Vue, Svelte, Twig identically. Ship one rule per breaking change; works across the entire L2/L4 surface.
+4. **Polyglot AST refactors** — ast-grep YAML rules can rewrite TSX, Vue, Svelte, Twig identically. Ship one rule per breaking change; works across the entire framework-adapter and application-block surface.
 
 ## Bundle benchmarks (April 2026, gzipped)
 

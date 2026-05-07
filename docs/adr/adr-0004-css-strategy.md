@@ -19,11 +19,11 @@ Components are authored in semantic CSS, not Tailwind classes. Tailwind v4 is a 
 
 Cascade layers make consumer override behavior predictable. Component authors define an `ashlar.components` layer; consumers can reliably override by writing into a higher layer (or the unlayered cascade). No specificity wars, no `!important`.
 
-`@scope` (Baseline December 2025 with Firefox 146) provides component-local styles without Shadow DOM — useful for Light DOM L1 components and CSS-only L0 components. It avoids the theming friction Shadow DOM creates.
+`@scope` (Baseline December 2025 with Firefox 146) provides component-local styles without Shadow DOM — useful for Light DOM interactive components and CSS-only markup primitives. It avoids the theming friction Shadow DOM creates.
 
 CSS variables driven by DTCG-compiled tokens provide runtime theming, dark mode (via `light-dark()`), agency branding (via mode/scope-scoped overrides), and a cross-stack contract that works the same in React, Vue, Drupal, Sitecore, and plain HTML.
 
-Authoring in semantic CSS instead of Tailwind classes is essential for the ~70% of L0 components that ship as pure CSS+HTML to non-Tailwind stacks. Federal Drupal, Sitecore, AEM, and server-rendered Django/Rails/PHP shops typically do not have Tailwind in their build pipelines. Forcing Tailwind on components excludes a large audience and bloats bundles for the rest. Tailwind users get full token integration through the `@theme` output.
+Authoring in semantic CSS instead of Tailwind classes is essential for the ~70% of markup primitives that ship as pure CSS+HTML to non-Tailwind stacks. Federal Drupal, Sitecore, AEM, and server-rendered Django/Rails/PHP shops typically do not have Tailwind in their build pipelines. Forcing Tailwind on components excludes a large audience and bloats bundles for the rest. Tailwind users get full token integration through the `@theme` output.
 
 ## Consequences
 
@@ -32,7 +32,7 @@ Authoring in semantic CSS instead of Tailwind classes is essential for the ~70% 
 - Predictable override behavior via cascade layers.
 - Component-local styles without Shadow DOM via `@scope`.
 - Runtime theming (light/dark/HC/agency) without JavaScript.
-- Lower build complexity for L0 consumers — no Sass, no Tailwind required.
+- Lower build complexity for markup primitive consumers — no Sass, no Tailwind required.
 - Maximum cross-stack reach.
 
 **Negative**

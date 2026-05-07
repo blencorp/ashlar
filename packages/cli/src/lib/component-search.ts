@@ -6,6 +6,7 @@ import {
   type RegistryStability,
   type RegistryTier,
 } from "./registry.js";
+import { formatRegistryLayer } from "./layers.js";
 
 export type ComponentSearchInput = {
   cwd: string;
@@ -145,7 +146,7 @@ function filterReasons(component: RegistryComponent, input: ComponentSearchInput
     return null;
   }
   if (input.layer) {
-    reasons.push(`layer: ${component.layer}`);
+    reasons.push(`layer: ${formatRegistryLayer(component.layer)}`);
   }
   if (input.tier && component.tier !== input.tier) {
     return null;

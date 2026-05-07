@@ -1,6 +1,7 @@
+import { formatRegistryLayer } from "./layers.js";
 import type { AshlarLockfile, ResolvedAshlarConfig } from "./project.js";
 import { writeFileIfMissing } from "./project.js";
-import { getComponent } from "./registry.js";
+import { getComponent, type RegistryLayer } from "./registry.js";
 import { findThemeToken, loadStockThemes, type ThemeDefinition } from "./theme.js";
 
 type DesignContextOptions = {
@@ -12,7 +13,7 @@ type InstalledDesignCapsule = {
   version: string;
   stability: string;
   tier?: string;
-  layer?: string;
+  layer?: RegistryLayer;
   evidence?: string;
   platformFeatures?: string[];
   policyMappings?: string[];
@@ -232,7 +233,7 @@ function installedCapsuleLines(capsules: InstalledDesignCapsule[]): string {
     .map((capsule) => {
       const metadata = [
         capsule.tier,
-        capsule.layer,
+        capsule.layer ? formatRegistryLayer(capsule.layer) : undefined,
         capsule.stability,
         capsule.evidence ? `evidence: ${capsule.evidence}` : undefined,
       ]
