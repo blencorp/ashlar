@@ -144,6 +144,7 @@ describe("CI workflow", () => {
     expect(workflow).toContain("workflow_dispatch:");
     expect(workflow).toContain("id-token: write");
     expect(workflow).toContain("contents: read");
+    expect(workflow).toContain("github.ref == 'refs/heads/main'");
     expect(workflow).toContain("runs-on: ubuntu-latest");
     expect(workflow).toContain("registry-url: https://registry.npmjs.org");
     expect(workflow).toContain("package-manager-cache: false");

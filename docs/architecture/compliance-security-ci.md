@@ -389,7 +389,7 @@ Implemented locally. Checks the repository-side prerequisites for provenance-cap
 - CI grants `id-token: write`;
 - CI runs on a GitHub-hosted runner;
 - CI runs the readiness check itself;
-- the manual `publish.yml` trusted-publishing path is tokenless, uses the npm registry, disables package-manager cache during setup, sets `NPM_CONFIG_PROVENANCE=true`, runs `pnpm release`, runs `ashlar release provenance-verify-public` after publishing, and uploads `reports/ashlar-npm-provenance.json` from the JSON verifier.
+- the manual `publish.yml` trusted-publishing path is main-only, tokenless, uses the npm registry, disables package-manager cache during setup, sets `NPM_CONFIG_PROVENANCE=true`, runs `pnpm release`, runs `ashlar release provenance-verify-public` after publishing, and uploads `reports/ashlar-npm-provenance.json` from the JSON verifier.
 
 The command deliberately does not claim that npm provenance exists. The npmjs.com trusted publisher configuration is outside the local repo and must be verified on the package settings page before a public release.
 
