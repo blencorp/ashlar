@@ -1,5 +1,16 @@
 # ashlar
 
+## 0.3.0
+
+### Minor Changes
+
+- [`c9f509a`](https://github.com/blencorp/ashlar/commit/c9f509a917ba7c7a27a96448764bcf775b827520) Thanks [@naodya](https://github.com/naodya)! - Add shadcn-v4-style installer preview flags for `ashlar add`: `--view`, `--dry-run`, and `--diff` verify capsules before showing metadata, planned writes, or source diffs without changing consumer files.
+
+### Patch Changes
+
+- Updated dependencies [[`c9f509a`](https://github.com/blencorp/ashlar/commit/c9f509a917ba7c7a27a96448764bcf775b827520)]:
+  - @ashlar/cli@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes
