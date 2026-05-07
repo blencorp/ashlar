@@ -46,4 +46,16 @@ describe("search command", () => {
     });
     expect(payload.components[0]?.reasons.join(" ")).toContain("feature: details-summary");
   });
+
+  it("supports shadcn-style search offsets", () => {
+    const result = runCli(["search", "--limit", "1", "--offset", "1", "--json"]);
+    const payload = JSON.parse(result.stdout) as {
+      count: number;
+      components: Array<{ name: string }>;
+    };
+
+    expect(result.status).toBe(0);
+    expect(payload.count).toBe(1);
+    expect(payload.components[0]?.name).not.toBe("alert");
+  });
 });

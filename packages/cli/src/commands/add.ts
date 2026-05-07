@@ -21,10 +21,13 @@ import {
 
 type AddOptions = CwdOption & {
   all?: boolean;
-  diff?: boolean;
+  diff?: boolean | string;
   dryRun?: boolean;
+  overwrite?: boolean;
+  path?: string;
+  silent?: boolean;
   yes?: boolean;
-  view?: boolean;
+  view?: boolean | string;
 };
 
 type InstallPlan = {
@@ -163,14 +166,21 @@ export function registerAddCommand(program: Command) {
     .description("Add component capsules from the configured registry")
     .option("-a, --all", "Add every available component in the configured registry")
     .option("-c, --cwd <path>", "Working directory. Defaults to the current directory.")
+    .option("-o, --overwrite", "Overwrite existing component files")
+    .option("-p, --path <path>", "Directory where component source should be installed")
+    .option("-s, --silent", "Mute non-error output")
     .option("--dry-run", "Preview verified install writes without changing files")
-    .option("--diff", "Show a source diff for verified install writes without changing files")
-    .option("--view", "Show verified capsule metadata and target files before install")
+    .option(
+      "--diff [path]",
+      "Show a source diff for verified install writes without changing files",
+    )
+    .option("--view [path]", "Show verified capsule metadata and target files before install")
     .option("-y, --yes", "Skip confirmation prompts. Present for shadcn CLI compatibility.")
     .action((components: string[], options: AddOptions) => {
       try {
         applyCommandCwd(options);
-        const config = readConfig();
+        const baseConfig = readConfig();
+        const config = options.path ? { ...baseConfig, componentsDir: options.path } : baseConfig;
         const selectedComponents = options.all
           ? listComponents(process.cwd(), config.registry).map((component) => component.name)
           : components;
@@ -185,6 +195,9 @@ export function registerAddCommand(program: Command) {
         }
 
         if (options.view || options.dryRun || options.diff) {
+          if (options.silent) {
+            return;
+          }
           if (options.view) {
             renderView(plans);
           }
@@ -198,7 +211,9 @@ export function registerAddCommand(program: Command) {
           return;
         }
 
-        printBrandHeader("Installing source-owned capsules");
+        if (!options.silent) {
+          printBrandHeader("Installing source-owned capsules");
+        }
         const lockfile = readLockfile();
 
         for (const plan of plans) {
@@ -209,6 +224,11 @@ export function registerAddCommand(program: Command) {
 
           for (const file of plan.files) {
             const target = file.target;
+            if (existsSync(target) && !options.overwrite) {
+              throw new Error(
+                `Refusing to overwrite existing Ashlar source file: ${target}. Pass --overwrite to replace it.`,
+              );
+            }
             mkdirSync(dirname(target), { recursive: true });
             copyFileSync(file.source, target);
             const hash = sha256File(target);
@@ -233,23 +253,33 @@ export function registerAddCommand(program: Command) {
             files: installedFiles,
           };
 
-          printSuccess(`Added ${plan.detail.name}@${plan.detail.version}`);
-          for (const file of Object.keys(installedFiles).sort()) {
-            console.log(`  ${file}`);
+          if (!options.silent) {
+            printSuccess(`Added ${plan.detail.name}@${plan.detail.version}`);
+            for (const file of Object.keys(installedFiles).sort()) {
+              console.log(`  ${file}`);
+            }
           }
         }
 
+        if (options.path) {
+          writeJson("ashlar.config.json", config);
+        }
         writeJson("ashlar-lock.json", lockfile);
         syncAshlarProject(process.cwd(), config, lockfile);
         writeAgentsContext("AGENTS.md", config, lockfile);
         writeDesignContext("DESIGN.md", config, lockfile, { cwd: process.cwd(), force: true });
-        printSection("Next");
-        printCommand(
-          "ashlar verify",
-          "Check installed files against registry hashes and signatures.",
-        );
-        printCommand("ashlar status", "Review adoption gates, evidence status, and next actions.");
-        printFooter();
+        if (!options.silent) {
+          printSection("Next");
+          printCommand(
+            "ashlar verify",
+            "Check installed files against registry hashes and signatures.",
+          );
+          printCommand(
+            "ashlar status",
+            "Review adoption gates, evidence status, and next actions.",
+          );
+          printFooter();
+        }
       } catch (error) {
         console.error(error instanceof Error ? error.message : String(error));
         process.exitCode = 1;

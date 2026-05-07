@@ -22,6 +22,7 @@ type SearchOptions = {
   feature?: string;
   token?: string;
   limit?: string;
+  offset?: string;
 } & CwdOption;
 
 export function registerSearchCommand(program: Command) {
@@ -42,6 +43,7 @@ export function registerSearchCommand(program: Command) {
     .option("--feature <text>", "Filter by platform feature")
     .option("--token <text>", "Filter by consumed design token")
     .option("-l, --limit <count>", "Maximum results", "20")
+    .option("-o, --offset <count>", "Number of results to skip", "0")
     .option("--json", "Emit JSON")
     .action((query = "", options: SearchOptions) => {
       try {
@@ -51,6 +53,10 @@ export function registerSearchCommand(program: Command) {
         const limit = Number.parseInt(options.limit ?? "20", 10);
         if (!Number.isInteger(limit) || limit < 1) {
           throw new Error("--limit must be a positive integer");
+        }
+        const offset = Number.parseInt(options.offset ?? "0", 10);
+        if (!Number.isInteger(offset) || offset < 0) {
+          throw new Error("--offset must be a non-negative integer");
         }
         const components = searchRegistryComponents({
           cwd: process.cwd(),
@@ -63,8 +69,8 @@ export function registerSearchCommand(program: Command) {
           policy: options.policy,
           feature: options.feature,
           token: options.token,
-          limit,
-        });
+          limit: limit + offset,
+        }).slice(offset, offset + limit);
 
         if (options.json) {
           console.log(
@@ -83,6 +89,7 @@ export function registerSearchCommand(program: Command) {
         printBrandHeader("Registry search");
         printKeyValue("query", searchQuery || "(all)");
         printKeyValue("results", components.length);
+        printKeyValue("offset", offset);
         for (const item of components) {
           printSection(`${item.name}@${item.version}`);
           console.log(
