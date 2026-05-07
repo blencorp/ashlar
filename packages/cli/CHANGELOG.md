@@ -1,5 +1,11 @@
 # @ashlar/cli
 
+## 0.3.2
+
+### Patch Changes
+
+- [#77](https://github.com/blencorp/ashlar/pull/77) [`deda0e7`](https://github.com/blencorp/ashlar/commit/deda0e76de687775199ae7a3892fc31456501250) Thanks [@naodya](https://github.com/naodya)! - Add shadcn-v4-compatible CLI ergonomics: `create` as an `init` alias, `-c/--cwd` for common discovery/install commands, `search -q/-l`, and `add --all` previews for the configured Ashlar registry.
+
 ## 0.3.1
 
 ### Patch Changes
