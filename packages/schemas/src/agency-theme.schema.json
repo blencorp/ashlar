@@ -4,7 +4,7 @@
   "title": "Ashlar Agency Theme",
   "description": "DTCG-aligned theme document. Each agency theme lives in its own JSON file under packages/cli/themes/ (or in a downstream theme registry). The CLI's theme loader scans the directory and validates every file against this schema before compilation.",
   "type": "object",
-  "required": ["name", "title", "description", "sources", "tokens"],
+  "required": ["name", "title", "description", "provenance", "sources", "tokens"],
   "properties": {
     "$schema": { "type": "string" },
     "name": {
@@ -22,13 +22,40 @@
       "minLength": 1,
       "description": "One-sentence description shown in theme pickers and contributor docs."
     },
+    "provenance": {
+      "type": "object",
+      "description": "Human-review metadata describing whether this theme is source-derived, official, or unverified. Source-derived themes use public agency or government design sources but are not agency endorsements.",
+      "required": ["status", "reviewedAt", "reviewedBy", "summary"],
+      "properties": {
+        "status": {
+          "enum": ["source-derived", "official-adapter", "unverified"],
+          "description": "Source confidence. `official-adapter` is reserved for themes reviewed or published by the agency or an authorized design-system owner."
+        },
+        "reviewedAt": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "Date this theme's source mapping was last checked, in YYYY-MM-DD format."
+        },
+        "reviewedBy": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Person, organization, or review role that checked the source mapping."
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Plain-language claim boundary for this theme's relationship to its sources."
+        }
+      },
+      "additionalProperties": false
+    },
     "sources": {
       "type": "array",
       "description": "Primary agency or government design-system sources used to derive this theme. These links travel with generated theme JSON so downstream teams can audit provenance.",
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["label", "url", "note"],
+        "required": ["label", "url", "note", "retrievedAt"],
         "properties": {
           "label": {
             "type": "string",
@@ -44,6 +71,19 @@
             "type": "string",
             "minLength": 1,
             "description": "Short note describing which tokens or design constraints came from this source."
+          },
+          "retrievedAt": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Date this public source was last checked, in YYYY-MM-DD format."
+          },
+          "tokenPaths": {
+            "type": "array",
+            "description": "Ashlar DTCG token paths directly informed by this source.",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
           }
         },
         "additionalProperties": false

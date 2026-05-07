@@ -142,7 +142,7 @@ Agency themes are first-class registry items. They:
 - Extend the default theme via DTCG token overrides.
 - Pass `ashlar theme validate` (contrast pairs, forced-colors fallbacks, dark mode if declared).
 - Preserve interaction semantics — themes change visual identity, not component behavior.
-- Document the brand source (which agency, which guidelines, which version).
+- Document reviewed provenance status, reviewer, review date, source retrieval dates, and the token paths supported by each public source.
 - Include at least one example application using the theme.
 
 Themes ship in the same registry as components, with their own versioning and evidence (contrast validation results, theme migration codemods if applicable).

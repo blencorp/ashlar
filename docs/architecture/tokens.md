@@ -4,7 +4,7 @@ The token system is the framework-neutral contract that drives every other layer
 
 Source format: **DTCG 2025.10-shaped** JSON. The current prototype loads stock theme JSON files and emits CSS variables, a Tailwind v4 `@theme` companion file, and typed TypeScript token helpers. The target compiler still includes JSON and design-tool outputs.
 
-> **Status (2026-05-07)**: stock themes live under `packages/cli/themes/*.tokens.json`, `ashlar init` copies those JSON files and writes generated `theme.css`, `tailwind-theme.css`, and `tokens.ts`; `ashlar theme sync` regenerates those outputs from local theme JSON; and `ashlar theme validate` checks schema shape, required source provenance, required semantic token paths, and WCAG AA action contrast in light/dark modes. Tailwind `@theme` output is implemented as a companion stylesheet and is consumed by the Tailwind-enabled Vite example; typed token output is implemented as a generated TypeScript contract; generated `DESIGN.md` exports theme source links for coding agents. See [STATUS.md](../../STATUS.md).
+> **Status (2026-05-07)**: stock themes live under `packages/cli/themes/*.tokens.json`, `ashlar init` copies those JSON files and writes generated `theme.css`, `tailwind-theme.css`, and `tokens.ts`; `ashlar theme sync` regenerates those outputs from local theme JSON; and `ashlar theme validate` checks schema shape, reviewed source provenance, source retrieval dates, required semantic token paths, and WCAG AA action contrast in light/dark modes. Tailwind `@theme` output is implemented as a companion stylesheet and is consumed by the Tailwind-enabled Vite example; typed token output is implemented as a generated TypeScript contract; generated `DESIGN.md` exports theme provenance and source links for coding agents. See [STATUS.md](../../STATUS.md).
 
 ## Hierarchy
 
@@ -202,9 +202,10 @@ Used for IntelliSense in component code and in consumer applications.
 
 ## Agency theme contract
 
-Agency themes extend the default theme by overriding allowed tokens. The target theme schema validates that:
+Agency themes extend the default theme by overriding allowed tokens. The theme schema validates that:
 
-- Public source provenance is present for every theme. Each source must include a label, HTTPS URL, and note explaining which tokens or constraints it supports.
+- Theme-level provenance is present with `status`, `reviewedAt`, `reviewedBy`, and a short summary. Stock themes use `source-derived`; `unverified` is rejected by `ashlar theme validate`.
+- Public source provenance is present for every theme. Each source must include a label, HTTPS URL, retrieval date, note, and optional token-path list explaining which tokens or constraints it supports.
 - Required semantic tokens are present.
 - Aliases resolve.
 - Color values parse.
@@ -217,6 +218,21 @@ Agency themes extend the default theme by overriding allowed tokens. The target 
   "$schema": "https://ashlar.dev/schemas/theme.schema.json",
   "name": "example-agency",
   "extends": "ashlar/default",
+  "provenance": {
+    "status": "source-derived",
+    "reviewedAt": "2026-05-07",
+    "reviewedBy": "Example Agency Design System Team",
+    "summary": "Derived from the agency's public color and typography guidance for service UI tokens."
+  },
+  "sources": [
+    {
+      "label": "Example Agency design tokens",
+      "url": "https://example.gov/design/tokens",
+      "note": "Supports brand, typography, focus, and action-color token choices.",
+      "retrievedAt": "2026-05-07",
+      "tokenPaths": ["color.brand.primary", "color.focus.ring", "type.font.sans"]
+    }
+  ],
   "tokens": {
     "color.brand.primary": { "$type": "color", "$value": "oklch(0.42 0.12 250)" },
     "color.action.primary.bg": { "$type": "color", "$value": "{color.brand.primary}" }
@@ -233,13 +249,15 @@ Agency themes extend the default theme by overriding allowed tokens. The target 
 }
 ```
 
-Current `ashlar theme validate` enforces schema validity, required semantic token paths, alias resolution for those paths, and AA contrast for primary and secondary action foreground/background pairs. Current `ashlar theme sync` regenerates CSS variables, Tailwind `@theme` output, and typed TypeScript token helpers from local theme JSON. The broader compiler contract above remains the target for slice 6 completion.
+Current `ashlar theme validate` enforces schema validity, reviewed provenance metadata, source retrieval dates, required semantic token paths, alias resolution for those paths, and AA contrast for primary and secondary action foreground/background pairs. Current `ashlar theme sync` regenerates CSS variables, Tailwind `@theme` output, and typed TypeScript token helpers from local theme JSON. The broader compiler contract above remains the target for slice 6 completion.
 
-Stock source provenance is intentionally narrow:
+Stock source provenance is intentionally narrow and explicitly non-endorsement:
 
 - `default` cites USWDS color guidance, USWDS system color tokens, and USWDS font tokens.
 - `va` cites the VA.gov color palette and VA.gov typography foundation pages.
 - `usda` cites USDA Design and Brand Plays plus USWDS color guidance, because USDA explicitly anchors logo colors while directing broader interface palettes back to USWDS colors.
+
+All stock sources carry `retrievedAt` dates and token-path hints. The stock themes are source-derived examples, not official USWDS, VA, or USDA packages.
 
 ## Contrast policy
 

@@ -2,17 +2,27 @@
   "$schema": "https://ashlar.dev/schemas/agency-theme.schema.json",
   "name": "va",
   "title": "VA",
-  "description": "VA.gov-inspired service theme grounded in VA semantic color tokens. Illustrative; not an official VA brand specification.",
+  "description": "VA.gov source-derived service theme grounded in VA semantic color and typography guidance. Not an official VA brand specification or endorsement.",
+  "provenance": {
+    "status": "source-derived",
+    "reviewedAt": "2026-05-07",
+    "reviewedBy": "BLEN",
+    "summary": "Derived from public VA.gov Design System color and typography sources; not published or endorsed by the Department of Veterans Affairs."
+  },
   "sources": [
     {
       "label": "VA.gov color palette",
       "url": "https://design.va.gov/foundation/color-palette",
-      "note": "Uses VA semantic colors, including vads-color-primary and base text values."
+      "note": "Uses VA semantic colors, including vads-color-primary and base text values.",
+      "retrievedAt": "2026-05-07",
+      "tokenPaths": ["color.action.primary.*", "color.text.*", "color.focus", "color.status.*"]
     },
     {
       "label": "VA.gov typography",
       "url": "https://design.va.gov/foundation/typography",
-      "note": "Uses VA's Source Sans Pro sans-serif stack and VA typography scale references."
+      "note": "Uses VA's Source Sans Pro sans-serif stack and VA typography scale references.",
+      "retrievedAt": "2026-05-07",
+      "tokenPaths": ["font.sans"]
     }
   ],
   "order": 10,

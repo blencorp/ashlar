@@ -29,7 +29,16 @@ export type TokenTree = {
 export type AgencyThemeSource = {
   label: string;
   url: string;
-  note?: string;
+  note: string;
+  retrievedAt: string;
+  tokenPaths?: string[];
+};
+
+export type ThemeProvenance = {
+  status: "source-derived" | "official-adapter" | "unverified";
+  reviewedAt: string;
+  reviewedBy: string;
+  summary: string;
 };
 
 type AgencyThemeFile = {
@@ -37,6 +46,7 @@ type AgencyThemeFile = {
   name: string;
   title: string;
   description: string;
+  provenance: ThemeProvenance;
   sources: AgencyThemeSource[];
   order?: number;
   tokens: TokenTree;
@@ -49,6 +59,7 @@ export type ThemeDefinition = {
   name: string;
   title: string;
   description: string;
+  provenance: ThemeProvenance;
   sources: AgencyThemeSource[];
   order: number;
   tokens: TokenTree;
@@ -81,7 +92,18 @@ export type ThemeValidationFinding = {
 
 export type ThemeValidationResult = {
   themes: number;
+  provenance: ThemeProvenanceSummary[];
   findings: ThemeValidationFinding[];
+};
+
+export type ThemeProvenanceSummary = {
+  name: string;
+  title: string;
+  status: ThemeProvenance["status"];
+  reviewedAt: string;
+  reviewedBy: string;
+  summary: string;
+  sources: AgencyThemeSource[];
 };
 
 const requiredSemanticTokens = [
@@ -139,6 +161,7 @@ function readJsonThemeFile(absolutePath: string, label: string): ThemeDefinition
     name: theme.name,
     title: theme.title,
     description: theme.description,
+    provenance: theme.provenance,
     sources: theme.sources,
     order: theme.order ?? 100,
     tokens: theme.tokens,
@@ -244,6 +267,15 @@ export function validateThemes(themes = loadStockThemes()): ThemeValidationResul
 
   return {
     themes: themes.length,
+    provenance: themes.map((theme) => ({
+      name: theme.name,
+      title: theme.title,
+      status: theme.provenance.status,
+      reviewedAt: theme.provenance.reviewedAt,
+      reviewedBy: theme.provenance.reviewedBy,
+      summary: theme.provenance.summary,
+      sources: theme.sources,
+    })),
     findings,
   };
 }
@@ -259,6 +291,29 @@ export function validateTheme(theme: ThemeDefinition): ThemeValidationFinding[] 
       rule: "theme/source-provenance",
       message: "Agency themes must cite at least one public design-system or brand source.",
       path: "sources",
+    });
+  }
+
+  if (theme.provenance.status === "unverified") {
+    findings.push({
+      theme: theme.name,
+      mode: "light",
+      level: "error",
+      rule: "theme/provenance-status",
+      message:
+        "Stock agency themes must be source-derived or official-adapter before they can ship.",
+      path: "provenance.status",
+    });
+  }
+
+  if (!isIsoDate(theme.provenance.reviewedAt)) {
+    findings.push({
+      theme: theme.name,
+      mode: "light",
+      level: "error",
+      rule: "theme/provenance-review-date",
+      message: "Theme provenance reviewedAt must be an ISO date in YYYY-MM-DD format.",
+      path: "provenance.reviewedAt",
     });
   }
 
@@ -281,6 +336,16 @@ export function validateTheme(theme: ThemeDefinition): ThemeValidationFinding[] 
         rule: "theme/source-provenance",
         message: `Theme source "${source.label}" must explain which tokens or constraints it supports.`,
         path: "sources.note",
+      });
+    }
+    if (!isIsoDate(source.retrievedAt)) {
+      findings.push({
+        theme: theme.name,
+        mode: "light",
+        level: "error",
+        rule: "theme/source-review-date",
+        message: `Theme source "${source.label}" must include retrievedAt as YYYY-MM-DD.`,
+        path: "sources.retrievedAt",
       });
     }
   }
@@ -339,6 +404,10 @@ export function validateTheme(theme: ThemeDefinition): ThemeValidationFinding[] 
   }
 
   return findings;
+}
+
+function isIsoDate(value: string): boolean {
+  return /^\d{4}-\d{2}-\d{2}$/.test(value);
 }
 
 function flattenThemeTokenRecords(

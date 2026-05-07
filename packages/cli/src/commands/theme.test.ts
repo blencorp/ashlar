@@ -38,6 +38,38 @@ describe("theme command", () => {
 
     expect(result.status).toBe(0);
     expect(result.stdout).toContain("Validated 3 theme(s) with 0 findings");
+    expect(result.stdout).toContain("Source provenance:");
+    expect(result.stdout).toContain("Default (source-derived; reviewed 2026-05-07 by BLEN)");
+    expect(result.stdout).toContain("VA.gov color palette (2026-05-07):");
+    expect(result.stdout).toContain("USDA Design and Brand Plays (2026-05-07):");
+  });
+
+  it("emits machine-readable theme source provenance", () => {
+    const result = runCli(["theme", "validate", "--json"]);
+
+    expect(result.status).toBe(0);
+    const parsed = JSON.parse(result.stdout) as {
+      provenance: Array<{
+        name: string;
+        status: string;
+        reviewedAt: string;
+        sources: Array<{ label: string; retrievedAt: string; tokenPaths: string[] }>;
+      }>;
+    };
+    expect(parsed.provenance).toContainEqual(
+      expect.objectContaining({
+        name: "default",
+        status: "source-derived",
+        reviewedAt: "2026-05-07",
+        sources: expect.arrayContaining([
+          expect.objectContaining({
+            label: "USWDS system color tokens",
+            retrievedAt: "2026-05-07",
+            tokenPaths: expect.arrayContaining(["color.action.primary.bg"]),
+          }),
+        ]),
+      }),
+    );
   });
 
   it("syncs generated CSS from local token JSON", () => {
@@ -102,5 +134,21 @@ describe("theme command", () => {
     expect(result.status).toBe(1);
     expect(result.stdout).toContain("Invalid agency theme");
     expect(result.stdout).toContain("sources");
+  });
+
+  it("rejects unreviewed stock theme provenance", () => {
+    const themesDir = join(scratch, "themes");
+    cpSync(join(repoRoot, "packages", "cli", "themes"), themesDir, { recursive: true });
+    const defaultThemePath = join(themesDir, "default.tokens.json");
+    const theme = JSON.parse(readFileSync(defaultThemePath, "utf8")) as {
+      provenance: { status: string };
+    };
+    theme.provenance.status = "unverified";
+    writeFileSync(defaultThemePath, `${JSON.stringify(theme, null, 2)}\n`);
+
+    const result = runCli(["theme", "validate", "--themes-dir", themesDir]);
+
+    expect(result.status).toBe(1);
+    expect(result.stdout).toContain("ERROR default/light theme/provenance-status");
   });
 });

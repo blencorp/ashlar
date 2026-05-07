@@ -25,25 +25,35 @@ describe("theme loader", () => {
 
   it("loads source provenance for stock themes", () => {
     const themes = loadStockThemes();
+    expect(getDefaultTheme().provenance).toMatchObject({
+      status: "source-derived",
+      reviewedAt: "2026-05-07",
+      reviewedBy: "BLEN",
+    });
     expect(getDefaultTheme().sources).toContainEqual(
       expect.objectContaining({
         label: "USWDS system color tokens",
         url: "https://designsystem.digital.gov/design-tokens/color/system-tokens/",
+        retrievedAt: "2026-05-07",
+        tokenPaths: expect.arrayContaining(["color.action.primary.bg"]),
       }),
     );
     expect(themes.find((theme) => theme.name === "va")?.sources).toContainEqual(
       expect.objectContaining({
         label: "VA.gov color palette",
         url: "https://design.va.gov/foundation/color-palette",
+        retrievedAt: "2026-05-07",
       }),
     );
     expect(themes.find((theme) => theme.name === "usda")?.sources).toContainEqual(
       expect.objectContaining({
         label: "USDA Design and Brand Plays",
         url: "https://www.usda.gov/about-usda/policies-and-links/digital/digital-strategy/design-and-brand/design-and-brand-plays",
+        tokenPaths: expect.arrayContaining(["color.action.primary.bg"]),
       }),
     );
     expect(themes.every((theme) => theme.sources.every((source) => source.note))).toBe(true);
+    expect(themes.every((theme) => theme.sources.every((source) => source.retrievedAt))).toBe(true);
   });
 
   it("validates theme files (action.primary.bg color)", () => {
