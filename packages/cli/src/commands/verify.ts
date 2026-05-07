@@ -4,12 +4,20 @@ import { readVerifiedCapsuleManifest } from "../lib/capsule.js";
 import { sha256File } from "../lib/hash.js";
 import { readConfig, readLockfile, writeJson } from "../lib/project.js";
 import { getComponentVersion } from "../lib/registry.js";
+import {
+  printBrandHeader,
+  printCommand,
+  printFooter,
+  printSection,
+  printSuccess,
+} from "../lib/tui.js";
 
 export function registerVerifyCommand(program: Command) {
   program
     .command("verify")
     .description("Verify installed capsule hashes")
     .action(() => {
+      printBrandHeader("Capsule verification");
       if (!existsSync("ashlar-lock.json")) {
         console.error("ashlar-lock.json not found. Run `ashlar init` first.");
         process.exitCode = 1;
@@ -30,6 +38,7 @@ export function registerVerifyCommand(program: Command) {
 
       if (componentEntries.length === 0) {
         console.log("No installed components; lockfile present");
+        printFooter();
         return;
       }
 
@@ -103,6 +112,9 @@ export function registerVerifyCommand(program: Command) {
       }
 
       writeJson("ashlar-lock.json", lockfile);
-      console.log(`Verified with ${warnings} warning(s)`);
+      printSuccess(`Verified with ${warnings} warning(s)`);
+      printSection("Next");
+      printCommand("ashlar status", "Review project readiness and remaining gates.");
+      printFooter();
     });
 }

@@ -8,6 +8,13 @@ import { sha256File } from "../lib/hash.js";
 import { readConfig, readLockfile, writeJson } from "../lib/project.js";
 import { getComponent } from "../lib/registry.js";
 import { syncAshlarProject } from "../lib/styles.js";
+import {
+  printBrandHeader,
+  printCommand,
+  printFooter,
+  printSection,
+  printSuccess,
+} from "../lib/tui.js";
 
 export function registerAddCommand(program: Command) {
   program
@@ -17,6 +24,7 @@ export function registerAddCommand(program: Command) {
     .action((components: string[]) => {
       const config = readConfig();
       const lockfile = readLockfile();
+      printBrandHeader("Installing source-owned capsules");
 
       for (const component of components) {
         let detail: ReturnType<typeof getComponent>;
@@ -79,7 +87,7 @@ export function registerAddCommand(program: Command) {
           files: installedFiles,
         };
 
-        console.log(`Added ${component}@${detail.version}`);
+        printSuccess(`Added ${component}@${detail.version}`);
         for (const file of Object.keys(installedFiles).sort()) {
           console.log(`  ${file}`);
         }
@@ -89,5 +97,12 @@ export function registerAddCommand(program: Command) {
       syncAshlarProject(process.cwd(), config, lockfile);
       writeAgentsContext("AGENTS.md", config, lockfile);
       writeDesignContext("DESIGN.md", config, lockfile, { cwd: process.cwd(), force: true });
+      printSection("Next");
+      printCommand(
+        "ashlar verify",
+        "Check installed files against registry hashes and signatures.",
+      );
+      printCommand("ashlar status", "Review adoption gates, evidence status, and next actions.");
+      printFooter();
     });
 }

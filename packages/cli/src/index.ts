@@ -19,6 +19,7 @@ import { registerThemeCommand } from "./commands/theme.js";
 import { registerUpdateCommand } from "./commands/update.js";
 import { registerVerifyCommand } from "./commands/verify.js";
 import { registerViewCommand } from "./commands/view.js";
+import { renderBrandHeader, renderFooter } from "./lib/tui.js";
 
 const program = new Command();
 
@@ -35,7 +36,27 @@ function readCliVersion(): string {
   }
 }
 
-program.name("ashlar").description("Ashlar component registry CLI").version(readCliVersion());
+program
+  .name("ashlar")
+  .description("Source-owned, evidence-backed UI infrastructure for public-service teams")
+  .version(readCliVersion())
+  .addHelpText("beforeAll", `${renderBrandHeader("Source-owned UI for public services")}\n`)
+  .addHelpText(
+    "afterAll",
+    `
+Core flow:
+  ashlar init
+  ashlar search "official website"
+  ashlar view button
+  ashlar add button
+  ashlar verify
+
+Agent flow:
+  ashlar suggest "Build a benefits application form"
+  ashlar mcp --help
+
+${renderFooter()}`,
+  );
 
 registerInitCommand(program);
 registerAddCommand(program);

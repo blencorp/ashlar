@@ -4,6 +4,14 @@ import { writeDesignContext } from "../lib/design-context.js";
 import { defaultConfig, writeJson } from "../lib/project.js";
 import { syncAshlarProject } from "../lib/styles.js";
 import { writeThemeFiles } from "../lib/theme.js";
+import {
+  printBrandHeader,
+  printCommand,
+  printFooter,
+  printKeyValue,
+  printSection,
+  printSuccess,
+} from "../lib/tui.js";
 
 export function registerInitCommand(program: Command) {
   program
@@ -56,7 +64,21 @@ export function registerInitCommand(program: Command) {
 
         writeAgentsContext("AGENTS.md", config, lockfile);
         writeDesignContext("DESIGN.md", config, lockfile, { cwd: process.cwd(), force });
-        console.log("Initialized Ashlar");
+        printBrandHeader("Initialized source-owned Ashlar project files");
+        printSuccess("Initialized Ashlar");
+        printSection("Project files");
+        printKeyValue("config", "ashlar.config.json");
+        printKeyValue("lockfile", "ashlar-lock.json");
+        printKeyValue("components", config.componentsDir);
+        printKeyValue("entrypoint", config.styles.entrypoint);
+        printSection("Next");
+        printCommand('ashlar search "official website"', "Find signed capsules by policy or task.");
+        printCommand(
+          "ashlar add banner identifier",
+          "Install source-owned public-service shell capsules.",
+        );
+        printCommand("ashlar verify", "Check local source against registry hashes and signatures.");
+        printFooter();
       },
     );
 }

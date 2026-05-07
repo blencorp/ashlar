@@ -1,5 +1,14 @@
 import type { Command } from "commander";
 import { buildProjectStatus } from "../lib/project-status.js";
+import {
+  formatStatus,
+  printBrandHeader,
+  printCommand,
+  printFooter,
+  printKeyValue,
+  printListItem,
+  printSection,
+} from "../lib/tui.js";
 
 type StatusOptions = {
   json?: boolean;
@@ -7,42 +16,40 @@ type StatusOptions = {
 };
 
 function printText(report: ReturnType<typeof buildProjectStatus>): void {
+  printBrandHeader("Project status and adoption path");
   console.log(`Ashlar status: ${report.status}`);
-  console.log("");
-  console.log("Project:");
-  console.log(`  initialized: ${report.project.initialized ? "yes" : "no"}`);
-  console.log(`  registry: ${report.project.registry}`);
-  console.log(`  components dir: ${report.project.componentsDir}`);
-  console.log(`  installed capsules: ${report.project.installedComponents.length}`);
+  printSection("Project");
+  printKeyValue("initialized", report.project.initialized ? "yes" : "no");
+  printKeyValue("registry", report.project.registry);
+  printKeyValue("components dir", report.project.componentsDir);
+  printKeyValue("installed capsules", report.project.installedComponents.length);
   for (const component of report.project.installedComponents) {
     const stability = component.stability ? ` (${component.stability})` : "";
-    console.log(`    - ${component.name}@${component.version}${stability}`);
+    printListItem(`${component.name}@${component.version}${stability}`);
   }
-  console.log("");
-  console.log("Registry:");
-  console.log(`  available: ${report.registry.available ? "yes" : "no"}`);
-  console.log(`  capsules: ${report.registry.componentCount}`);
-  console.log(`  L0 capsules: ${report.registry.l0Count}`);
-  console.log(`  stable-evidence L0 capsules: ${report.registry.stableEvidenceL0Count}`);
-  console.log("");
-  console.log("Checks:");
+  printSection("Registry");
+  printKeyValue("available", report.registry.available ? "yes" : "no");
+  printKeyValue("capsules", report.registry.componentCount);
+  printKeyValue("L0 capsules", report.registry.l0Count);
+  printKeyValue("stable-evidence L0 capsules", report.registry.stableEvidenceL0Count);
+  printSection("Checks");
   for (const check of report.checks) {
-    console.log(`  ${check.status.toUpperCase()} ${check.id}: ${check.summary}`);
+    console.log(`  ${formatStatus(check.status)} ${check.id}: ${check.summary}`);
     for (const detail of check.details) {
-      console.log(`    - ${detail}`);
+      printListItem(detail);
     }
   }
-  console.log("");
-  console.log("Next:");
+  printSection("Next");
   for (const action of report.nextActions) {
-    console.log(`  ${action.command}`);
-    console.log(`    ${action.reason}`);
+    printCommand(action.command, action.reason);
   }
+  printFooter();
 }
 
 export function registerStatusCommand(program: Command) {
   program
     .command("status")
+    .alias("info")
     .description("Show read-only Ashlar project adoption status and next actions")
     .option("--registry <path>", "Registry path or URL")
     .option("--json", "Print JSON status report")
