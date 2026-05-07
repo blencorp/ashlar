@@ -16,8 +16,8 @@ const themes = [
   {
     value: "default",
     label: "Default",
-    sigil: "Base",
-    word: "Default",
+    sigil: "Default",
+    word: "Baseline",
     note: "USWDS color and type sources.",
     source: "USWDS",
   },

@@ -3,7 +3,7 @@
 Public-service Vite reference app for Ashlar. Demonstrates:
 
 - L0 Button capsule (`<button class="ashlar-button">`) installed via `ashlar add`.
-- Federal page-shell compliance (banner, identifier with required links, ≥20-char page title, ≥50-char meta description).
+- Public-service page-shell compliance (banner, identifier with required links, ≥20-char page title, ≥50-char meta description).
 - Live runtime switching across the **Default**, **VA**, and **USDA** stock agency themes.
 - Light, dark, and system color modes.
 - Live token introspection — see resolved CSS custom-property values change as themes switch.
@@ -31,7 +31,7 @@ From this directory:
 pnpm exec ashlar audit --policy all --registry ../../registry --explain index.html
 ```
 
-Runs the federal page-shell rules and the component anti-pattern rules together. The page passes with zero findings; if it ever stops passing, the example regressed.
+Runs the public-service page-shell rules and the component anti-pattern rules together. The page passes with zero findings; if it ever stops passing, the example regressed.
 
 ## Build for production
 
@@ -70,7 +70,7 @@ pnpm exec ashlar add button
 #      regenerates ashlar.css and the indexes.
 
 # 5. Replace the scaffold's example index.html / main.ts / styles with the
-#    federal-shell versions in this directory.
+#    public-service shell versions in this directory.
 
 # 6. Verify
 pnpm exec ashlar audit --policy all --registry ../../registry index.html
