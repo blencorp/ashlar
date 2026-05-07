@@ -191,6 +191,8 @@
     background: transparent;
     padding: 0;
     font-size: 1em;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
   }
 
   .control-group {
