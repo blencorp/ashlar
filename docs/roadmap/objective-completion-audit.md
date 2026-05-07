@@ -1,7 +1,7 @@
 # Objective Completion Audit
 
 Date: 2026-05-07
-Branch inspected: `main` at `8040d94` after #89, #90, and #91 merged
+Branch inspected: `main` at `b5eb73b` after #89, #90, #91, #92, #93, and #94 merged
 
 ## Objective
 
@@ -18,7 +18,7 @@ Ashlar has a real substrate now: signed source capsules, federal and component a
 - public npm trusted-publishing provenance for `@blen/ashlar`, `@blen/ashlar-cli`, and `@blen/ashlar-schemas`;
 - public capsule Sigstore trust material.
 
-Strict readiness evidence: `node packages/cli/dist/index.js release readiness --registry ./registry --json-output /tmp/ashlar-readiness-current.json --report /tmp/ashlar-readiness-current.md` returned `status: "fail"` on 2026-05-07 from `8040d94` with 9 passing checks and 4 failing checks: `stable-markup-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
+Strict readiness evidence: `node packages/cli/dist/index.js release readiness --registry ./registry --json-output /tmp/ashlar-readiness-current.json --report /tmp/ashlar-readiness-current.md` returned `status: "fail"` on 2026-05-07 from `b5eb73b` with 9 passing checks and 4 failing checks: `stable-markup-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
 
 ## Prompt-To-Artifact Checklist
 
@@ -57,13 +57,16 @@ Merged implementation stack now includes the earlier foundation work plus the re
 - #89 `fix(language): replace public layer codes`
 - #90 `chore(release): version packages`
 - #91 `docs(language): remove remaining layer code references`
+- #92 `docs(status): refresh current proof audit`
+- #93 `ci(release): require main for npm publish`
+- #94 `chore(release): version packages`
 
-Post-merge evidence through #91: GitHub `CI` and `Version Packages` completed successfully on `8040d94`. Earlier post-merge runs also completed successfully for `e285840` (#89) and `c0cd5a1` (#90). The #91 local and PR verification included `pnpm format:check`, `pnpm check`, `pnpm build`, `pnpm commitlint --from HEAD~1 --to HEAD`, and a repository scan proving no remaining legacy numbered layer-code references across `docs`, `packages`, `apps`, `examples`, or `registry`.
+Post-merge evidence through #94: GitHub `CI` and `Version Packages` completed successfully on `b5eb73b`. Earlier post-merge runs also completed successfully for `e285840` (#89), `c0cd5a1` (#90), `8040d94` (#91), `6831d1e` (#92), and `33e37bb` (#93). The #93 local and PR verification included `pnpm format:check`, `pnpm check`, `pnpm build`, `pnpm release:smoke`, focused release-provenance workflow tests, `pnpm ashlar release provenance-check`, `pnpm commitlint --from HEAD~1 --to HEAD`, and local testing URL checks. The #94 version PR had no remote checks on the bot branch, so it was verified locally with `pnpm format:check`, `pnpm check`, `pnpm build`, `pnpm release:smoke`, and `pnpm commitlint --from HEAD~1 --to HEAD` before merge. A repository scan after #94 found no remaining legacy numbered layer-code references across `docs`, `packages`, `apps`, `examples`, or `registry`.
 
-Package state on `8040d94`:
+Package state on `b5eb73b`:
 
-- `@blen/ashlar@0.3.6`
-- `@blen/ashlar-cli@0.3.6`
+- `@blen/ashlar@0.3.7`
+- `@blen/ashlar-cli@0.3.7`
 - `@blen/ashlar-schemas@0.1.5`
 
 ## Gate Audit

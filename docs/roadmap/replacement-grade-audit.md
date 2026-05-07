@@ -1,6 +1,6 @@
 # Replacement-Grade Audit
 
-Date: 2026-05-05
+Date: 2026-05-07
 
 This audit answers one question: is Ashlar already credible as a USWDS replacement-grade, shadcn-class public-service UI system, or is it still a prototype with a strong thesis?
 
@@ -33,7 +33,7 @@ Current strict gate status:
 | Be more than another AI UI library | `docs/product-doctrine.md`, `docs/architecture/ai-native.md`, `packages/cli/src/commands/mcp.ts`, `packages/cli/src/lib/ai-eval.ts` | AI claim is grounded in read-only MCP discovery, evidence retrieval, token lookup, and `validate_usage`; write tools remain blocked. | Partially met |
 | Address shadcn gap: copied source drifts | `packages/cli/src/commands/update.ts`, `packages/cli/src/lib/codemod.ts`, `packages/cli/src/commands/update-survival.test.ts` | `update` has lockfile hashes, three-way merge, codemods, critical-file confirmation, and 11 survival scenarios. | Prototype met |
 | Address shadcn gap: no evidence chain | `packages/cli/src/lib/evidence-check.ts`, `packages/cli/src/lib/evidence-review-status.ts`, `packages/schemas/src/manual-transcript.schema.json` | Stable gate requires WCAG, ICT Baseline, automated evidence, keyboard transcript, screen-reader transcript, limitations, and reviewer metadata. | Tooling met; evidence missing |
-| Address shadcn gap: registry trust and provenance | `packages/cli/src/lib/capsule.ts`, `packages/cli/src/lib/release-provenance.ts`, `packages/cli/src/lib/release-public-trust.ts`, `.github/workflows/publish.yml`, `.github/workflows/sigstore.yml` | Local manifest signatures, npm provenance readiness, public npm verifier, capsule signing, and public trust verifier exist. | Tooling met; public proof missing |
+| Address shadcn gap: registry trust and provenance | `packages/cli/src/lib/capsule.ts`, `packages/cli/src/lib/release-provenance.ts`, `packages/cli/src/lib/release-public-trust.ts`, `.github/workflows/publish.yml`, `.github/workflows/sigstore.yml` | Local manifest signatures, npm provenance readiness, a main-only trusted-publishing workflow guard, public npm verifier, capsule signing, and public trust verifier exist. | Tooling met; public proof missing |
 | Easy first integration | `ashlar audit --policy federal`, `examples/legacy-federal-project/`, `packages/cli/src/commands/audit.test.ts` | Validator runs against non-Ashlar legacy markup and emits useful findings without installed capsules. | Met for validator wedge |
 | Source-owned install path | `ashlar init`, `ashlar add`, `ashlar verify`, `packages/cli/src/commands/add.test.ts` | Capsules install as source, lockfile records hashes, verify detects tampering and stale registry state. | Prototype met |
 | Light footprint | `ashlar bundle budget`, `packages/cli/src/lib/bundle-budget.ts`, capsule `bundleBudget` metadata | Current strict-readiness measurement: 12 markup primitive capsules, 2,094 B CSS gzip, 0 B JS, under the 20,992 B markup primitive gate. | Met for current markup primitive set |
