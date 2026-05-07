@@ -1,6 +1,6 @@
 {
   "name": "@ashlar/example-nextjs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "Next.js App Router Ashlar reference app.",
   "type": "module",
