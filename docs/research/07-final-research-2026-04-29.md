@@ -45,7 +45,7 @@ Recommended posture:
 - Use DTCG JSON as the token source of truth.
 - Emit CSS variables and Tailwind v4 `@theme`.
 - Keep canonical component source as semantic CSS, not Tailwind utility classes.
-- Add `@ashlar/tailwind` later for teams that want shadcn-style utility-class source.
+- Add `@blen/ashlar-tailwind` later for teams that want shadcn-style utility-class source.
 
 This keeps Tailwind teams happy without making Tailwind a hard dependency for Drupal, WordPress, plain HTML, or air-gapped federal sites.
 

@@ -24,7 +24,7 @@ The intent is to keep the v0.x architecture compatible with these directions, ev
 
 **What this preserves**: future ability to ship a resumability-driven render mode (Qwik-style or successor framework). For government services on slow devices, kiosks, rural connections, this is materially better than hydration.
 
-**Forward conditions**: when a resumability-friendly framework reaches enterprise-grade production maturity (Qwik, post-Qwik successor, or framework-neutral resumability standard), Ashlar ships an `@ashlar/resume` package that exploits the discipline. v0.3+ at the earliest.
+**Forward conditions**: when a resumability-friendly framework reaches enterprise-grade production maturity (Qwik, post-Qwik successor, or framework-neutral resumability standard), Ashlar ships an `@blen/ashlar-resume` package that exploits the discipline. v0.3+ at the earliest.
 
 ## 3. Event-sourced patterns for L3
 

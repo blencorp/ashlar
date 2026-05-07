@@ -24,7 +24,7 @@ A capsule's L1 implementation has two key files: `*.machine.ts` (the statechart)
 ```ts
 // combobox.machine.ts
 import { createMachine } from "@zag-js/core";
-import { signal } from "@ashlar/signals";
+import { signal } from "@blen/ashlar-signals";
 
 export interface ComboBoxContext {
   inputValue: string;
@@ -90,7 +90,7 @@ Reactive derived data uses signals (not the machine context) so that fine-graine
 
 ```ts
 // combobox.signals.ts
-import { computed, signal } from "@ashlar/signals";
+import { computed, signal } from "@blen/ashlar-signals";
 
 export function createComboBoxSignals(machine: Machine<ComboBoxContext>) {
   const inputValue = computed(() => machine.context.inputValue);
@@ -171,10 +171,10 @@ Adapters are auto-generated from the capsule's CEM. They consume the machine dir
 ### React adapter (auto-generated, simplified)
 
 ```tsx
-// @ashlar/react/combobox.tsx (generated)
+// @blen/ashlar-react/combobox.tsx (generated)
 import { useEffect, useRef, useState } from "react";
-import { comboboxMachine } from "@ashlar/components-source/combobox/machine";
-import { createComboBoxSignals } from "@ashlar/components-source/combobox/signals";
+import { comboboxMachine } from "@blen/ashlar-components-source/combobox/machine";
+import { createComboBoxSignals } from "@blen/ashlar-components-source/combobox/signals";
 
 export function ComboBox(props: ComboBoxProps) {
   const machineRef = useRef(comboboxMachine.start());

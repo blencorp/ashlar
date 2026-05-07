@@ -253,7 +253,7 @@ export function registerReleaseCommand(program: Command) {
     .command("provenance-verify-public")
     .description("Verify public npm provenance for published release packages")
     .option("--npm <path>", "npm executable path (defaults to npm)")
-    .option("--package <spec...>", "Exact package spec(s), for example ashlar@0.0.0")
+    .option("--package <spec...>", "Exact package spec(s), for example @blen/ashlar@0.0.0")
     .option("--registry-url <url>", "npm registry URL", "https://registry.npmjs.org")
     .option("--json", "Print JSON verification report")
     .action((options: ReleasePublicProvenanceOptions) => {

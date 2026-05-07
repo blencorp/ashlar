@@ -51,7 +51,7 @@
 - [ ] Extend `capsule.schema.json` with `policyMappings`, `platformFeatures`, and `evidence`.
 - [ ] Add `registry/index.json` with Button as the only component.
 - [ ] Enrich Button CEM and evidence metadata without changing Button stability.
-- [ ] Run `pnpm --filter @ashlar/schemas typecheck` and `pnpm --filter @ashlar/schemas build`.
+- [ ] Run `pnpm --filter @blen/ashlar-schemas typecheck` and `pnpm --filter @blen/ashlar-schemas build`.
 
 ## Task 2: Registry Helper and Registry-Facing Commands
 
@@ -60,7 +60,7 @@
 - [ ] Add `search` and `view` commands with human and JSON output.
 - [ ] Update `add` and `evidence` to resolve versions through the registry helper.
 - [ ] Register `search` and `view` in `packages/cli/src/index.ts`.
-- [ ] Run `pnpm --filter @ashlar/cli test -- src/lib/registry.test.ts`.
+- [ ] Run `pnpm --filter @blen/ashlar-cli test -- src/lib/registry.test.ts`.
 - [ ] Run command smoke checks for `search`, `view`, and `evidence`.
 
 ## Task 3: Federal Policy Audit and SARIF

@@ -6,9 +6,9 @@ Proposed.
 
 ## Decision
 
-Author L1 components as **Web Components wrapping a statechart** (Lit + Zag is the current candidate; see "Lit + Zag is a research bet" below for the open question). Generate framework-specific adapters (`@ashlar/react`, `@ashlar/vue`, `@ashlar/svelte`, `@ashlar/solid`) **automatically from extended Custom Elements Manifests**. React is not privileged; it is one consumer among several.
+Author L1 components as **Web Components wrapping a statechart** (Lit + Zag is the current candidate; see "Lit + Zag is a research bet" below for the open question). Generate framework-specific adapters (`@blen/ashlar-react`, `@blen/ashlar-vue`, `@blen/ashlar-svelte`, `@blen/ashlar-solid`) **automatically from extended Custom Elements Manifests**. React is not privileged; it is one consumer among several.
 
-Ship the custom element itself (`@ashlar/element`) as a first-class delivery for Drupal, Sitecore, AEM, plain HTML, and other framework-less environments.
+Ship the custom element itself (`@blen/ashlar-element`) as a first-class delivery for Drupal, Sitecore, AEM, plain HTML, and other framework-less environments.
 
 Do **not** hand-maintain parallel framework component trees.
 
@@ -41,7 +41,7 @@ Slice 5 of the [v0.0 roadmap](../roadmap/01-v0.0-foundation.md) is the place to 
 - Single source of behavior (Zag machine + Lit shell) drives all consumers.
 - Adapters are not hand-maintained; CEM regenerates them when components change.
 - Framework-agnostic by construction. New framework adapter = new generator template.
-- WC delivery (`@ashlar/element`) covers Drupal, Sitecore, AEM, plain HTML directly.
+- WC delivery (`@blen/ashlar-element`) covers Drupal, Sitecore, AEM, plain HTML directly.
 - Aligns with USWDS Elements direction, preserving future upstream-contribution potential.
 - React not privileged means we are not held hostage to React's release rhythm or design choices.
 
@@ -54,7 +54,7 @@ Slice 5 of the [v0.0 roadmap](../roadmap/01-v0.0-foundation.md) is the place to 
 
 **Mitigations**
 
-- Framework integration testing as a v0.0 success gate: prove `@ashlar/element` + Next.js SSR + Vite SPA + Drupal Twig + plain HTML all work for a representative L1 component (Combobox).
+- Framework integration testing as a v0.0 success gate: prove `@blen/ashlar-element` + Next.js SSR + Vite SPA + Drupal Twig + plain HTML all work for a representative L1 component (Combobox).
 - Document Firefox ARIA fallbacks per L1 component.
 - Adapter generators ship as part of the Ashlar build pipeline; consumers do not need to run them.
 - Lit SSR escape hatch: ship CSS-only "shell" SSR mode for non-JS environments via L4 templates.

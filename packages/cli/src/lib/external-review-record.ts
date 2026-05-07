@@ -649,7 +649,11 @@ function publicProvenanceReport(value: unknown): PublicProvenanceVerification | 
 
 function reviewedPackageSpecs(content: string): string[] {
   const value = externalReviewFieldValue(content, "Packages reviewed") ?? "";
-  return Array.from(value.matchAll(/(?:ashlar|@ashlar\/(?:cli|schemas))@[0-9A-Za-z.+-]+/g))
+  return Array.from(
+    value.matchAll(
+      /(?:@blen\/ashlar(?:-cli|-schemas)?|@ashlar\/(?:cli|schemas)|(?<![/\w-])ashlar)@[0-9A-Za-z.+-]+/g,
+    ),
+  )
     .map((match) => match[0])
     .sort();
 }

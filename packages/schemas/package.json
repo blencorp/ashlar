@@ -1,5 +1,5 @@
 {
-  "name": "@ashlar/schemas",
+  "name": "@blen/ashlar-schemas",
   "version": "0.1.3",
   "description": "JSON Schemas and TypeScript constants for Ashlar registry artifacts.",
   "license": "Apache-2.0",

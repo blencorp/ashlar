@@ -42,6 +42,14 @@ post-merge guard that turns accepted changesets into a release PR.
 
 Publishing remains manually gated by `Publish`, not automatic on every merge. That workflow requires a `publish` confirmation, runs `pnpm check`, `pnpm build`, `pnpm release:smoke`, local provenance preflight, and release readiness with explicit prototype escape hatches before `changeset publish`.
 
+The public packages use the BLEN-owned npm namespace:
+
+- `@blen/ashlar` is the public `npx @blen/ashlar` entrypoint and keeps the installed binary name as `ashlar`.
+- `@blen/ashlar-cli` owns the CLI implementation.
+- `@blen/ashlar-schemas` owns the JSON Schema package consumed by the CLI.
+
+Publish public developer-facing releases to npmjs through GitHub Actions trusted publishing. Do not make GitHub Packages the default public registry for these packages: [GitHub's npm registry requires an access token](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages) to publish, install, and delete public packages, which would break the low-friction `npx @blen/ashlar` adoption path. If we later need internal or canary packages on GitHub Packages, add a separate workflow and scope mapping such as `@blen:registry=https://npm.pkg.github.com` instead of changing the public npmjs release path.
+
 This split is deliberate:
 
 - Conventional Commits keep review and squash history semantic.

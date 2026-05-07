@@ -257,7 +257,7 @@ function provenanceCheck(cwd: string): ReleaseReadinessCheck {
 
 function publicProvenanceCheck(allowUnverifiedPublic: boolean | undefined): ReleaseReadinessCheck {
   const details = [
-    "Verify npmjs.com trusted publisher settings for ashlar, @ashlar/cli, and @ashlar/schemas.",
+    "Verify npmjs.com trusted publisher settings for @blen/ashlar, @blen/ashlar-cli, and @blen/ashlar-schemas.",
     "Publish a real release from GitHub-hosted CI.",
     "Run ashlar release provenance-verify-public against the published package versions.",
   ];

@@ -1,7 +1,7 @@
 {
-  "name": "ashlar",
+  "name": "@blen/ashlar",
   "version": "0.3.4",
-  "description": "Memorable npx entrypoint for the Ashlar CLI.",
+  "description": "Scoped npx entrypoint for the Ashlar CLI.",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -26,6 +26,6 @@
     "lint": "node --check bin/ashlar.js"
   },
   "dependencies": {
-    "@ashlar/cli": "workspace:*"
+    "@blen/ashlar-cli": "workspace:*"
   }
 }

@@ -1,4 +1,4 @@
-# @ashlar/example-nextjs
+# @blen/ashlar-example-nextjs
 
 ## 0.0.2
 

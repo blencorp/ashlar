@@ -1,4 +1,4 @@
-# @ashlar/schemas
+# @blen/ashlar-schemas
 
 ## 0.1.3
 

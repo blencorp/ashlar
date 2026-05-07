@@ -1,5 +1,5 @@
 {
-  "name": "@ashlar/cli",
+  "name": "@blen/ashlar-cli",
   "version": "0.3.4",
   "description": "Ashlar component registry CLI.",
   "license": "Apache-2.0",
@@ -35,7 +35,7 @@
     "lint": "biome lint src"
   },
   "dependencies": {
-    "@ashlar/schemas": "workspace:*",
+    "@blen/ashlar-schemas": "workspace:*",
     "@ast-grep/napi": "catalog:",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "ajv": "catalog:",

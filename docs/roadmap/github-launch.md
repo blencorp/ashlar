@@ -122,7 +122,7 @@ Issues:
 - Drupal/Twig production-style demo.
 - Date Picker, Data Table, File Upload.
 - USWDS migration tooling.
-- `@ashlar/tailwind`.
+- `@blen/ashlar-tailwind`.
 - Public evidence dashboard.
 - Third-party accessibility audit.
 

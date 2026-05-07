@@ -210,7 +210,7 @@ export function checkReleaseProvenanceReadiness(cwd: string): ReleaseProvenanceR
     errors,
     packages,
     warnings: [
-      "npmjs.com trusted publisher settings are manual: configure ashlar, @ashlar/cli, and @ashlar/schemas with workflow filename publish.yml before release.",
+      "npmjs.com trusted publisher settings are manual: configure @blen/ashlar, @blen/ashlar-cli, and @blen/ashlar-schemas with workflow filename publish.yml before release.",
     ],
   };
 }

@@ -25,7 +25,7 @@ const ajv: AjvInstance = new Ajv2020({
 addFormats(ajv);
 
 function readSchema(specifier: string): unknown {
-  const schemaPath = require.resolve(`@ashlar/schemas/${specifier}`);
+  const schemaPath = require.resolve(`@blen/ashlar-schemas/${specifier}`);
   return JSON.parse(readFileSync(schemaPath, "utf8"));
 }
 

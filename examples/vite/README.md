@@ -17,8 +17,8 @@ From the repo root:
 
 ```bash
 pnpm install
-pnpm --filter @ashlar/cli build       # build the CLI once so `ashlar` is callable
-pnpm --filter @ashlar/example-vite dev
+pnpm --filter @blen/ashlar-cli build       # build the CLI once so `ashlar` is callable
+pnpm --filter @blen/ashlar-example-vite dev
 ```
 
 Open <http://127.0.0.1:4173/>.
@@ -36,7 +36,7 @@ Runs the public-service page-shell rules and the component anti-pattern rules to
 ## Build for production
 
 ```bash
-pnpm --filter @ashlar/example-vite build
+pnpm --filter @blen/ashlar-example-vite build
 ```
 
 Outputs to `dist/`. Static HTML + CSS + a small JS bundle.
@@ -55,7 +55,7 @@ cd examples
 pnpm create vite@latest vite --template vanilla-ts
 cd vite
 
-# 2. Make it a workspace package and add @ashlar/cli as a devDep
+# 2. Make it a workspace package and add @blen/ashlar-cli as a devDep
 #    (see this directory's package.json)
 
 # 3. Initialize Ashlar
@@ -75,7 +75,7 @@ pnpm exec ashlar add button
 # 6. Verify
 pnpm exec ashlar audit --policy all --registry ../../registry index.html
 pnpm exec ashlar theme sync
-pnpm --filter @ashlar/example-vite build
+pnpm --filter @blen/ashlar-example-vite build
 ```
 
 ## Adding a new agency theme
@@ -84,7 +84,7 @@ Themes live as DTCG JSON files. To add a new agency:
 
 1. Create `packages/cli/themes/<agency>.tokens.json` matching the
    [`agency-theme.schema.json`](../../packages/schemas/src/agency-theme.schema.json) contract.
-2. Run `pnpm --filter @ashlar/cli build` and `pnpm exec ashlar init --force` from this example.
+2. Run `pnpm --filter @blen/ashlar-cli build` and `pnpm exec ashlar init --force` from this example.
 3. The picker will list the new theme automatically.
 
 The CLI validates every theme file against the schema before compilation, so a malformed theme fails loudly rather than producing broken CSS.

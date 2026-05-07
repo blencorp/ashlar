@@ -126,13 +126,13 @@ The `_ashlar` namespace is forward-compatible: tools that don't recognize it ign
 
 ### Schema validation
 
-`@ashlar/cli` ships a JSON Schema for the `_ashlar` extensions. Capsule build pipelines validate before publishing.
+`@blen/ashlar-cli` ships a JSON Schema for the `_ashlar` extensions. Capsule build pipelines validate before publishing.
 
 ## MCP server
 
 > **Status (2026-05-05)**: started for v0.0 slice 5. `ashlar mcp` ships a local read-only stdio server with policy/feature/token/evidence-aware registry search, deterministic task-to-capsule suggestions, missing-capability warnings, capsule metadata, evidence, token lookup, and `validate_usage`; `_ashlar` JSON Schema validation is wired in the CLI; `ashlar ai-eval` ships a deterministic saved-output harness; ADR 0012 covers the v0.0 local read-only MCP/eval threat model. Write tools, hosted transport, embedding search, and live model benchmarks remain planned. See [STATUS.md](../../STATUS.md).
 
-`npx ashlar mcp` starts an MCP server pointing at the consumer's installed components and tokens. AI assistants connect via stdio (local) or, in v0.1+, SSE/HTTP (gated behind an additional threat model). MCP governance moved to the Linux Foundation Agentic AI Foundation in December 2025; the server tracks the [2025-11-25 spec](https://modelcontextprotocol.io/specification/2025-11-25/basic).
+`npx @blen/ashlar mcp` starts an MCP server pointing at the consumer's installed components and tokens. AI assistants connect via stdio (local) or, in v0.1+, SSE/HTTP (gated behind an additional threat model). MCP governance moved to the Linux Foundation Agentic AI Foundation in December 2025; the server tracks the [2025-11-25 spec](https://modelcontextprotocol.io/specification/2025-11-25/basic).
 
 ### Tools
 
@@ -236,7 +236,7 @@ The harness does not call a model. It records the prompt and checks a saved gene
 ### Security posture
 
 - Read-only by default. `add_component` and `update_component` are gated behind explicit user approval.
-- Local-by-default. `npx ashlar mcp` runs in the consumer's process; no network egress except to the configured registry.
+- Local-by-default. `npx @blen/ashlar mcp` runs in the consumer's process; no network egress except to the configured registry.
 - Manifest hashes today; signed manifests after slice 4. AI tools see the same capsule metadata humans verify.
 - No hidden prompts. Tool descriptions and resource contents are exactly the published CEM and capsule files.
 - Threat model: [ADR 0012 — MCP and AI eval threat model](../adr/adr-0012-mcp-threat-model.md).

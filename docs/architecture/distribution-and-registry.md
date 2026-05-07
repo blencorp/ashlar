@@ -146,7 +146,7 @@ Custom registries:
 - Inherit the same content addressing, manifest format, and verification flow.
 - Can be air-gapped.
 
-The registry build tool (`@ashlar/registry-build`) is open-source so any organization can publish.
+The registry build tool (`@blen/ashlar-registry-build`) is open-source so any organization can publish.
 
 ## Air-gapped operation
 

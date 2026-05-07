@@ -36,7 +36,7 @@ The current prototype implements:
 - A deterministic `ai-eval` harness that validates saved AI-generated outputs against Ashlar policy expectations and records CEM/evidence grounding metadata;
 - `evidence collect` to generate schema-backed JSON automated-evidence artifacts from registry fixtures, `evidence apply` to fold reviewed artifacts into proposed evidence packets, `evidence prepare-stable` to generate a complete non-mutating reviewer bundle with a schema-backed file manifest, self-contained `REVIEW.html` fixture harness, and prefilled stable-evidence review issue body, `evidence prepare-stable-all` to generate reviewer bundles for every L0 capsule in one intake directory, `evidence review-status` to report remaining placeholders or blocked stable gates before writing reviewed evidence, `evidence finalize-stable` to write reviewed and stable proposal files only after that bundle is ready, `evidence transcript-template` / `evidence transcript-validate` for manual keyboard and screen-reader transcript artifacts with component-specific reviewer scripts for Button stable-evidence, `evidence --check` to fail stable or `stable-evidence` claims when WCAG, ICT Baseline, automated, schema-backed local manual transcripts, limitations, or review metadata is incomplete, plus `evidence --report` for Markdown review artifacts;
 - `theme sync` and `theme validate` for agency tokens, regenerating `theme.css`, a Tailwind v4 `@theme` companion file, a typed `tokens.ts` contract, and the Ashlar entrypoint from local theme JSON while checking reviewed source provenance, source retrieval dates, required semantic tokens, and action color contrast;
-- A local release smoke that packs `ashlar`, `@ashlar/cli`, and `@ashlar/schemas`, installs the tarballs into a throwaway consumer project, and runs the packed `ashlar` binary against a standalone federal audit fixture;
+- A local release smoke that packs `@blen/ashlar`, `@blen/ashlar-cli`, and `@blen/ashlar-schemas`, installs the tarballs into a throwaway consumer project, and runs the packed `ashlar` binary against a standalone federal audit fixture;
 - `release sbom` to generate an SPDX 2.3 JSON release SBOM for the Ashlar packages and declared runtime dependencies;
 - `release attest` / `release verify-attestation` to create and verify a hash-based tamper-evidence artifact for release outputs;
 - `release sign-capsules` to generate capsule Sigstore bundles with cosign and write manifest metadata, `release public-trust-verify` to require all signed capsule bundles to pass the consumer Sigstore verifier, plus `release trust-bundle` / `release verify-trust-bundle` to tie the local registry trust root, signed capsule hashes, release SBOM, and SBOM attestation into one schema-backed offline-review artifact;
@@ -203,8 +203,8 @@ node /path/to/ashlar/packages/cli/dist/index.js release review-record stable-evi
 node /path/to/ashlar/packages/cli/dist/index.js release review-record-check
 
 # After a real npm publish, verify public provenance for the exact release versions
-node /path/to/ashlar/packages/cli/dist/index.js release provenance-verify-public --package ashlar@0.0.0 @ashlar/cli@0.0.0 @ashlar/schemas@0.0.0
-node /path/to/ashlar/packages/cli/dist/index.js release provenance-verify-public --package ashlar@0.0.0 @ashlar/cli@0.0.0 @ashlar/schemas@0.0.0 --json > ./reports/ashlar-npm-provenance.json
+node /path/to/ashlar/packages/cli/dist/index.js release provenance-verify-public --package @blen/ashlar@0.0.0 @blen/ashlar-cli@0.0.0 @blen/ashlar-schemas@0.0.0
+node /path/to/ashlar/packages/cli/dist/index.js release provenance-verify-public --package @blen/ashlar@0.0.0 @blen/ashlar-cli@0.0.0 @blen/ashlar-schemas@0.0.0 --json > ./reports/ashlar-npm-provenance.json
 
 # Write an SPDX release SBOM
 node /path/to/ashlar/packages/cli/dist/index.js release sbom --output ./reports/ashlar-sbom.spdx.json
@@ -229,8 +229,8 @@ verify/update, themes, AI/MCP, and trust/evidence posture without weakening the
 claim boundaries in `STATUS.md`.
 
 ```bash
-pnpm --filter @ashlar/docs dev
-pnpm --filter @ashlar/docs build
+pnpm --filter @blen/ashlar-docs dev
+pnpm --filter @blen/ashlar-docs build
 ```
 
 ## Roadmap

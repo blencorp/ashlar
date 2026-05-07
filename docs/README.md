@@ -77,22 +77,22 @@ Zig remains a future experiment, not a v0/v1 foundation, because Zig 0.16 still 
 The local prototype currently demonstrates the source-owned registry flow:
 
 ```bash
-npx ashlar init
-npx ashlar status
-npx ashlar migrate uswds "examples/uswds-project/**/*.{html,tsx,jsx}"
-npx ashlar search button
-npx ashlar view button
-npx ashlar add button
-npx ashlar evidence button
-npx ashlar evidence --check
-npx ashlar evidence --report ./reports/ashlar-evidence.md
-npx ashlar audit --policy federal --explain examples/plain-html/index.html
-npx ashlar design sync
-npx ashlar verify
-npx ashlar update button --yes
-npx ashlar mcp
-npx ashlar theme sync
-npx ashlar theme validate
+npx @blen/ashlar init
+npx @blen/ashlar status
+npx @blen/ashlar migrate uswds "examples/uswds-project/**/*.{html,tsx,jsx}"
+npx @blen/ashlar search button
+npx @blen/ashlar view button
+npx @blen/ashlar add button
+npx @blen/ashlar evidence button
+npx @blen/ashlar evidence --check
+npx @blen/ashlar evidence --report ./reports/ashlar-evidence.md
+npx @blen/ashlar audit --policy federal --explain examples/plain-html/index.html
+npx @blen/ashlar design sync
+npx @blen/ashlar verify
+npx @blen/ashlar update button --yes
+npx @blen/ashlar mcp
+npx @blen/ashlar theme sync
+npx @blen/ashlar theme validate
 ```
 
 ## License

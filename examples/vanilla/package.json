@@ -1,5 +1,5 @@
 {
-  "name": "@ashlar/example-vanilla",
+  "name": "@blen/ashlar-example-vanilla",
   "version": "0.0.2",
   "private": true,
   "description": "Vanilla TypeScript Ashlar reference app.",
@@ -14,7 +14,7 @@
     "audit": "node ../../packages/cli/dist/index.js audit --policy all --registry ../../registry index.html"
   },
   "devDependencies": {
-    "@ashlar/cli": "workspace:*",
+    "@blen/ashlar-cli": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:"

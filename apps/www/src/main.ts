@@ -380,7 +380,7 @@ function renderThemeToggle(host: HTMLElement): void {
 type ScriptLine = { kind: "cmd" | "out"; text: string };
 
 const SCRIPT: ScriptLine[] = [
-  { kind: "cmd", text: "npx ashlar init" },
+  { kind: "cmd", text: "npx @blen/ashlar init" },
   { kind: "out", text: "verified signature  ·  sigstore" },
   { kind: "out", text: "resolved 14 components  ·  wrote ./components" },
   { kind: "cmd", text: "ashlar add field button alert" },
@@ -565,7 +565,7 @@ function wireCopyInit(): void {
   for (const btn of document.querySelectorAll<HTMLButtonElement>('[data-action="copy-init"]')) {
     btn.addEventListener("click", async () => {
       try {
-        await navigator.clipboard.writeText("npx ashlar init");
+        await navigator.clipboard.writeText("npx @blen/ashlar init");
       } catch {
         // Clipboard unavailable; the user can still read and copy manually.
       }

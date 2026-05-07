@@ -117,23 +117,23 @@ try {
   const schemasVersion = readPackageVersion(join("packages", "schemas"));
   const cliVersion = readPackageVersion(join("packages", "cli"));
   const ashlarVersion = readPackageVersion(join("packages", "ashlar"));
-  const schemasTarball = newestTarball(packDir, `ashlar-schemas-${schemasVersion}`);
-  const cliTarball = newestTarball(packDir, `ashlar-cli-${cliVersion}`);
-  const ashlarTarball = newestTarball(packDir, `ashlar-${ashlarVersion}`);
+  const schemasTarball = newestTarball(packDir, `blen-ashlar-schemas-${schemasVersion}`);
+  const cliTarball = newestTarball(packDir, `blen-ashlar-cli-${cliVersion}`);
+  const ashlarTarball = newestTarball(packDir, `blen-ashlar-${ashlarVersion}`);
   assertPublicTarball(schemasTarball);
   assertPublicTarball(cliTarball);
   assertPublicTarball(ashlarTarball);
 
   const packedCli = tarballPackageJson(cliTarball);
   if (packedCli.bin?.ashlar !== "./dist/index.js") {
-    throw new Error("Packed @ashlar/cli package does not expose the ashlar binary.");
+    throw new Error("Packed @blen/ashlar-cli package does not expose the ashlar binary.");
   }
   const packedEntrypoint = tarballPackageJson(ashlarTarball);
   if (packedEntrypoint.bin?.ashlar !== "./bin/ashlar.js") {
-    throw new Error("Packed ashlar package does not expose the ashlar binary.");
+    throw new Error("Packed @blen/ashlar package does not expose the ashlar binary.");
   }
-  if (typeof packedEntrypoint.dependencies?.["@ashlar/cli"] !== "string") {
-    throw new Error("Packed ashlar package does not depend on @ashlar/cli.");
+  if (typeof packedEntrypoint.dependencies?.["@blen/ashlar-cli"] !== "string") {
+    throw new Error("Packed @blen/ashlar package does not depend on @blen/ashlar-cli.");
   }
 
   writeFileSync(
@@ -142,12 +142,12 @@ try {
       {
         type: "module",
         dependencies: {
-          ashlar: `file:${ashlarTarball}`,
+          "@blen/ashlar": `file:${ashlarTarball}`,
         },
         pnpm: {
           overrides: {
-            "@ashlar/cli": `file:${cliTarball}`,
-            "@ashlar/schemas": `file:${schemasTarball}`,
+            "@blen/ashlar-cli": `file:${cliTarball}`,
+            "@blen/ashlar-schemas": `file:${schemasTarball}`,
           },
         },
       },
@@ -176,13 +176,13 @@ try {
   }
 
   const installedEntrypoint = JSON.parse(
-    readFileSync(join(appDir, "node_modules", "ashlar", "package.json"), "utf8"),
+    readFileSync(join(appDir, "node_modules", "@blen", "ashlar", "package.json"), "utf8"),
   );
   if (installedEntrypoint.bin?.ashlar !== "./bin/ashlar.js") {
-    throw new Error("Packed ashlar package does not expose the ashlar binary.");
+    throw new Error("Packed @blen/ashlar package does not expose the ashlar binary.");
   }
 
-  console.log(`Packaged CLI smoke passed for ashlar ${version}.`);
+  console.log(`Packaged CLI smoke passed for @blen/ashlar ${version}.`);
 } finally {
   rmSync(scratch, { recursive: true, force: true });
 }

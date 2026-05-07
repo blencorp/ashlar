@@ -1,5 +1,5 @@
 {
-  "name": "@ashlar/docs",
+  "name": "@blen/ashlar-docs",
   "version": "0.0.0",
   "private": true,
   "description": "Static first-run documentation site for Ashlar adoption.",

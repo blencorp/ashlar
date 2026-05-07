@@ -4,7 +4,7 @@
 
 **Goal:** Build the first executable slice of Ashlar: public repository readiness, package workspace, CLI skeleton, capsule schema, one L0 Button capsule, validation rule generation, and CI commands.
 
-**Architecture:** Start with a TypeScript monorepo containing `@ashlar/cli`, `@ashlar/schemas`, and a local registry package. The first capsule is Button, installed as source with CSS, HTML, CEM, evidence, and ast-grep rules. Verification is hash-based first; Sigstore/SLSA wiring lands after the local registry flow works.
+**Architecture:** Start with a TypeScript monorepo containing `@blen/ashlar-cli`, `@blen/ashlar-schemas`, and a local registry package. The first capsule is Button, installed as source with CSS, HTML, CEM, evidence, and ast-grep rules. Verification is hash-based first; Sigstore/SLSA wiring lands after the local registry flow works.
 
 **Tech Stack:** Node.js 24 LTS (24.15.0 baseline), TypeScript 6, pnpm 10, Turborepo 2, Vitest 4, Playwright, axe-core, ast-grep, DTCG JSON, semantic CSS, GitHub Actions.
 
@@ -37,7 +37,7 @@ Add `package.json`:
 
 ```json
 {
-  "name": "ashlar",
+  "name": "@blen/ashlar",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.33.2",
@@ -134,7 +134,7 @@ Add `packages/cli/package.json`:
 
 ```json
 {
-  "name": "@ashlar/cli",
+  "name": "@blen/ashlar-cli",
   "version": "0.0.0",
   "type": "module",
   "bin": {
@@ -268,7 +268,7 @@ export function registerVerifyCommand(program: Command) {
 Run:
 
 ```bash
-pnpm --filter @ashlar/cli build
+pnpm --filter @blen/ashlar-cli build
 node packages/cli/dist/index.js --help
 ```
 
@@ -296,7 +296,7 @@ Add `packages/schemas/package.json`:
 
 ```json
 {
-  "name": "@ashlar/schemas",
+  "name": "@blen/ashlar-schemas",
   "version": "0.0.0",
   "type": "module",
   "exports": {
@@ -401,7 +401,7 @@ export const lockSchemaId = "https://ashlar.dev/schemas/lock.schema.json";
 Run:
 
 ```bash
-pnpm --filter @ashlar/schemas build
+pnpm --filter @blen/ashlar-schemas build
 ```
 
 Expected: TypeScript emits `packages/schemas/dist/index.js`.
@@ -575,7 +575,7 @@ describe("sha256Text", () => {
 Run:
 
 ```bash
-pnpm --filter @ashlar/cli test packages/cli/src/lib/hash.test.ts
+pnpm --filter @blen/ashlar-cli test packages/cli/src/lib/hash.test.ts
 ```
 
 Expected: FAIL because `hash.ts` does not exist.
@@ -598,7 +598,7 @@ export function sha256Text(input: string): string {
 Run:
 
 ```bash
-pnpm --filter @ashlar/cli test packages/cli/src/lib/hash.test.ts
+pnpm --filter @blen/ashlar-cli test packages/cli/src/lib/hash.test.ts
 ```
 
 Expected: PASS.
@@ -649,7 +649,7 @@ describe("buildCapsuleManifest", () => {
 Run:
 
 ```bash
-pnpm --filter @ashlar/cli test packages/cli/src/lib/capsule.test.ts
+pnpm --filter @blen/ashlar-cli test packages/cli/src/lib/capsule.test.ts
 ```
 
 Expected: FAIL because `capsule.ts` does not exist.
@@ -695,7 +695,7 @@ export function buildCapsuleManifest(input: {
 Run:
 
 ```bash
-pnpm --filter @ashlar/cli test packages/cli/src/lib/capsule.test.ts
+pnpm --filter @blen/ashlar-cli test packages/cli/src/lib/capsule.test.ts
 ```
 
 Expected: PASS.

@@ -33,7 +33,7 @@ Implemented today:
 - `ashlar audit` with empty/no-op findings
 - `ashlar verify`
 - `ashlar evidence`
-- `@ashlar/schemas` with capsule and lockfile schemas
+- `@blen/ashlar-schemas` with capsule and lockfile schemas
 - one local Button capsule at `registry/components/button/0.0.1`
 - one plain HTML example
 - CI that runs checks, build, and empty SARIF upload
@@ -80,7 +80,7 @@ Important current gaps:
 
 ### Package Boundaries
 
-`@ashlar/schemas` owns JSON Schemas and exported constants. It must add:
+`@blen/ashlar-schemas` owns JSON Schemas and exported constants. It must add:
 
 - `evidence.schema.json`
 - `registry-index.schema.json`
@@ -89,7 +89,7 @@ Important current gaps:
 - `evidenceFormatVersion`
 - `registryIndexFormatVersion`
 
-`@ashlar/cli` owns CLI behavior and filesystem registry access. Shared logic must live in small library files:
+`@blen/ashlar-cli` owns CLI behavior and filesystem registry access. Shared logic must live in small library files:
 
 - `src/lib/registry.ts`: locate registry index, list components, load component detail, resolve latest version.
 - `src/lib/policy/federal.ts`: federal HTML policy rules.

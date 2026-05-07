@@ -9,7 +9,7 @@ Proposed.
 Ashlar's AI integration uses three layered artifacts, each with one job:
 
 1. **Extended Custom Elements Manifest (CEM)** — every capsule emits a `*.cem.json` conforming to the W3C-CG CEM schema, augmented with an `_ashlar` namespace for variants, anti-patterns, accessibility requirements, token consumption, rendering classification, and canonical examples.
-2. **MCP server** at `npx ashlar mcp` — exposes search, retrieval, validation, suggestion, migration, and evidence tools to AI assistants.
+2. **MCP server** at `npx @blen/ashlar mcp` — exposes search, retrieval, validation, suggestion, migration, and evidence tools to AI assistants.
 3. **AGENTS.md** in the consumer's project root — coding-agent instructions for using Ashlar correctly. Symlinked from `CLAUDE.md`, `.cursor/rules/ashlar.mdc`, and `.windsurfrules` for editor coverage.
 
 A separate `llms.txt` (and `llms-full.txt`) is published for the docs site for LLM-retrieval purposes.
@@ -41,7 +41,7 @@ AGENTS.md (`agents.md`, ~60,000 repos as of late 2025) and `llms.txt` (Jeremy Ho
 **Mitigations**
 
 - Publish JSON Schema for `_ashlar` extensions; tools that don't recognize the namespace ignore it (CEM is forward-compatible).
-- MCP server is a thin Node process; runs locally via `npx ashlar mcp`. Hosted version is optional.
+- MCP server is a thin Node process; runs locally via `npx @blen/ashlar mcp`. Hosted version is optional.
 - AGENTS.md template is generated and updated by `ashlar init` and `ashlar update`; consumers can customize and the template doesn't overwrite their changes.
 
 ## References

@@ -1,4 +1,4 @@
-# @ashlar/example-vanilla
+# @blen/ashlar-example-vanilla
 
 ## 0.0.2
 

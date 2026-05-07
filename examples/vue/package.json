@@ -1,5 +1,5 @@
 {
-  "name": "@ashlar/example-vue",
+  "name": "@blen/ashlar-example-vue",
   "version": "0.0.2",
   "private": true,
   "description": "Vue Ashlar reference app.",
@@ -14,7 +14,7 @@
     "audit": "node ../../packages/cli/dist/index.js audit --policy all --registry ../../registry public/audit.html"
   },
   "devDependencies": {
-    "@ashlar/cli": "workspace:*",
+    "@blen/ashlar-cli": "workspace:*",
     "@vitejs/plugin-vue": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:",

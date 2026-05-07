@@ -177,7 +177,7 @@ importers:
         specifier: 'catalog:'
         version: 19.2.6(react@19.2.6)
     devDependencies:
-      '@ashlar/cli':
+      '@blen/ashlar-cli':
         specifier: workspace:*
         version: link:../../packages/cli
       '@types/react':
@@ -198,7 +198,7 @@ importers:
 
   examples/react-spa:
     devDependencies:
-      '@ashlar/cli':
+      '@blen/ashlar-cli':
         specifier: workspace:*
         version: link:../../packages/cli
       '@types/react':
@@ -225,7 +225,7 @@ importers:
 
   examples/svelte:
     devDependencies:
-      '@ashlar/cli':
+      '@blen/ashlar-cli':
         specifier: workspace:*
         version: link:../../packages/cli
       '@sveltejs/vite-plugin-svelte':
@@ -249,7 +249,7 @@ importers:
 
   examples/vanilla:
     devDependencies:
-      '@ashlar/cli':
+      '@blen/ashlar-cli':
         specifier: workspace:*
         version: link:../../packages/cli
       '@types/node':
@@ -264,7 +264,7 @@ importers:
 
   examples/vite:
     devDependencies:
-      '@ashlar/cli':
+      '@blen/ashlar-cli':
         specifier: workspace:*
         version: link:../../packages/cli
       '@tailwindcss/vite':
@@ -288,7 +288,7 @@ importers:
 
   examples/vue:
     devDependencies:
-      '@ashlar/cli':
+      '@blen/ashlar-cli':
         specifier: workspace:*
         version: link:../../packages/cli
       '@vitejs/plugin-vue':
@@ -309,18 +309,18 @@ importers:
 
   packages/ashlar:
     dependencies:
-      '@ashlar/cli':
+      '@blen/ashlar-cli':
         specifier: workspace:*
         version: link:../cli
 
   packages/cli:
     dependencies:
-      '@ashlar/schemas':
-        specifier: workspace:*
-        version: link:../schemas
       '@ast-grep/napi':
         specifier: 'catalog:'
         version: 0.42.1
+      '@blen/ashlar-schemas':
+        specifier: workspace:*
+        version: link:../schemas
       '@modelcontextprotocol/sdk':
         specifier: ^1.29.0
         version: 1.29.0(zod@4.4.3)

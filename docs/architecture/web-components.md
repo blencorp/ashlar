@@ -144,9 +144,9 @@ And emits framework-idiomatic wrappers.
 Generated via `@lit/labs/gen-wrapper-react`-style tooling, customized for Ashlar's CEM extensions:
 
 ```tsx
-// @ashlar/react/combobox.tsx (generated)
+// @blen/ashlar-react/combobox.tsx (generated)
 import { createComponent } from "@lit/react";
-import { AshlarCombobox } from "@ashlar/element/combobox";
+import { AshlarCombobox } from "@blen/ashlar-element/combobox";
 
 export const ComboBox = createComponent({
   tagName: "ashlar-combobox",
@@ -168,10 +168,10 @@ For SSR + React 19, the adapter handles `"use client"` boundaries appropriately.
 ### Vue adapter
 
 ```vue
-<!-- @ashlar/vue/combobox.vue (generated) -->
+<!-- @blen/ashlar-vue/combobox.vue (generated) -->
 <script setup lang="ts">
 import { onMounted } from "vue";
-import "@ashlar/element/combobox";
+import "@blen/ashlar-element/combobox";
 
 defineProps<{
   options?: Option[];
@@ -203,7 +203,7 @@ For Drupal, Sitecore, AEM, plain HTML — the custom element itself is the deliv
 
 ```html
 <script type="module">
-  import "@ashlar/element/combobox";
+  import "@blen/ashlar-element/combobox";
 </script>
 
 <ashlar-combobox></ashlar-combobox>
@@ -221,7 +221,8 @@ capsule.cem.json + capsule.element.ts
               │
    ┌──────────┼──────────┬──────────┬──────────┐
    ▼          ▼          ▼          ▼          ▼
-@ashlar/   @ashlar/   @ashlar/   @ashlar/   @ashlar/
+@blen/     @blen/     @blen/     @blen/     @blen/
+ashlar-    ashlar-    ashlar-    ashlar-    ashlar-
 react      vue        svelte     solid      element
 ```
 

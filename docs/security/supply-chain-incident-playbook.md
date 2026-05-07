@@ -46,10 +46,10 @@ For SEV-3:
 Ask consumers to collect these artifacts before changing local state:
 
 ```bash
-npx ashlar verify
-npx ashlar registry mirror --registry <current-registry> --output ./ashlar-registry-snapshot
-npx ashlar evidence --check --registry <current-registry>
-npx ashlar release verify-trust-bundle \
+npx @blen/ashlar verify
+npx @blen/ashlar registry mirror --registry <current-registry> --output ./ashlar-registry-snapshot
+npx @blen/ashlar evidence --check --registry <current-registry>
+npx @blen/ashlar release verify-trust-bundle \
   --registry <current-registry> \
   --bundle <release-trust-bundle.json> \
   --sbom <ashlar-sbom.spdx.json> \
@@ -103,7 +103,7 @@ Recommended order for consumers:
 
 1. Stop running `ashlar add`, `ashlar update`, and package upgrades until the advisory names a known-good version.
 2. Run `ashlar verify` and preserve the output.
-3. Pin to the known-good `ashlar`, `@ashlar/cli`, and `@ashlar/schemas` versions.
+3. Pin to the known-good `@blen/ashlar`, `@blen/ashlar-cli`, and `@blen/ashlar-schemas` versions.
 4. Replace the registry mirror or trust root with the advisory-provided known-good material.
 5. Re-run `ashlar verify`, `ashlar evidence --check`, and project tests.
 6. Review local diffs in installed Ashlar source before merging regenerated files.

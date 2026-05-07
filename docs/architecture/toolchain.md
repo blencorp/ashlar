@@ -27,11 +27,11 @@ See [`tooling-baseline.md`](./tooling-baseline.md) for the exact pinned versions
 The CLI should be a Node 24 LTS + TypeScript ESM package:
 
 ```bash
-npx ashlar init
-npx ashlar add button alert form-field
-npx ashlar audit
-npx ashlar verify
-npx ashlar evidence button
+npx @blen/ashlar init
+npx @blen/ashlar add button alert form-field
+npx @blen/ashlar audit
+npx @blen/ashlar verify
+npx @blen/ashlar evidence button
 ```
 
 Reasons:

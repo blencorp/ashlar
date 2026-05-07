@@ -43,7 +43,7 @@ export const pages: DocPage[] = [
       },
       {
         label: "Build the CLI",
-        command: "pnpm --filter @ashlar/cli build",
+        command: "pnpm --filter @blen/ashlar-cli build",
         note: "Creates packages/cli/dist so local docs and examples can call the same binary CI uses.",
       },
       {
@@ -202,7 +202,7 @@ export const pages: DocPage[] = [
       },
       {
         label: "Build the Tailwind proof",
-        command: "pnpm --filter @ashlar/example-vite build",
+        command: "pnpm --filter @blen/ashlar-example-vite build",
         note: "Proves Tailwind v4 can consume Ashlar's generated @theme output.",
       },
     ],

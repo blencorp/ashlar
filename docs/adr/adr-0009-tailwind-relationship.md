@@ -10,7 +10,7 @@ Proposed.
 
 **Tailwind is not the component authoring layer.** L0 component CSS is written in semantic class names referencing CSS custom properties (`.ashlar-button { background: var(--ashlar-color-action-primary-bg); … }`), not Tailwind utility classes hard-coded into component source.
 
-A separate companion package, `@ashlar/tailwind`, may ship later for shadcn-style copy-paste teams who specifically want utility-class component source. This is not v0.0 scope.
+A separate companion package, `@blen/ashlar-tailwind`, may ship later for shadcn-style copy-paste teams who specifically want utility-class component source. This is not v0.0 scope.
 
 ## Rationale
 
@@ -26,7 +26,7 @@ For Ashlar's audience, the answer must be semantic CSS in source:
 
 4. **Static deployments.** Pure CSS works in any static HTML page without a build step. Tailwind requires a build pipeline.
 
-**For Tailwind users, none of this is a downside.** They get the `@theme` output, install the `@ashlar/tailwind` preset, and freely mix Tailwind utilities with Ashlar components. Cascade layers (`@layer ashlar.components`) ensure Tailwind utility overrides win:
+**For Tailwind users, none of this is a downside.** They get the `@theme` output, install the `@blen/ashlar-tailwind` preset, and freely mix Tailwind utilities with Ashlar components. Cascade layers (`@layer ashlar.components`) ensure Tailwind utility overrides win:
 
 ```jsx
 <button className="ashlar-button md:w-full" data-variant="primary">
@@ -42,18 +42,18 @@ The semantic class delivers the component; Tailwind utilities decorate. Both eco
 
 - Maximum reach — Ashlar works in any stack, with or without Tailwind.
 - Real "lightweight" claim with bundle math to back it.
-- Tailwind users get full integration via `@theme` output and the `@ashlar/tailwind` preset.
+- Tailwind users get full integration via `@theme` output and the `@blen/ashlar-tailwind` preset.
 - Decoupled from Tailwind's release rhythm and breaking changes.
 - Static HTML deployments are first-class.
 
 **Negative**
 
-- Tailwind-only teams who want copy-paste utility-class component source must wait for `@ashlar/tailwind` (or live without it).
+- Tailwind-only teams who want copy-paste utility-class component source must wait for `@blen/ashlar-tailwind` (or live without it).
 - Two mental models exist for styling overrides: cascade-layer-aware utility classes versus direct CSS variable overrides.
 
 **Mitigations**
 
-- `@ashlar/tailwind` companion is on the v0.2 roadmap.
+- `@blen/ashlar-tailwind` companion is on the v0.2 roadmap.
 - Documentation includes a "you have two override paths" guide with worked examples.
 
 ## References
