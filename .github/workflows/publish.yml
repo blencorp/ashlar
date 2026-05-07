@@ -15,7 +15,7 @@ concurrency: publish-${{ github.ref }}
 
 jobs:
   npm:
-    if: github.repository == 'blencorp/ashlar' && inputs.confirm == 'publish'
+    if: github.repository == 'blencorp/ashlar' && github.ref == 'refs/heads/main' && inputs.confirm == 'publish'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6

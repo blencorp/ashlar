@@ -40,7 +40,7 @@ post-merge guard that turns accepted changesets into a release PR.
 
 ## Publishing
 
-Publishing remains manually gated by `Publish`, not automatic on every merge. That workflow requires a `publish` confirmation, runs `pnpm check`, `pnpm build`, `pnpm release:smoke`, local provenance preflight, and release readiness with explicit prototype escape hatches before `changeset publish`.
+Publishing remains manually gated by `Publish`, not automatic on every merge. That workflow is main-only, requires a `publish` confirmation, runs `pnpm check`, `pnpm build`, `pnpm release:smoke`, local provenance preflight, and release readiness with explicit prototype escape hatches before `changeset publish`.
 
 The public packages use the BLEN-owned npm namespace:
 

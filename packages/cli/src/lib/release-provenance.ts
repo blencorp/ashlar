@@ -154,6 +154,9 @@ function checkPublishWorkflow(cwd: string): string[] {
   if (!/^\s*contents:\s*read(?:\s+#.*)?$/m.test(workflow)) {
     errors.push(`${publishWorkflowPath}: permissions.contents should be read`);
   }
+  if (!/github\.ref\s*==\s*'refs\/heads\/main'/.test(workflow)) {
+    errors.push(`${publishWorkflowPath}: workflow must restrict npm publishing to refs/heads/main`);
+  }
   if (!/^\s*runs-on:\s*ubuntu-latest(?:\s+#.*)?$/m.test(workflow)) {
     errors.push(`${publishWorkflowPath}: publish job must run on a GitHub-hosted runner`);
   }
