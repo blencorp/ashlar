@@ -43,6 +43,7 @@ describe("theme loader", () => {
         url: "https://www.usda.gov/about-usda/policies-and-links/digital/digital-strategy/design-and-brand/design-and-brand-plays",
       }),
     );
+    expect(themes.every((theme) => theme.sources.every((source) => source.note))).toBe(true);
   });
 
   it("validates theme files (action.primary.bg color)", () => {

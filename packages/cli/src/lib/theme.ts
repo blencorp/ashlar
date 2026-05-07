@@ -37,7 +37,7 @@ type AgencyThemeFile = {
   name: string;
   title: string;
   description: string;
-  sources?: AgencyThemeSource[];
+  sources: AgencyThemeSource[];
   order?: number;
   tokens: TokenTree;
   modes?: {
@@ -139,7 +139,7 @@ function readJsonThemeFile(absolutePath: string, label: string): ThemeDefinition
     name: theme.name,
     title: theme.title,
     description: theme.description,
-    sources: theme.sources ?? [],
+    sources: theme.sources,
     order: theme.order ?? 100,
     tokens: theme.tokens,
     dark: theme.modes?.dark ?? {},
@@ -250,6 +250,40 @@ export function validateThemes(themes = loadStockThemes()): ThemeValidationResul
 
 export function validateTheme(theme: ThemeDefinition): ThemeValidationFinding[] {
   const findings: ThemeValidationFinding[] = [];
+
+  if (theme.sources.length === 0) {
+    findings.push({
+      theme: theme.name,
+      mode: "light",
+      level: "error",
+      rule: "theme/source-provenance",
+      message: "Agency themes must cite at least one public design-system or brand source.",
+      path: "sources",
+    });
+  }
+
+  for (const source of theme.sources) {
+    if (!source.url.startsWith("https://")) {
+      findings.push({
+        theme: theme.name,
+        mode: "light",
+        level: "error",
+        rule: "theme/source-provenance",
+        message: `Theme source "${source.label}" must use a public HTTPS URL.`,
+        path: "sources.url",
+      });
+    }
+    if (!source.note?.trim()) {
+      findings.push({
+        theme: theme.name,
+        mode: "light",
+        level: "error",
+        rule: "theme/source-provenance",
+        message: `Theme source "${source.label}" must explain which tokens or constraints it supports.`,
+        path: "sources.note",
+      });
+    }
+  }
 
   for (const mode of ["light", "dark"] as const) {
     for (const path of requiredSemanticTokens) {
