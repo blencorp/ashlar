@@ -102,7 +102,11 @@ export function writeDesignContext(
   lockfile: AshlarLockfile,
   options: DesignContextOptions & { force?: boolean },
 ): boolean {
-  return writeFileIfMissing(path, buildDesignContext(config, lockfile, options), options.force ?? true);
+  return writeFileIfMissing(
+    path,
+    buildDesignContext(config, lockfile, options),
+    options.force ?? true,
+  );
 }
 
 function defaultTheme(): ThemeDefinition {
@@ -135,7 +139,8 @@ function designTokens(theme: ThemeDefinition) {
     fontSans: fontSans?.value ?? "system-ui, sans-serif",
     controlRadius: controlRadius?.value ?? "0.25rem",
     controlRadiusVariable: controlRadius?.cssVariable ?? "--ashlar-radius-control",
-    buttonRadius: buttonRadius?.resolvedValue ?? buttonRadius?.value ?? "var(--ashlar-radius-control)",
+    buttonRadius:
+      buttonRadius?.resolvedValue ?? buttonRadius?.value ?? "var(--ashlar-radius-control)",
     buttonRadiusVariable: buttonRadius?.cssVariable ?? "--ashlar-button-radius",
     buttonMinBlockSize: buttonMinBlockSize?.value ?? "2.75rem",
   };

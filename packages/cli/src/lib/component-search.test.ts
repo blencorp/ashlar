@@ -26,8 +26,9 @@ describe("component search", () => {
     });
 
     expect(results.map((result) => result.name)).toEqual(["banner", "benefit-application"]);
-    expect(results.every((result) => result.reasons.some((reason) => reason.startsWith("policy:"))))
-      .toBe(true);
+    expect(
+      results.every((result) => result.reasons.some((reason) => reason.startsWith("policy:"))),
+    ).toBe(true);
   });
 
   it("filters by platform feature and layer for AI planning", () => {

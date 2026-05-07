@@ -5,7 +5,10 @@ import { buildStableEvidenceReviewStatus } from "./evidence-review-status.js";
 import { sha256File } from "./hash.js";
 import { getComponent, listComponents } from "./registry.js";
 import { verifyReleaseTrustBundle } from "./release-trust-bundle.js";
-import type { PublicCapsuleTrustCapsule, PublicCapsuleTrustResult } from "./release-public-trust.js";
+import type {
+  PublicCapsuleTrustCapsule,
+  PublicCapsuleTrustResult,
+} from "./release-public-trust.js";
 import type { PublicProvenanceVerification } from "./release-provenance.js";
 
 export type ExternalReviewRecordKind = "design-partner" | "release-trust" | "stable-evidence";
@@ -401,7 +404,9 @@ function stableEvidencePublicationReceiptErrors(cwd: string, content: string): s
 
   const errors: string[] = [];
   if (receipt.component !== component) {
-    errors.push(`Publication receipt component mismatch: expected ${component}, found ${receipt.component}`);
+    errors.push(
+      `Publication receipt component mismatch: expected ${component}, found ${receipt.component}`,
+    );
   }
   if (resolve(cwd, receipt.registryPath) !== resolve(cwd, registryPath ?? "")) {
     errors.push(
@@ -418,11 +423,16 @@ function stableEvidencePublicationReceiptErrors(cwd: string, content: string): s
   try {
     const detail = getComponent(cwd, component ?? "", registryPath);
     const manifest = readCapsuleManifest(detail.directory, detail.name);
-    if (detail.evidence.stability !== "stable" || detail.evidence.accessibilityStatus !== "stable-evidence") {
+    if (
+      detail.evidence.stability !== "stable" ||
+      detail.evidence.accessibilityStatus !== "stable-evidence"
+    ) {
       errors.push(`${detail.name}@${detail.version}: registry evidence is not stable-evidence`);
     }
     if (detail.version !== receipt.version) {
-      errors.push(`Publication receipt version mismatch: expected ${detail.version}, found ${receipt.version}`);
+      errors.push(
+        `Publication receipt version mismatch: expected ${detail.version}, found ${receipt.version}`,
+      );
     }
     if (detail.capsuleHash !== receipt.capsuleHash) {
       errors.push(
@@ -442,7 +452,9 @@ function stableEvidencePublicationReceiptErrors(cwd: string, content: string): s
     for (const reference of receipt.evidenceReferences) {
       const target = resolve(reference.target);
       if (!existsSync(target)) {
-        errors.push(`Publication receipt evidence reference target is missing: ${reference.target}`);
+        errors.push(
+          `Publication receipt evidence reference target is missing: ${reference.target}`,
+        );
         continue;
       }
       const currentHash = sha256File(target);
@@ -558,7 +570,9 @@ function publicTrustVerificationArtifactErrors(input: {
   const expected = listComponents(input.cwd, input.registryPath).map((component) =>
     getComponent(input.cwd, component.name, input.registryPath),
   );
-  const expectedKeys = new Set(expected.map((component) => `${component.name}@${component.version}`));
+  const expectedKeys = new Set(
+    expected.map((component) => `${component.name}@${component.version}`),
+  );
   const actualKeys = new Set(
     report.capsules.map((capsule) => `${capsule.component}@${capsule.version}`),
   );
@@ -622,8 +636,7 @@ function publicProvenanceReport(value: unknown): PublicProvenanceVerification | 
   }
   if (
     !value.packages.every(
-      (item) =>
-        isObject(item) && typeof item.name === "string" && typeof item.version === "string",
+      (item) => isObject(item) && typeof item.name === "string" && typeof item.version === "string",
     )
   ) {
     return undefined;
@@ -704,7 +717,9 @@ function releaseTrustArtifactErrors(cwd: string, content: string): string[] {
   const trustBundle = externalReviewFieldValue(content, "Release trust bundle");
   const sigstoreVerification = externalReviewFieldValue(content, "Capsule Sigstore verification");
   const npmProvenance = externalReviewFieldValue(content, "npm provenance verification");
-  if ([registry, sbom, attestation, trustBundle].some((value) => hasPlaceholderValue(value ?? ""))) {
+  if (
+    [registry, sbom, attestation, trustBundle].some((value) => hasPlaceholderValue(value ?? ""))
+  ) {
     return errors;
   }
 
@@ -958,7 +973,9 @@ function stableEvidenceRecord(input: StableEvidenceReviewRecordInput): string {
   });
 
   if (report.status !== "ready") {
-    const blockers = report.blockers.map((blocker) => `${blocker.file} ${blocker.rule}: ${blocker.message}`);
+    const blockers = report.blockers.map(
+      (blocker) => `${blocker.file} ${blocker.rule}: ${blocker.message}`,
+    );
     throw new Error(
       `Cannot write a completed stable evidence record while review-status is ${report.status}:\n${blockers
         .map((blocker) => `  - ${blocker}`)
@@ -1125,7 +1142,9 @@ export function writeExternalReviewRecord(
   const errors = externalReviewRecordErrors(definition, content);
   errors.push(...reviewRecordArtifactErrors(input.cwd, definition, content));
   if (errors.length > 0) {
-    throw new Error(`Generated external review record is incomplete:\n${errors.map((error) => `  - ${error}`).join("\n")}`);
+    throw new Error(
+      `Generated external review record is incomplete:\n${errors.map((error) => `  - ${error}`).join("\n")}`,
+    );
   }
 
   mkdirSync(dirname(output), { recursive: true });

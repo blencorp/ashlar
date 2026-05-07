@@ -63,9 +63,7 @@ export function registerAuditCommand(program: Command) {
       const registryPath = options.registry ?? "./registry";
       const cwd = process.cwd();
       const policy = (options.policy ?? null) as AuditPolicy | null;
-      const findings = policy
-        ? runAudit({ cwd, files, policy, registryPath })
-        : [];
+      const findings = policy ? runAudit({ cwd, files, policy, registryPath }) : [];
 
       if (options.sarif) {
         console.log(JSON.stringify(toSarif(findings), null, 2));

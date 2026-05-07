@@ -54,7 +54,9 @@ function trustedSigstorePolicy(trustRoot: CapsuleTrustRoot | undefined): {
   const [certificateIdentity] = trustRoot.sigstore.certificateIdentities;
   const [certificateOidcIssuer] = trustRoot.sigstore.certificateOidcIssuers;
   if (!certificateIdentity || !certificateOidcIssuer) {
-    throw new Error("Registry Sigstore trust policy must include at least one identity and issuer.");
+    throw new Error(
+      "Registry Sigstore trust policy must include at least one identity and issuer.",
+    );
   }
 
   return { certificateIdentity, certificateOidcIssuer };
@@ -118,7 +120,9 @@ function selectedComponents(input: SignCapsulesInput): RegistryComponent[] {
     );
   }
 
-  return input.components.map((component) => getComponent(input.cwd, component, input.registryPath));
+  return input.components.map((component) =>
+    getComponent(input.cwd, component, input.registryPath),
+  );
 }
 
 function signComponent(input: {
@@ -155,7 +159,11 @@ function signComponent(input: {
   try {
     const payload = capsuleSignaturePayload(manifest);
     writeFileSync(payloadPath, payload);
-    runCosign(["sign-blob", "--yes", "--bundle", tempBundlePath, payloadPath], input.cwd, input.cosignPath);
+    runCosign(
+      ["sign-blob", "--yes", "--bundle", tempBundlePath, payloadPath],
+      input.cwd,
+      input.cosignPath,
+    );
     copyFileSync(tempBundlePath, finalBundlePath);
 
     const sigstore = sigstoreBundleMetadata({

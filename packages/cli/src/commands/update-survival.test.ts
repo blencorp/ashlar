@@ -13,11 +13,7 @@ import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import {
-  buildCapsuleManifest,
-  signCapsuleManifest,
-  type CapsuleManifest,
-} from "../lib/capsule.js";
+import { buildCapsuleManifest, signCapsuleManifest, type CapsuleManifest } from "../lib/capsule.js";
 
 const here = fileURLToPath(new URL(".", import.meta.url));
 const cliEntry = join(here, "..", "..", "dist", "index.js");
@@ -90,7 +86,11 @@ function signManifest(manifest: CapsuleManifest): CapsuleManifest {
   });
 }
 
-function writeSignedManifest(directory: string, component: string, manifest: CapsuleManifest): void {
+function writeSignedManifest(
+  directory: string,
+  component: string,
+  manifest: CapsuleManifest,
+): void {
   writeJson(join(directory, `${component}.capsule.json`), signManifest(manifest));
 }
 
@@ -240,7 +240,11 @@ function publishButtonV2(
   });
 }
 
-function updateWithReport(fixture: Fixture): { report: UpdateReport; status: number; stdout: string } {
+function updateWithReport(fixture: Fixture): {
+  report: UpdateReport;
+  status: number;
+  stdout: string;
+} {
   const result = fixture.runCli([
     "update",
     "button",
@@ -402,10 +406,7 @@ const scenarios: Scenario[] = [
         version: "0.0.3",
         versions: ["0.0.1", "0.0.2", "0.0.3"],
         cssTransform: (css) =>
-          css.replaceAll(
-            "--ashlar-color-action-primary-bg",
-            "--ashlar-color-action-primary-fill",
-          ),
+          css.replaceAll("--ashlar-color-action-primary-bg", "--ashlar-color-action-primary-fill"),
         codemod: {
           pattern: "color: var(--ashlar-color-action-primary-surface);",
           rewrite: "color: var(--ashlar-color-action-primary-fill);",
@@ -418,7 +419,9 @@ const scenarios: Scenario[] = [
       expect(report.totals.codemodReplacements).toBe(2);
       expect(css).toContain(".local-action { color: var(--ashlar-color-action-primary-fill); }");
       expect(css).not.toContain(".local-action { color: var(--ashlar-color-action-primary-bg); }");
-      expect(css).not.toContain(".local-action { color: var(--ashlar-color-action-primary-surface); }");
+      expect(css).not.toContain(
+        ".local-action { color: var(--ashlar-color-action-primary-surface); }",
+      );
     },
   },
   {
@@ -471,7 +474,10 @@ const scenarios: Scenario[] = [
   {
     name: "parallel HTML text conflict",
     editLocal: (fixture) => {
-      writeFileSync(fixture.htmlPath, readFileSync(fixture.htmlPath, "utf8").replace("Apply", "Save"));
+      writeFileSync(
+        fixture.htmlPath,
+        readFileSync(fixture.htmlPath, "utf8").replace("Apply", "Save"),
+      );
     },
     publish: (fixture) =>
       publishButtonV2(fixture, {

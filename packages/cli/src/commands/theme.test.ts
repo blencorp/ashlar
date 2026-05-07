@@ -74,7 +74,9 @@ describe("theme command", () => {
     cpSync(join(repoRoot, "packages", "cli", "themes"), themesDir, { recursive: true });
     const defaultThemePath = join(themesDir, "default.tokens.json");
     const theme = JSON.parse(readFileSync(defaultThemePath, "utf8")) as {
-      tokens: { color: { action: { primary: { bg: { $value: string }; fg: { $value: string } } } } };
+      tokens: {
+        color: { action: { primary: { bg: { $value: string }; fg: { $value: string } } } };
+      };
     };
     theme.tokens.color.action.primary.bg.$value = "#ffffff";
     theme.tokens.color.action.primary.fg.$value = "#ffffff";

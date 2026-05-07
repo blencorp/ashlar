@@ -113,7 +113,9 @@ export function applyCapsuleCodemods(input: {
         "component directory",
       );
       if (!Object.hasOwn(input.manifest.files, rule.target)) {
-        throw new Error(`Ashlar codemod target is not listed in the capsule manifest: ${rule.target}`);
+        throw new Error(
+          `Ashlar codemod target is not listed in the capsule manifest: ${rule.target}`,
+        );
       }
       if (!existsSync(target)) {
         continue;

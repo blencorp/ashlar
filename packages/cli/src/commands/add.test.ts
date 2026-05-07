@@ -84,13 +84,7 @@ describe("add command", () => {
 
     try {
       cpSync(join(repoRoot, "registry"), registry, { recursive: true });
-      const manifestPath = join(
-        registry,
-        "components",
-        "button",
-        "0.0.1",
-        "button.capsule.json",
-      );
+      const manifestPath = join(registry, "components", "button", "0.0.1", "button.capsule.json");
       const manifest = JSON.parse(readFileSync(manifestPath, "utf8")) as {
         files: Record<string, string>;
       };
@@ -138,13 +132,7 @@ describe("add command", () => {
 
     try {
       cpSync(join(repoRoot, "registry"), registry, { recursive: true });
-      const manifestPath = join(
-        registry,
-        "components",
-        "button",
-        "0.0.1",
-        "button.capsule.json",
-      );
+      const manifestPath = join(registry, "components", "button", "0.0.1", "button.capsule.json");
       const manifest = JSON.parse(readFileSync(manifestPath, "utf8")) as {
         signature?: { value: string };
       };
@@ -224,13 +212,7 @@ describe("add command", () => {
       expect(runCli(["init", "--registry", registry], localScratch).status).toBe(0);
       expect(runCli(["add", "button"], localScratch).status).toBe(0);
 
-      const manifestPath = join(
-        registry,
-        "components",
-        "button",
-        "0.0.1",
-        "button.capsule.json",
-      );
+      const manifestPath = join(registry, "components", "button", "0.0.1", "button.capsule.json");
       const manifest = JSON.parse(readFileSync(manifestPath, "utf8")) as {
         signature?: { value: string };
       };
@@ -280,10 +262,7 @@ describe("add command", () => {
       expect(runCli(["init", "--registry", registry], localScratch).status).toBe(0);
       expect(runCli(["add", "button"], localScratch).status).toBe(0);
 
-      writeFileSync(
-        join(registry, "components", "button", "0.0.1", "button.capsule.json"),
-        "{}\n",
-      );
+      writeFileSync(join(registry, "components", "button", "0.0.1", "button.capsule.json"), "{}\n");
 
       const verify = runCli(["verify"], localScratch);
 

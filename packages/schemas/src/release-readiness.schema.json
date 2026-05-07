@@ -3,14 +3,7 @@
   "$id": "https://ashlar.dev/schemas/release-readiness.schema.json",
   "title": "Ashlar Release Readiness Report",
   "type": "object",
-  "required": [
-    "$schema",
-    "schemaVersion",
-    "generatedAt",
-    "status",
-    "summary",
-    "checks"
-  ],
+  "required": ["$schema", "schemaVersion", "generatedAt", "status", "summary", "checks"],
   "properties": {
     "$schema": {
       "const": "https://ashlar.dev/schemas/release-readiness.schema.json"

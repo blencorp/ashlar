@@ -62,9 +62,7 @@ describe("applyCapsuleCodemods", () => {
       ).toThrow(
         /Ashlar codemod requires review before applying[\s\S]*risky-color-change[\s\S]*button\.css[\s\S]*approveConfirmedRules/,
       );
-      expect(readFileSync(join(buttonDir, "button.css"), "utf8")).toBe(
-        ".button { color: red; }\n",
-      );
+      expect(readFileSync(join(buttonDir, "button.css"), "utf8")).toBe(".button { color: red; }\n");
 
       const applied = applyCapsuleCodemods({
         approveConfirmedRules: true,
@@ -136,9 +134,7 @@ describe("applyCapsuleCodemods", () => {
           registryDirectory,
         }),
       ).toThrow(/Invalid Ashlar codemod file/i);
-      expect(readFileSync(join(buttonDir, "button.css"), "utf8")).toBe(
-        ".button { color: red; }\n",
-      );
+      expect(readFileSync(join(buttonDir, "button.css"), "utf8")).toBe(".button { color: red; }\n");
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }

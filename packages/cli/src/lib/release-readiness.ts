@@ -3,9 +3,7 @@ import { resolve } from "node:path";
 import { readCapsuleManifest, readVerifiedCapsuleManifest } from "./capsule.js";
 import { checkBundleBudget } from "./bundle-budget.js";
 import { checkEvidence } from "./evidence-check.js";
-import {
-  checkExternalReviewRecords,
-} from "./external-review-record.js";
+import { checkExternalReviewRecords } from "./external-review-record.js";
 import { runAiEvalSuite } from "./ai-eval.js";
 import { checkReleaseProvenanceReadiness } from "./release-provenance.js";
 import {
@@ -96,7 +94,12 @@ function registryCapsuleCheck(input: {
   }
 
   if (errors.length > 0) {
-    return check("registry-capsules", "fail", "One or more capsule manifests failed verification.", errors);
+    return check(
+      "registry-capsules",
+      "fail",
+      "One or more capsule manifests failed verification.",
+      errors,
+    );
   }
 
   return check(
@@ -164,7 +167,9 @@ function evidenceGateCheck(components: RegistryComponent[]): ReleaseReadinessChe
       "evidence-gate",
       "fail",
       `Evidence gate found ${failures.length} blocking finding(s).`,
-      failures.map((finding) => `${finding.component}@${finding.version} ${finding.rule}: ${finding.message}`),
+      failures.map(
+        (finding) => `${finding.component}@${finding.version} ${finding.rule}: ${finding.message}`,
+      ),
     );
   }
 
@@ -175,10 +180,7 @@ function evidenceGateCheck(components: RegistryComponent[]): ReleaseReadinessChe
   );
 }
 
-function bundleBudgetCheck(input: {
-  cwd: string;
-  registryPath: string;
-}): ReleaseReadinessCheck {
+function bundleBudgetCheck(input: { cwd: string; registryPath: string }): ReleaseReadinessCheck {
   try {
     const report = checkBundleBudget({
       components: [],
@@ -197,12 +199,9 @@ function bundleBudgetCheck(input: {
       details,
     );
   } catch (error) {
-    return check(
-      "bundle-budget",
-      "fail",
-      "Bundle budget check could not run.",
-      [error instanceof Error ? error.message : String(error)],
-    );
+    return check("bundle-budget", "fail", "Bundle budget check could not run.", [
+      error instanceof Error ? error.message : String(error),
+    ]);
   }
 }
 
@@ -231,12 +230,9 @@ function aiEvalCheck(input: {
         .flatMap((testCase) => testCase.failures.map((failure) => `${testCase.id}: ${failure}`)),
     );
   } catch (error) {
-    return check(
-      "ai-eval",
-      "fail",
-      "AI eval suite could not run.",
-      [error instanceof Error ? error.message : String(error)],
-    );
+    return check("ai-eval", "fail", "AI eval suite could not run.", [
+      error instanceof Error ? error.message : String(error),
+    ]);
   }
 }
 
@@ -366,7 +362,11 @@ const sigstoreOidcIssuer = "https://token.actions.githubusercontent.com";
 function sigstoreWorkflowCheck(cwd: string): ReleaseReadinessCheck {
   const path = resolve(cwd, sigstoreWorkflowPath);
   if (!existsSync(path)) {
-    return check("sigstore-workflow-local", "fail", `Sigstore workflow is missing: ${sigstoreWorkflowPath}`);
+    return check(
+      "sigstore-workflow-local",
+      "fail",
+      `Sigstore workflow is missing: ${sigstoreWorkflowPath}`,
+    );
   }
 
   const workflow = readFileSync(path, "utf8");
@@ -398,8 +398,14 @@ function sigstoreWorkflowCheck(cwd: string): ReleaseReadinessCheck {
   if (!/\brelease\s+public-trust-verify\b/.test(workflow)) {
     errors.push("workflow must verify capsule Sigstore bundles before upload");
   }
-  if (!/release\s+public-trust-verify[^\n]*--json\s*>\s*reports\/ashlar-public-trust\.json/.test(workflow)) {
-    errors.push("workflow must write public-trust verification JSON for release-trust review records");
+  if (
+    !/release\s+public-trust-verify[^\n]*--json\s*>\s*reports\/ashlar-public-trust\.json/.test(
+      workflow,
+    )
+  ) {
+    errors.push(
+      "workflow must write public-trust verification JSON for release-trust review records",
+    );
   }
   if (!/cosign\s+sign-blob\s+--yes\s+--bundle/.test(workflow)) {
     errors.push("workflow must create Sigstore bundles with cosign sign-blob --yes --bundle");
@@ -454,7 +460,11 @@ const incidentPlaybookSections = [
 function incidentPlaybookCheck(cwd: string): ReleaseReadinessCheck {
   const path = resolve(cwd, incidentPlaybookPath);
   if (!existsSync(path)) {
-    return check("incident-playbook", "fail", `Supply-chain incident playbook is missing: ${incidentPlaybookPath}`);
+    return check(
+      "incident-playbook",
+      "fail",
+      `Supply-chain incident playbook is missing: ${incidentPlaybookPath}`,
+    );
   }
 
   const content = readFileSync(path, "utf8");
@@ -539,7 +549,9 @@ function externalReviewProcessCheck(cwd: string): ReleaseReadinessCheck {
       errors.push(`external review record template must reject placeholder records: ${template}`);
     }
     if (!content.includes("Decision: pass | blocked")) {
-      errors.push(`external review record template must capture a pass or blocked decision: ${template}`);
+      errors.push(
+        `external review record template must capture a pass or blocked decision: ${template}`,
+      );
     }
   }
 

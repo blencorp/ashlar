@@ -2,11 +2,9 @@ export const aiEvalSchemaId = "https://ashlar.dev/schemas/ai-eval.schema.json";
 export const capsuleSchemaId = "https://ashlar.dev/schemas/capsule.schema.json";
 export const codemodSchemaId = "https://ashlar.dev/schemas/codemod.schema.json";
 export const evidenceSchemaId = "https://ashlar.dev/schemas/evidence.schema.json";
-export const evidenceArtifactSchemaId =
-  "https://ashlar.dev/schemas/evidence-artifact.schema.json";
+export const evidenceArtifactSchemaId = "https://ashlar.dev/schemas/evidence-artifact.schema.json";
 export const manualEvidenceSchemaId = "https://ashlar.dev/schemas/manual-evidence.schema.json";
-export const manualTranscriptSchemaId =
-  "https://ashlar.dev/schemas/manual-transcript.schema.json";
+export const manualTranscriptSchemaId = "https://ashlar.dev/schemas/manual-transcript.schema.json";
 export const lockSchemaId = "https://ashlar.dev/schemas/lock.schema.json";
 export const registryIndexSchemaId = "https://ashlar.dev/schemas/registry-index.schema.json";
 export const ashlarCemSchemaId = "https://ashlar.dev/schemas/ashlar-cem.schema.json";

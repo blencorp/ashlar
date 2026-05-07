@@ -51,7 +51,10 @@ const layerOrder: Record<RegistryLayer, number> = {
 };
 
 function normalize(value: string): string {
-  return value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 }
 
 function includesNormalized(text: string, needle: string): boolean {
@@ -218,7 +221,10 @@ function matchingFeatureLabel(component: RegistryComponent, filter: string): str
   );
 }
 
-function scoreQuery(component: RegistryComponent, query: string | undefined): {
+function scoreQuery(
+  component: RegistryComponent,
+  query: string | undefined,
+): {
   score: number;
   reasons: string[];
 } | null {

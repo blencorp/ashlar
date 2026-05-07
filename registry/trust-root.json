@@ -41,6 +41,11 @@
       "keyId": "ashlar-local-dev-text-input-2026-05-06",
       "algorithm": "ed25519",
       "publicKey": "MCowBQYDK2VwAyEA1jB0eKFP5gopbZ0kGDn0eKG6sialqqPHB+zI0mJcxSM="
+    },
+    {
+      "keyId": "ashlar-local-dev-form-field-format-2026-05-07",
+      "algorithm": "ed25519",
+      "publicKey": "MCowBQYDK2VwAyEAxM8vszrdWa1oCEhtUSoRQcn9rwB17STNlXsBe74ZUr4="
     }
   ],
   "sigstore": {

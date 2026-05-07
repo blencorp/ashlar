@@ -21,8 +21,7 @@ const repoTree = (path: string) => `https://github.com/blencorp/ashlar/tree/main
 export const claimBoundary = {
   status:
     "Ashlar is a v0.0 prototype. STATUS.md is canonical when docs, demos, or roadmap language disagree.",
-  allowed:
-    "USWDS-compatible audit, migration, and source-capsule prototype for public-service UI.",
+  allowed: "USWDS-compatible audit, migration, and source-capsule prototype for public-service UI.",
   blocked:
     "Do not claim USWDS replacement, public-alpha readiness, stable accessible components, public npm provenance, or public capsule Sigstore trust until strict readiness passes.",
 };
@@ -118,7 +117,7 @@ export const pages: DocPage[] = [
       {
         label: "Ask for a task suggestion",
         command:
-          "node packages/cli/dist/index.js suggest \"Build a benefits application form\" --registry ./registry",
+          'node packages/cli/dist/index.js suggest "Build a benefits application form" --registry ./registry',
         note: "Maps a public-service task to available capsules and explicit capability gaps.",
       },
       {

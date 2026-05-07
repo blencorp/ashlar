@@ -349,7 +349,9 @@ export function registerReleaseCommand(program: Command) {
         });
         const validation = validate("releaseReadiness", report);
         if (!validation.ok) {
-          throw new Error(`Generated release readiness report is invalid:\n${describeErrors(validation)}`);
+          throw new Error(
+            `Generated release readiness report is invalid:\n${describeErrors(validation)}`,
+          );
         }
 
         if (options.jsonOutput) {

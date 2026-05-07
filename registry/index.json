@@ -87,7 +87,7 @@
       "latest": "0.0.1",
       "versions": ["0.0.1"],
       "capsuleHashes": {
-        "0.0.1": "sha256:cf7b5defea4958e7af1278de582eadfa5bccfbaca2122967c4be88037283f8da"
+        "0.0.1": "sha256:bca26a8c40c96b4b28874ddc0b00365484a42ff6eae630c44ae8a5d3e5ea3c46"
       },
       "tier": "composite",
       "layer": "L0",

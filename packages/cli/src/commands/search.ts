@@ -18,7 +18,9 @@ type SearchOptions = {
 export function registerSearchCommand(program: Command) {
   program
     .command("search")
-    .description("Search the local Ashlar registry by component, policy, feature, token, or evidence metadata")
+    .description(
+      "Search the local Ashlar registry by component, policy, feature, token, or evidence metadata",
+    )
     .argument("[query]", "Component name or description text")
     .option("--layer <layer>", "Filter by layer, such as L0 or L3")
     .option("--tier <tier>", "Filter by tier: foundation, primitive, composite, pattern, or block")
