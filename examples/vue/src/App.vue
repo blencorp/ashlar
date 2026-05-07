@@ -3,26 +3,39 @@ import { computed, ref, watchEffect } from "vue";
 
 type Theme = "default" | "va" | "usda";
 type Mode = "light" | "dark" | "system";
-type ThemeOption = { value: Theme; label: string; logo: string; note: string };
+type ThemeOption = {
+  value: Theme;
+  label: string;
+  sigil: string;
+  word: string;
+  note: string;
+  source: string;
+};
 
 const themes = [
   {
     value: "default",
     label: "Default",
-    logo: "US",
+    sigil: "Base",
+    word: "Default",
     note: "USWDS color and type sources.",
+    source: "USWDS",
   },
   {
     value: "va",
     label: "VA",
-    logo: "VA",
+    sigil: "VA",
+    word: "VA.gov",
     note: "VA.gov color and typography.",
+    source: "VA.gov",
   },
   {
     value: "usda",
     label: "USDA",
-    logo: "USDA",
+    sigil: "USDA",
+    word: "Brand plays",
     note: "USDA brand plays plus USWDS.",
+    source: "USDA",
   },
 ] satisfies [ThemeOption, ...ThemeOption[]];
 
@@ -115,13 +128,14 @@ const columns = [
 
 const theme = ref<Theme>("default");
 const mode = ref<Mode>("light");
+const dialogOpen = ref(false);
 const selectedTheme = computed<ThemeOption>(
   () => themes.find((option) => option.value === theme.value) ?? themes[0],
 );
 
-function selectTheme(event: MouseEvent, value: Theme) {
+function selectTheme(value: Theme) {
   theme.value = value;
-  (event.currentTarget as HTMLElement).closest("details")?.removeAttribute("open");
+  dialogOpen.value = false;
 }
 
 watchEffect(() => {
@@ -163,24 +177,62 @@ watchEffect(() => {
           moving across agency themes.
         </p>
       </div>
-      <details class="agency-picker">
-        <summary class="agency-trigger">
-          <span class="agency-trigger__body">
-            <span class="agency-logo" :data-agency="selectedTheme.value" aria-hidden="true">
-              {{ selectedTheme.logo }}
-            </span>
-            <span>
-              <span class="agency-trigger__label">Agency</span>
-              <span class="agency-trigger__name">{{ selectedTheme.label }}</span>
-            </span>
+      <fieldset class="agency-switcher">
+        <legend class="visually-hidden">Agency theme</legend>
+        <span class="agency-status">
+          <span class="agency-mark" :data-agency="selectedTheme.value" aria-hidden="true">
+            <span class="agency-mark__sigil">{{ selectedTheme.sigil }}</span>
+            <span class="agency-mark__word">{{ selectedTheme.word }}</span>
           </span>
-        </summary>
-        <div class="agency-panel">
+          <span>
+            <span class="agency-trigger__label">Agency theme</span>
+            <span class="agency-trigger__name">{{ selectedTheme.label }}</span>
+          </span>
+        </span>
+        <button
+          class="agency-trigger"
+          type="button"
+          aria-haspopup="dialog"
+          :aria-expanded="dialogOpen"
+          aria-controls="agency-switcher-dialog"
+          @click="dialogOpen = true"
+        >
+          Switch agency
+        </button>
+      </fieldset>
+      <div v-if="dialogOpen" class="agency-dialog-backdrop" data-agency-dialog>
+        <button
+          class="agency-dialog-scrim"
+          type="button"
+          aria-label="Close agency theme menu"
+          @click="dialogOpen = false"
+        ></button>
+        <div
+          id="agency-switcher-dialog"
+          class="agency-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="agency-switcher-title"
+          aria-describedby="agency-switcher-copy"
+          tabindex="-1"
+        >
           <div class="agency-panel__header">
             <div>
               <span class="agency-panel__kicker">Theme</span>
-              <h2 class="agency-panel__title">Choose agency theme</h2>
+              <h2 id="agency-switcher-title" class="agency-panel__title">Choose agency theme</h2>
+              <p id="agency-switcher-copy" class="agency-panel__copy">
+                Apply a source-backed theme to preview how the same Ashlar components adapt across
+                agency systems.
+              </p>
             </div>
+            <button
+              class="agency-close"
+              type="button"
+              aria-label="Close agency theme menu"
+              @click="dialogOpen = false"
+            >
+              x
+            </button>
           </div>
           <fieldset class="agency-grid">
             <legend class="visually-hidden">Agency theme</legend>
@@ -189,16 +241,19 @@ watchEffect(() => {
               :key="option.value"
               :aria-pressed="theme === option.value"
               class="agency-card"
+              :data-theme="option.value"
               type="button"
-              @click="selectTheme($event, option.value)"
+              @click="selectTheme(option.value)"
             >
-              <span class="agency-logo" :data-agency="option.value" aria-hidden="true">
-                {{ option.logo }}
-              </span>
               <span>
+                <span class="agency-mark" :data-agency="option.value" aria-hidden="true">
+                  <span class="agency-mark__sigil">{{ option.sigil }}</span>
+                  <span class="agency-mark__word">{{ option.word }}</span>
+                </span>
                 <span class="agency-card__name">{{ option.label }}</span>
                 <span class="agency-card__note">{{ option.note }}</span>
               </span>
+              <span class="agency-card__source">{{ option.source }}</span>
             </button>
           </fieldset>
           <fieldset class="mode-switch">
@@ -215,7 +270,7 @@ watchEffect(() => {
             </button>
           </fieldset>
         </div>
-      </details>
+      </div>
     </header>
 
     <section class="metrics" aria-label="Queue metrics">

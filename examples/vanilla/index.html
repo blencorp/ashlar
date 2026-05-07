@@ -46,50 +46,87 @@
             moving across agency themes.
           </p>
         </div>
-        <details class="agency-picker">
-          <summary class="agency-trigger">
-            <span class="agency-trigger__body">
-              <span
-                class="agency-logo"
-                data-selected-agency-mark
-                data-agency="default"
-                aria-hidden="true"
-              >US</span>
-              <span>
-                <span class="agency-trigger__label">Agency</span>
-                <span class="agency-trigger__name" data-selected-agency>Default</span>
-              </span>
+        <fieldset class="agency-switcher">
+          <legend class="visually-hidden">Agency theme</legend>
+          <span class="agency-status">
+            <span class="agency-mark" data-selected-agency-mark data-agency="default" aria-hidden="true">
+              <span class="agency-mark__sigil">Base</span>
+              <span class="agency-mark__word">Default</span>
             </span>
-          </summary>
-          <div class="agency-panel">
+            <span>
+              <span class="agency-trigger__label">Agency theme</span>
+              <span class="agency-trigger__name" data-selected-agency>Default</span>
+            </span>
+          </span>
+          <button
+            class="agency-trigger"
+            type="button"
+            aria-haspopup="dialog"
+            aria-expanded="false"
+            aria-controls="agency-switcher-dialog"
+            data-agency-open
+          >
+            Switch agency
+          </button>
+        </fieldset>
+        <div class="agency-dialog-backdrop" data-agency-dialog hidden>
+          <button class="agency-dialog-scrim" type="button" aria-label="Close agency theme menu" data-agency-scrim></button>
+          <div
+            class="agency-panel"
+            id="agency-switcher-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="agency-switcher-title"
+            aria-describedby="agency-switcher-copy"
+            tabindex="-1"
+          >
             <div class="agency-panel__header">
               <div>
                 <span class="agency-panel__kicker">Theme</span>
-                <h2 class="agency-panel__title">Choose agency theme</h2>
+                <h2 class="agency-panel__title" id="agency-switcher-title">Choose agency theme</h2>
+                <p class="agency-panel__copy" id="agency-switcher-copy">
+                  Apply a source-backed theme to preview how the same Ashlar components adapt
+                  across agency systems.
+                </p>
               </div>
+              <button class="agency-close" type="button" aria-label="Close agency theme menu" data-agency-close>
+                x
+              </button>
             </div>
             <fieldset class="agency-grid">
               <legend class="visually-hidden">Agency theme</legend>
               <button class="agency-card" data-theme="default" type="button">
-                <span class="agency-logo" data-agency="default" aria-hidden="true">US</span>
                 <span>
+                  <span class="agency-mark" data-agency="default" aria-hidden="true">
+                    <span class="agency-mark__sigil">Base</span>
+                    <span class="agency-mark__word">Default</span>
+                  </span>
                   <span class="agency-card__name">Default</span>
                   <span class="agency-card__note">USWDS color and type sources.</span>
                 </span>
+                <span class="agency-card__source">USWDS</span>
               </button>
               <button class="agency-card" data-theme="va" type="button">
-                <span class="agency-logo" data-agency="va" aria-hidden="true">VA</span>
                 <span>
+                  <span class="agency-mark" data-agency="va" aria-hidden="true">
+                    <span class="agency-mark__sigil">VA</span>
+                    <span class="agency-mark__word">VA.gov</span>
+                  </span>
                   <span class="agency-card__name">VA</span>
                   <span class="agency-card__note">VA.gov color and typography.</span>
                 </span>
+                <span class="agency-card__source">VA.gov</span>
               </button>
               <button class="agency-card" data-theme="usda" type="button">
-                <span class="agency-logo" data-agency="usda" aria-hidden="true">USDA</span>
                 <span>
+                  <span class="agency-mark" data-agency="usda" aria-hidden="true">
+                    <span class="agency-mark__sigil">USDA</span>
+                    <span class="agency-mark__word">Brand plays</span>
+                  </span>
                   <span class="agency-card__name">USDA</span>
                   <span class="agency-card__note">USDA brand plays plus USWDS.</span>
                 </span>
+                <span class="agency-card__source">USDA</span>
               </button>
             </fieldset>
             <fieldset class="mode-switch">
@@ -99,7 +136,7 @@
               <button class="control-button" data-mode="system" type="button">System</button>
             </fieldset>
           </div>
-        </details>
+        </div>
       </header>
 
       <section class="metrics" aria-label="Queue metrics">

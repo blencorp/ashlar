@@ -2,24 +2,37 @@
 type Theme = "default" | "va" | "usda";
 type Mode = "light" | "dark" | "system";
 
-const themes: Array<{ value: Theme; label: string; logo: string; note: string }> = [
+const themes: Array<{
+  value: Theme;
+  label: string;
+  sigil: string;
+  word: string;
+  note: string;
+  source: string;
+}> = [
   {
     value: "default",
     label: "Default",
-    logo: "US",
+    sigil: "Base",
+    word: "Default",
     note: "USWDS color and type sources.",
+    source: "USWDS",
   },
   {
     value: "va",
     label: "VA",
-    logo: "VA",
+    sigil: "VA",
+    word: "VA.gov",
     note: "VA.gov color and typography.",
+    source: "VA.gov",
   },
   {
     value: "usda",
     label: "USDA",
-    logo: "USDA",
+    sigil: "USDA",
+    word: "Brand plays",
     note: "USDA brand plays plus USWDS.",
+    source: "USDA",
   },
 ];
 
@@ -112,12 +125,13 @@ const columns = [
 
 let theme: Theme = "default";
 let mode: Mode = "light";
+let dialogOpen = false;
 
 $: selectedTheme = themes.find((option) => option.value === theme) ?? themes[0];
 
-function selectTheme(event: MouseEvent, value: Theme) {
+function selectTheme(value: Theme) {
   theme = value;
-  (event.currentTarget as HTMLElement).closest("details")?.removeAttribute("open");
+  dialogOpen = false;
 }
 
 $: if (typeof document !== "undefined") {
@@ -158,59 +172,102 @@ $: if (typeof document !== "undefined") {
         moving across agency themes.
       </p>
     </div>
-    <details class="agency-picker">
-      <summary class="agency-trigger">
-        <span class="agency-trigger__body">
-          <span class="agency-logo" data-agency={selectedTheme.value} aria-hidden="true">
-            {selectedTheme.logo}
-          </span>
-          <span>
-            <span class="agency-trigger__label">Agency</span>
-            <span class="agency-trigger__name">{selectedTheme.label}</span>
-          </span>
+    <fieldset class="agency-switcher">
+      <legend class="visually-hidden">Agency theme</legend>
+      <span class="agency-status">
+        <span class="agency-mark" data-agency={selectedTheme.value} aria-hidden="true">
+          <span class="agency-mark__sigil">{selectedTheme.sigil}</span>
+          <span class="agency-mark__word">{selectedTheme.word}</span>
         </span>
-      </summary>
-      <div class="agency-panel">
-        <div class="agency-panel__header">
-          <div>
-            <span class="agency-panel__kicker">Theme</span>
-            <h2 class="agency-panel__title">Choose agency theme</h2>
+        <span>
+          <span class="agency-trigger__label">Agency theme</span>
+          <span class="agency-trigger__name">{selectedTheme.label}</span>
+        </span>
+      </span>
+      <button
+        class="agency-trigger"
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded={dialogOpen}
+        aria-controls="agency-switcher-dialog"
+        on:click={() => (dialogOpen = true)}
+      >
+        Switch agency
+      </button>
+    </fieldset>
+    {#if dialogOpen}
+      <div class="agency-dialog-backdrop" data-agency-dialog>
+        <button
+          class="agency-dialog-scrim"
+          type="button"
+          aria-label="Close agency theme menu"
+          on:click={() => (dialogOpen = false)}
+        ></button>
+        <div
+          class="agency-panel"
+          id="agency-switcher-dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="agency-switcher-title"
+          aria-describedby="agency-switcher-copy"
+          tabindex="-1"
+        >
+          <div class="agency-panel__header">
+            <div>
+              <span class="agency-panel__kicker">Theme</span>
+              <h2 class="agency-panel__title" id="agency-switcher-title">Choose agency theme</h2>
+              <p class="agency-panel__copy" id="agency-switcher-copy">
+                Apply a source-backed theme to preview how the same Ashlar components adapt across
+                agency systems.
+              </p>
+            </div>
+            <button
+              class="agency-close"
+              type="button"
+              aria-label="Close agency theme menu"
+              on:click={() => (dialogOpen = false)}
+            >
+              x
+            </button>
           </div>
+          <fieldset class="agency-grid">
+            <legend class="visually-hidden">Agency theme</legend>
+            {#each themes as option}
+              <button
+                aria-pressed={theme === option.value}
+                class="agency-card"
+                data-theme={option.value}
+                on:click={() => selectTheme(option.value)}
+                type="button"
+              >
+                <span>
+                  <span class="agency-mark" data-agency={option.value} aria-hidden="true">
+                    <span class="agency-mark__sigil">{option.sigil}</span>
+                    <span class="agency-mark__word">{option.word}</span>
+                  </span>
+                  <span class="agency-card__name">{option.label}</span>
+                  <span class="agency-card__note">{option.note}</span>
+                </span>
+                <span class="agency-card__source">{option.source}</span>
+              </button>
+            {/each}
+          </fieldset>
+          <fieldset class="mode-switch">
+            <legend class="visually-hidden">Color mode</legend>
+            {#each modes as option}
+              <button
+                aria-pressed={mode === option.value}
+                class="control-button"
+                on:click={() => (mode = option.value)}
+                type="button"
+              >
+                {option.label}
+              </button>
+            {/each}
+          </fieldset>
         </div>
-        <fieldset class="agency-grid">
-          <legend class="visually-hidden">Agency theme</legend>
-          {#each themes as option}
-            <button
-              aria-pressed={theme === option.value}
-              class="agency-card"
-              on:click={(event) => selectTheme(event, option.value)}
-              type="button"
-            >
-              <span class="agency-logo" data-agency={option.value} aria-hidden="true">
-                {option.logo}
-              </span>
-              <span>
-                <span class="agency-card__name">{option.label}</span>
-                <span class="agency-card__note">{option.note}</span>
-              </span>
-            </button>
-          {/each}
-        </fieldset>
-        <fieldset class="mode-switch">
-          <legend class="visually-hidden">Color mode</legend>
-          {#each modes as option}
-            <button
-              aria-pressed={mode === option.value}
-              class="control-button"
-              on:click={() => (mode = option.value)}
-              type="button"
-            >
-              {option.label}
-            </button>
-          {/each}
-        </fieldset>
       </div>
-    </details>
+    {/if}
   </header>
 
   <section class="metrics" aria-label="Queue metrics">
