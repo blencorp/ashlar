@@ -208,6 +208,7 @@ This document is the master index. Topic-specific sources are also cited inline 
 - SLSA v1.2 specification: https://slsa.dev/spec/v1.2/
 - NIST SP 800-218 SSDF: https://csrc.nist.gov/publications/detail/sp/800-218/final
 - npm trusted publishing: https://docs.npmjs.com/trusted-publishers/
+- GitHub Packages npm registry: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry
 - Sigstore overview: https://docs.sigstore.dev/
 - GitHub SARIF upload docs: https://docs.github.com/en/code-security/how-tos/scan-code-for-vulnerabilities/integrate-with-existing-tools/uploading-a-sarif-file-to-github
 

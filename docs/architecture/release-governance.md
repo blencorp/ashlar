@@ -48,13 +48,16 @@ The public packages use the BLEN-owned npm namespace:
 - `@blen/ashlar-cli` owns the CLI implementation.
 - `@blen/ashlar-schemas` owns the JSON Schema package consumed by the CLI.
 
-Publish public developer-facing releases to npmjs through GitHub Actions trusted publishing. Do not make GitHub Packages the default public registry for these packages: [GitHub's npm registry requires an access token](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages) to publish, install, and delete public packages, which would break the low-friction `npx @blen/ashlar` adoption path. If we later need internal or canary packages on GitHub Packages, add a separate workflow and scope mapping such as `@blen:registry=https://npm.pkg.github.com` instead of changing the public npmjs release path.
+Publish public developer-facing releases to npmjs through GitHub Actions trusted publishing. Do not make GitHub Packages the default public registry for these packages: [GitHub's npm registry requires an access token](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages) to publish, install, and delete public packages, which would break the low-friction `npx @blen/ashlar` adoption path.
+
+`GitHub Packages` is wired separately as an authenticated mirror/canary workflow for the BLEN-owned scope. It is manual-dispatch only, main-only, requires the `publish-github-packages` confirmation, grants `packages: write`, configures `@blen:registry=https://npm.pkg.github.com`, publishes with `GITHUB_TOKEN`, and disables npm provenance for that registry. This does not satisfy `npm-provenance-public`; only the npmjs trusted-publishing path does.
 
 This split is deliberate:
 
 - Conventional Commits keep review and squash history semantic.
 - Changesets records package intent and generates version PRs.
 - Trusted publishing and public provenance stay blocked until the release-trust gate is ready.
+- GitHub Packages can hold authenticated mirrors or canaries, but it is not the public install path.
 
 For UI, theme, or example-app changes, release readiness also depends on the
 example visual-smoke gate:
