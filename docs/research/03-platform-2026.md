@@ -22,7 +22,7 @@ This is a structural change versus 2022. A design system architected in 2022 had
 | `<dialog>` element + `showModal()` | Baseline Widely Available 2024 | Modal stack, backdrop, sibling `inert`, ESC handling, focus return, `method="dialog"` form submission. Replaces all custom modal libraries. |
 | View Transitions API (same-document) | Baseline Newly Available October 2025 | Route and state animations, list reorder, modal entry — without animation libraries. Cross-document VT is in Chrome and Safari; Firefox catching up in 2026. |
 | `@property` | Baseline Widely Available 2024 | Animatable gradients, typed CSS variables, theme transitions — no `requestAnimationFrame`. |
-| Color L4/5: `oklch()`, `color-mix()`, `light-dark()`, relative color syntax | Baseline 2024–2025 | Single token set generates entire palette plus dark mode in pure CSS. Use `oklch()` for perceptually uniform palettes. |
+| CSS Color 4/5: `oklch()`, `color-mix()`, `light-dark()`, relative color syntax | Baseline 2024–2025 | Single token set generates entire palette plus dark mode in pure CSS. Use `oklch()` for perceptually uniform palettes. |
 | `@scope` | **Baseline Newly Available December 2025** (Firefox 146) | Component-local styles without Shadow DOM or build tooling. |
 | `color-scheme` + `prefers-color-scheme` | Universal | Dark mode without JavaScript. |
 | `forced-colors` + System Colors (`Canvas`, `CanvasText`, `LinkText`) | Universal | Windows High Contrast, kiosks, accessibility tools — required for Section 508 and EN 301 549. |

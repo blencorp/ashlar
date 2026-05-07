@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the first executable slice of Ashlar: public repository readiness, package workspace, CLI skeleton, capsule schema, one L0 Button capsule, validation rule generation, and CI commands.
+**Goal:** Build the first executable slice of Ashlar: public repository readiness, package workspace, CLI skeleton, capsule schema, one markup primitive Button capsule, validation rule generation, and CI commands.
 
 **Architecture:** Start with a TypeScript monorepo containing `@blen/ashlar-cli`, `@blen/ashlar-schemas`, and a local registry package. The first capsule is Button, installed as source with CSS, HTML, CEM, evidence, and ast-grep rules. Verification is hash-based first; Sigstore/SLSA wiring lands after the local registry flow works.
 
@@ -345,7 +345,15 @@ Add `packages/schemas/src/capsule.schema.json`:
   "properties": {
     "name": { "type": "string", "pattern": "^[a-z0-9-]+$" },
     "version": { "type": "string" },
-    "layer": { "enum": ["L0", "L1", "L2", "L3", "L4"] },
+    "layer": {
+      "enum": [
+        "markup-primitives",
+        "interactive-components",
+        "framework-adapters",
+        "service-patterns",
+        "application-blocks"
+      ]
+    },
     "stability": { "enum": ["proposal", "experimental", "beta", "stable", "deprecated"] },
     "files": {
       "type": "object",
@@ -483,7 +491,7 @@ Add `registry/components/button/0.0.1/button.cem.json`:
           "description": "Accessible action control for forms and workflows.",
           "_ashlar": {
             "version": "0.0.1",
-            "layer": "L0",
+            "layer": "markup-primitives",
             "stability": "experimental",
             "variants": ["primary"],
             "a11yRequirements": [
@@ -632,7 +640,7 @@ describe("buildCapsuleManifest", () => {
         directory: dir,
         name: "button",
         version: "0.0.1",
-        layer: "L0",
+        layer: "markup-primitives",
         stability: "experimental"
       });
       expect(Object.keys(manifest.files)).toEqual(["a.txt", "b.txt"]);
@@ -666,7 +674,12 @@ import { sha256Text } from "./hash.js";
 export type CapsuleManifest = {
   name: string;
   version: string;
-  layer: "L0" | "L1" | "L2" | "L3" | "L4";
+  layer:
+    | "markup-primitives"
+    | "interactive-components"
+    | "framework-adapters"
+    | "service-patterns"
+    | "application-blocks";
   stability: "proposal" | "experimental" | "beta" | "stable" | "deprecated";
   files: Record<string, string>;
   capsule_hash: string;
