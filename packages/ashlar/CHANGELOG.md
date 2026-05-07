@@ -1,5 +1,14 @@
 # @blen/ashlar
 
+## 0.3.5
+
+### Patch Changes
+
+- [#85](https://github.com/blencorp/ashlar/pull/85) [`0824b7a`](https://github.com/blencorp/ashlar/commit/0824b7ae216c4fe290c0831875a2c30a75a54903) Thanks [@naodya](https://github.com/naodya)! - Move the publishable packages to the BLEN-owned npm namespace while keeping the `ashlar` CLI binary.
+
+- Updated dependencies [[`0824b7a`](https://github.com/blencorp/ashlar/commit/0824b7ae216c4fe290c0831875a2c30a75a54903), [`4711340`](https://github.com/blencorp/ashlar/commit/471134010e9fb02273caf74639a4b8d27a0689c0)]:
+  - @blen/ashlar-cli@0.3.5
+
 ## 0.3.4
 
 ### Patch Changes

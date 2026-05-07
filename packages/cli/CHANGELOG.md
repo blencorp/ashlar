@@ -1,5 +1,16 @@
 # @blen/ashlar-cli
 
+## 0.3.5
+
+### Patch Changes
+
+- [#85](https://github.com/blencorp/ashlar/pull/85) [`0824b7a`](https://github.com/blencorp/ashlar/commit/0824b7ae216c4fe290c0831875a2c30a75a54903) Thanks [@naodya](https://github.com/naodya)! - Move the publishable packages to the BLEN-owned npm namespace while keeping the `ashlar` CLI binary.
+
+- [#87](https://github.com/blencorp/ashlar/pull/87) [`4711340`](https://github.com/blencorp/ashlar/commit/471134010e9fb02273caf74639a4b8d27a0689c0) Thanks [@naodya](https://github.com/naodya)! - Clarify registry layer language in CLI output and accept human-readable layer aliases such as `markup-primitives`, `interactive-components`, `service-patterns`, and `application-blocks` while retaining `L0`-`L4` as internal aliases.
+
+- Updated dependencies [[`0824b7a`](https://github.com/blencorp/ashlar/commit/0824b7ae216c4fe290c0831875a2c30a75a54903)]:
+  - @blen/ashlar-schemas@0.1.4
+
 ## 0.3.4
 
 ### Patch Changes
