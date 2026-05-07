@@ -203,7 +203,10 @@ describe("CI workflow", () => {
     expect(workflow).toContain("cosign verify-blob");
     expect(workflow).toContain("reports/ashlar-release-trust-checklist.md");
     expect(workflow).toContain("reports/ashlar-public-trust.json");
-    expect(workflow).toContain("registry/**/*.sigstore.json");
+    expect(workflow).toContain("name: ashlar-sigstore-release-artifacts");
+    expect(workflow).toContain("\n            registry\n");
+    expect(workflow).not.toContain("registry/**/*.capsule.json");
+    expect(workflow).not.toContain("registry/**/*.sigstore.json");
     expect(workflow).toContain(
       "https://github.com/blencorp/ashlar/.github/workflows/sigstore.yml@refs/heads/main",
     );
