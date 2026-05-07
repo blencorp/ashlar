@@ -18,10 +18,11 @@ Commands:
 
 ```bash
 pnpm install
+pnpm check
 pnpm build
-pnpm typecheck
-pnpm test
-pnpm lint
+
+# Required after UI, theme, or example-app changes. Run after pnpm build.
+pnpm examples:visual
 ```
 
 ## Contribution Standards
@@ -46,8 +47,13 @@ Before opening a PR:
 - run the local checks;
 - update docs when behavior changes;
 - add or update tests;
-- add a changeset for publishable package changes once packages are public;
+- add a changeset for publishable package changes, or call out why none is needed;
+- run `pnpm examples:visual` after `pnpm build` when changing UI, themes, visual examples, or generated example assets;
 - avoid implying official USWDS, GSA, NDS, or federal endorsement.
+
+Pull request titles and commits must follow Conventional Commits. Changesets is
+the package version authority; do not add `semantic-release` or a competing
+publisher. See [release governance](docs/architecture/release-governance.md).
 
 ## Component Proposals
 
