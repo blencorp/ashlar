@@ -1,5 +1,11 @@
 # @ashlar/cli
 
+## 0.2.0
+
+### Minor Changes
+
+- [`d552e1e`](https://github.com/blencorp/ashlar/commit/d552e1efa98213f45d5d95d36592d4d39c01d596) Thanks [@naodya](https://github.com/naodya)! - Add `ashlar release proof-plan`, a reviewer-facing action map that ties strict readiness blockers to the stable-evidence, release-trust, and design-partner proof tracks.
+
 ## 0.1.5
 
 ### Patch Changes
