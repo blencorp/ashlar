@@ -27,7 +27,15 @@ const scannableExtensions = new Set([
 const forbidden = [
   {
     label: "numbered family code",
-    pattern: /\bL[0-9]\b/g,
+    pattern: /\bL-?[0-9]\b/gi,
+  },
+  {
+    label: "numbered maturity level",
+    pattern: /\blevel\s+[0-2]\b/gi,
+  },
+  {
+    label: "numbered maturity tier",
+    pattern: /\btier\s+[0-2]\b/gi,
   },
   {
     label: "numbered family wording",
