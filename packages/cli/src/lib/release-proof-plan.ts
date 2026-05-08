@@ -68,6 +68,10 @@ function registryChild(registryPath: string, child: string): string {
   return `${prefix.length === 0 ? "." : prefix}/${child}`;
 }
 
+function localAshlarCommand(args: string): string {
+  return `pnpm ashlar ${args}`;
+}
+
 function trackStatus(
   report: ReleaseReadinessReport,
   checks: string[],
@@ -119,12 +123,24 @@ export function buildReleaseProofPlan(input: ProofPlanInput): ReleaseProofPlan {
           `docs/reviews/stable-evidence-${input.stableComponent}-<date>.md`,
         ],
         commands: [
-          `ashlar evidence prepare-stable ${input.stableComponent} --registry ${registry} --fixture ${stableFixture} --output ${stableReviewDir}`,
-          `ashlar evidence review-status ${input.stableComponent} --registry ${registry} --review-dir ${stableReviewDir}`,
-          `ashlar evidence finalize-stable ${input.stableComponent} --registry ${registry} --review-dir ${stableReviewDir}`,
-          `ashlar evidence ${input.stableComponent} --check --registry ${registry} --evidence-file ${stableReviewDir}/${input.stableComponent}.evidence.stable.json`,
-          `ashlar evidence publish ${input.stableComponent} --registry ${registry} --evidence-file ${stableReviewDir}/${input.stableComponent}.evidence.stable.json --signing-key <trusted-local-signing-key> --key-id <trusted-key-id> --output reports/button-evidence-publication.json`,
-          `ashlar release review-record stable-evidence --output docs/reviews/stable-evidence-${input.stableComponent}-<date>.md --reviewer <reviewer> --affiliation <organization> --review-date <yyyy-mm-dd> --source-issue https://github.com/blencorp/ashlar/issues/22 --repo-commit <commit-sha> --rationale <why-the-review-passed> --component ${input.stableComponent} --registry ${registry} --review-dir ${stableReviewDir} --publication-receipt reports/button-evidence-publication.json`,
+          localAshlarCommand(
+            `evidence prepare-stable ${input.stableComponent} --registry ${registry} --fixture ${stableFixture} --output ${stableReviewDir}`,
+          ),
+          localAshlarCommand(
+            `evidence review-status ${input.stableComponent} --registry ${registry} --review-dir ${stableReviewDir}`,
+          ),
+          localAshlarCommand(
+            `evidence finalize-stable ${input.stableComponent} --registry ${registry} --review-dir ${stableReviewDir}`,
+          ),
+          localAshlarCommand(
+            `evidence ${input.stableComponent} --check --registry ${registry} --evidence-file ${stableReviewDir}/${input.stableComponent}.evidence.stable.json`,
+          ),
+          localAshlarCommand(
+            `evidence publish ${input.stableComponent} --registry ${registry} --evidence-file ${stableReviewDir}/${input.stableComponent}.evidence.stable.json --signing-key <trusted-local-signing-key> --key-id <trusted-key-id> --output reports/button-evidence-publication.json`,
+          ),
+          localAshlarCommand(
+            `release review-record stable-evidence --output docs/reviews/stable-evidence-${input.stableComponent}-<date>.md --reviewer <reviewer> --affiliation <organization> --review-date <yyyy-mm-dd> --source-issue https://github.com/blencorp/ashlar/issues/22 --repo-commit <commit-sha> --rationale <why-the-review-passed> --component ${input.stableComponent} --registry ${registry} --review-dir ${stableReviewDir} --publication-receipt reports/button-evidence-publication.json`,
+          ),
         ],
       },
       {
@@ -148,10 +164,18 @@ export function buildReleaseProofPlan(input: ProofPlanInput): ReleaseProofPlan {
           "gh workflow run publish.yml --ref main -f confirm=publish",
           "gh workflow run github-packages.yml --ref main -f confirm=publish-github-packages",
           "gh workflow run sigstore.yml --ref main -f confirm=sign",
-          `ashlar release provenance-verify-public --package ${packageSpecs} --json > reports/ashlar-npm-provenance.json`,
-          "ashlar release public-trust-verify --registry <signed-registry-artifact> --json > reports/ashlar-public-trust.json",
-          "ashlar release verify-trust-bundle --registry <signed-registry-artifact> --bundle reports/ashlar-trust-bundle.json --sbom reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json",
-          `ashlar release review-record release-trust --output docs/reviews/release-trust-<version>.md --reviewer <reviewer> --affiliation <organization> --review-date <yyyy-mm-dd> --source-issue https://github.com/blencorp/ashlar/issues/23 --repo-commit <commit-sha> --rationale <why-the-review-passed> --release-candidate <version> --registry-artifact <signed-registry-artifact> --npm-provenance reports/ashlar-npm-provenance.json --sigstore-verification reports/ashlar-public-trust.json --sbom reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json --trust-bundle reports/ashlar-trust-bundle.json --workflow-run <workflow-run-url> --package ${packageSpecs}`,
+          localAshlarCommand(
+            `release provenance-verify-public --package ${packageSpecs} --json > reports/ashlar-npm-provenance.json`,
+          ),
+          localAshlarCommand(
+            "release public-trust-verify --registry <signed-registry-artifact> --json > reports/ashlar-public-trust.json",
+          ),
+          localAshlarCommand(
+            "release verify-trust-bundle --registry <signed-registry-artifact> --bundle reports/ashlar-trust-bundle.json --sbom reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json",
+          ),
+          localAshlarCommand(
+            `release review-record release-trust --output docs/reviews/release-trust-<version>.md --reviewer <reviewer> --affiliation <organization> --review-date <yyyy-mm-dd> --source-issue https://github.com/blencorp/ashlar/issues/23 --repo-commit <commit-sha> --rationale <why-the-review-passed> --release-candidate <version> --registry-artifact <signed-registry-artifact> --npm-provenance reports/ashlar-npm-provenance.json --sigstore-verification reports/ashlar-public-trust.json --sbom reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json --trust-bundle reports/ashlar-trust-bundle.json --workflow-run <workflow-run-url> --package ${packageSpecs}`,
+          ),
         ],
       },
       {
@@ -169,12 +193,20 @@ export function buildReleaseProofPlan(input: ProofPlanInput): ReleaseProofPlan {
           "docs/reviews/design-partner-<partner>-<date>.md",
         ],
         commands: [
-          "ashlar release design-partner-checklist --output reports/ashlar-design-partner-checklist.md",
-          "ashlar audit --policy federal --explain examples/legacy-federal-project/index.html",
-          `ashlar audit --policy all --registry ${registry} examples/service-flow/benefit-application.pass.html`,
-          `ashlar search "benefits application" --registry ${registry}`,
-          `ashlar suggest "Build a benefits application form"`,
-          `ashlar release review-record design-partner --output docs/reviews/design-partner-<partner>-<date>.md --reviewer <reviewer> --affiliation <organization> --review-date <yyyy-mm-dd> --source-issue https://github.com/blencorp/ashlar/issues/24 --repo-commit <commit-sha> --rationale <why-the-review-passed> --scenario <scenario> --product-surface <surface> --integration-path <path> --project <project-or-fixture> --user-role <role> --adoption-goal <goal> --demo <branch-or-url> --commands-run <commands> --screens-reviewed <screens-or-recording> --guidance <guidance-reviewed> --validator-output reports/design-partner-validator-output.txt --review-checklist reports/ashlar-design-partner-checklist.md --what-worked <feedback> --unclear <feedback> --missing-primitives <feedback> --docs-gaps <feedback> --would-replace-uswds <answer> --would-use-beside-uswds <answer> --would-only-use-validator <answer> --would-not-adopt <answer>`,
+          localAshlarCommand(
+            "release design-partner-checklist --output reports/ashlar-design-partner-checklist.md",
+          ),
+          localAshlarCommand(
+            "audit --policy federal --explain examples/legacy-federal-project/index.html",
+          ),
+          localAshlarCommand(
+            `audit --policy all --registry ${registry} examples/service-flow/benefit-application.pass.html`,
+          ),
+          localAshlarCommand(`search "benefits application" --registry ${registry}`),
+          localAshlarCommand(`suggest "Build a benefits application form"`),
+          localAshlarCommand(
+            `release review-record design-partner --output docs/reviews/design-partner-<partner>-<date>.md --reviewer <reviewer> --affiliation <organization> --review-date <yyyy-mm-dd> --source-issue https://github.com/blencorp/ashlar/issues/24 --repo-commit <commit-sha> --rationale <why-the-review-passed> --scenario <scenario> --product-surface <surface> --integration-path <path> --project <project-or-fixture> --user-role <role> --adoption-goal <goal> --demo <branch-or-url> --commands-run <commands> --screens-reviewed <screens-or-recording> --guidance <guidance-reviewed> --validator-output reports/design-partner-validator-output.txt --review-checklist reports/ashlar-design-partner-checklist.md --what-worked <feedback> --unclear <feedback> --missing-primitives <feedback> --docs-gaps <feedback> --would-replace-uswds <answer> --would-use-beside-uswds <answer> --would-only-use-validator <answer> --would-not-adopt <answer>`,
+          ),
         ],
       },
     ],

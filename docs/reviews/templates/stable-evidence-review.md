@@ -33,8 +33,8 @@ Publication receipt:
 ## Command Output
 
 ```text
-ashlar evidence review-status <component> --registry ./registry --review-dir <review-dir>
-ashlar evidence publish <component> --registry ./registry --evidence-file <stable-evidence-packet> --signing-key <key> --key-id <key-id> --output <publication-receipt>
+pnpm ashlar evidence review-status <component> --registry ./registry --review-dir <review-dir>
+pnpm ashlar evidence publish <component> --registry ./registry --evidence-file <stable-evidence-packet> --signing-key <key> --key-id <key-id> --output <publication-receipt>
 ```
 
 Result:
