@@ -259,7 +259,7 @@ The roadmap is gate-based, not calendar-based, and v0.0 is staged as a slice gra
 2. **v0.0 Foundation** — six independently shippable slices: standards-and-evidence (✓), validator wedge, drift management, supply-chain hardening, AI contracts, token pipeline.
 3. **v0.1 Public alpha** — public registry, MCP read-only server, 8-12 components with tiered evidence, first service pattern, foundation home + at least three contributing organizations.
 4. **v0.2 Beta** — Vue/Svelte/Solid adapters, complex interactive components, USWDS migration tooling, Tailwind consumer package, third-party accessibility audit.
-5. **v1.0 Stable** — durable governance, LTS posture, evidence-tiered stable component count (10-12 stable + LTS-aspiring rather than 25-30 single-tier).
+5. **v1.0 Stable** — durable governance, LTS posture, evidence-backed stable component count (10-12 stable + LTS-aspiring rather than 25-30 loosely reviewed components).
 
 See [docs/roadmap/00-roadmap.md](docs/roadmap/00-roadmap.md), [docs/roadmap/01-v0.0-foundation.md](docs/roadmap/01-v0.0-foundation.md), and [docs/roadmap/github-launch.md](docs/roadmap/github-launch.md).
 

@@ -61,7 +61,7 @@ export function registerSuggestCommand(program: Command) {
           console.log(
             `${index + 1}. ${suggestion.name}@${suggestion.version} [${formatRegistryLayer(
               suggestion.layer,
-            )}, ${suggestion.tier}, ${suggestion.stability}]`,
+            )}, ${suggestion.stability}]`,
           );
           console.log(`   ${suggestion.description}`);
           console.log(`   Evidence: ${suggestion.evidenceStatus}`);

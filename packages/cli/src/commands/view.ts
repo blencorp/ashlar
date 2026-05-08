@@ -35,7 +35,6 @@ export function registerViewCommand(program: Command) {
         printBrandHeader("Capsule metadata");
         for (const detail of details) {
           printSection(`${detail.name}@${detail.version}`);
-          printKeyValue("Tier", detail.tier);
           printKeyValue("Family", formatRegistryLayer(detail.layer));
           printKeyValue("Stability", detail.stability);
           printKeyValue("Evidence", detail.evidence.accessibilityStatus);

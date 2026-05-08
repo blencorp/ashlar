@@ -72,7 +72,6 @@ function renderDryRun(plans: InstallPlan[]): void {
   printBrandHeader("Previewing source-owned capsule installs");
   for (const plan of plans) {
     printSection(`${plan.detail.name}@${plan.detail.version}`);
-    printKeyValue("tier", plan.detail.tier);
     printKeyValue("family", formatRegistryLayer(plan.detail.layer));
     printKeyValue("stability", plan.detail.stability);
     printKeyValue("capsule hash", plan.manifest.capsule_hash);
@@ -93,7 +92,6 @@ function renderView(plans: InstallPlan[]): void {
   printBrandHeader("Capsule install preview");
   for (const plan of plans) {
     printSection(`${plan.detail.name}@${plan.detail.version}`);
-    printKeyValue("Tier", plan.detail.tier);
     printKeyValue("Family", formatRegistryLayer(plan.detail.layer));
     printKeyValue("Stability", plan.detail.stability);
     printKeyValue("Evidence", plan.detail.evidence.accessibilityStatus);

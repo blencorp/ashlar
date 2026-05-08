@@ -1,6 +1,6 @@
 import { Option, type Command } from "commander";
 import { searchRegistryComponents } from "../lib/component-search.js";
-import type { RegistryStability, RegistryTier } from "../lib/registry.js";
+import type { RegistryStability } from "../lib/registry.js";
 import { applyCommandCwd, type CwdOption } from "../lib/cwd.js";
 import { formatRegistryLayer, parseRegistryLayerAlias } from "../lib/layers.js";
 import { readConfig } from "../lib/project.js";
@@ -16,7 +16,6 @@ type SearchOptions = {
   family?: string;
   json?: boolean;
   layer?: string;
-  tier?: RegistryTier;
   stability?: RegistryStability;
   evidence?: string;
   policy?: string;
@@ -42,7 +41,6 @@ export function registerSearchCommand(program: Command) {
       "Filter by capsule family: foundations, interactive-controls, framework-adapters, service-patterns, application-blocks",
     )
     .addOption(new Option("--layer <layer>", "Deprecated alias for --family").hideHelp())
-    .option("--tier <tier>", "Filter by tier: foundation, primitive, composite, pattern, or block")
     .option("--stability <stability>", "Filter by stability")
     .option("--evidence <status>", "Filter by evidence status")
     .option("--policy <text>", "Filter by policy source or requirement text")
@@ -82,7 +80,6 @@ export function registerSearchCommand(program: Command) {
           registryPath: config.registry,
           query: searchQuery,
           layer,
-          tier: options.tier,
           stability: options.stability,
           evidence: options.evidence,
           policy: options.policy,
@@ -112,7 +109,7 @@ export function registerSearchCommand(program: Command) {
         for (const item of components) {
           printSection(`${item.name}@${item.version}`);
           console.log(
-            `${item.name}@${item.version} [${formatRegistryLayer(item.layer)}, ${item.tier}, ${item.stability}] ${item.description}`,
+            `${item.name}@${item.version} [${formatRegistryLayer(item.layer)}, ${item.stability}] ${item.description}`,
           );
           console.log(`  Evidence: ${item.evidenceStatus}`);
           console.log(`  Reasons: ${item.reasons.join("; ")}`);

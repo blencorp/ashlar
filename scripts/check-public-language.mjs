@@ -53,6 +53,14 @@ const forbidden = [
     label: "legacy default theme name",
     pattern: new RegExp("\\bFed" + "eral theme\\b", "gi"),
   },
+  {
+    label: "public tier filter",
+    pattern: /--tier\s+</gi,
+  },
+  {
+    label: "public printed tier label",
+    pattern: /printKeyValue\(\s*["']tier["']|printKeyValue\(\s*["']Tier["']/gi,
+  },
 ];
 
 const findings = [];
