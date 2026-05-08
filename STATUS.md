@@ -6,11 +6,11 @@ For the current prompt-to-artifact gap map against the broader "gov shadcn" obje
 
 Date: 2026-05-08
 Phase: v0.0 prototype
-Baseline: main at `265d5d8` after package namespace/versioning, GitHub Packages workflow wiring and readiness checks, public family-language cleanup, CI annotation cleanup, package versioning, and post-merge CI/Version Packages success (#88, #89, #90, #91, #92, #93, #94, #95, #96, #97, #98, #99, #100, #101)
+Baseline: main at `73968a3` after package namespace/versioning, GitHub Packages workflow wiring and readiness checks, public family-language cleanup, CI annotation cleanup, package versioning, current proof-audit refresh, and post-merge CI/Version Packages success (#88, #89, #90, #91, #92, #93, #94, #95, #96, #97, #98, #99, #100, #101, #102)
 Proof tracking: [Replacement-grade proof gates](https://github.com/blencorp/ashlar/milestone/1) milestone, issues [#22](https://github.com/blencorp/ashlar/issues/22), [#23](https://github.com/blencorp/ashlar/issues/23), and [#24](https://github.com/blencorp/ashlar/issues/24)
 Strict readiness: still failing by design on `stable-markup-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`
 
-Family naming: user-facing docs, CLI output, schemas, generated registry metadata, option names, and gate IDs should say **foundations**, **interactive controls**, **framework adapters**, **service patterns**, and **application blocks** where the reader is choosing product families. Internal registry schemas still use a compatibility `layer` field, and CSS still uses native cascade `@layer`. A repository scan after #101 found no public `L0` / `L1` strings; the only remaining `L99` is a negative schema-validation test.
+Family naming: user-facing docs, CLI output, schemas, generated registry metadata, option names, and gate IDs should say **foundations**, **interactive controls**, **framework adapters**, **service patterns**, and **application blocks** where the reader is choosing product families. Internal registry schemas still use a compatibility `layer` field, and CSS still uses native cascade `@layer`. The only remaining old numbered family code is a negative schema-validation fixture.
 
 ## Implemented today
 
