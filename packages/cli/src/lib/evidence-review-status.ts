@@ -74,6 +74,10 @@ function cwdRelative(cwd: string, path: string): string {
   return value.startsWith("../") ? path : value;
 }
 
+function localAshlarCommand(args: string): string {
+  return `pnpm ashlar ${args}`;
+}
+
 function resolveFromCwd(cwd: string, path: string): string {
   return isAbsolute(path) ? path : resolve(cwd, path);
 }
@@ -505,17 +509,27 @@ export function buildStableEvidenceReviewStatus(
       file: cwdRelative(input.cwd, blocker.file),
     })),
     nextCommands: [
-      `ashlar evidence transcript-validate ${detail.name} --registry ${input.registryPath} --type keyboard --transcript ${files.keyboardTranscript}`,
-      `ashlar evidence transcript-validate ${detail.name} --registry ${input.registryPath} --type screen-reader --transcript ${files.screenReaderTranscript}`,
-      `ashlar evidence review-status ${detail.name} --registry ${input.registryPath} --review-dir ${cwdRelative(
-        input.cwd,
-        paths.reviewDir,
-      )}`,
-      `ashlar evidence finalize-stable ${detail.name} --registry ${input.registryPath} --review-dir ${cwdRelative(
-        input.cwd,
-        paths.reviewDir,
-      )}`,
-      `ashlar evidence ${detail.name} --check --registry ${input.registryPath} --evidence-file ${files.stableEvidence}`,
+      localAshlarCommand(
+        `evidence transcript-validate ${detail.name} --registry ${input.registryPath} --type keyboard --transcript ${files.keyboardTranscript}`,
+      ),
+      localAshlarCommand(
+        `evidence transcript-validate ${detail.name} --registry ${input.registryPath} --type screen-reader --transcript ${files.screenReaderTranscript}`,
+      ),
+      localAshlarCommand(
+        `evidence review-status ${detail.name} --registry ${input.registryPath} --review-dir ${cwdRelative(
+          input.cwd,
+          paths.reviewDir,
+        )}`,
+      ),
+      localAshlarCommand(
+        `evidence finalize-stable ${detail.name} --registry ${input.registryPath} --review-dir ${cwdRelative(
+          input.cwd,
+          paths.reviewDir,
+        )}`,
+      ),
+      localAshlarCommand(
+        `evidence ${detail.name} --check --registry ${input.registryPath} --evidence-file ${files.stableEvidence}`,
+      ),
     ],
   };
 }

@@ -192,7 +192,7 @@ describe("schema-validate", () => {
         },
       ],
       nextCommands: [
-        "ashlar evidence transcript-validate button --registry ./registry --type keyboard --transcript reports/button-stable-review/button-keyboard-transcript.json",
+        "pnpm ashlar evidence transcript-validate button --registry ./registry --type keyboard --transcript reports/button-stable-review/button-keyboard-transcript.json",
       ],
     });
 
