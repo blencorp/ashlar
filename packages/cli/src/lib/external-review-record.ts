@@ -282,7 +282,7 @@ function stableEvidenceArtifactErrors(cwd: string, content: string): string[] {
     });
     if (report.status !== "ready") {
       errors.push(
-        `referenced stable evidence bundle is ${report.status}; run ashlar evidence review-status ${component} --registry ${registryPath} --review-dir ${reviewDir}`,
+        `referenced stable evidence bundle is ${report.status}; run pnpm ashlar evidence review-status ${component} --registry ${registryPath} --review-dir ${reviewDir}`,
       );
       for (const blocker of report.blockers.slice(0, 5)) {
         errors.push(`${blocker.file} ${blocker.rule}: ${blocker.message}`);
@@ -1008,12 +1008,12 @@ Evidence bundle path: ${report.reviewDir}
 - Screen-reader transcript: ${report.files.screenReaderTranscript}
 - Proposed evidence packet: ${report.files.proposedEvidence}
 - Publication receipt: ${publicationReceipt}
-- Review status command: ashlar evidence review-status ${report.component} --registry ${registryPath} --review-dir ${report.reviewDir}
+- Review status command: pnpm ashlar evidence review-status ${report.component} --registry ${registryPath} --review-dir ${report.reviewDir}
 
 ## Command Output
 
 \`\`\`text
-ashlar evidence review-status ${report.component} --registry ${registryPath} --review-dir ${report.reviewDir}
+pnpm ashlar evidence review-status ${report.component} --registry ${registryPath} --review-dir ${report.reviewDir}
 \`\`\`
 
 Result: pass
@@ -1064,10 +1064,10 @@ Release candidate: ${releaseCandidate}
 ## Command Output
 
 \`\`\`text
-ashlar release provenance-verify-public --package ${packages.join(" ")}
-ashlar release provenance-verify-public --package ${packages.join(" ")} --json > ${requireCompletedValue(input.npmProvenance, "--npm-provenance")}
-ashlar release public-trust-verify --registry ${registryArtifact} --json > ${requireCompletedValue(input.sigstoreVerification, "--sigstore-verification")}
-ashlar release verify-trust-bundle --bundle ${trustBundle} --registry ${registryArtifact} --sbom ${sbom} --attestation ${attestation}
+pnpm ashlar release provenance-verify-public --package ${packages.join(" ")}
+pnpm ashlar release provenance-verify-public --package ${packages.join(" ")} --json > ${requireCompletedValue(input.npmProvenance, "--npm-provenance")}
+pnpm ashlar release public-trust-verify --registry ${registryArtifact} --json > ${requireCompletedValue(input.sigstoreVerification, "--sigstore-verification")}
+pnpm ashlar release verify-trust-bundle --bundle ${trustBundle} --registry ${registryArtifact} --sbom ${sbom} --attestation ${attestation}
 \`\`\`
 
 Result: pass
@@ -1172,11 +1172,11 @@ This checklist is for an external design partner reviewing Ashlar's product dire
 ## Review Commands
 
 \`\`\`bash
-ashlar audit --policy federal --explain ${input.legacyFixture}
-ashlar audit --policy all --registry ${input.registryPath} ${input.serviceFlowFixture}
-ashlar search "benefits application" --registry ${input.registryPath}
-ashlar suggest "${input.task}"
-ashlar view button --registry ${input.registryPath}
+pnpm ashlar audit --policy federal --explain ${input.legacyFixture}
+pnpm ashlar audit --policy all --registry ${input.registryPath} ${input.serviceFlowFixture}
+pnpm ashlar search "benefits application" --registry ${input.registryPath}
+pnpm ashlar suggest "${input.task}"
+pnpm ashlar view button --registry ${input.registryPath}
 \`\`\`
 
 ## Product Questions
@@ -1200,7 +1200,7 @@ ashlar view button --registry ${input.registryPath}
 - [ ] The reviewer does not interpret Ashlar as official USWDS, GSA, NDS, or federal guidance.
 - [ ] The review does not claim application-level 508 compliance.
 - [ ] The review records actual reactions and blockers, not intended positioning.
-- [ ] Replacement-grade language waits for strict \`ashlar release readiness\` and completed external review records.
+- [ ] Replacement-grade language waits for strict \`pnpm ashlar release readiness\` and completed external review records.
 `;
 }
 

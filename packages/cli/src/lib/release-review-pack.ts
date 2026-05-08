@@ -100,7 +100,7 @@ mkdir -p reports/review-pack
 gh run download <run-id> -n ashlar-release-review-pack -D reports/review-pack
 \`\`\`
 
-If you download the artifact as a zip in the browser, extract its contents into \`reports/review-pack/\` before running the generated commands. Reading the pack from another directory is fine, but the stable-evidence worksheet references and commands must be updated to that extracted path before \`ashlar evidence review-status\` can pass.
+If you download the artifact as a zip in the browser, extract its contents into \`reports/review-pack/\` before running the generated commands. Reading the pack from another directory is fine, but the stable-evidence worksheet references and commands must be updated to that extracted path before \`pnpm ashlar evidence review-status\` can pass.
 
 ## Reviewer Tracks
 
@@ -116,7 +116,7 @@ Read \`${packRelative(result.outputDir, result.files.proofActionPlan)}\` for the
 
 - Do not copy templates into \`docs/reviews/\` as proof.
 - Do not count this pack as external review.
-- Do not strengthen replacement language until strict \`ashlar release readiness\` passes without local-prototype escape hatches.
+- Do not strengthen replacement language until strict \`pnpm ashlar release readiness\` passes without local-prototype escape hatches.
 `;
 }
 

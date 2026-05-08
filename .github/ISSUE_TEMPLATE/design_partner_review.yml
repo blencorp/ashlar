@@ -36,14 +36,14 @@ body:
       label: Commands or screens reviewed
       value: |
         ```bash
-        ashlar release design-partner-checklist --output reports/ashlar-design-partner-checklist.md
-        ashlar audit --policy federal --explain <files>
-        ashlar search <task>
-        ashlar view <capsule>
-        ashlar add <capsule>
-        ashlar verify
-        ashlar update <capsule> --yes
-        ashlar mcp
+        pnpm ashlar release design-partner-checklist --output reports/ashlar-design-partner-checklist.md
+        pnpm ashlar audit --policy federal --explain <files>
+        pnpm ashlar search <task>
+        pnpm ashlar view <capsule>
+        pnpm ashlar add <capsule>
+        pnpm ashlar verify
+        pnpm ashlar update <capsule> --yes
+        pnpm ashlar mcp
         ```
   - type: textarea
     id: checklist

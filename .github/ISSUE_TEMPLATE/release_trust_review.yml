@@ -29,10 +29,10 @@ body:
       description: Paste the exact commands and relevant output.
       value: |
         ```bash
-        ashlar release readiness --registry ./registry
-        ashlar release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version>
-        ashlar release public-trust-verify --registry <signed-registry-artifact>
-        ashlar release verify-trust-bundle --registry <registry> --bundle <bundle> --sbom <sbom> --attestation <attestation>
+        pnpm ashlar release readiness --registry ./registry
+        pnpm ashlar release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version>
+        pnpm ashlar release public-trust-verify --registry <signed-registry-artifact>
+        pnpm ashlar release verify-trust-bundle --registry <registry> --bundle <bundle> --sbom <sbom> --attestation <attestation>
         ```
     validations:
       required: true

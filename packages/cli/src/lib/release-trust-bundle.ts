@@ -148,7 +148,7 @@ Capsules: ${input.bundle.registry.capsuleCount}
 Registry index: ${input.bundle.registry.indexHash}
 Trust root: ${input.bundle.registry.trustRootHash ?? "missing"}
 
-This checklist is for external release-trust review. It does not replace npm provenance, Sigstore verification, or \`ashlar release verify-trust-bundle\`.
+This checklist is for external release-trust review. It does not replace npm provenance, Sigstore verification, or \`pnpm ashlar release verify-trust-bundle\`.
 
 ## Artifacts
 
@@ -157,23 +157,23 @@ ${artifacts}
 ## Verification Commands
 
 \`\`\`bash
-ashlar release readiness --registry ${input.registryPath}
-ashlar release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version>
-ashlar release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version> --json > reports/ashlar-npm-provenance.json
-ashlar release public-trust-verify --registry ${input.registryPath}
-ashlar release public-trust-verify --registry ${input.registryPath} --json > reports/ashlar-public-trust.json
-ashlar release verify-trust-bundle --registry ${input.registryPath} --bundle ${input.bundlePath} --sbom ${input.sbomPath} --attestation ${input.attestationPath}
+pnpm ashlar release readiness --registry ${input.registryPath}
+pnpm ashlar release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version>
+pnpm ashlar release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version> --json > reports/ashlar-npm-provenance.json
+pnpm ashlar release public-trust-verify --registry ${input.registryPath}
+pnpm ashlar release public-trust-verify --registry ${input.registryPath} --json > reports/ashlar-public-trust.json
+pnpm ashlar release verify-trust-bundle --registry ${input.registryPath} --bundle ${input.bundlePath} --sbom ${input.sbomPath} --attestation ${input.attestationPath}
 \`\`\`
 
 ## Required Checks
 
 - [ ] npm trusted publisher settings are configured for \`@blen/ashlar\`, \`@blen/ashlar-cli\`, and \`@blen/ashlar-schemas\` without long-lived npm tokens.
 - [ ] Public npm provenance verification passes for the exact published package versions.
-- [ ] The local \`npm provenance verification\` review-record artifact is JSON from \`ashlar release provenance-verify-public --json\` and matches the reviewed package versions.
+- [ ] The local \`npm provenance verification\` review-record artifact is JSON from \`pnpm ashlar release provenance-verify-public --json\` and matches the reviewed package versions.
 - [ ] Capsule Sigstore bundles verify with the expected GitHub Actions workflow identity and OIDC issuer.
-- [ ] \`ashlar release public-trust-verify\` passes against the downloaded signed registry artifact.
-- [ ] The local \`Capsule Sigstore verification\` review-record artifact is JSON from \`ashlar release public-trust-verify --json\` and matches the signed registry artifact.
-- [ ] \`ashlar release verify-trust-bundle\` passes against the downloaded registry, SBOM, attestation, and trust bundle.
+- [ ] \`pnpm ashlar release public-trust-verify\` passes against the downloaded signed registry artifact.
+- [ ] The local \`Capsule Sigstore verification\` review-record artifact is JSON from \`pnpm ashlar release public-trust-verify --json\` and matches the signed registry artifact.
+- [ ] \`pnpm ashlar release verify-trust-bundle\` passes against the downloaded registry, SBOM, attestation, and trust bundle.
 - [ ] SBOM, attestation, trust bundle, and signed-registry artifacts are attached to the review record or linked from immutable workflow artifacts.
 - [ ] No private keys, long-lived tokens, or private infrastructure details appear in the release artifacts.
 
@@ -185,7 +185,7 @@ ${notes}
 
 - [ ] The review does not treat this checklist as proof by itself.
 - [ ] The review distinguishes local readiness from public npm provenance and public Sigstore trust.
-- [ ] Replacement-grade language waits for strict \`ashlar release readiness\` without local-prototype escape hatches.
+- [ ] Replacement-grade language waits for strict \`pnpm ashlar release readiness\` without local-prototype escape hatches.
 `;
 }
 
