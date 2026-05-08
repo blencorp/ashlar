@@ -18,7 +18,7 @@ The current implementation proves enough of the substrate to keep going, but pub
 node packages/cli/dist/index.js release readiness --registry ./registry
 ```
 
-Current strict gate status from `main` at `73968a3`:
+Current strict gate status from the current checkout:
 
 - `stable-markup-evidence`: fails because 0 markup primitive capsules have published stable evidence.
 - `external-review-proof`: fails until real stable-evidence, release-trust, and design-partner review records exist under `docs/reviews/`.
@@ -51,6 +51,7 @@ Ashlar can make stronger replacement language only when these pass without local
 ```bash
 pnpm check
 pnpm build
+pnpm repo:doctor
 node packages/cli/dist/index.js release readiness --registry ./registry
 node packages/cli/dist/index.js release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version>
 node packages/cli/dist/index.js release public-trust-verify --registry <signed-registry-artifact>
