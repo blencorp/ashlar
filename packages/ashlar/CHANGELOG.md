@@ -1,5 +1,14 @@
 # @blen/ashlar
 
+## 0.3.14
+
+### Patch Changes
+
+- [#123](https://github.com/blencorp/ashlar/pull/123) [`bd393b9`](https://github.com/blencorp/ashlar/commit/bd393b91e185604ee2b9eb3b7eb12b23cc08b312) Thanks [@naodya](https://github.com/naodya)! - Use the repository-local `pnpm ashlar` command path across release-trust and design-partner review handoff templates and generated reviewer checklists.
+
+- Updated dependencies [[`bd393b9`](https://github.com/blencorp/ashlar/commit/bd393b91e185604ee2b9eb3b7eb12b23cc08b312)]:
+  - @blen/ashlar-cli@0.3.14
+
 ## 0.3.13
 
 ### Patch Changes
