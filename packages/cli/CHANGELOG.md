@@ -1,5 +1,11 @@
 # @blen/ashlar-cli
 
+## 0.3.13
+
+### Patch Changes
+
+- [#121](https://github.com/blencorp/ashlar/pull/121) [`7114e74`](https://github.com/blencorp/ashlar/commit/7114e743957e906e4ee0cff239b0a6a783b121ad) Thanks [@naodya](https://github.com/naodya)! - Use the repository-local `pnpm ashlar` command path in generated release proof plans and stable-evidence review handoff templates, with the current `finalize-stable` stable evidence flow.
+
 ## 0.3.12
 
 ### Patch Changes
