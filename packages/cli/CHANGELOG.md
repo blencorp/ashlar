@@ -1,5 +1,11 @@
 # @blen/ashlar-cli
 
+## 0.3.12
+
+### Patch Changes
+
+- [#119](https://github.com/blencorp/ashlar/pull/119) [`2a8cdd1`](https://github.com/blencorp/ashlar/commit/2a8cdd1fbbef654c5a33ab37d97a7d0b64da6a98) Thanks [@naodya](https://github.com/naodya)! - Make generated stable-evidence review bundles use the repository-local `pnpm ashlar` command path while documenting the published `ashlar` and `npx @blen/ashlar` alternatives for external reviewers.
+
 ## 0.3.11
 
 ### Patch Changes
