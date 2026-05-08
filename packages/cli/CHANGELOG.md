@@ -1,5 +1,11 @@
 # @blen/ashlar-cli
 
+## 0.3.20
+
+### Patch Changes
+
+- [#142](https://github.com/blencorp/ashlar/pull/142) [`38dfb90`](https://github.com/blencorp/ashlar/commit/38dfb90d0bed088ff6007877e53a1a475a57d690) Thanks [@naodya](https://github.com/naodya)! - Clean npm workspace config from public provenance verification subprocesses so first-publish and provenance failures report only release-relevant npm output.
+
 ## 0.3.19
 
 ### Patch Changes
