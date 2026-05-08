@@ -20,7 +20,7 @@ The accessibility evidence schema (automated results + manual keyboard + manual 
 
 Ashlar is in v0.0 prototype. **See [STATUS.md](STATUS.md) for the live, honest list of what is implemented, experimental, and planned.** Headline claims that are not yet code or not yet publicly proven (real public capsule Sigstore bundles, npm provenance, hosted/write MCP, full DTCG token compiler) are explicitly marked there.
 
-Ashlar groups capsules into plain product families. **Foundations** are semantic HTML/CSS capsules with zero JavaScript, **interactive controls** are stateful Web Components, **framework adapters** are generated wrappers, **service patterns** compose flows, and **application blocks** are larger templates. Registry schemas keep an internal `layer` field for compatibility, but public docs and normal CLI output should not ask users to reason about numbered layers or registry codes.
+Ashlar groups capsules into plain product families. **Foundations** are semantic HTML/CSS capsules with zero JavaScript, **interactive controls** are stateful Web Components, **framework adapters** are generated wrappers, **service patterns** compose flows, and **application blocks** are larger templates. Registry schemas keep an internal `layer` field for compatibility, but public docs and normal CLI output should not ask users to reason about numbered levels or registry codes.
 
 The current prototype implements:
 

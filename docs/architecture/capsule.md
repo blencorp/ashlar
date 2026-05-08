@@ -30,7 +30,7 @@ Files are optional except for `*.cem.json`, `*.evidence.json`, `*.capsule.json` 
 
 ## Capsule manifest (`*.capsule.json`)
 
-The capsule's own manifest, distinct from the consumer's `ashlar-lock.json`. Records the capsule's identity, version, stability, layer, file hashes, capsule hash, local registry signature, and optional Sigstore bundle metadata. It is published as a real file in the registry today, pinned from `registry/index.json`, and verified against `registry/trust-root.json`.
+The capsule's own manifest, distinct from the consumer's `ashlar-lock.json`. Records the capsule's identity, version, stability, internal family field (`layer`), file hashes, capsule hash, local registry signature, and optional Sigstore bundle metadata. It is published as a real file in the registry today, pinned from `registry/index.json`, and verified against `registry/trust-root.json`.
 
 ```json
 {
@@ -88,13 +88,13 @@ The CLI warns when adding non-stable capsules.
 
 ## Component tiers
 
-Cross-cuts the layer model:
+Cross-cuts product families:
 
 - **`foundation`** — tokens, layout primitives, focus ring, motion, icons.
 - **`primitive`** — single-purpose controls (Button, Link, Checkbox, Dialog, Tooltip).
 - **`composite`** — multiple primitives (Form Field, Search, Header, Identifier, Table).
-- **`pattern`** — service flows (eligibility, document upload, address); the service-pattern layer.
-- **`block`** — full UI sections (landing hero, application step, dashboard); the application-block layer.
+- **`pattern`** — service flows (eligibility, document upload, address); the service-pattern family.
+- **`block`** — full UI sections (landing hero, application step, dashboard); the application-block family.
 
 ## Extended Custom Elements Manifest
 

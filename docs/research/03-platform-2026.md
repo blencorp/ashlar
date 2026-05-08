@@ -2,7 +2,7 @@
 
 Synthesized from primary-source research conducted April 2026. The full source list is in [`source-map.md`](./source-map.md).
 
-This document records what the modern web platform delivers in 2026 and what JavaScript a design system can therefore stop shipping. It is the empirical foundation for Ashlar's markup primitive layer.
+This document records what the modern web platform delivers in 2026 and what JavaScript a design system can therefore stop shipping. It is the empirical foundation for Ashlar's foundation family.
 
 ## Headline finding
 

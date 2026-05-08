@@ -140,7 +140,7 @@ The `_ashlar` namespace is forward-compatible: tools that don't recognize it ign
 // Read-only tools (v0.0 slice 5):
 search_components({
   query?: string,
-  layer?: "markup-primitives" | "interactive-components" | "framework-adapters" | "service-patterns" | "application-blocks",
+  family?: "foundations" | "interactive-controls" | "framework-adapters" | "service-patterns" | "application-blocks",
   tier?: "foundation" | "primitive" | "composite" | "pattern" | "block",
   stability?: string,
   evidence?: string,
