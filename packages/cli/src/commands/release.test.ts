@@ -728,7 +728,7 @@ function installDefaultFakeCosign(): void {
 }
 
 function writeFakeNpm(
-  mode: "pass" | "missing-provenance" | "install-fail" | "untrusted-metadata" = "pass",
+  mode: "pass" | "missing-provenance" | "install-fail" | "untrusted-metadata" | "env-leak" = "pass",
 ): string {
   const npmPath = join(scratch, `fake-npm-${mode}.mjs`);
   writeFileSync(
@@ -737,6 +737,10 @@ function writeFakeNpm(
 import { readFileSync } from "node:fs";
 const args = process.argv.slice(2);
 if (args[0] === "install") {
+  if (${JSON.stringify(mode)} === "env-leak" && process.env.npm_config_catalog) {
+    console.error("inherited npm config leaked into public verification");
+    process.exit(1);
+  }
   if (${JSON.stringify(mode)} === "install-fail") {
     console.error("package not found");
     process.exit(1);
@@ -1196,6 +1200,33 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(result.stdout).toContain(
       "npm provenance output does not include @blen/ashlar-cli@0.0.0.",
     );
+  });
+
+  it("does not leak workspace npm config into public provenance verification", () => {
+    const npmPath = writeFakeNpm("env-leak");
+    const originalCatalog = process.env.npm_config_catalog;
+    process.env.npm_config_catalog = "catalog:";
+
+    try {
+      const result = runCli([
+        "release",
+        "provenance-verify-public",
+        "--npm",
+        npmPath,
+        "--package",
+        "@blen/ashlar@0.0.0",
+      ]);
+
+      expect(result.status, result.stdout).toBe(0);
+      expect(result.stdout).toContain("Public npm provenance verified");
+      expect(result.stdout).not.toContain("inherited npm config leaked");
+    } finally {
+      if (originalCatalog === undefined) {
+        delete process.env.npm_config_catalog;
+      } else {
+        process.env.npm_config_catalog = originalCatalog;
+      }
+    }
   });
 
   it("reports replacement-grade readiness blockers for the current prototype", () => {
