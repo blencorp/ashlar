@@ -77,9 +77,14 @@ This track happens only after a release branch is ready on `main`.
 Maintainer prep:
 
 1. Configure npm trusted publishers for `@blen/ashlar`, `@blen/ashlar-cli`, and `@blen/ashlar-schemas`.
-2. Run `.github/workflows/publish.yml` from GitHub Actions.
-3. Run `.github/workflows/sigstore.yml` from GitHub Actions.
+2. Run `.github/workflows/publish.yml` from GitHub Actions with `confirm=publish`.
+3. Run `.github/workflows/sigstore.yml` from GitHub Actions with `confirm=sign`.
 4. Download the signed registry, SBOM, attestation, trust bundle, `ashlar-npm-provenance.json`, `ashlar-public-trust.json`, release-trust reviewer checklist, and Sigstore bundles.
+
+```bash
+gh workflow run publish.yml --ref main -f confirm=publish
+gh workflow run sigstore.yml --ref main -f confirm=sign
+```
 
 Reviewer acceptance commands:
 

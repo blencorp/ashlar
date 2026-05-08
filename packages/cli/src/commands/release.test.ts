@@ -1413,6 +1413,8 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(plan.tracks.flatMap((track) => track.commands)).toEqual(
       expect.arrayContaining([
         expect.stringContaining("ashlar evidence prepare-stable button"),
+        "gh workflow run publish.yml --ref main -f confirm=publish",
+        "gh workflow run sigstore.yml --ref main -f confirm=sign",
         expect.stringContaining("ashlar release provenance-verify-public"),
         expect.stringContaining("ashlar release design-partner-checklist"),
       ]),
