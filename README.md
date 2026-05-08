@@ -78,6 +78,9 @@ Ashlar is the substrate beneath the components: the verifier, the signer, the up
 pnpm install
 pnpm build
 
+# Run the maintainer health stack before opening or merging a PR
+pnpm repo:doctor
+
 # Initialize a target project (e.g. a Vite app)
 node /path/to/ashlar/packages/cli/dist/index.js init
 mkdir -p ./my-public-service-app

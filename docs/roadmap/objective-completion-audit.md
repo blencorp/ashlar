@@ -1,7 +1,7 @@
 # Objective Completion Audit
 
 Date: 2026-05-08
-Branch inspected: `main` at `73968a3` after #95, #96, #97, #98, #99, #100, #101, and #102 merged
+Branch inspected: current checkout after #95, #96, #97, #98, #99, #100, #101, #102, and #103 merged, with the repo doctor workflow added
 
 ## Objective
 
@@ -11,24 +11,24 @@ Build a government-first UI library that can credibly replace day-to-day USWDS u
 
 Not achieved yet.
 
-Ashlar has a real substrate now: signed source capsules, federal and component audits, migration planning, update survival tests, local MCP, first-run docs, evidence tooling, release readiness gates, bundle budgets, framework examples, a memorable `npx @blen/ashlar` package entrypoint, banner visual regression tests, shadcn-v4-compatible CLI ergonomics, `@blen/*` package metadata, GitHub Packages canary workflow wiring, and product-facing capsule family names across docs, CLI output, options, and gates. The remaining blockers are not implementation effort proxies; they are proof gates:
+Ashlar has a real substrate now: signed source capsules, federal and component audits, migration planning, update survival tests, local MCP, first-run docs, evidence tooling, release readiness gates, bundle budgets, framework examples, a memorable `npx @blen/ashlar` package entrypoint, banner visual regression tests, shadcn-v4-compatible CLI ergonomics, `@blen/*` package metadata, GitHub Packages canary workflow wiring, product-facing capsule family names across docs, CLI output, options, and gates, and a one-command repo doctor for local maintainer health checks. The remaining blockers are not implementation effort proxies; they are proof gates:
 
 - one stable-evidence markup primitive component with real manual accessibility evidence;
 - completed external review records;
 - public npm trusted-publishing provenance for `@blen/ashlar`, `@blen/ashlar-cli`, and `@blen/ashlar-schemas`;
 - public capsule Sigstore trust material.
 
-Strict readiness evidence: `node packages/cli/dist/index.js release readiness --registry ./registry --json-output /tmp/ashlar-readiness-current.json --report /tmp/ashlar-readiness-current.md` returned `status: "fail"` on 2026-05-08 from `73968a3` with 9 passing checks and 4 failing checks: `stable-markup-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
+Strict readiness evidence: `node packages/cli/dist/index.js release readiness --registry ./registry --json-output /tmp/ashlar-readiness-current.json --report /tmp/ashlar-readiness-current.md` returned `status: "fail"` on 2026-05-08 with 9 passing checks and 4 failing checks: `stable-markup-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
 
 ## Prompt-To-Artifact Checklist
 
 | Requirement | Current evidence | Coverage judgment | Missing proof |
 | --- | --- | --- | --- |
 | Replace day-to-day USWDS usage | `ashlar audit --policy federal`, `ashlar migrate uswds`, 12 markup primitive capsules in `registry/components`, `benefit-application` service-flow capsule, `examples/uswds-project` migration fixture, `examples/legacy-federal-project` audit fixture, `docs/roadmap/uswds-coverage-matrix.md`, framework case-board examples, banner visual smoke | Strong prototype, not replacement-grade. Coverage gaps are now explicit. | Stable accessibility evidence, external design-partner validation, wider component/pattern coverage, public release |
-| Become memorable like shadcn/ui | `@blen/ashlar` package entrypoint, `npx @blen/ashlar` docs/status alignment, source-capsule distribution model, public family names, `apps/www` marketing surface, and `apps/docs` first-run docs app are merged to `main` | Good naming/DX direction with a first-run docs surface. The old public numbered-family language regression is gone; the only remaining numbered family code is an internal negative schema test. | Package name must be reserved by real npm publish; public docs deployment and community launch still missing |
+| Become memorable like shadcn/ui | `@blen/ashlar` package entrypoint, `npx @blen/ashlar` docs/status alignment, source-capsule distribution model, public family names, `apps/www` marketing surface, and `apps/docs` first-run docs app are merged to `main` | Good naming/DX direction with a first-run docs surface. The old public numbered-family language regression is gone. | Package name must be reserved by real npm publish; public docs deployment and community launch still missing |
 | Address shadcn gaps | `ashlar update`, `ashlar verify`, capsule lockfile hashes, update survival tests, signed capsule manifests, release readiness, SBOM/trust-bundle/provenance tooling | Strongest product wedge in repo | Needs real release traffic, public Sigstore bundles, npm provenance, external security review |
 | AI-native gov app workflow | `ashlar mcp`, MCP `validate_usage`, `search_components`, `suggest_for_task`, `list_tokens`, `get_token`, `ashlar ai-eval`, generated `AGENTS.md` and `DESIGN.md`, and `examples/ai-eval/generated-output-corpus` | Useful local AI-native substrate with a small seed corpus | Independent model/tool outputs beyond the Codex seed corpus, hosted/remote MCP decision, write-tool threat model if write tools are ever added |
-| Amazing DX and easy integration | `ashlar init|create`, `status|info`, `add --all --view --dry-run --diff`, `search|list -q -l`, `suggest`, `view|docs`, `-c/--cwd` on common commands, `audit`, `theme sync`, `theme validate`, release smoke installing packed CLI into a clean consumer, `apps/docs` first-run path for install/audit/add/verify/theme/AI/trust, and real framework examples for vanilla TypeScript, React SPA, Next.js App Router, Svelte, and Vue | Good local DX and first-run guidance; main includes shadcn-v4-compatible ergonomics without claiming template/preset support. | Public npm install path, public docs deployment, real user feedback, real template/preset system if Ashlar chooses to mirror that shadcn surface |
+| Amazing DX and easy integration | `ashlar init|create`, `status|info`, `add --all --view --dry-run --diff`, `search|list -q -l`, `suggest`, `view|docs`, `-c/--cwd` on common commands, `audit`, `theme sync`, `theme validate`, `pnpm repo:doctor`, release smoke installing packed CLI into a clean consumer, `apps/docs` first-run path for install/audit/add/verify/theme/AI/trust, and real framework examples for vanilla TypeScript, React SPA, Next.js App Router, Svelte, and Vue | Good local DX and first-run guidance; main includes shadcn-v4-compatible ergonomics without claiming template/preset support. | Public npm install path, public docs deployment, real user feedback, real template/preset system if Ashlar chooses to mirror that shadcn surface |
 | Light footprint | `ashlar bundle budget` reports 12 markup primitive capsules at 2,094 B CSS gzip and 0 B JS gzip against a 20,992 B markup primitive budget; Button is 649 B CSS gzip and 0 B JS | Strong evidence for current markup primitive substrate | Must hold as interactive components arrive |
 | Gov trust/compliance posture | Federal page-shell audit, evidence gate, review-pack generation, incident playbook, release readiness, SBOM, trust bundle, issue templates | Strong process and tooling | Real stable evidence, completed review records, public provenance/Sigstore proof |
 
@@ -68,10 +68,11 @@ Merged implementation stack now includes the earlier foundation work plus the re
 - #100 `feat(release): check GitHub Packages readiness`
 - #101 `chore(release): version packages`
 - #102 `docs(status): refresh current proof audit`
+- #103 `docs(language): remove numbered family leaks`
 
-Post-merge evidence through #102: GitHub `CI` and `Version Packages` completed successfully on `73968a3`. The #100 feature PR completed `status`, `commitlint`, and `checks`; after merge, main CI completed `pnpm check`, `pnpm build`, `pnpm examples:visual`, `pnpm release:smoke`, `release provenance-check`, `release github-packages-check`, SBOM/trust-bundle/evidence/audit/report generation, and artifact upload. The #101 generated version PR had no remote PR checks, so it was verified locally before merge with `pnpm install --frozen-lockfile`, `pnpm format:check`, `pnpm check`, `pnpm build`, `pnpm release:smoke`, `release provenance-check`, `release github-packages-check`, `pnpm commitlint --from HEAD~1 --to HEAD`, and `git diff --check`; its post-merge `CI` and `Version Packages` runs then passed on `main`. #102 refreshed the current proof audit and passed post-merge `CI` and `Version Packages`.
+Post-merge evidence through #103: GitHub `CI` and `Version Packages` completed successfully after the current proof-audit refresh and numbered-family leak cleanup. The #100 feature PR completed `status`, `commitlint`, and `checks`; after merge, main CI completed `pnpm check`, `pnpm build`, `pnpm examples:visual`, `pnpm release:smoke`, `release provenance-check`, `release github-packages-check`, SBOM/trust-bundle/evidence/audit/report generation, and artifact upload. The #101 generated version PR had no remote PR checks, so it was verified locally before merge with `pnpm install --frozen-lockfile`, `pnpm format:check`, `pnpm check`, `pnpm build`, `pnpm release:smoke`, `release provenance-check`, `release github-packages-check`, `pnpm commitlint --from HEAD~1 --to HEAD`, and `git diff --check`; its post-merge `CI` and `Version Packages` runs then passed on `main`. #102 refreshed the current proof audit and passed post-merge `CI` and `Version Packages`; #103 removed the remaining public numbered-family leaks and also passed post-merge `CI` and `Version Packages`.
 
-Package state on `73968a3`:
+Package state:
 
 - `@blen/ashlar@0.3.9`
 - `@blen/ashlar-cli@0.3.9`

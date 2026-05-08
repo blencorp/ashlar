@@ -73,3 +73,16 @@ That gate runs the production examples in Chromium and rejects horizontal
 overflow, missing agency-theme controls, unreadable dark-mode text input styles,
 agency modals outside the viewport, and nested-card regressions in the
 case-board examples.
+
+For a full local maintainer pass before opening or merging a PR, run:
+
+```bash
+pnpm repo:doctor
+```
+
+The doctor command runs the format, lint/typecheck/test, build, visual,
+release-smoke, publish-readiness, diff-check, strict-readiness, and proof-plan
+steps in one place. It writes `reports/doctor/summary.md` and exits 0 only when
+local checks pass and strict readiness is blocked solely by the expected proof
+gates. It does not count stable evidence, public npm provenance, public
+Sigstore trust, or external reviews by itself.

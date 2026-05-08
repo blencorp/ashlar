@@ -618,7 +618,7 @@ describe("schema-validate", () => {
             {
               kind: "class",
               name: "Bad",
-              _ashlar: { version: "0.0.1", layer: "L99", stability: "experimental" },
+              _ashlar: { version: "0.0.1", layer: "not-a-family", stability: "experimental" },
             },
           ],
         },
