@@ -5,6 +5,7 @@ export type ComponentDoc = {
   version: string;
   tagName: string;
   description: string;
+  family: string;
   layer: string;
   stability: string;
   selector: string;
@@ -41,6 +42,7 @@ export const components: ComponentDoc[] = Object.entries(cemModules)
       version,
       tagName: stringValue(declaration?.tagName, "n/a"),
       description: stringValue(declaration?.description, "No description provided."),
+      family: familyLabel(stringValue(ashlar?.layer, "unknown")),
       layer: stringValue(ashlar?.layer, "unknown"),
       stability: stringValue(ashlar?.stability, "unknown"),
       selector: stringValue(ashlar?.selector, "n/a"),
@@ -50,7 +52,18 @@ export const components: ComponentDoc[] = Object.entries(cemModules)
       policyMappings: mappingNames(ashlar?.policyMappings),
     };
   })
-  .sort((a, b) => a.layer.localeCompare(b.layer) || a.name.localeCompare(b.name));
+  .sort((a, b) => a.family.localeCompare(b.family) || a.name.localeCompare(b.name));
+
+function familyLabel(layer: string): string {
+  const labels: Record<string, string> = {
+    "application-blocks": "application blocks",
+    "framework-adapters": "framework adapters",
+    "interactive-components": "interactive controls",
+    "markup-primitives": "foundations",
+    "service-patterns": "service patterns",
+  };
+  return labels[layer] ?? layer;
+}
 
 function evidenceFor(name: string): JsonRecord {
   const entry = Object.entries(evidenceModules).find(([path]) =>

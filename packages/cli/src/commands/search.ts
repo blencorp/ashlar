@@ -1,4 +1,4 @@
-import type { Command } from "commander";
+import { Option, type Command } from "commander";
 import { searchRegistryComponents } from "../lib/component-search.js";
 import type { RegistryStability, RegistryTier } from "../lib/registry.js";
 import { applyCommandCwd, type CwdOption } from "../lib/cwd.js";
@@ -13,6 +13,7 @@ import {
 } from "../lib/tui.js";
 
 type SearchOptions = {
+  family?: string;
   json?: boolean;
   layer?: string;
   tier?: RegistryTier;
@@ -37,9 +38,10 @@ export function registerSearchCommand(program: Command) {
     .option("-c, --cwd <path>", "Working directory. Defaults to the current directory.")
     .option("-q, --query <text>", "Query string. Mirrors shadcn search -q.")
     .option(
-      "--layer <layer>",
-      "Filter by layer: markup-primitives, interactive-components, framework-adapters, service-patterns, application-blocks",
+      "--family <family>",
+      "Filter by capsule family: foundations, interactive-controls, framework-adapters, service-patterns, application-blocks",
     )
+    .addOption(new Option("--layer <layer>", "Deprecated alias for --family").hideHelp())
     .option("--tier <tier>", "Filter by tier: foundation, primitive, composite, pattern, or block")
     .option("--stability <stability>", "Filter by stability")
     .option("--evidence <status>", "Filter by evidence status")
@@ -62,10 +64,17 @@ export function registerSearchCommand(program: Command) {
         if (!Number.isInteger(offset) || offset < 0) {
           throw new Error("--offset must be a non-negative integer");
         }
-        const layer = options.layer ? parseRegistryLayerAlias(options.layer) : undefined;
+        if (options.family && options.layer) {
+          throw new Error("Use --family instead of combining --family and --layer.");
+        }
+        const layer = options.family
+          ? parseRegistryLayerAlias(options.family)
+          : options.layer
+            ? parseRegistryLayerAlias(options.layer)
+            : undefined;
         if (layer === "all") {
           throw new Error(
-            "--layer all is not needed for search; omit --layer to search all layers.",
+            "--family all is not needed for search; omit --family to search all families.",
           );
         }
         const components = searchRegistryComponents({

@@ -184,7 +184,7 @@ ashlar evidence ${bundle.component} --check --registry ${registryPath} --evidenc
 
 function batchReviewerIndex(batch: StableEvidenceReviewBatch, cwd: string, registryPath: string) {
   const layerLabel =
-    batch.layer === "all" ? "all registry layers" : formatRegistryLayerCapsules(batch.layer);
+    batch.layer === "all" ? "all registry families" : formatRegistryLayerCapsules(batch.layer);
   const rows = batch.bundles
     .map((bundle) => {
       const reviewDir = cwdRelative(cwd, bundle.outputDir);
@@ -597,7 +597,7 @@ export function prepareStableEvidenceReviewBatch(
   );
   if (components.length === 0) {
     throw new Error(
-      `No Ashlar components found for stable evidence review layer: ${
+      `No Ashlar components found for stable evidence review family: ${
         layer === "all" ? "all" : formatRegistryLayer(layer)
       }`,
     );

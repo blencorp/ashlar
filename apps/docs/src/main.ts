@@ -118,7 +118,7 @@ function renderComponents(activeId: string): string {
       <div class="component-table" role="table" aria-label="Ashlar registry components">
         <div class="component-row head" role="row">
           <span role="columnheader">Capsule</span>
-          <span role="columnheader">Layer</span>
+          <span role="columnheader">Family</span>
           <span role="columnheader">Evidence</span>
           <span role="columnheader">Contract</span>
         </div>
@@ -135,7 +135,7 @@ function renderComponentRow(component: (typeof components)[number]): string {
         <strong>${escapeHtml(component.name)}</strong>
         <small>${escapeHtml(component.description)}</small>
       </span>
-      <span role="cell">${escapeHtml(component.layer)} · ${escapeHtml(component.stability)}</span>
+      <span role="cell">${escapeHtml(component.family)} · ${escapeHtml(component.stability)}</span>
       <span role="cell">${escapeHtml(component.evidenceStatus)}</span>
       <span role="cell">
         <code>${escapeHtml(component.selector)}</code>

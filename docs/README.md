@@ -15,7 +15,7 @@ The work is led by engineers at [Blen](https://blencorp.com) with the intent to 
 1. [`product-doctrine.md`](./product-doctrine.md) — the category, replacement stance, DX doctrine, and buzzword test.
 2. [`strategy.md`](./strategy.md) — the public case for Ashlar and how to position it.
 3. [`philosophy.md`](./philosophy.md) — the thesis and design principles.
-4. [`architecture/overview.md`](./architecture/overview.md) — the layered architecture and how the pieces fit.
+4. [`architecture/overview.md`](./architecture/overview.md) — the capsule families and how the pieces fit.
 5. [`architecture/toolchain.md`](./architecture/toolchain.md) — the recommended v0/v1 technical foundation.
 6. [`architecture/tooling-baseline.md`](./architecture/tooling-baseline.md) — pinned stable runtime and monorepo tool versions.
 7. [`architecture/release-governance.md`](./architecture/release-governance.md) — Conventional Commits, Changesets, version PRs, and publish gates.

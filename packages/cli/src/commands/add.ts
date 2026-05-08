@@ -73,7 +73,7 @@ function renderDryRun(plans: InstallPlan[]): void {
   for (const plan of plans) {
     printSection(`${plan.detail.name}@${plan.detail.version}`);
     printKeyValue("tier", plan.detail.tier);
-    printKeyValue("layer", formatRegistryLayer(plan.detail.layer));
+    printKeyValue("family", formatRegistryLayer(plan.detail.layer));
     printKeyValue("stability", plan.detail.stability);
     printKeyValue("capsule hash", plan.manifest.capsule_hash);
     for (const file of plan.files) {
@@ -94,7 +94,7 @@ function renderView(plans: InstallPlan[]): void {
   for (const plan of plans) {
     printSection(`${plan.detail.name}@${plan.detail.version}`);
     printKeyValue("Tier", plan.detail.tier);
-    printKeyValue("Layer", formatRegistryLayer(plan.detail.layer));
+    printKeyValue("Family", formatRegistryLayer(plan.detail.layer));
     printKeyValue("Stability", plan.detail.stability);
     printKeyValue("Evidence", plan.detail.evidence.accessibilityStatus);
     printKeyValue("Capsule hash", plan.manifest.capsule_hash);

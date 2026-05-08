@@ -332,7 +332,7 @@ Implemented locally. Writes a schema-backed release-review JSON bundle using `re
 
 - the registry index hash;
 - the registry trust-root hash and public keys;
-- each verified capsule name, version, layer, stability, capsule hash, and local signature key id;
+- each verified capsule name, version, family, stability, capsule hash, and local signature key id;
 - the release SBOM hash and byte size;
 - the release SBOM attestation hash and byte size.
 

@@ -4,6 +4,7 @@ import { z } from "zod/v4";
 import { findAuditTargets, runAudit, type AuditPolicy } from "./audit-runner.js";
 import { suggestComponentsForTask } from "./component-suggest.js";
 import { searchRegistryComponents } from "./component-search.js";
+import { parseRegistryLayerAlias } from "./layers.js";
 import { getComponent } from "./registry.js";
 import { findThemeToken, listThemeTokens, loadStockThemes, type ThemeDefinition } from "./theme.js";
 
@@ -40,13 +41,13 @@ export function buildAshlarMcpServer(options: AshlarMcpServerOptions): McpServer
     {
       title: "Search Ashlar Capsules",
       description:
-        "Search the local Ashlar registry by component, policy, platform feature, token, layer, stability, or evidence metadata.",
+        "Search the local Ashlar registry by component, policy, platform feature, token, family, stability, or evidence metadata.",
       inputSchema: z.object({
         query: z.string().optional().default(""),
-        layer: z
+        family: z
           .enum([
-            "markup-primitives",
-            "interactive-components",
+            "foundations",
+            "interactive-controls",
             "framework-adapters",
             "service-patterns",
             "application-blocks",
@@ -62,8 +63,12 @@ export function buildAshlarMcpServer(options: AshlarMcpServerOptions): McpServer
       }),
       annotations: readOnlyAnnotations,
     },
-    ({ query, layer, tier, stability, evidence, policy, feature, token, limit }) =>
+    ({ query, family, tier, stability, evidence, policy, feature, token, limit }) =>
       safeJsonResult(() => {
+        const layer = family ? parseRegistryLayerAlias(family) : undefined;
+        if (layer === "all") {
+          throw new Error("Search all families by omitting the family filter.");
+        }
         const components = searchRegistryComponents({
           cwd: options.cwd,
           registryPath: options.registryPath,

@@ -1,16 +1,16 @@
 import type { RegistryLayer } from "./registry.js";
 
 export const registryLayerNames: Record<RegistryLayer, string> = {
-  "markup-primitives": "markup primitives",
-  "interactive-components": "interactive components",
+  "markup-primitives": "foundations",
+  "interactive-components": "interactive controls",
   "framework-adapters": "framework adapters",
   "service-patterns": "service patterns",
   "application-blocks": "application blocks",
 };
 
 export const registryLayerCapsuleNames: Record<RegistryLayer, string> = {
-  "markup-primitives": "markup primitive capsules",
-  "interactive-components": "interactive component capsules",
+  "markup-primitives": "foundation capsules",
+  "interactive-components": "interactive control capsules",
   "framework-adapters": "framework adapter capsules",
   "service-patterns": "service pattern capsules",
   "application-blocks": "application block capsules",
@@ -19,13 +19,18 @@ export const registryLayerCapsuleNames: Record<RegistryLayer, string> = {
 const registryLayerAliases: Record<string, RegistryLayer | "all"> = {
   all: "all",
   base: "markup-primitives",
+  foundations: "markup-primitives",
   foundation: "markup-primitives",
   markup: "markup-primitives",
   "markup-primitive": "markup-primitives",
   "markup-primitives": "markup-primitives",
+  control: "interactive-components",
+  controls: "interactive-components",
   primitive: "markup-primitives",
   primitives: "markup-primitives",
   interactive: "interactive-components",
+  "interactive-control": "interactive-components",
+  "interactive-controls": "interactive-components",
   "interactive-component": "interactive-components",
   "interactive-components": "interactive-components",
   stateful: "interactive-components",
@@ -58,7 +63,7 @@ export function parseRegistryLayerAlias(value: string | undefined): RegistryLaye
   const layer = registryLayerAliases[normalized];
   if (!layer) {
     throw new Error(
-      "Unknown Ashlar layer. Use markup-primitives, interactive-components, framework-adapters, service-patterns, application-blocks, or all.",
+      "Unknown Ashlar family. Use foundations, interactive-controls, framework-adapters, service-patterns, application-blocks, or all.",
     );
   }
 
