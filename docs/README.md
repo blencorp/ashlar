@@ -20,22 +20,23 @@ The work is led by engineers at [Blen](https://blencorp.com) with the intent to 
 6. [`architecture/tooling-baseline.md`](./architecture/tooling-baseline.md) — pinned stable runtime and monorepo tool versions.
 7. [`architecture/release-governance.md`](./architecture/release-governance.md) — Conventional Commits, Changesets, version PRs, and publish gates.
 8. [`architecture/compliance-security-ci.md`](./architecture/compliance-security-ci.md) — accessibility, security, provenance, and CI tooling scope.
-9. [`architecture/`](./architecture/) — detailed architecture documents (capsule format, drift management, AI-native strategy, validation, tokens, accessibility evidence, future architecture).
-10. [`adr/`](./adr/) — architecture decision records.
-11. [`roadmap/00-roadmap.md`](./roadmap/00-roadmap.md) — phased delivery plan and success gates.
-12. [`roadmap/replacement-grade-audit.md`](./roadmap/replacement-grade-audit.md) — prompt-to-artifact audit for the USWDS replacement / shadcn-for-gov ambition.
-13. [`roadmap/uswds-coverage-matrix.md`](./roadmap/uswds-coverage-matrix.md) — coverage matrix that turns "replace USWDS" into explicit component, pattern, and claim-boundary gaps.
-14. [`roadmap/external-review-plan.md`](./roadmap/external-review-plan.md) — review tracks for stable evidence, public trust, and design partner validation.
-15. [`roadmap/github-launch.md`](./roadmap/github-launch.md) — public GitHub launch checklist, milestones, and labels.
-16. [`security/supply-chain-incident-playbook.md`](./security/supply-chain-incident-playbook.md) — package, registry, signing, and evidence compromise response plan.
-17. [`research/`](./research/) — the body of research informing design decisions, including the final April 29, 2026 current-source pass.
-18. [`research/08-gap-analysis-2026-04-29.md`](./research/08-gap-analysis-2026-04-29.md) — gap analysis and next roadmap correction.
-19. [`research/09-design-md-2026-04-29.md`](./research/09-design-md-2026-04-29.md) — DESIGN.md adoption recommendation.
-20. [`superpowers/specs/2026-04-29-v0-0-standards-evidence-slice-spec.md`](./superpowers/specs/2026-04-29-v0-0-standards-evidence-slice-spec.md) — behavior contract for the standards/evidence slice.
-21. [`superpowers/plans/2026-04-29-v0-0-standards-evidence-slice-revised.md`](./superpowers/plans/2026-04-29-v0-0-standards-evidence-slice-revised.md) — implementation plan for the standards/evidence slice.
-22. [`superpowers/specs/2026-05-05-first-service-flow-proof-spec.md`](./superpowers/specs/2026-05-05-first-service-flow-proof-spec.md) — first proof that capsules can power a small public-service flow.
-23. [`governance/`](./governance/) — community model and contribution rules.
-24. [`../examples/`](../examples/) — framework examples covering vanilla, React SPA, Next.js, Svelte, Vue, plain HTML, and the Vite theme workbench.
+9. [`testing.md`](./testing.md) — hands-on local QA path for docs, framework examples, visual smoke, and CLI review.
+10. [`architecture/`](./architecture/) — detailed architecture documents (capsule format, drift management, AI-native strategy, validation, tokens, accessibility evidence, future architecture).
+11. [`adr/`](./adr/) — architecture decision records.
+12. [`roadmap/00-roadmap.md`](./roadmap/00-roadmap.md) — phased delivery plan and success gates.
+13. [`roadmap/replacement-grade-audit.md`](./roadmap/replacement-grade-audit.md) — prompt-to-artifact audit for the USWDS replacement / shadcn-for-gov ambition.
+14. [`roadmap/uswds-coverage-matrix.md`](./roadmap/uswds-coverage-matrix.md) — coverage matrix that turns "replace USWDS" into explicit component, pattern, and claim-boundary gaps.
+15. [`roadmap/external-review-plan.md`](./roadmap/external-review-plan.md) — review tracks for stable evidence, public trust, and design partner validation.
+16. [`roadmap/github-launch.md`](./roadmap/github-launch.md) — public GitHub launch checklist, milestones, and labels.
+17. [`security/supply-chain-incident-playbook.md`](./security/supply-chain-incident-playbook.md) — package, registry, signing, and evidence compromise response plan.
+18. [`research/`](./research/) — the body of research informing design decisions, including the final April 29, 2026 current-source pass.
+19. [`research/08-gap-analysis-2026-04-29.md`](./research/08-gap-analysis-2026-04-29.md) — gap analysis and next roadmap correction.
+20. [`research/09-design-md-2026-04-29.md`](./research/09-design-md-2026-04-29.md) — DESIGN.md adoption recommendation.
+21. [`superpowers/specs/2026-04-29-v0-0-standards-evidence-slice-spec.md`](./superpowers/specs/2026-04-29-v0-0-standards-evidence-slice-spec.md) — behavior contract for the standards/evidence slice.
+22. [`superpowers/plans/2026-04-29-v0-0-standards-evidence-slice-revised.md`](./superpowers/plans/2026-04-29-v0-0-standards-evidence-slice-revised.md) — implementation plan for the standards/evidence slice.
+23. [`superpowers/specs/2026-05-05-first-service-flow-proof-spec.md`](./superpowers/specs/2026-05-05-first-service-flow-proof-spec.md) — first proof that capsules can power a small public-service flow.
+24. [`governance/`](./governance/) — community model and contribution rules.
+25. [`../examples/`](../examples/) — framework examples covering vanilla, React SPA, Next.js, Svelte, Vue, plain HTML, and the Vite theme workbench.
 
 ## What problem this solves
 
