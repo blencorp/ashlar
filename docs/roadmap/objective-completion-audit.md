@@ -1,7 +1,7 @@
 # Objective Completion Audit
 
 Date: 2026-05-08
-Branch inspected: current checkout after #95 through #109 merged, with repo doctor, testing-session launcher, manual testing checklist, public family-language cleanup, and post-merge CI/Version Packages success on `main`
+Branch inspected: `main` at `46cb8da` after #95 through #114 merged, with repo doctor, testing-session launcher, manual testing checklist, public family-language cleanup, release proof-plan GitHub Packages wiring, versioned `@blen/*` packages, and post-merge CI/Version Packages success on `main`
 
 ## Objective
 
@@ -11,7 +11,7 @@ Build a government-first UI library that can credibly replace day-to-day USWDS u
 
 Not achieved yet.
 
-Ashlar has a real substrate now: signed source capsules, federal and component audits, migration planning, update survival tests, local MCP, first-run docs, evidence tooling, release readiness gates, bundle budgets, framework examples, a memorable `npx @blen/ashlar` package entrypoint, banner visual regression tests, shadcn-v4-compatible CLI ergonomics, `@blen/*` package metadata, GitHub Packages canary workflow wiring, product-facing capsule family names across docs, CLI output, options, and gates, a one-command repo doctor for local maintainer health checks, and a one-command testing session for docs plus all example apps with a generated manual visual-review checklist. The remaining blockers are not implementation effort proxies; they are proof gates:
+Ashlar has a real substrate now: signed source capsules, federal and component audits, migration planning, update survival tests, local MCP, first-run docs, evidence tooling, release readiness gates, bundle budgets, framework examples, a memorable `npx @blen/ashlar` package entrypoint, banner visual regression tests, shadcn-v4-compatible CLI ergonomics, `@blen/*` package metadata, GitHub Packages canary workflow wiring, release proof-plan commands for npm, GitHub Packages, and Sigstore, product-facing capsule family names across docs, CLI output, options, and gates, a one-command repo doctor for local maintainer health checks, and a one-command testing session for docs plus all example apps with a generated manual visual-review checklist. The remaining blockers are not implementation effort proxies; they are proof gates:
 
 - one stable-evidence markup primitive component with real manual accessibility evidence;
 - completed external review records;
@@ -19,6 +19,8 @@ Ashlar has a real substrate now: signed source capsules, federal and component a
 - public capsule Sigstore trust material.
 
 Strict readiness evidence: `node packages/cli/dist/index.js release readiness --registry ./registry --json-output /tmp/ashlar-readiness-current.json --report /tmp/ashlar-readiness-current.md` returned `status: "fail"` on 2026-05-08 with 9 passing checks and 4 failing checks: `stable-markup-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
+
+Current testing evidence: `pnpm testing:start --check --visual` passed on 2026-05-08 after rebuilding the workspace. It verified HTTP 200 for the public site, docs app, Vite theme workbench, and the vanilla TypeScript, React SPA, Next.js App Router, Svelte, and Vue case-board examples, then ran Playwright visual smoke for the six framework apps with zero failures. The generated local review material is under `reports/testing-session/` and `reports/example-visual-smoke/`.
 
 ## Prompt-To-Artifact Checklist
 
@@ -74,13 +76,19 @@ Merged implementation stack now includes the earlier foundation work plus the re
 - #106 `fix(doctor): ignore nested worktrees`
 - #107 `docs(language): prefer family wording in public docs`
 - #108 `feat(testing): add manual testing checklist`
+- #109 `docs(status): refresh objective audit after testing`
+- #110 `chore(testing): guard public product language`
+- #111 `fix(release): include workflow confirmations in proof plan`
+- #112 `chore(release): version packages`
+- #113 `fix(release): include github packages proof step`
+- #114 `chore(release): version packages`
 
-Post-merge evidence through #109: GitHub `CI` and `Version Packages` completed successfully after the current proof-audit refresh, family-language cleanup, repo doctor merge, testing-session launcher, nested-worktree doctor fix, manual testing checklist merge, and current objective-audit refresh. The #100 feature PR completed `status`, `commitlint`, and `checks`; after merge, main CI completed `pnpm check`, `pnpm build`, `pnpm examples:visual`, `pnpm release:smoke`, `release provenance-check`, `release github-packages-check`, SBOM/trust-bundle/evidence/audit/report generation, and artifact upload. The #101 generated version PR had no remote PR checks, so it was verified locally before merge with `pnpm install --frozen-lockfile`, `pnpm format:check`, `pnpm check`, `pnpm build`, `pnpm release:smoke`, `release provenance-check`, `release github-packages-check`, `pnpm commitlint --from HEAD~1 --to HEAD`, and `git diff --check`; its post-merge `CI` and `Version Packages` runs then passed on `main`. #102 refreshed the current proof audit and passed post-merge `CI` and `Version Packages`; #103 cleaned public family naming and also passed post-merge `CI` and `Version Packages`; #104 added `pnpm repo:doctor`; #105 added `pnpm testing:start`; #106 fixed nested-worktree doctor handling; #107 removed internal-code product language from public docs; #108 added `pnpm testing:start --check --visual` plus `reports/testing-session/checklist.md`; and #109 refreshed this audit after testing. PR and post-merge `main` CI/Version Packages passed for each of those slices.
+Post-merge evidence through #114: GitHub `CI` and `Version Packages` completed successfully after the proof-audit refresh, family-language cleanup, repo doctor merge, testing-session launcher, nested-worktree doctor fix, manual testing checklist merge, public product-language guard, release proof-plan workflow confirmation commands, GitHub Packages proof-plan step, and generated version merges. The #100 feature PR completed `status`, `commitlint`, and `checks`; after merge, main CI completed `pnpm check`, `pnpm build`, `pnpm examples:visual`, `pnpm release:smoke`, `release provenance-check`, `release github-packages-check`, SBOM/trust-bundle/evidence/audit/report generation, and artifact upload. The generated version PRs #101, #112, and #114 were verified locally before merge where needed, then their post-merge `main` `CI` and `Version Packages` workflows passed. The final verified `main` runs for `46cb8da` are GitHub Actions `CI` run `25538074854` and `Version Packages` run `25538074848`, both successful.
 
 Package state:
 
-- `@blen/ashlar@0.3.9`
-- `@blen/ashlar-cli@0.3.9`
+- `@blen/ashlar@0.3.11`
+- `@blen/ashlar-cli@0.3.11`
 - `@blen/ashlar-schemas@0.1.5`
 
 ## Gate Audit
