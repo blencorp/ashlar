@@ -41,6 +41,7 @@ jobs:
       - run: node packages/cli/dist/index.js status --registry ./registry --json > reports/ashlar-status.json
       - run: pnpm release:smoke
       - run: node packages/cli/dist/index.js release provenance-check
+      - run: node packages/cli/dist/index.js release github-packages-check
       - run: node packages/cli/dist/index.js release sbom --output reports/ashlar-sbom.spdx.json
       - run: node packages/cli/dist/index.js release attest --subject reports/ashlar-sbom.spdx.json --output reports/ashlar-sbom.attestation.json
       - run: node packages/cli/dist/index.js release verify-attestation --subject reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json
