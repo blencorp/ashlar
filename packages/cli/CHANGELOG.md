@@ -1,5 +1,11 @@
 # @blen/ashlar-cli
 
+## 0.3.18
+
+### Patch Changes
+
+- [#137](https://github.com/blencorp/ashlar/pull/137) [`da09822`](https://github.com/blencorp/ashlar/commit/da09822fe41991b7a4a20006d0939c7f17e2634c) Thanks [@naodya](https://github.com/naodya)! - Tighten public-language guardrails so docs, packages, registry output, examples, and generated reports stay on product-family language.
+
 ## 0.3.17
 
 ### Patch Changes
