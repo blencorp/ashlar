@@ -16,11 +16,13 @@ body:
       label: Review bundle
       description: Link to or attach the output of evidence prepare-stable.
       value: |
+        Commands below use the repository-local `pnpm ashlar` entrypoint. External reviewers using an installed CLI can replace `pnpm ashlar` with `ashlar` or `npx @blen/ashlar`.
+
         Generated with:
 
         ```bash
-        ashlar evidence prepare-stable <component> --registry ./registry --fixture <fixture> --output <review-dir>
-        ashlar evidence review-status <component> --registry ./registry --review-dir <review-dir>
+        pnpm ashlar evidence prepare-stable <component> --registry ./registry --fixture <fixture> --output <review-dir>
+        pnpm ashlar evidence review-status <component> --registry ./registry --review-dir <review-dir>
         ```
     validations:
       required: true
@@ -58,7 +60,8 @@ body:
       label: Graduation gates
       options:
         - label: Manual review artifacts contain no TODO, TBD, placeholder, or blocked result.
-        - label: "`ashlar evidence transcript-validate` passes for each local transcript reference."
-        - label: "`ashlar evidence review-status` reports ready before graduation."
-        - label: "`ashlar evidence graduate` passes before any registry publication."
+        - label: "`pnpm ashlar evidence transcript-validate` passes for each local transcript reference."
+        - label: "`pnpm ashlar evidence review-status` reports ready before finalization."
+        - label: "`pnpm ashlar evidence finalize-stable` writes reviewed and stable proposal artifacts."
+        - label: "`pnpm ashlar evidence --check --evidence-file <stable proposal>` passes before any registry publication."
         - label: No application-level compliance claim is added.

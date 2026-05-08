@@ -1367,9 +1367,9 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(actionPlan).toContain("https://github.com/blencorp/ashlar/issues/22");
     expect(actionPlan).toContain("https://github.com/blencorp/ashlar/issues/23");
     expect(actionPlan).toContain("https://github.com/blencorp/ashlar/issues/24");
-    expect(actionPlan).toContain("ashlar release review-record stable-evidence");
-    expect(actionPlan).toContain("ashlar release review-record release-trust");
-    expect(actionPlan).toContain("ashlar release review-record design-partner");
+    expect(actionPlan).toContain("pnpm ashlar release review-record stable-evidence");
+    expect(actionPlan).toContain("pnpm ashlar release review-record release-trust");
+    expect(actionPlan).toContain("pnpm ashlar release review-record design-partner");
   });
 
   it("writes a proof action plan that maps readiness blockers to external review tracks", () => {
@@ -1412,12 +1412,12 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     );
     expect(plan.tracks.flatMap((track) => track.commands)).toEqual(
       expect.arrayContaining([
-        expect.stringContaining("ashlar evidence prepare-stable button"),
+        expect.stringContaining("pnpm ashlar evidence prepare-stable button"),
         "gh workflow run publish.yml --ref main -f confirm=publish",
         "gh workflow run github-packages.yml --ref main -f confirm=publish-github-packages",
         "gh workflow run sigstore.yml --ref main -f confirm=sign",
-        expect.stringContaining("ashlar release provenance-verify-public"),
-        expect.stringContaining("ashlar release design-partner-checklist"),
+        expect.stringContaining("pnpm ashlar release provenance-verify-public"),
+        expect.stringContaining("pnpm ashlar release design-partner-checklist"),
       ]),
     );
   });

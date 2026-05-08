@@ -20,16 +20,16 @@ Maintainer prep:
 
 ```bash
 pnpm build
-node packages/cli/dist/index.js release proof-plan \
+pnpm ashlar release proof-plan \
   --registry ./registry \
   --output reports/proof-action-plan.md
-node packages/cli/dist/index.js release review-pack \
+pnpm ashlar release review-pack \
   --registry ./registry \
   --output reports/review-pack
-node packages/cli/dist/index.js evidence prepare-stable-all \
+pnpm ashlar evidence prepare-stable-all \
   --registry ./registry \
   --output reports/markup-primitive-stable-review
-node packages/cli/dist/index.js evidence review-status button \
+pnpm ashlar evidence review-status button \
   --registry ./registry \
   --review-dir reports/markup-primitive-stable-review/button
 ```
@@ -50,17 +50,17 @@ Reviewer output must include:
 Maintainer acceptance:
 
 ```bash
-node packages/cli/dist/index.js evidence review-status button \
+pnpm ashlar evidence review-status button \
   --registry ./registry \
   --review-dir reports/markup-primitive-stable-review/button
-node packages/cli/dist/index.js evidence finalize-stable button \
+pnpm ashlar evidence finalize-stable button \
   --registry ./registry \
   --review-dir reports/markup-primitive-stable-review/button
-node packages/cli/dist/index.js evidence button \
+pnpm ashlar evidence button \
   --check \
   --registry ./registry \
   --evidence-file reports/markup-primitive-stable-review/button/button.evidence.stable.json
-node packages/cli/dist/index.js evidence publish button \
+pnpm ashlar evidence publish button \
   --registry ./registry \
   --evidence-file reports/markup-primitive-stable-review/button/button.evidence.stable.json \
   --signing-key <trusted-local-signing-key> \
@@ -91,17 +91,17 @@ gh workflow run sigstore.yml --ref main -f confirm=sign
 Reviewer acceptance commands:
 
 ```bash
-node packages/cli/dist/index.js release provenance-verify-public \
+pnpm ashlar release provenance-verify-public \
   --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version>
-node packages/cli/dist/index.js release provenance-verify-public \
+pnpm ashlar release provenance-verify-public \
   --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version> \
   --json > <ashlar-npm-provenance.json>
-node packages/cli/dist/index.js release public-trust-verify \
+pnpm ashlar release public-trust-verify \
   --registry <signed-registry-artifact>
-node packages/cli/dist/index.js release public-trust-verify \
+pnpm ashlar release public-trust-verify \
   --registry <signed-registry-artifact> \
   --json > <ashlar-public-trust.json>
-node packages/cli/dist/index.js release verify-trust-bundle \
+pnpm ashlar release verify-trust-bundle \
   --registry <signed-registry-artifact> \
   --bundle <ashlar-trust-bundle.json> \
   --sbom <ashlar-sbom.spdx.json> \
@@ -133,7 +133,7 @@ Strict `ashlar release readiness` fails until all three record types exist.
 For completed reviews, maintainers can use the guarded record writer instead of hand-copying a template. It requires reviewer metadata and refuses placeholder fields; the `stable-evidence` variant also runs `evidence review-status` and will not write a completed record while the bundle is blocked.
 
 ```bash
-node packages/cli/dist/index.js release review-record stable-evidence \
+pnpm ashlar release review-record stable-evidence \
   --output docs/reviews/stable-evidence-button-2026-05-05.md \
   --reviewer "<reviewer>" \
   --affiliation "<organization>" \
@@ -150,8 +150,8 @@ node packages/cli/dist/index.js release review-record stable-evidence \
 Before asking release readiness to count the records, preflight them directly:
 
 ```bash
-node packages/cli/dist/index.js release review-record-check
-node packages/cli/dist/index.js release review-record-check docs/reviews/stable-evidence-button-2026-05-05.md
+pnpm ashlar release review-record-check
+pnpm ashlar release review-record-check docs/reviews/stable-evidence-button-2026-05-05.md
 ```
 
 For `stable-evidence-*` records, this checker reruns `ashlar evidence review-status` against the `Evidence bundle path` in the record and verifies local `Publication receipt` JSON from `ashlar evidence publish --output` against the signed registry state. A markdown record that looks complete but points at a blocked bundle, missing receipt, stale receipt, or unpublished registry evidence does not count.
@@ -167,18 +167,18 @@ The first partner review should test the validator wedge and the service-flow pr
 Maintainer prep:
 
 ```bash
-node packages/cli/dist/index.js release design-partner-checklist \
+pnpm ashlar release design-partner-checklist \
   --output reports/ashlar-design-partner-checklist.md
 ```
 
 Suggested reviewer flow:
 
 ```bash
-node packages/cli/dist/index.js audit --policy federal --explain examples/legacy-federal-project/index.html
-node packages/cli/dist/index.js audit --policy all --registry ./registry examples/service-flow/benefit-application.pass.html
-node packages/cli/dist/index.js search "benefits application" --registry ./registry
-node packages/cli/dist/index.js suggest "Build a benefits application form"
-node packages/cli/dist/index.js view button --registry ./registry
+pnpm ashlar audit --policy federal --explain examples/legacy-federal-project/index.html
+pnpm ashlar audit --policy all --registry ./registry examples/service-flow/benefit-application.pass.html
+pnpm ashlar search "benefits application" --registry ./registry
+pnpm ashlar suggest "Build a benefits application form"
+pnpm ashlar view button --registry ./registry
 ```
 
 Use the generated `ashlar-design-partner-checklist.md` as the reviewer acceptance checklist. The checklist is not proof by itself; it should drive a real partner conversation that is then recorded as a completed `docs/reviews/design-partner-*.md` file.
