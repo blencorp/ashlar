@@ -6,7 +6,7 @@ For the current prompt-to-artifact gap map against the broader "gov shadcn" obje
 
 Date: 2026-05-08
 Phase: v0.0 prototype
-Baseline: current checkout after package namespace/versioning, GitHub Packages workflow wiring and readiness checks, public family-language cleanup, CI annotation cleanup, package versioning, current proof-audit refresh, numbered-family leak removal, repo doctor workflow, testing-session launcher, nested-worktree doctor fix, manual testing checklist support, and post-merge CI/Version Packages success through #107
+Baseline: current checkout after package namespace/versioning, GitHub Packages workflow wiring and readiness checks, public family-language cleanup, CI annotation cleanup, package versioning, current proof-audit refresh, numbered-family leak removal, repo doctor workflow, testing-session launcher, nested-worktree doctor fix, manual testing checklist support, and post-merge CI/Version Packages success through #108
 Proof tracking: [Replacement-grade proof gates](https://github.com/blencorp/ashlar/milestone/1) milestone, issues [#22](https://github.com/blencorp/ashlar/issues/22), [#23](https://github.com/blencorp/ashlar/issues/23), and [#24](https://github.com/blencorp/ashlar/issues/24)
 Strict readiness: still failing by design on `stable-markup-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`
 
