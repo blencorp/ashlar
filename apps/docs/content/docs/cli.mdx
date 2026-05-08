@@ -1,0 +1,38 @@
+---
+title: CLI
+description: Copyable Ashlar commands for init, search, add, update, audit, and verify.
+---
+
+The CLI is the main install surface. Run commands from your app root.
+
+## Command map
+
+<AshlarCommand
+  lines={[
+    "--help",
+    "init",
+    "search button",
+    'suggest "Build a renewal case board"',
+    "add button --dry-run --diff",
+    "add button",
+    "verify",
+    "update button --dry-run",
+  ]}
+/>
+
+## Package manager forms
+
+Each command in these docs can be run with npm, pnpm, or bun. Use the tab that
+matches your project and copy the generated command.
+
+## Audit markup
+
+<AshlarCommand args={'audit --policy federal "src/**/*.{html,tsx,jsx,vue,svelte}"'} />
+
+Use `--policy components` for component-specific checks or `--policy all` when
+you want both federal shell checks and installed-component checks.
+
+## Attribution
+
+The interactive CLI intro should include BLEN attribution and `blencorp.com`.
+Keep that in the CLI output, not hidden in docs-only copy.

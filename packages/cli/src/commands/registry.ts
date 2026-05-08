@@ -1,10 +1,11 @@
 import type { Command } from "commander";
+import { defaultRegistryPath } from "../lib/default-registry.js";
 import { mirrorRegistry } from "../lib/registry-mirror.js";
 
 type RegistryMirrorOptions = {
   force?: boolean;
   output: string;
-  registry: string;
+  registry?: string;
 };
 
 export function registerRegistryCommand(program: Command) {
@@ -14,13 +15,13 @@ export function registerRegistryCommand(program: Command) {
     .command("mirror")
     .description("Verify and copy a registry for offline use")
     .requiredOption("--output <path>", "Output directory")
-    .option("--registry <path>", "Registry path or URL", "./registry")
+    .option("--registry <path>", "Registry path, URL, or built-in registry alias")
     .option("--force", "Replace an existing mirror directory")
     .action((options: RegistryMirrorOptions) => {
       try {
         const result = mirrorRegistry({
           cwd: process.cwd(),
-          registryPath: options.registry,
+          registryPath: options.registry ?? defaultRegistryPath(),
           output: options.output,
           force: Boolean(options.force),
         });

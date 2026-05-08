@@ -1,5 +1,14 @@
 # @blen/ashlar
 
+## 0.3.23
+
+### Patch Changes
+
+- [#151](https://github.com/blencorp/ashlar/pull/151) [`afe5891`](https://github.com/blencorp/ashlar/commit/afe5891c9bf213e3c4301ce19aa886a0840f9168) Thanks [@naodya](https://github.com/naodya)! - Bundle the source registry with the published CLI so user commands can initialize,
+  search, add, and verify components from `@blen/ashlar` without a local checkout.
+- Updated dependencies [[`afe5891`](https://github.com/blencorp/ashlar/commit/afe5891c9bf213e3c4301ce19aa886a0840f9168)]:
+  - @blen/ashlar-cli@0.3.23
+
 ## 0.3.22
 
 ### Patch Changes

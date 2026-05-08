@@ -1,0 +1,43 @@
+---
+title: Theming
+description: Default, VA, and USDA themes are token contracts that must stay grounded in real agency guidance.
+---
+
+The stock theme is **Default**. Do not label it Federal. Agency-specific themes
+should be treated as adapters around semantic tokens, not as proof that Ashlar is
+endorsed by an agency.
+
+## Sync local token output
+
+<AshlarCommand lines={["theme sync", "theme validate"]} />
+
+## Theme names
+
+- `default`: neutral Ashlar baseline for public-service apps.
+- `va`: illustrative VA-aligned adapter; ground changes in VA.gov Design System
+  guidance before calling the theme accurate.
+- `usda`: illustrative USDA-aligned adapter; ground changes in USDA digital and
+  style guidance before calling the theme accurate.
+
+## Agency research sources
+
+- USWDS: https://designsystem.digital.gov/
+- VA.gov Design System: https://design.va.gov/
+- USDA Style Guide: https://www.usda.gov/about-usda/policies-and-links/digital/usda-style-guide
+
+## CSS output
+
+```bash
+src/ashlar/ashlar.css
+src/ashlar/themes/theme.css
+src/ashlar/themes/tailwind-theme.css
+src/ashlar/themes/tokens.ts
+```
+
+## Review checklist
+
+- Forced-colors and visible focus must survive theme switching.
+- Token names should describe intent, not agency color trivia.
+- Agency logos belong in agency selectors and examples only when usage rights and
+  source guidance are explicit.
+- Visual tests should cover light, dark, and system mode for every theme.

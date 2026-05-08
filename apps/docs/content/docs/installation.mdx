@@ -1,0 +1,45 @@
+---
+title: Installation
+description: Initialize Ashlar in an existing app and install your first source capsules.
+---
+
+Install Ashlar from the root of the app where you want the source files to live.
+You do not need to clone the Ashlar repository or pass a local registry path.
+
+## Run init
+
+<AshlarCommand args="init" />
+
+`init` writes:
+
+- `ashlar.config.json` for registry, output paths, and style paths.
+- `ashlar-lock.json` for installed capsule hashes.
+- `src/ashlar/ashlar.css` and theme files.
+- `AGENTS.md` and `DESIGN.md` context files for AI-assisted work.
+
+## Add components
+
+<AshlarCommand args="add button alert text-input" />
+
+The default component directory is `src/ashlar/components`. You can preview the
+write first:
+
+<AshlarCommand args="add button --dry-run --diff" />
+
+## Import styles
+
+Import the generated Ashlar entrypoint from your app's global stylesheet or main
+entry file:
+
+```css
+@import "./src/ashlar/ashlar.css";
+```
+
+Adjust the path to match where your global CSS file lives.
+
+## Verify
+
+<AshlarCommand args="verify" />
+
+Run `verify` after adding or updating components. It checks installed files
+against `ashlar-lock.json` and the registry metadata bundled with the CLI.

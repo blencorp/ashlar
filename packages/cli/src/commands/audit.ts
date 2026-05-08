@@ -5,6 +5,7 @@ import {
   runAudit,
   type AuditPolicy,
 } from "../lib/audit-runner.js";
+import { defaultRegistryPath } from "../lib/default-registry.js";
 import type { PolicyFinding } from "../lib/policy/federal.js";
 import { toSarif } from "../lib/sarif.js";
 
@@ -51,7 +52,7 @@ export function registerAuditCommand(program: Command) {
     .option("--explain", "Print explanatory help for findings")
     .option("--policy <name>", "Run a named policy pack: federal, components, or all")
     .option("--sarif", "Emit SARIF")
-    .option("--registry <path>", "Registry path (defaults to ./registry)")
+    .option("--registry <path>", "Registry path or built-in registry alias")
     .action((files: string[] | undefined, options: AuditOptions) => {
       if (options.policy && !isKnownAuditPolicy(options.policy)) {
         console.error(`Unknown Ashlar policy pack: ${options.policy}`);
@@ -60,7 +61,7 @@ export function registerAuditCommand(program: Command) {
         return;
       }
 
-      const registryPath = options.registry ?? "./registry";
+      const registryPath = options.registry ?? defaultRegistryPath();
       const cwd = process.cwd();
       const policy = (options.policy ?? null) as AuditPolicy | null;
       const findings = policy ? runAudit({ cwd, files, policy, registryPath }) : [];

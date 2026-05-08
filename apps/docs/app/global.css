@@ -1,0 +1,628 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+
+:root {
+  --ashlar-blue: #005ea8;
+  --ashlar-blue-dark: #1a4480;
+  --ashlar-red: #b50909;
+  --ashlar-ink: var(--color-fd-foreground);
+  --ashlar-muted: var(--color-fd-muted-foreground);
+  --ashlar-border: var(--color-fd-border);
+  --ashlar-surface: var(--color-fd-card);
+  --ashlar-surface-subtle: var(--color-fd-muted);
+  --ashlar-code-bg: #111820;
+  --ashlar-code-fg: #f7f9fb;
+}
+
+.dark {
+  --ashlar-blue: #58b4ff;
+  --ashlar-blue-dark: #8ec8ff;
+  --ashlar-red: #ff6f61;
+  --ashlar-code-bg: #0c1117;
+  --ashlar-code-fg: #f7f9fb;
+}
+
+html {
+  letter-spacing: 0;
+}
+
+body {
+  background: var(--color-fd-background);
+  color: var(--color-fd-foreground);
+}
+
+pre,
+code {
+  letter-spacing: 0;
+}
+
+.ashlar-docs-shell {
+  --ashlar-header-height: 58px;
+  --ashlar-docs-sidebar-width: 288px;
+  --ashlar-docs-menu-width: 224px;
+  min-height: 100vh;
+}
+
+.ashlar-docs-topbar {
+  background: color-mix(in srgb, var(--color-fd-background) 94%, transparent);
+  backdrop-filter: blur(14px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.ashlar-docs-topbar-inner {
+  align-items: center;
+  display: flex;
+  gap: 22px;
+  height: var(--ashlar-header-height);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.ashlar-docs-logo {
+  align-items: center;
+  color: var(--color-fd-foreground);
+  display: inline-flex;
+  font-weight: 760;
+  text-decoration: none;
+}
+
+.ashlar-docs-topbar nav {
+  align-items: center;
+  display: flex;
+  gap: 24px;
+}
+
+.ashlar-docs-topbar-link,
+.ashlar-docs-github {
+  color: var(--color-fd-foreground);
+  font-size: 0.92rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.ashlar-docs-topbar-link:hover,
+.ashlar-docs-github:hover {
+  color: var(--ashlar-blue);
+}
+
+.ashlar-docs-github {
+  margin-left: auto;
+}
+
+.ashlar-docs-layout {
+  display: grid;
+  grid-template-columns: var(--ashlar-docs-sidebar-width) minmax(0, 1fr);
+  margin-inline: auto;
+  min-height: calc(100vh - var(--ashlar-header-height));
+  padding-inline: 8px;
+}
+
+.ashlar-docs-sidebar {
+  background: transparent;
+  color: var(--color-fd-foreground);
+  position: relative;
+}
+
+.ashlar-docs-sidebar::after {
+  background: linear-gradient(180deg, transparent, var(--ashlar-border) 18%, transparent);
+  bottom: 0;
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 36px;
+  width: 1px;
+}
+
+.ashlar-docs-sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  height: calc(100vh - var(--ashlar-header-height));
+  margin-inline: auto;
+  overflow-y: auto;
+  padding: 34px 8px 18px;
+  position: sticky;
+  top: var(--ashlar-header-height);
+  width: var(--ashlar-docs-menu-width);
+}
+
+.ashlar-docs-nav {
+  display: grid;
+  gap: 4px;
+}
+
+.ashlar-docs-nav p,
+.ashlar-docs-toc p {
+  color: var(--ashlar-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.ashlar-docs-nav-link {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--color-fd-foreground);
+  font-size: 0.88rem;
+  font-weight: 620;
+  min-height: 30px;
+  padding: 5px 10px;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.ashlar-docs-nav-link[data-active="true"] {
+  background: var(--color-fd-accent);
+  border-color: var(--color-fd-border);
+  color: var(--color-fd-accent-foreground);
+}
+
+.ashlar-docs-sidebar-footer {
+  align-items: center;
+  border: 1px solid var(--ashlar-border);
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: auto;
+  padding: 6px 8px;
+}
+
+.ashlar-docs-sidebar-footer a,
+.ashlar-docs-sidebar-footer button {
+  background: transparent;
+  border: 0;
+  color: var(--ashlar-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 4px;
+  text-decoration: none;
+}
+
+.ashlar-docs-page {
+  align-items: stretch;
+  display: flex;
+  min-width: 0;
+  padding: 0 0 72px;
+}
+
+.ashlar-docs-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.ashlar-docs-article {
+  margin-inline: auto;
+  max-width: 40rem;
+  min-width: 0;
+  padding: 42px 0 0;
+  width: min(100%, 40rem);
+}
+
+.ashlar-docs-header {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 46px;
+}
+
+.ashlar-docs-header h1 {
+  color: var(--color-fd-foreground);
+  font-size: 2rem;
+  font-weight: 760;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.ashlar-docs-header p {
+  color: var(--ashlar-muted);
+  font-size: 1rem;
+  line-height: 1.55;
+  margin: 0;
+  max-width: 35rem;
+}
+
+.ashlar-docs-body {
+  color: var(--color-fd-foreground);
+}
+
+.ashlar-docs-toc {
+  align-content: start;
+  display: grid;
+  gap: 10px;
+  flex: 0 0 var(--ashlar-docs-sidebar-width);
+  max-height: calc(100vh - var(--ashlar-header-height));
+  overflow-y: auto;
+  padding: 44px 32px 64px;
+  position: sticky;
+  top: var(--ashlar-header-height);
+}
+
+.ashlar-docs-toc a {
+  color: var(--ashlar-muted);
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ashlar-docs-toc a:hover {
+  color: var(--color-fd-foreground);
+}
+
+.ashlar-docs-toc a[data-depth="3"] {
+  padding-left: 16px;
+}
+
+.ashlar-docs-toc a[data-depth="4"] {
+  padding-left: 28px;
+}
+
+.ashlar-home {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(0, 94, 168, 0.08), transparent 360px), var(--color-fd-background);
+}
+
+.dark .ashlar-home {
+  background:
+    linear-gradient(180deg, rgba(88, 180, 255, 0.1), transparent 360px), var(--color-fd-background);
+}
+
+.ashlar-home-shell {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 72px;
+}
+
+.ashlar-home-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0 48px;
+}
+
+.ashlar-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  color: var(--color-fd-foreground);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.ashlar-wordmark span {
+  color: var(--ashlar-red);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.ashlar-home-actions,
+.ashlar-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ashlar-button {
+  align-items: center;
+  border: 1px solid var(--ashlar-blue);
+  background: var(--ashlar-blue);
+  color: white;
+  display: inline-flex;
+  font-weight: 750;
+  min-height: 40px;
+  padding: 9px 14px;
+  text-decoration: none;
+}
+
+.ashlar-button[data-variant="secondary"] {
+  background: transparent;
+  color: var(--ashlar-blue);
+}
+
+.ashlar-hero {
+  display: grid;
+  gap: 22px;
+  max-width: 820px;
+}
+
+.ashlar-kicker {
+  color: var(--ashlar-blue-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.ashlar-hero h1 {
+  font-size: clamp(2.4rem, 6vw, 5.7rem);
+  line-height: 0.98;
+  margin: 0;
+  max-width: 790px;
+}
+
+.ashlar-hero p {
+  color: var(--ashlar-muted);
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 760px;
+}
+
+.ashlar-status-band {
+  border-block: 1px solid var(--ashlar-border);
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 56px;
+  padding: 24px 0;
+}
+
+.ashlar-status-band div {
+  display: grid;
+  gap: 6px;
+}
+
+.ashlar-status-band strong {
+  font-size: 0.84rem;
+  text-transform: uppercase;
+}
+
+.ashlar-status-band span {
+  color: var(--ashlar-muted);
+  line-height: 1.5;
+}
+
+.ashlar-code-panel {
+  background: var(--ashlar-code-bg);
+  color: var(--ashlar-code-fg);
+  margin-top: 40px;
+  overflow-x: auto;
+  padding: 20px;
+}
+
+.ashlar-code-panel pre {
+  margin: 0;
+}
+
+.ashlar-code-panel code {
+  font-size: 0.94rem;
+}
+
+.ashlar-command-tabs {
+  background: var(--color-fd-card);
+  border: 1px solid var(--ashlar-border);
+  border-radius: 10px;
+  color: var(--color-fd-card-foreground);
+  margin: 22px 0 34px;
+  overflow: hidden;
+}
+
+.ashlar-command-tabs-header {
+  align-items: center;
+  background: var(--ashlar-surface-subtle);
+  border-bottom: 1px solid var(--ashlar-border);
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.ashlar-command-tabs-header div {
+  display: flex;
+  gap: 4px;
+}
+
+.ashlar-command-tabs button {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: var(--ashlar-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 750;
+  min-height: 30px;
+  padding: 4px 9px;
+}
+
+.ashlar-command-tabs button[aria-selected="true"] {
+  background: var(--color-fd-background);
+  border-color: var(--ashlar-border);
+  color: var(--color-fd-foreground);
+}
+
+.ashlar-command-tabs pre {
+  margin: 0;
+  overflow-x: auto;
+  padding: 16px 18px;
+}
+
+.ashlar-command-tabs code {
+  color: var(--ashlar-blue-dark);
+  display: block;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.dark .ashlar-command-tabs code {
+  color: #8ec8ff;
+}
+
+.ashlar-component-index {
+  background: var(--color-fd-card);
+  border: 1px solid var(--ashlar-border);
+  border-collapse: separate;
+  border-radius: 10px;
+  border-spacing: 0;
+  color: var(--color-fd-card-foreground);
+  display: table;
+  margin: 24px 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.ashlar-component-index caption {
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.ashlar-component-row {
+  display: table-row;
+}
+
+.ashlar-component-row th,
+.ashlar-component-row td {
+  border-top: 1px solid var(--ashlar-border);
+  padding: 16px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.ashlar-component-row[data-header="true"] {
+  background: var(--ashlar-surface-subtle);
+  color: var(--color-fd-foreground);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.ashlar-component-row[data-header="true"] th {
+  border-top: 0;
+}
+
+.ashlar-component-row th,
+.ashlar-component-row td,
+.ashlar-component-row strong {
+  min-width: 0;
+}
+
+.ashlar-component-row small {
+  color: var(--ashlar-muted);
+  display: block;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  margin-top: 4px;
+}
+
+.ashlar-component-row code {
+  overflow-wrap: anywhere;
+}
+
+.ashlar-research-note {
+  border-left: 4px solid var(--ashlar-blue);
+  color: var(--ashlar-muted);
+  margin: 18px 0 28px;
+  padding-left: 14px;
+}
+
+@media (max-width: 860px) {
+  .ashlar-docs-layout {
+    display: block;
+  }
+
+  .ashlar-docs-sidebar {
+    border-bottom: 1px solid var(--ashlar-border);
+    border-right: 0;
+  }
+
+  .ashlar-docs-sidebar-inner {
+    height: auto;
+    padding: 16px;
+    position: static;
+    width: auto;
+  }
+
+  .ashlar-docs-nav {
+    gap: 2px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding-top: 10px;
+  }
+
+  .ashlar-docs-nav p {
+    grid-column: 1 / -1;
+  }
+
+  .ashlar-docs-nav-link {
+    width: auto;
+  }
+
+  .ashlar-docs-sidebar-footer {
+    margin-top: 4px;
+  }
+
+  .ashlar-docs-page {
+    display: block;
+    padding: 36px 18px 56px;
+  }
+
+  .ashlar-docs-article {
+    max-width: none;
+    padding: 0;
+    width: 100%;
+  }
+
+  .ashlar-docs-header {
+    margin-bottom: 36px;
+  }
+
+  .ashlar-docs-toc {
+    display: none;
+  }
+
+  .ashlar-home-nav,
+  .ashlar-status-band {
+    grid-template-columns: 1fr;
+  }
+
+  .ashlar-home-nav {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-bottom: 34px;
+  }
+
+  .ashlar-component-row {
+    display: block;
+  }
+
+  .ashlar-component-row[data-header="true"] {
+    display: none;
+  }
+
+  .ashlar-component-index,
+  .ashlar-component-index tbody,
+  .ashlar-component-row td {
+    display: block;
+  }
+
+  .ashlar-component-row td {
+    border-top: 0;
+    padding: 12px 14px;
+  }
+
+  .ashlar-component-row td::before {
+    color: var(--ashlar-muted);
+    content: attr(data-label);
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  .ashlar-component-row + .ashlar-component-row {
+    border-top: 1px solid var(--ashlar-border);
+  }
+}

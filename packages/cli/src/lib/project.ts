@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
+import { defaultRegistryPath } from "./default-registry.js";
 import { describeErrors, validate } from "./schema-validate.js";
 
 export type AshlarConfig = {
@@ -55,7 +56,7 @@ export function readConfig(): ResolvedAshlarConfig {
 export function defaultConfig(overrides: Partial<AshlarConfig> = {}): ResolvedAshlarConfig {
   return normalizeConfig({
     $schema: "https://ashlar.dev/schemas/config.schema.json",
-    registry: "./registry",
+    registry: defaultRegistryPath(),
     componentsDir: "src/ashlar/components",
     indexesDir: "src/ashlar/indexes",
     styles: {
@@ -71,7 +72,7 @@ export function defaultConfig(overrides: Partial<AshlarConfig> = {}): ResolvedAs
 export function normalizeConfig(config: AshlarConfig): ResolvedAshlarConfig {
   return {
     $schema: config.$schema,
-    registry: config.registry ?? "./registry",
+    registry: config.registry ?? defaultRegistryPath(),
     componentsDir: config.componentsDir ?? "src/ashlar/components",
     indexesDir: config.indexesDir ?? "src/ashlar/indexes",
     styles: {
@@ -85,7 +86,7 @@ export function normalizeConfig(config: AshlarConfig): ResolvedAshlarConfig {
 
 export function readLockfile(): AshlarLockfile {
   if (!existsSync("ashlar-lock.json")) {
-    return { version: "1", registry: "./registry", components: {} };
+    return { version: "1", registry: defaultRegistryPath(), components: {} };
   }
 
   const lockfile = JSON.parse(readFileSync("ashlar-lock.json", "utf8")) as AshlarLockfile;

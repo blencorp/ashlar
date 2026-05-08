@@ -1,0 +1,31 @@
+---
+title: Examples
+description: Integrate Ashlar into real apps across the framework matrix.
+---
+
+Examples should prove integration, not decorate the docs. Start with a real app,
+run `init`, add components, import the generated CSS, and keep the copied source
+under version control.
+
+## Existing app flow
+
+<AshlarCommand lines={["init", "add button alert text-input", "verify"]} />
+
+## Framework notes
+
+- Vanilla: import the generated stylesheet from your main CSS file and use the
+  copied HTML/CSS contracts directly.
+- React SPA: import the generated stylesheet from `src/main.tsx` or your global
+  CSS, then wrap copied markup in your app components.
+- Next.js: import the generated stylesheet from `app/globals.css`.
+- Svelte: import the generated stylesheet from your app-level CSS or layout.
+- Vue: import the generated stylesheet from `src/main.ts` or your global CSS.
+
+## Example quality bar
+
+- Use real public-service workflows like case queues, renewal forms, document
+  review, and approvals.
+- Avoid one-off demo shells that do not exercise components and theme tokens.
+- Cover vanilla, React SPA, Next.js, Svelte, Vue, and Vite with the same
+  init/add/verify path.
+- Every example should have install, build, audit, and visual smoke coverage.

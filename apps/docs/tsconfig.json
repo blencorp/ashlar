@@ -1,20 +1,24 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "es2023",
+    "allowJs": true,
+    "baseUrl": ".",
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "ignoreDeprecations": "6.0",
+    "incremental": true,
+    "jsx": "preserve",
+    "lib": ["ES2024", "DOM", "DOM.Iterable"],
     "module": "esnext",
-    "lib": ["ES2023", "DOM"],
-    "types": ["vite/client", "node", "vitest"],
-    "skipLibCheck": true,
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "resolveJsonModule": true,
     "noEmit": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true
+    "paths": {
+      "@/*": ["./*"],
+      "collections/*": ["./.source/*"]
+    },
+    "plugins": [{ "name": "next" }]
   },
-  "include": ["src", "vite.config.ts"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".source/**/*.ts"],
+  "exclude": ["node_modules"]
 }

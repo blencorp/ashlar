@@ -1,0 +1,37 @@
+---
+title: Trust and verification
+description: Verify installed source and keep public claims tied to evidence.
+---
+
+Ashlar's trust model starts in the app that installs the source. The CLI writes a
+lockfile, records capsule hashes, and lets you verify local files after changes.
+
+## Verify installed source
+
+<AshlarCommand args="verify" />
+
+`verify` checks:
+
+- the installed capsule version in `ashlar-lock.json`;
+- the registry capsule hash;
+- the copied files in your project;
+- local edits that no longer match the original source hash.
+
+## Audit before release
+
+<AshlarCommand args={'audit --policy all "src/**/*.{html,tsx,jsx,vue,svelte}"'} />
+
+## Claim boundary
+
+Allowed:
+
+- Source-owned public-service UI starting points.
+- Component metadata, evidence records, and local verification.
+- Default theme plus agency-inspired theme adapters when sources are cited.
+
+Blocked:
+
+- USWDS replacement.
+- Agency endorsement.
+- Accessibility-stable claims without completed review evidence.
+- Visual-only claims that are not backed by code, tests, and registry metadata.

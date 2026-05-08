@@ -61,6 +61,21 @@ function assertPublicTarball(tarball) {
   }
 }
 
+function assertTarballEntry(tarball, requiredEntry) {
+  const result = spawnSync("tar", ["-tf", tarball], {
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  if (result.status !== 0) {
+    throw new Error(`Unable to inspect package tarball ${tarball}:\n${result.stderr ?? ""}`);
+  }
+
+  const entries = (result.stdout ?? "").split("\n").filter(Boolean);
+  if (!entries.includes(requiredEntry)) {
+    throw new Error(`Package tarball ${tarball} is missing required entry: ${requiredEntry}`);
+  }
+}
+
 function tarballPackageJson(tarball) {
   const result = spawnSync("tar", ["-xOf", tarball, "package/package.json"], {
     encoding: "utf8",
@@ -123,6 +138,7 @@ try {
   assertPublicTarball(schemasTarball);
   assertPublicTarball(cliTarball);
   assertPublicTarball(ashlarTarball);
+  assertTarballEntry(cliTarball, "package/dist/registry/index.json");
 
   const packedCli = tarballPackageJson(cliTarball);
   if (packedCli.bin?.ashlar !== "./dist/index.js") {
@@ -166,6 +182,11 @@ try {
       `Expected packaged CLI to report version ${cliVersion}, but ashlar --version returned ${version}.`,
     );
   }
+  run(["--dir", appDir, "exec", "ashlar", "init", "--yes"], { capture: true });
+  run(["--dir", appDir, "exec", "ashlar", "search", "button"], { capture: true });
+  run(["--dir", appDir, "exec", "ashlar", "add", "button", "--yes"], { capture: true });
+  run(["--dir", appDir, "exec", "ashlar", "verify"], { capture: true });
+
   const audit = run(
     ["--dir", appDir, "exec", "ashlar", "audit", "--policy", "federal", "page.html"],
     { capture: true },

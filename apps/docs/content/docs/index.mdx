@@ -1,0 +1,38 @@
+---
+title: Introduction
+description: Ashlar is a proof-gated source registry for public-service interfaces.
+---
+
+Ashlar is a source registry for public-service interfaces. It gives product teams
+copyable UI source, registry metadata, and verification commands without hiding
+the files in a runtime package.
+
+<Callout>
+Ashlar is not a USWDS replacement. Treat it as a source-owned starter system for
+public-service apps while evidence and agency-specific review continue.
+</Callout>
+
+## Start in your app
+
+Run Ashlar from the root of the app you already own:
+
+<AshlarCommand lines={["init", "add button alert text-input", "verify"]} />
+
+## What should feel familiar
+
+- `init` writes project-local configuration and stylesheet entrypoints.
+- `add` copies component source into your app instead of importing an opaque UI
+  bundle.
+- `verify` checks the installed source against registry metadata and the
+  lockfile.
+- Commands are copyable and package-manager first, following the same user shape
+  as modern source-registry tools.
+
+## What should feel different
+
+- Ashlar starts with validation and trust checks, not visual novelty.
+- The stock theme is called Default, not Federal.
+- Agency themes must be traced to real agency design guidance before they become
+  more than illustrative presets.
+- AI guidance is generated alongside installed source so assistants can see what
+  code came from the registry.

@@ -2,20 +2,34 @@
   "name": "@blen/ashlar-docs",
   "version": "0.0.0",
   "private": true,
-  "description": "Static first-run documentation site for Ashlar adoption.",
+  "description": "Next.js and Fumadocs documentation app for Ashlar.",
   "type": "module",
   "scripts": {
-    "dev": "vite --host 127.0.0.1 --port 4175 --strictPort",
-    "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1 --port 4175 --strictPort",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run --passWithNoTests",
-    "lint": "biome lint src"
+    "dev": "fumadocs-mdx && next dev --hostname 127.0.0.1 --port 4175",
+    "build": "fumadocs-mdx && next build",
+    "preview": "next start --hostname 127.0.0.1 --port 4175",
+    "typecheck": "fumadocs-mdx && tsc -p tsconfig.json --noEmit",
+    "test": "fumadocs-mdx && vitest run --passWithNoTests",
+    "lint": "biome lint app components content lib mdx-components.tsx next.config.mjs postcss.config.mjs source.config.ts"
+  },
+  "dependencies": {
+    "@takumi-rs/image-response": "catalog:",
+    "fumadocs-core": "catalog:",
+    "fumadocs-mdx": "catalog:",
+    "fumadocs-ui": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tailwindcss": "catalog:"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "catalog:",
+    "@types/mdast": "catalog:",
+    "@types/mdx": "catalog:",
     "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "typescript": "catalog:",
-    "vite": "catalog:",
     "vitest": "catalog:"
   }
 }

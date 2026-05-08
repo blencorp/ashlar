@@ -1,6 +1,11 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { isAbsolute, join, resolve } from "node:path";
 import type { CapsuleTrustRoot } from "./capsule.js";
+import {
+  DEFAULT_REGISTRY_ALIAS,
+  isDefaultRegistryAlias,
+  resolveBundledRegistryRoot,
+} from "./default-registry.js";
 import { describeErrors, validate } from "./schema-validate.js";
 
 export type RegistryLayer =
@@ -122,10 +127,17 @@ function readJson<T>(path: string): T {
 }
 
 export function resolveRegistryRoot(cwd: string, registryPath: string): string {
+  if (isDefaultRegistryAlias(registryPath)) {
+    return resolveBundledRegistryRoot(cwd);
+  }
+
   return isAbsolute(registryPath) ? registryPath : resolve(cwd, registryPath);
 }
 
-export function readRegistryIndex(cwd: string, registryPath = "./registry"): RegistryIndex {
+export function readRegistryIndex(
+  cwd: string,
+  registryPath = DEFAULT_REGISTRY_ALIAS,
+): RegistryIndex {
   const indexPath = join(resolveRegistryRoot(cwd, registryPath), "index.json");
 
   if (!existsSync(indexPath)) {
@@ -143,7 +155,7 @@ export function readRegistryIndex(cwd: string, registryPath = "./registry"): Reg
 
 export function readRegistryTrustRoot(
   cwd: string,
-  registryPath = "./registry",
+  registryPath = DEFAULT_REGISTRY_ALIAS,
 ): CapsuleTrustRoot | undefined {
   const trustRootPath = join(resolveRegistryRoot(cwd, registryPath), "trust-root.json");
 
@@ -162,7 +174,10 @@ export function readRegistryTrustRoot(
   return trustRoot;
 }
 
-export function listComponents(cwd: string, registryPath = "./registry"): RegistryListItem[] {
+export function listComponents(
+  cwd: string,
+  registryPath = DEFAULT_REGISTRY_ALIAS,
+): RegistryListItem[] {
   const index = readRegistryIndex(cwd, registryPath);
 
   return Object.entries(index.components)
@@ -173,7 +188,7 @@ export function listComponents(cwd: string, registryPath = "./registry"): Regist
 export function resolveComponentVersion(
   cwd: string,
   name: string,
-  registryPath = "./registry",
+  registryPath = DEFAULT_REGISTRY_ALIAS,
 ): string {
   const component = listComponents(cwd, registryPath).find((item) => item.name === name);
 
@@ -200,7 +215,7 @@ function extractAshlarMetadata(cem: CemManifest): AshlarMetadata {
 export function getComponent(
   cwd: string,
   name: string,
-  registryPath = "./registry",
+  registryPath = DEFAULT_REGISTRY_ALIAS,
 ): RegistryComponent {
   const item = listComponents(cwd, registryPath).find((component) => component.name === name);
 
@@ -216,7 +231,7 @@ export function getComponentVersion(
   cwd: string,
   name: string,
   version: string,
-  registryPath = "./registry",
+  registryPath = DEFAULT_REGISTRY_ALIAS,
 ): RegistryComponent {
   const item = listComponents(cwd, registryPath).find((component) => component.name === name);
 
