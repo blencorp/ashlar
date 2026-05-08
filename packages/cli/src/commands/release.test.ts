@@ -1453,6 +1453,38 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     );
   });
 
+  it("keeps proof action plan JSON stdout parseable when also writing Markdown output", () => {
+    const output = join(scratch, "proof-action-plan.md");
+    const result = runCli([
+      "release",
+      "proof-plan",
+      "--registry",
+      "./registry",
+      "--output",
+      output,
+      "--json",
+    ]);
+
+    expect(result.status).toBe(1);
+    expect(result.stdout).not.toContain("Wrote release proof action plan");
+
+    const plan = JSON.parse(result.stdout) as {
+      readiness: { status: string };
+      tracks: Array<{ commands: string[]; name: string }>;
+    };
+    const packageSpecs = [
+      `@blen/ashlar@${readPackageVersion("packages/ashlar")}`,
+      `@blen/ashlar-cli@${readPackageVersion("packages/cli")}`,
+      `@blen/ashlar-schemas@${readPackageVersion("packages/schemas")}`,
+    ];
+
+    expect(plan.readiness.status).toBe("fail");
+    expect(plan.tracks.flatMap((track) => track.commands).join("\n")).toContain(
+      packageSpecs.join(" "),
+    );
+    expect(readFileSync(output, "utf8")).toContain("# Ashlar Replacement Proof Action Plan");
+  });
+
   it("writes checkout-relative release-trust checklist paths for relative review pack output", () => {
     const outputArg = `reports/review-pack-${reviewFileSuffix()}`;
     const output = join(repoRoot, outputArg);

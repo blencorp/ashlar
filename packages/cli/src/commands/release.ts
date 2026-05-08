@@ -480,7 +480,9 @@ export function registerReleaseCommand(program: Command) {
         if (options.output) {
           mkdirSync(dirname(options.output), { recursive: true });
           writeFileSync(options.output, markdown);
-          console.log(`Wrote release proof action plan to ${options.output}`);
+          if (!options.json) {
+            console.log(`Wrote release proof action plan to ${options.output}`);
+          }
         }
 
         if (options.json) {
