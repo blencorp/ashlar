@@ -6,7 +6,7 @@ Accepted.
 
 ## Decision
 
-Ashlar markup primitive capsules, stored internally as layer `markup-primitives`, use semantic platform HTML plus Ashlar classes and data attributes as the canonical DOM contract.
+Ashlar foundation capsules, stored internally under the `markup-primitives` compatibility value, use semantic platform HTML plus Ashlar classes and data attributes as the canonical DOM contract.
 
 For example, Button is:
 
@@ -22,11 +22,11 @@ It is not:
 <ashlar-button variant="primary">Apply</ashlar-button>
 ```
 
-Interactive components, stored internally as layer `interactive-components`, may use custom elements when JavaScript behavior is genuinely required.
+Interactive controls, stored internally under the `interactive-components` compatibility value, may use custom elements when JavaScript behavior is genuinely required.
 
 ## Rationale
 
-The markup primitive layer exists specifically to work without JavaScript, framework adapters, hydration, or custom-element registration. Semantic HTML preserves built-in accessibility behavior, form participation, keyboard activation, progressive enhancement, CMS compatibility, and low bundle cost.
+The foundation family exists specifically to work without JavaScript, framework adapters, hydration, or custom-element registration. Semantic HTML preserves built-in accessibility behavior, form participation, keyboard activation, progressive enhancement, CMS compatibility, and low bundle cost.
 
 Custom elements remain appropriate for interactive stateful components such as ComboBox, Date Picker, Toast, and rich Upload controls.
 

@@ -40,7 +40,7 @@ No hosted MCP transport or write tools are in scope for v0.0.
 
 - Keep v0.0 MCP local stdio only.
 - Keep tool set read-only: `search_components`, `suggest_for_task`, `get_component`, `get_evidence`, `list_tokens`, `get_token`, `validate_usage`.
-- Keep `search_components` deterministic and metadata-backed in v0.0: component text, policy mappings, platform features, tokens, evidence status, layer, and stability only. Embedding-backed task suggestions remain a separate follow-up.
+- Keep `search_components` deterministic and metadata-backed in v0.0: component text, policy mappings, platform features, tokens, evidence status, family, and stability only. Embedding-backed task suggestions remain a separate follow-up.
 - Keep `suggest_for_task` deterministic in v0.0: return capsule recommendations and an install command, but never call `add`, edit files, or request network services.
 - Validate AI eval suite JSON with `ai-eval.schema.json`.
 - Route `validate_usage`, `audit`, and `ai-eval` through the same policy runner so findings are consistent.

@@ -1,4 +1,4 @@
-# ADR 0002 — Runtime architecture: five-layer model with platform-first markup primitives
+# ADR 0002 - Runtime architecture: five capsule families with platform-first foundations
 
 ## Status
 
@@ -6,15 +6,15 @@ Proposed.
 
 ## Decision
 
-Ashlar is organized as five layers, each independently usable:
+Ashlar is organized as five capsule families, each independently usable. Registry manifests still use an internal `layer` field for compatibility, but product docs and CLI output should use these family names:
 
-- **Markup primitives** (`markup-primitives`) — Pure CSS and HTML capsules; exploits the modern web platform; zero or trivial JavaScript. Targets ~70% of typical components.
-- **Interactive components** (`interactive-components`) — Web Components (Lit) wrapping Zag statecharts and signals. Targets the ~30% of components that legitimately need JavaScript state.
+- **Foundations** (`markup-primitives` internally) — Pure CSS and HTML capsules; exploits the modern web platform; zero or trivial JavaScript. Targets ~70% of typical components.
+- **Interactive controls** (`interactive-components` internally) — Web Components (Lit) wrapping Zag statecharts and signals. Targets the ~30% of components that legitimately need JavaScript state.
 - **Framework adapters** (`framework-adapters`) — `@blen/ashlar-react`, `@blen/ashlar-vue`, `@blen/ashlar-svelte`, and `@blen/ashlar-solid` auto-generated from extended Custom Elements Manifests.
 - **Service patterns** (`service-patterns`) — composed service flows such as eligibility check, document upload, and address form.
 - **Application blocks** (`application-blocks`) — same components rendered as Nunjucks, Twig, Jinja, ERB, and plain HTML.
 
-Tokens (DTCG 2025.10) sit beneath all layers as a framework-neutral contract.
+Tokens (DTCG 2025.10) sit beneath all families as a framework-neutral contract.
 
 ## Rationale
 
@@ -37,7 +37,7 @@ GOV.UK Frontend's empirical observation that UK government runs 24+ template lan
 **Negative**
 
 - More architectural surface than a single-framework library.
-- Five layers is more to document and explain.
+- Five families are more to document and explain.
 - Interactive components introduce dependencies on Lit and Zag.
 - Custom-element ARIA reflection is incomplete in Firefox; explicit ARIA fallbacks required.
 

@@ -413,7 +413,7 @@ This command is useful only after packages exist on npm. Until then, `ashlar rel
 Implemented locally. Verifies capsule manifests, reads the CSS and JavaScript runtime files listed in those manifests, computes raw and gzipped bytes, and fails CI when the combined gzipped CSS or JavaScript exceeds the configured budget. If explicit CLI flags are omitted, the command uses the integrity-covered `bundleBudget` defaults in each capsule manifest.
 
 - Current markup primitive twelve-capsule page: target under 20,992 B gzipped.
-- Markup primitive JavaScript: target exactly 0 B unless a component is explicitly moved out of the markup primitive layer.
+- Foundation JavaScript: target exactly 0 B unless a component is explicitly moved into an interactive family.
 - One interactive component added: target under 24 KiB gzipped.
 - Button v0.0 gate: under 4KB gzipped CSS.
 

@@ -108,7 +108,7 @@ These are tested in pattern evidence packets in addition to component-level evid
 
 ## Application Blocks
 
-The application block layer answers GOV.UK Frontend's empirical observation that government runs 24+ template languages. Ashlar ships the same component as multiple templates so server-rendered, CMS, and framework-less stacks can consume without a build step.
+The application block family answers GOV.UK Frontend's empirical observation that government runs 24+ template languages. Ashlar ships the same component as multiple templates so server-rendered, CMS, and framework-less stacks can consume without a build step.
 
 ### Supported template languages
 
