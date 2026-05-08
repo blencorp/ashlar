@@ -1152,11 +1152,17 @@ describe("evidence command", () => {
     expect(readme).toContain("ashlar evidence transcript-validate button");
     expect(readme).toContain("REVIEW.html");
     expect(readme).toContain("ashlar evidence finalize-stable button");
+    expect(readme).toContain("Maintainer Publication Handoff");
+    expect(readme).toContain("ashlar evidence publish button");
+    expect(readme).toContain("ashlar release review-record stable-evidence");
+    expect(readme).toContain("ashlar release review-record-check");
     expect(readme).toContain("Review packet manifest");
     expect(readme).toContain("REVIEWER_CHECKLIST.md");
     expect(issue).toContain("Stable Evidence Review: button@0.0.1");
     expect(issue).toContain(".github/ISSUE_TEMPLATE/stable_evidence_review.yml");
     expect(issue).toContain("ashlar evidence review-status button");
+    expect(issue).toContain("ashlar evidence publish");
+    expect(issue).toContain("ashlar release review-record stable-evidence");
     expect(issue).toContain("Review packet manifest");
     expect(issue).toContain("button-keyboard-transcript.json");
     expect(issue).toContain("REVIEW.html");
@@ -1166,6 +1172,9 @@ describe("evidence command", () => {
     expect(checklist).toContain("The review records observed behavior, not intent");
     expect(checklist).toContain("ashlar evidence review-status button");
     expect(checklist).toContain("ashlar evidence finalize-stable button");
+    expect(checklist).toContain("Maintainer Handoff");
+    expect(checklist).toContain("ashlar evidence publish button");
+    expect(checklist).toContain("ashlar release review-record-check");
   });
 
   it("prepares non-mutating stable evidence review bundles for every foundation capsule", () => {
@@ -1214,6 +1223,8 @@ describe("evidence command", () => {
     expect(index).toContain("# Stable Evidence Review Batch");
     expect(index).toContain("This directory is a review intake aid for foundation capsules.");
     expect(index).toContain("ashlar evidence review-status button --registry");
+    expect(index).toContain("ashlar evidence publish <component>");
+    expect(index).toContain("ashlar release review-record-check");
     expect(index).toContain("Strict readiness only counts completed external review records");
   });
 
