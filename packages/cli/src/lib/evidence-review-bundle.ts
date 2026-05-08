@@ -354,7 +354,7 @@ function reviewBundleManifest(
     stableClaim: false,
     requiresManualReview: true,
     generatedBy: {
-      command: `ashlar evidence prepare-stable ${bundle.component}`,
+      command: localAshlarCommand(`evidence prepare-stable ${bundle.component}`),
       registry: registryPath,
       fixture: relativeFixture,
     },

@@ -49,7 +49,7 @@ export const pages: DocPage[] = [
       },
       {
         label: "Read the current state",
-        command: "node packages/cli/dist/index.js status --registry ./registry",
+        command: "pnpm ashlar status --registry ./registry",
         note: "Reports initialization state, registry coverage, stable-evidence blockers, and next commands.",
       },
     ],
@@ -74,20 +74,19 @@ export const pages: DocPage[] = [
     commands: [
       {
         label: "Audit a compliant reference page",
-        command:
-          "node packages/cli/dist/index.js audit --policy federal --explain examples/plain-html/index.html",
+        command: "pnpm ashlar audit --policy federal --explain examples/plain-html/index.html",
         note: "Shows the expected zero-finding path for a minimal federal page shell.",
       },
       {
         label: "Audit a legacy federal fixture",
         command:
-          "node packages/cli/dist/index.js audit --policy federal --explain examples/legacy-federal-project/index.html",
+          "pnpm ashlar audit --policy federal --explain examples/legacy-federal-project/index.html",
         note: "Demonstrates adoption-wedge findings without requiring Ashlar components.",
       },
       {
         label: "Audit a service-flow proof",
         command:
-          "node packages/cli/dist/index.js audit --policy all --registry ./registry examples/service-flow/benefit-application.pass.html",
+          "pnpm ashlar audit --policy all --registry ./registry examples/service-flow/benefit-application.pass.html",
         note: "Runs federal page-shell and component anti-pattern rules together.",
       },
     ],
@@ -112,24 +111,23 @@ export const pages: DocPage[] = [
     commands: [
       {
         label: "Search registry metadata",
-        command: "node packages/cli/dist/index.js search button --registry ./registry",
+        command: "pnpm ashlar search button --registry ./registry",
         note: "Returns policy, feature, family, stability, evidence, and install command context.",
       },
       {
         label: "Ask for a task suggestion",
-        command:
-          'node packages/cli/dist/index.js suggest "Build a benefits application form" --registry ./registry',
+        command: 'pnpm ashlar suggest "Build a benefits application form" --registry ./registry',
         note: "Maps a public-service task to available capsules and explicit capability gaps.",
       },
       {
         label: "Preview installer writes",
-        command: "node packages/cli/dist/index.js add button --dry-run --diff",
+        command: "pnpm ashlar add button --dry-run --diff",
         note: "Verifies the capsule first, then shows planned writes and diffs without touching source.",
       },
       {
         label: "Install the core form path",
         command:
-          "node packages/cli/dist/index.js add form-field text-input textarea date-input select radio-group checkbox button alert error-summary identifier",
+          "pnpm ashlar add form-field text-input textarea date-input select radio-group checkbox button alert error-summary identifier",
         note: "Copies source, CEM, evidence, styles, lockfile entries, and agent instructions.",
       },
     ],
@@ -154,18 +152,17 @@ export const pages: DocPage[] = [
     commands: [
       {
         label: "Verify installed source",
-        command: "node packages/cli/dist/index.js verify",
+        command: "pnpm ashlar verify",
         note: "Checks installed file hashes, registry manifests, index-pinned hashes, and signatures.",
       },
       {
         label: "Mirror the registry",
-        command:
-          "node packages/cli/dist/index.js registry mirror --registry ./registry --output ./ashlar-mirror",
+        command: "pnpm ashlar registry mirror --registry ./registry --output ./ashlar-mirror",
         note: "Copies only a registry that passes capsule verification.",
       },
       {
         label: "Apply an upstream update",
-        command: "node packages/cli/dist/index.js update button --yes",
+        command: "pnpm ashlar update button --yes",
         note: "Runs a three-way merge path and requires explicit approval for accessibility-critical files.",
       },
     ],
@@ -193,12 +190,12 @@ export const pages: DocPage[] = [
     commands: [
       {
         label: "Sync theme outputs",
-        command: "node packages/cli/dist/index.js theme sync",
+        command: "pnpm ashlar theme sync",
         note: "Writes theme.css, tailwind-theme.css, and tokens.ts from local token JSON.",
       },
       {
         label: "Validate token contrast",
-        command: "node packages/cli/dist/index.js theme validate",
+        command: "pnpm ashlar theme validate",
         note: "Checks schema shape, required semantic tokens, and action color contrast.",
       },
       {
@@ -239,12 +236,12 @@ export const pages: DocPage[] = [
       },
       {
         label: "Inspect the CLI surface",
-        command: "node packages/cli/dist/index.js --help",
+        command: "pnpm ashlar --help",
         note: "Confirms the shadcn-style command flow, BLEN attribution, and local binary output after build.",
       },
       {
         label: "Check release blockers",
-        command: "node packages/cli/dist/index.js release readiness --registry ./registry",
+        command: "pnpm ashlar release readiness --registry ./registry",
         note: "Should keep failing until external review, stable evidence, npm provenance, and public Sigstore proof exist.",
       },
     ],
@@ -270,19 +267,19 @@ export const pages: DocPage[] = [
     commands: [
       {
         label: "Start local MCP",
-        command: "node packages/cli/dist/index.js mcp",
+        command: "pnpm ashlar mcp",
         note: "Runs the read-only local stdio server for registry, token, evidence, and validation tools.",
       },
       {
         label: "Run saved-output eval",
         command:
-          "node packages/cli/dist/index.js ai-eval --suite examples/ai-eval/ashlar-ai-eval.json --registry ./registry",
+          "pnpm ashlar ai-eval --suite examples/ai-eval/ashlar-ai-eval.json --registry ./registry",
         note: "Checks deterministic saved outputs against expected policy findings.",
       },
       {
         label: "Run generated-output corpus",
         command:
-          "node packages/cli/dist/index.js ai-eval --suite examples/ai-eval/generated-output-corpus/ashlar-generated-output-corpus.json --registry ./registry",
+          "pnpm ashlar ai-eval --suite examples/ai-eval/generated-output-corpus/ashlar-generated-output-corpus.json --registry ./registry",
         note: "Runs the seed public-service prompt corpus added for AI readiness review.",
       },
     ],
@@ -310,25 +307,25 @@ export const pages: DocPage[] = [
     commands: [
       {
         label: "Check strict readiness",
-        command: "node packages/cli/dist/index.js release readiness --registry ./registry --json",
+        command: "pnpm ashlar release readiness --registry ./registry --json",
         note: "Expected today: fail on stable evidence, external review proof, npm provenance, and public Sigstore trust.",
       },
       {
         label: "Map the proof actions",
         command:
-          "node packages/cli/dist/index.js release proof-plan --registry ./registry --output reports/proof-action-plan.md",
+          "pnpm ashlar release proof-plan --registry ./registry --output reports/proof-action-plan.md",
         note: "Turns the current blockers into issue-linked reviewer tracks and exact artifact commands.",
       },
       {
         label: "Prepare Button review intake",
         command:
-          "node packages/cli/dist/index.js evidence prepare-stable button --registry ./registry --fixture registry/components/button/0.0.1/button.html --output reports/button-stable-review",
+          "pnpm ashlar evidence prepare-stable button --registry ./registry --fixture registry/components/button/0.0.1/button.html --output reports/button-stable-review",
         note: "Writes reviewer intake; it does not create stable evidence.",
       },
       {
         label: "Generate release review pack",
         command:
-          "node packages/cli/dist/index.js release review-pack --registry ./registry --output reports/review-pack",
+          "pnpm ashlar release review-pack --registry ./registry --output reports/review-pack",
         note: "Collects readiness, evidence, AI, bundle, SBOM, trust, and reviewer checklist artifacts.",
       },
     ],

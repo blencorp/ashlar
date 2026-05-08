@@ -34,7 +34,7 @@ pnpm check
 pnpm build
 pnpm examples:visual
 pnpm release:smoke
-node packages/cli/dist/index.js release readiness --registry ./registry
+pnpm ashlar release readiness --registry ./registry
 ```
 
 The final readiness command is expected to fail until the strict proof gates are
@@ -129,12 +129,12 @@ For each case-board example:
 Run these from the repo root after `pnpm build`:
 
 ```bash
-node packages/cli/dist/index.js --help
-node packages/cli/dist/index.js status --registry ./registry
-node packages/cli/dist/index.js search "official website" --registry ./registry
-node packages/cli/dist/index.js suggest "Build a benefits application form"
-node packages/cli/dist/index.js add button --registry ./registry --dry-run --view --diff
-node packages/cli/dist/index.js release proof-plan --registry ./registry
+pnpm ashlar --help
+pnpm ashlar status --registry ./registry
+pnpm ashlar search "official website" --registry ./registry
+pnpm ashlar suggest "Build a benefits application form"
+pnpm ashlar add button --registry ./registry --dry-run --view --diff
+pnpm ashlar release proof-plan --registry ./registry
 ```
 
 The root help should show the ASCII Ashlar mark, shadcn-style command flow, and

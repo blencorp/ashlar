@@ -30,11 +30,11 @@ Release candidate:
 ## Command Output
 
 ```text
-ashlar release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version>
-ashlar release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version> --json > reports/ashlar-npm-provenance.json
-ashlar release public-trust-verify --registry ./registry
-ashlar release public-trust-verify --registry ./registry --json > reports/ashlar-public-trust.json
-ashlar release verify-trust-bundle --bundle <bundle> --registry ./registry --sbom <sbom> --attestation <attestation>
+pnpm ashlar release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version>
+pnpm ashlar release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version> --json > reports/ashlar-npm-provenance.json
+pnpm ashlar release public-trust-verify --registry ./registry
+pnpm ashlar release public-trust-verify --registry ./registry --json > reports/ashlar-public-trust.json
+pnpm ashlar release verify-trust-bundle --bundle <bundle> --registry ./registry --sbom <sbom> --attestation <attestation>
 ```
 
 Result:
