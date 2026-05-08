@@ -236,6 +236,9 @@ node /path/to/ashlar/packages/cli/dist/index.js release trust-bundle --registry 
 node /path/to/ashlar/packages/cli/dist/index.js release verify-trust-bundle --registry ./registry --bundle ./reports/ashlar-trust-bundle.json --sbom ./reports/ashlar-sbom.spdx.json --attestation ./reports/ashlar-sbom.attestation.json
 ```
 
+For the durable tester path, expected local URLs, visual checks, CLI checks, and
+defect-report template, see [`docs/testing.md`](docs/testing.md).
+
 ## First-run docs app
 
 The first-run documentation app lives in [`apps/docs`](apps/docs). It gives new
@@ -269,6 +272,7 @@ See [docs/roadmap/00-roadmap.md](docs/roadmap/00-roadmap.md), [docs/roadmap/01-v
 - [Philosophy](docs/philosophy.md)
 - [Replacement-grade audit](docs/roadmap/replacement-grade-audit.md)
 - [Objective completion audit](docs/roadmap/objective-completion-audit.md)
+- [Hands-on testing guide](docs/testing.md)
 - [External review plan](docs/roadmap/external-review-plan.md)
 - [Architecture overview](docs/architecture/overview.md)
 - [Toolchain decision](docs/architecture/toolchain.md)
