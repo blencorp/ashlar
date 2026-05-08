@@ -1,5 +1,11 @@
 # @blen/ashlar-cli
 
+## 0.3.10
+
+### Patch Changes
+
+- [#111](https://github.com/blencorp/ashlar/pull/111) [`ea37c2a`](https://github.com/blencorp/ashlar/commit/ea37c2a2f39fdc41030abc5cc1db76b4f32fd1ca) Thanks [@naodya](https://github.com/naodya)! - Fix the release proof-plan workflow commands so npm publishing and Sigstore signing include the required manual confirmation inputs.
+
 ## 0.3.9
 
 ### Patch Changes
