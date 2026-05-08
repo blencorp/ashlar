@@ -1,0 +1,109 @@
+name: Manual testing report
+description: Capture hands-on visual, interaction, theming, or DX findings from the Ashlar test session.
+title: "[Testing]: "
+labels: ["type: testing", "area: examples"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this after running `pnpm testing:start` or `pnpm testing:start --check --visual`.
+        This template captures product/DX defects; it does not create stable accessibility evidence or external review proof.
+  - type: dropdown
+    id: target
+    attributes:
+      label: Target
+      options:
+        - Public site
+        - Docs
+        - Vite theme workbench
+        - Vanilla TypeScript case board
+        - React SPA case board
+        - Next.js App Router case board
+        - Svelte case board
+        - Vue case board
+        - Multiple targets
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL or route
+      description: Include the local URL or hosted route where the issue appears.
+      placeholder: "http://127.0.0.1:4181/"
+    validations:
+      required: true
+  - type: input
+    id: viewport
+    attributes:
+      label: Viewport
+      description: Browser viewport or device size.
+      placeholder: "1440x900 desktop, 390x844 mobile"
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, Node/pnpm when relevant, selected agency, and color mode.
+      placeholder: "Chrome 124, macOS, Default agency, dark mode"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include navigation, theme choices, keyboard steps, and any filter/control state.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Describe overlap, contrast, focus, layout, wording, CLI output, or other observed failure.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Screenshot path, recording path, generated report path, or pasted relevant output.
+      placeholder: "reports/example-visual-smoke/react-spa-desktop.png"
+    validations:
+      required: true
+  - type: dropdown
+    id: visual-smoke
+    attributes:
+      label: Does automated visual smoke catch this?
+      options:
+        - "Yes"
+        - "No"
+        - "Not checked"
+    validations:
+      required: true
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - One framework/example only
+        - All case-board examples
+        - Docs or public site only
+        - CLI or generated report only
+        - Unknown
+    validations:
+      required: true
+  - type: checkboxes
+    id: regression-checks
+    attributes:
+      label: Regression checks
+      options:
+        - label: I checked the generated testing checklist in `reports/testing-session/checklist.md`.
+        - label: I checked the screenshots under `reports/example-visual-smoke/` when available.
+        - label: I noted whether the issue affects Default, VA, USDA, light, dark, or system mode.
+        - label: I noted whether this is a blocker for external partner testing.

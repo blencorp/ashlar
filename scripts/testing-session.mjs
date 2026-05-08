@@ -358,7 +358,7 @@ function writeChecklist(report) {
     "- Government banner uses a real inline SVG flag, not a CSS-painted block or placeholder.",
     "- Banner text, disclosure trigger, and focus outline are legible in each theme.",
     "- Agency selection is a centered dialog with agency marks and source/provenance badges, not a corner control box.",
-    "- Theme labels use Default, VA, and USDA; there is no user-facing Federal theme name.",
+    "- Theme labels use Default, VA, and USDA only; no legacy default-agency alias appears.",
     "- Light, dark, and system modes keep text inputs, selects, radios, checkboxes, alerts, and buttons readable.",
     "- Board columns read as unframed workflow lanes; individual cases may be cards, but cards are not nested inside other cards.",
     "- Mobile widths do not introduce horizontal scrolling, clipped text, or overlapped controls.",
@@ -388,7 +388,7 @@ function writeChecklist(report) {
     "",
     "## Defect Notes",
     "",
-    "For each issue, capture:",
+    "File each issue with the GitHub `Manual testing report` template. For each issue, capture:",
     "",
     "- target URL and viewport size;",
     "- selected agency and color mode;",
@@ -396,6 +396,7 @@ function writeChecklist(report) {
     "- actual behavior;",
     "- screenshot path or browser recording;",
     "- whether `pnpm examples:visual` catches it.",
+    "- whether the issue affects one framework example, every case-board example, docs, the public site, or generated CLI output.",
     "",
   );
   writeFileSync(resolve(outputDir, "checklist.md"), `${lines.join("\n")}\n`);
