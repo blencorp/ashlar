@@ -1,5 +1,11 @@
 # @blen/ashlar-cli
 
+## 0.3.19
+
+### Patch Changes
+
+- [#140](https://github.com/blencorp/ashlar/pull/140) [`846ae1b`](https://github.com/blencorp/ashlar/commit/846ae1b3f9e9da6cf27b1e8da8062c41fefc1929) Thanks [@naodya](https://github.com/naodya)! - Tighten the GitHub Packages mirror readiness check so the BLEN-scoped mirror no longer assumes a `blencorp/ashlar` repository token can publish `@blen/*` packages.
+
 ## 0.3.18
 
 ### Patch Changes
