@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { claimBoundary, pages } from "./content";
+import { renderGovernmentFlag } from "./flag";
 import { components } from "./registry";
 
 describe("docs content model", () => {
@@ -10,6 +11,7 @@ describe("docs content model", () => {
       "add",
       "verify-update",
       "themes",
+      "testing",
       "ai",
       "trust",
     ]);
@@ -39,5 +41,15 @@ describe("docs content model", () => {
     expect(components.length).toBeGreaterThanOrEqual(13);
     expect(components.map((component) => component.name)).toContain("button");
     expect(components.every((component) => component.evidenceStatus.length > 0)).toBe(true);
+  });
+
+  it("renders the disclosure flag as inline svg geometry", () => {
+    const flag = renderGovernmentFlag();
+
+    expect(flag).toContain("<svg");
+    expect(flag).toContain('aria-hidden="true"');
+    expect(flag).toContain("data-flag-canton");
+    expect(flag.match(/data-flag-stripe/g) ?? []).toHaveLength(7);
+    expect(flag.match(/data-flag-star/g) ?? []).toHaveLength(18);
   });
 });

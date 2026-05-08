@@ -1,4 +1,5 @@
 import { claimBoundary, pageById, pages, type DocPage } from "./content";
+import { renderGovernmentFlag } from "./flag";
 import { components } from "./registry";
 import "./styles.css";
 
@@ -19,7 +20,7 @@ function render(): void {
   const page = pageById(activePageId());
   root.innerHTML = `
     <div class="federal-strip">
-      <span class="flag" aria-hidden="true"></span>
+      ${renderGovernmentFlag()}
       <span>Independent open-source research. Not affiliated with GSA, USWDS, NDS, or the U.S. federal government.</span>
     </div>
     <div class="layout">
@@ -57,7 +58,7 @@ function renderNav(activeId: string): string {
 function renderHero(page: DocPage): string {
   return `
     <section class="hero" aria-labelledby="page-title">
-      <p class="eyebrow">First-run path</p>
+      <p class="eyebrow">${escapeHtml(page.eyebrow ?? "First-run path")}</p>
       <h1 id="page-title">${escapeHtml(page.title)}</h1>
       <p class="lede">${escapeHtml(page.summary)}</p>
       <p class="intent">${escapeHtml(page.intent)}</p>

@@ -7,6 +7,7 @@ export type CommandStep = {
 export type DocPage = {
   id: string;
   nav: string;
+  eyebrow?: string;
   title: string;
   summary: string;
   intent: string;
@@ -214,6 +215,48 @@ export const pages: DocPage[] = [
     links: [
       { label: "Token architecture", href: repoBlob("docs/architecture/tokens.md") },
       { label: "Vite theme example", href: repoTree("examples/vite") },
+    ],
+  },
+  {
+    id: "testing",
+    nav: "Testing",
+    eyebrow: "Hands-on QA",
+    title: "Test docs and examples",
+    summary:
+      "Start the public site, docs app, theme workbench, and framework case-board examples, then run visual smoke before trusting the surface.",
+    intent:
+      "Testing is part of the product surface. The local matrix proves each example boots, catches banner and theme regressions, and keeps strict release proof blockers visible.",
+    commands: [
+      {
+        label: "Start the local matrix",
+        command: "pnpm testing:start",
+        note: "Builds and serves the public site, docs app, Vite workbench, vanilla, React SPA, Next.js, Svelte, and Vue examples.",
+      },
+      {
+        label: "Run HTTP and visual smoke",
+        command: "pnpm testing:start --check --visual",
+        note: "Verifies local URLs and screenshots each framework example through the shared visual-smoke script.",
+      },
+      {
+        label: "Inspect the CLI surface",
+        command: "node packages/cli/dist/index.js --help",
+        note: "Confirms the shadcn-style command flow, BLEN attribution, and local binary output after build.",
+      },
+      {
+        label: "Check release blockers",
+        command: "node packages/cli/dist/index.js release readiness --registry ./registry",
+        note: "Should keep failing until external review, stable evidence, npm provenance, and public Sigstore proof exist.",
+      },
+    ],
+    checkpoints: [
+      "Testing URLs cover docs, public site, Vite workbench, vanilla, React SPA, Next.js, Svelte, and Vue.",
+      "The disclosure banner uses inline SVG flag geometry, not a CSS-painted placeholder block.",
+      "Theme controls expose Default, VA, and USDA only; the stock theme must not be relabeled.",
+      "Readiness failure should be limited to the four public proof blockers documented in STATUS.md.",
+    ],
+    links: [
+      { label: "Hands-on QA guide", href: repoBlob("docs/testing.md") },
+      { label: "Example apps", href: repoBlob("examples/README.md") },
     ],
   },
   {
