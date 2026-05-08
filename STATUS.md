@@ -6,11 +6,11 @@ For the current prompt-to-artifact gap map against the broader "gov shadcn" obje
 
 Date: 2026-05-08
 Phase: v0.0 prototype
-Baseline: current checkout after package namespace/versioning, GitHub Packages workflow wiring and readiness checks, public family-language cleanup, CI annotation cleanup, package versioning, current proof-audit refresh, repo doctor workflow, testing-session launcher, nested-worktree doctor fix, manual testing checklist support, docs testing guide/app coverage, docs disclosure-flag SVG fix, and post-merge CI/Version Packages success through #117
+Baseline: current checkout after package namespace/versioning, GitHub Packages workflow wiring and readiness checks, public family-language cleanup, CI annotation cleanup, package versioning, current proof-audit refresh, repo doctor workflow, testing-session launcher, nested-worktree doctor fix, manual testing checklist support, docs testing guide/app coverage, docs disclosure-flag SVG fix, numbered product-label blocking, manual testing report intake, and post-merge CI/Version Packages success through #127
 Proof tracking: [Replacement-grade proof gates](https://github.com/blencorp/ashlar/milestone/1) milestone, issues [#22](https://github.com/blencorp/ashlar/issues/22), [#23](https://github.com/blencorp/ashlar/issues/23), and [#24](https://github.com/blencorp/ashlar/issues/24)
 Strict readiness: still failing by design on `stable-markup-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`
 
-Family naming: reader-facing docs, CLI output, option names, and gate descriptions should say **foundations**, **interactive controls**, **framework adapters**, **service patterns**, and **application blocks** where the reader is choosing product families. Registry schemas and generated metadata still preserve an internal compatibility `layer` field, and CSS still uses native cascade `@layer`. Public surfaces should never ask users to reason about internal family codes.
+Family naming: reader-facing docs, CLI output, option names, and gate descriptions should say **foundations**, **interactive controls**, **framework adapters**, **service patterns**, and **application blocks** where the reader is choosing product families. Registry schemas and generated metadata still preserve an internal compatibility `layer` field, and CSS still uses native cascade `@layer`. Public surfaces should never ask users to reason about internal family codes or numbered product labels.
 
 ## Implemented today
 
