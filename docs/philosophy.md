@@ -90,9 +90,9 @@ Every claim links to STATUS.md or a versioned status field. We do not write "Car
 - **Signed source registry** (capsules) — content-addressed component bundles, Sigstore signing, lockfile-tracked installation, three-way-merge updates with codemod-assisted breaking changes.
 - **Evidence schema** — machine-readable accessibility evidence (axe + keyboard + manual SR + WCAG + ICT Baseline), stable-component gate, queryable by tools and auditors.
 - **AI contract** — extended Custom Elements Manifest with `_ashlar` namespace; MCP server exposing search, evidence retrieval, validation, and migration; AGENTS.md sync for editor coverage.
-- **Layered architecture**:
-  - **Markup primitives**: semantic HTML + CSS capsules; zero or trivial JavaScript; ~70% of typical components.
-  - **Interactive components**: custom elements wrapping statecharts and signals, for components that genuinely need behavior; ~30% of components. The statechart library choice is a research bet (see risks).
+- **Capsule families**:
+  - **Foundations**: semantic HTML + CSS capsules; zero or trivial JavaScript; ~70% of typical components.
+  - **Interactive controls**: custom elements wrapping statecharts and signals, for components that genuinely need behavior; ~30% of components. The statechart library choice is a research bet (see risks).
   - **Framework adapters**: auto-generated from extended CEM (React first; Vue/Svelte/Solid in v0.2).
   - **Service patterns**: flows like eligibility check, document upload, address verification.
   - **Application blocks**: the same component rendered as Nunjucks, Twig, Jinja, ERB, plain HTML.

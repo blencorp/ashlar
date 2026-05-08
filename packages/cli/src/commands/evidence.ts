@@ -1,4 +1,4 @@
-import type { Command } from "commander";
+import { Option, type Command } from "commander";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { applyEvidenceArtifact } from "../lib/evidence-apply.js";
@@ -36,6 +36,7 @@ type EvidenceOptions = {
   evidenceFile?: string;
   fixture?: string;
   format: string;
+  family?: string;
   keyId?: string;
   layer?: string;
   manualFile?: string;
@@ -91,10 +92,10 @@ export function registerEvidenceCommand(program: Command) {
     .option("--format <format>", "Output format: text or json", "text")
     .option("--key-id <id>", "Trusted local signing key id for evidence publish")
     .option(
-      "--layer <layer>",
-      "Layer for evidence prepare-stable-all: markup-primitives, interactive-components, framework-adapters, service-patterns, application-blocks, or all",
-      "markup-primitives",
+      "--family <family>",
+      "Capsule family for evidence prepare-stable-all: foundations, interactive-controls, framework-adapters, service-patterns, application-blocks, or all",
     )
+    .addOption(new Option("--layer <layer>", "Deprecated alias for --family").hideHelp())
     .option("--manual-file <path>", "Manual evidence artifact path for evidence review")
     .option(
       "--output <path>",
@@ -184,6 +185,9 @@ export function registerEvidenceCommand(program: Command) {
         }
 
         if (positional[0] === "prepare-stable-all") {
+          if (options.family && options.layer) {
+            throw new Error("Use --family instead of combining --family and --layer.");
+          }
           if (!options.output) {
             throw new Error("--output is required for evidence prepare-stable-all.");
           }
@@ -199,14 +203,14 @@ export function registerEvidenceCommand(program: Command) {
 
           const batch = prepareStableEvidenceReviewBatch({
             cwd: process.cwd(),
-            layer: stableEvidenceBatchLayer(options.layer),
+            layer: stableEvidenceBatchLayer(options.layer ?? options.family ?? "foundations"),
             outputDir: options.output,
             policy: options.policy as AuditPolicy,
             registryPath: registry,
           });
 
           const layerLabel =
-            batch.layer === "all" ? "all registry layers" : formatRegistryLayer(batch.layer);
+            batch.layer === "all" ? "all registry families" : formatRegistryLayer(batch.layer);
           console.log(
             `Prepared ${batch.bundles.length} stable evidence review bundle(s) for ${layerLabel}: ${batch.automatedStatus}`,
           );

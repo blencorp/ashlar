@@ -18,42 +18,42 @@ Snapshot sources:
 | Partial capsule | Ashlar covers part of the need, but not the full USWDS component or pattern contract. |
 | Audit or migration support | Ashlar can inspect, validate, or map existing markup, but does not own a replacement capsule. |
 | Planned capsule | Needed for credible day-to-day public-service work, but not implemented yet. |
-| Deferred | Not required for the smallest credible public alpha, or behavior-heavy enough to wait for interactive components and framework adapters research. |
+| Deferred | Not required for the smallest credible public alpha, or behavior-heavy enough to wait for interactive controls and framework adapters research. |
 | Out of scope as capsule | Better handled through tokens, typography, docs, utility output, or consumer app structure than a source capsule. |
 
 ## Current Ashlar Capsule Metadata
 
 Every current capsule has CEM metadata and capsule bundle-budget metadata. All current component evidence packets remain `not-reviewed`, so none of these capsules supports stable accessibility claims yet. Migration support below refers to explicit rules in `packages/cli/src/lib/uswds-migration.ts`, not general conceptual overlap.
 
-| Ashlar capsule | Layer | Stability | Bundle budget cap | CEM / AI contract | USWDS migration support |
+| Ashlar capsule | Family | Stability | Bundle budget cap | CEM / AI contract | USWDS migration support |
 | --- | --- | --- | --- | --- | --- |
-| `alert` | markup primitives | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-alert` |
-| `banner` | markup primitives | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-banner`, `<usa-banner>` |
+| `alert` | foundations | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-alert` |
+| `banner` | foundations | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-banner`, `<usa-banner>` |
 | `benefit-application` | service patterns | proposal | 2048 B CSS gzip / 0 B JS gzip | Yes | None; service-flow proof |
-| `button` | markup primitives | experimental | 4096 B CSS gzip / 0 B JS gzip | Yes | `usa-button` |
-| `checkbox` | markup primitives | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-checkbox` |
-| `date-input` | markup primitives | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-date-picker` partial replacement |
-| `error-summary` | markup primitives | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-error-message` with `form-field` |
-| `form-field` | markup primitives | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-form-group`, `usa-error-message` |
-| `identifier` | markup primitives | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-identifier` |
-| `radio-group` | markup primitives | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-radio` |
-| `select` | markup primitives | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-select` |
-| `text-input` | markup primitives | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-input` |
-| `textarea` | markup primitives | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-textarea` |
+| `button` | foundations | experimental | 4096 B CSS gzip / 0 B JS gzip | Yes | `usa-button` |
+| `checkbox` | foundations | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-checkbox` |
+| `date-input` | foundations | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-date-picker` partial replacement |
+| `error-summary` | foundations | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-error-message` with `form-field` |
+| `form-field` | foundations | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-form-group`, `usa-error-message` |
+| `identifier` | foundations | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-identifier` |
+| `radio-group` | foundations | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-radio` |
+| `select` | foundations | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-select` |
+| `text-input` | foundations | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-input` |
+| `textarea` | foundations | experimental | 1536 B CSS gzip / 0 B JS gzip | Yes | `usa-textarea` |
 
 ## Component Matrix
 
-| USWDS surface | Ashlar status | Current Ashlar artifact | Layer / evidence | v0.1 action |
+| USWDS surface | Ashlar status | Current Ashlar artifact | Family / evidence | v0.1 action |
 | --- | --- | --- | --- | --- |
-| Accordion | Deferred | None | interactive components and framework adapters behavior missing | Defer until behavior substrate review. |
-| Alert | Covered capsule | `registry/components/alert` | markup primitives, experimental, not-reviewed | Keep; add stable evidence after Button path proves workflow. |
-| Banner | Covered capsule | `registry/components/banner` | markup primitives, experimental, not-reviewed | Keep; treat as site-trust primitive. |
+| Accordion | Deferred | None | interactive controls and framework adapters behavior missing | Defer until behavior substrate review. |
+| Alert | Covered capsule | `registry/components/alert` | foundations, experimental, not-reviewed | Keep; add stable evidence after Button path proves workflow. |
+| Banner | Covered capsule | `registry/components/banner` | foundations, experimental, not-reviewed | Keep; treat as site-trust primitive. |
 | Breadcrumb | Planned capsule | None | Missing | Add if docs/public-service navigation flows require it. |
-| Button | Covered capsule | `registry/components/button` | markup primitives, experimental, not-reviewed | First stable-evidence target. |
+| Button | Covered capsule | `registry/components/button` | foundations, experimental, not-reviewed | First stable-evidence target. |
 | Button group | Planned capsule | None | Missing | Add after Button evidence, likely composition-only. |
 | Card | Planned capsule | None | Missing | Add only if service-flow or docs-site content needs it. |
 | Character count | Planned capsule | None | Missing | Important for long-answer forms; needs validation semantics. |
-| Checkbox | Covered capsule | `registry/components/checkbox` | markup primitives, experimental, not-reviewed | Keep; graduate after Button evidence workflow is reusable. |
+| Checkbox | Covered capsule | `registry/components/checkbox` | foundations, experimental, not-reviewed | Keep; graduate after Button evidence workflow is reusable. |
 | Collection | Deferred | None | Missing | Defer until content/listing patterns are prioritized. |
 | Combo box | Deferred | None | interactive behavior missing | Defer until statechart/interactive component substrate is proven. |
 | Data visualizations | Deferred | None | Missing | Not v0.1; requires separate charting and accessibility model. |
@@ -61,38 +61,38 @@ Every current capsule has CEM metadata and capsule bundle-budget metadata. All c
 | Date range picker | Deferred | None | interactive behavior missing | Defer until date picker strategy exists. |
 | File input | Planned capsule | None | Missing | Add for real benefit/application flows. |
 | Footer | Planned capsule | `identifier` covers required agency identity links | partial markup primitive, experimental, not-reviewed | Decide whether Footer is separate from Identifier. |
-| Form | Partial capsule | `form-field`, `error-summary`, form controls | markup primitives, experimental, not-reviewed | Define form composition guidance and evidence expectations. |
+| Form | Partial capsule | `form-field`, `error-summary`, form controls | foundations, experimental, not-reviewed | Define form composition guidance and evidence expectations. |
 | Grid | Out of scope as capsule | Token/CSS layout output | Not a capsule | Cover through docs, CSS variables, and examples. |
 | Header | Planned capsule | None | Missing | Needed for realistic public-service page shell. |
 | Icon | Deferred | None | Missing | Defer; prefer text-first UI and explicit icon policy. |
 | Icon list | Deferred | None | Missing | Defer until content patterns need it. |
-| Identifier | Covered capsule | `registry/components/identifier` | markup primitives, experimental, not-reviewed | Keep; tie to federal policy checks. |
+| Identifier | Covered capsule | `registry/components/identifier` | foundations, experimental, not-reviewed | Keep; tie to federal policy checks. |
 | In-page navigation | Planned capsule | None | Missing | Useful for long forms and docs pages. |
 | Input mask | Deferred | None | Behavior and validation complexity missing | Defer; prefer server/client validation clarity first. |
 | Input prefix/suffix | Planned capsule | `form-field` may host this, but no explicit primitive | partial markup primitive | Add as form-field variant only if CEM can express it cleanly. |
 | Language selector | Planned capsule | None | Missing | Needed for multilingual service flows, but after first English-only flow. |
 | Link | Out of scope as capsule | Native anchor plus audit rules | Not a capsule | Cover with guidance and validator checks. |
 | List | Out of scope as capsule | Native HTML lists plus prose styles | Not a capsule | Cover through typography/prose guidance. |
-| Memorable date | Partial capsule | `registry/components/date-input` | markup primitives, experimental, not-reviewed | Decide whether memorable date is a separate composition. |
+| Memorable date | Partial capsule | `registry/components/date-input` | foundations, experimental, not-reviewed | Decide whether memorable date is a separate composition. |
 | Modal | Deferred | None | interactive behavior missing | Defer until state, focus trap, inert, and escape handling are proven. |
 | Pagination | Planned capsule | None | Missing | Add when listing/search flows are prioritized. |
 | Process list | Planned capsule | None | Missing | High value for service instructions; candidate v0.1 capsule. |
 | Prose | Out of scope as capsule | Typography/token docs | Not a capsule | Cover through docs and generated CSS. |
-| Radio buttons | Covered capsule | `registry/components/radio-group` | markup primitives, experimental, not-reviewed | Keep; evidence after Button/Checkbox path. |
+| Radio buttons | Covered capsule | `registry/components/radio-group` | foundations, experimental, not-reviewed | Keep; evidence after Button/Checkbox path. |
 | Range slider | Deferred | None | Behavior/accessibility complexity missing | Defer; use number input/select where possible. |
 | Search | Planned capsule | None | Missing | Needed for docs, benefits, and service lookup flows. |
-| Select | Covered capsule | `registry/components/select` | markup primitives, experimental, not-reviewed | Keep for bounded option sets. |
+| Select | Covered capsule | `registry/components/select` | foundations, experimental, not-reviewed | Keep for bounded option sets. |
 | Side navigation | Planned capsule | None | Missing | Needed for docs and large service sites, not first form flow. |
 | Site alert | Planned capsule | `alert` covers page-level messages only | partial markup primitive | Decide whether sitewide alert is an Alert variant or separate capsule. |
 | Step indicator | Planned capsule | None | Missing | High value for multi-step service flows; candidate v0.1 capsule. |
 | Summary box | Planned capsule | None | Missing | High value for next steps and eligibility results. |
 | Table | Planned capsule | None | Missing | Needed for status tracking, document lists, and benefits comparisons. |
 | Tag | Planned capsule | None | Missing | Useful but low-risk; add after form/service primitives. |
-| Text input | Covered capsule | `registry/components/text-input` | markup primitives, experimental, not-reviewed | Keep; evidence after Button/form workflow. |
+| Text input | Covered capsule | `registry/components/text-input` | foundations, experimental, not-reviewed | Keep; evidence after Button/form workflow. |
 | Time picker | Deferred | None | Behavior/date-time complexity missing | Defer until date/time strategy exists. |
 | Tooltip | Deferred | None | Behavior/accessibility complexity missing | Defer; avoid for critical guidance. |
 | Typography | Out of scope as capsule | Token and CSS output | Not a capsule | Cover through theme/docs/tokens. |
-| Validation | Partial capsule | `error-summary`, `form-field`, component audit rules | markup primitives, experimental, not-reviewed | Promote as a cross-component contract, not only a component. |
+| Validation | Partial capsule | `error-summary`, `form-field`, component audit rules | foundations, experimental, not-reviewed | Promote as a cross-component contract, not only a component. |
 
 ## Pattern Matrix
 

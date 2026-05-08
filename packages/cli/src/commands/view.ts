@@ -36,7 +36,7 @@ export function registerViewCommand(program: Command) {
         for (const detail of details) {
           printSection(`${detail.name}@${detail.version}`);
           printKeyValue("Tier", detail.tier);
-          printKeyValue("Layer", formatRegistryLayer(detail.layer));
+          printKeyValue("Family", formatRegistryLayer(detail.layer));
           printKeyValue("Stability", detail.stability);
           printKeyValue("Evidence", detail.evidence.accessibilityStatus);
           printKeyValue(

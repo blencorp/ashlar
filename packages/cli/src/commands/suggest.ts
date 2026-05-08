@@ -1,6 +1,7 @@
 import type { Command } from "commander";
 import { suggestComponentsForTask } from "../lib/component-suggest.js";
 import { applyCommandCwd, type CwdOption } from "../lib/cwd.js";
+import { formatRegistryLayer } from "../lib/layers.js";
 import { readConfig } from "../lib/project.js";
 import {
   printBrandHeader,
@@ -58,7 +59,9 @@ export function registerSuggestCommand(program: Command) {
         for (const [index, suggestion] of report.suggestions.entries()) {
           printSection(`${index + 1}. ${suggestion.name}@${suggestion.version}`);
           console.log(
-            `${index + 1}. ${suggestion.name}@${suggestion.version} [${suggestion.layer}, ${suggestion.tier}, ${suggestion.stability}]`,
+            `${index + 1}. ${suggestion.name}@${suggestion.version} [${formatRegistryLayer(
+              suggestion.layer,
+            )}, ${suggestion.tier}, ${suggestion.stability}]`,
           );
           console.log(`   ${suggestion.description}`);
           console.log(`   Evidence: ${suggestion.evidenceStatus}`);

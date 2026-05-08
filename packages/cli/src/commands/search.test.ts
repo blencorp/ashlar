@@ -25,7 +25,7 @@ describe("search command", () => {
     const result = runCli(["search", "official website", "--policy", "Federal Website Standards"]);
 
     expect(result.status).toBe(0);
-    expect(result.stdout).toContain("banner@0.0.3 [markup primitives, primitive, experimental]");
+    expect(result.stdout).toContain("banner@0.0.3 [foundations, primitive, experimental]");
     expect(result.stdout).toContain("Reasons:");
     expect(result.stdout).toContain("policy: Federal Website Standards");
     expect(result.stdout).toContain("Install: ashlar add banner");
@@ -59,7 +59,19 @@ describe("search command", () => {
     expect(payload.components[0]?.name).not.toBe("alert");
   });
 
-  it("accepts human-readable layer aliases", () => {
+  it("accepts human-readable family aliases", () => {
+    const result = runCli(["search", "--family", "service-patterns", "--json"]);
+    const payload = JSON.parse(result.stdout) as {
+      components: Array<{ layer: string; name: string }>;
+    };
+
+    expect(result.status).toBe(0);
+    expect(payload.components).toEqual([
+      expect.objectContaining({ layer: "service-patterns", name: "benefit-application" }),
+    ]);
+  });
+
+  it("keeps the deprecated layer filter working for existing scripts", () => {
     const result = runCli(["search", "--layer", "service-patterns", "--json"]);
     const payload = JSON.parse(result.stdout) as {
       components: Array<{ layer: string; name: string }>;
@@ -69,5 +81,13 @@ describe("search command", () => {
     expect(payload.components).toEqual([
       expect.objectContaining({ layer: "service-patterns", name: "benefit-application" }),
     ]);
+  });
+
+  it("keeps the deprecated layer option out of normal help", () => {
+    const result = runCli(["search", "--help"]);
+
+    expect(result.status).toBe(0);
+    expect(result.stdout).toContain("--family <family>");
+    expect(result.stdout).not.toContain("--layer");
   });
 });

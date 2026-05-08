@@ -1,12 +1,12 @@
 # Architecture overview
 
-This document describes the layered architecture, the atomic unit (the capsule), the registry and CLI, the validation model, and the AI integration. Detailed documents for each subsystem live alongside this one in the [`architecture/`](./) folder.
+This document describes the capsule architecture, the atomic unit (the capsule), the registry and CLI, the validation model, and the AI integration. Detailed documents for each subsystem live alongside this one in the [`architecture/`](./) folder.
 
 For the current implementation foundation, see [`toolchain.md`](./toolchain.md). For the agency-facing validation, security, and CI surface, see [`compliance-security-ci.md`](./compliance-security-ci.md).
 
-## The five adoption layers
+## The Five Capsule Families
 
-Ashlar is organized as five independently usable layers. Product docs, registry JSON, CLI gates, and generated examples use the names below.
+Ashlar is organized as five independently usable capsule families. Product docs, CLI output, and generated examples use the names below; registry JSON keeps internal compatibility fields for tooling.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -19,21 +19,21 @@ Ashlar is organized as five independently usable layers. Product docs, registry 
 │ Framework adapters                                      │
 │ Auto-generated from CEM: React, Vue, Svelte, etc.       │
 ├─────────────────────────────────────────────────────────┤
-│ Interactive components                                  │
+│ Interactive controls                                    │
 │ Lit custom elements wrapping statecharts/signals        │
 ├─────────────────────────────────────────────────────────┤
-│ Markup primitives                                       │
+│ Foundations                                             │
 │ Pure CSS + HTML capsules, zero JavaScript runtime       │
 ├─────────────────────────────────────────────────────────┤
 │      Tokens (DTCG 2025.10) → CSS vars / Tailwind / TS   │
 └─────────────────────────────────────────────────────────┘
 ```
 
-### Markup Primitives
+### Foundations
 
 Pure CSS and HTML. No JavaScript runtime dependency. Components are class-based with semantic data attributes. Styling is delivered via cascade layers and CSS variables.
 
-This layer covers approximately 70% of typical design-system components in 2026, including:
+This family covers approximately 70% of typical design-system components in 2026, including:
 
 - Button, Link, Badge, Tag
 - Card, Banner, Identifier, Alert
@@ -42,9 +42,9 @@ This layer covers approximately 70% of typical design-system components in 2026,
 - Layout primitives (Stack, Grid, Cluster, Switcher)
 - Skip link, Focus ring utility, Visually-hidden utility
 
-Markup primitive components work in any rendering environment: React, Vue, Astro, plain HTML, Drupal, Sitecore, AEM, server-rendered Django/Rails/PHP. The same CSS and the same DOM contract.
+Foundation components work in any rendering environment: React, Vue, Astro, plain HTML, Drupal, Sitecore, AEM, server-rendered Django/Rails/PHP. The same CSS and the same DOM contract.
 
-### Interactive Components
+### Interactive Controls
 
 Lit-based custom elements. Each component wraps a Zag statechart (the behavior) and signals (the reactive data). The component is a thin shell that defines the custom element, handles SSR via Declarative Shadow DOM where needed, subscribes to the machine, and renders DOM updates.
 
@@ -225,7 +225,7 @@ Three artifacts, each does one thing:
 2. **AGENTS.md** in the project root — coding-agent instructions for using Ashlar correctly in the user's codebase. Symlinked from `CLAUDE.md`, `.cursor/rules/ashlar.mdc`, and `.windsurfrules` to cover the editor fragmentation.
 
 3. **MCP server** at `npx @blen/ashlar mcp` — exposes tools that go beyond shadcn's install-only MCP:
-   - `search_components(query, filters)` — ranked component, policy, feature, token, evidence, and layer search
+   - `search_components(query, filters)` — ranked component, policy, feature, token, evidence, and family search
    - `get_component(name)` — full extended CEM
    - `validate_usage(file_or_glob)` — runs ast-grep rules, returns violations
    - `suggest_for_task(description)` — deterministic metadata-backed capsule recommendations plus missing-capability gaps, no writes

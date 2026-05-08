@@ -70,7 +70,7 @@ export function buildEvidenceReport(
       `### ${component.name}@${component.version}`,
       `- stability: ${evidence.stability}`,
       `- accessibility: ${evidence.accessibilityStatus}`,
-      `- layer: ${formatRegistryLayer(component.layer)}`,
+      `- family: ${formatRegistryLayer(component.layer)}`,
       `- tier: ${component.tier}`,
       `- WCAG mappings: ${summarizeStatuses(evidence.wcag)}`,
       `- ICT Baseline mappings: ${summarizeStatuses(evidence.baselineTests)}`,

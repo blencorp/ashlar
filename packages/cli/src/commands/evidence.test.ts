@@ -1133,7 +1133,7 @@ describe("evidence command", () => {
     expect(checklist).toContain("ashlar evidence finalize-stable button");
   });
 
-  it("prepares non-mutating stable evidence review bundles for every markup primitive capsule", () => {
+  it("prepares non-mutating stable evidence review bundles for every foundation capsule", () => {
     const outputArg = "reports/markup-primitive-stable-review";
     const outputDir = join(scratch, outputArg);
 
@@ -1148,7 +1148,7 @@ describe("evidence command", () => {
 
     expect(result.status).toBe(0);
     expect(result.stdout).toContain(
-      "Prepared 12 stable evidence review bundle(s) for markup primitives: pass",
+      "Prepared 12 stable evidence review bundle(s) for foundations: pass",
     );
     expect(result.stdout).toContain("  - button@0.0.1: pass");
 
@@ -1177,7 +1177,7 @@ describe("evidence command", () => {
 
     const index = readFileSync(indexPath, "utf8");
     expect(index).toContain("# Stable Evidence Review Batch");
-    expect(index).toContain("This directory is a review intake aid for markup primitive capsules.");
+    expect(index).toContain("This directory is a review intake aid for foundation capsules.");
     expect(index).toContain("ashlar evidence review-status button --registry");
     expect(index).toContain("Strict readiness only counts completed external review records");
   });

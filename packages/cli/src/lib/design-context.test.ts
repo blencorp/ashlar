@@ -59,7 +59,7 @@ describe("buildDesignContext", () => {
     });
 
     expect(context).toContain("form-field@0.0.1");
-    expect(context).toContain("composite, markup primitives, experimental, evidence: not-reviewed");
+    expect(context).toContain("composite, foundations, experimental, evidence: not-reviewed");
     expect(context).toContain("Policy mappings:");
     expect(context).toContain("Platform features:");
   });

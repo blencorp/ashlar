@@ -83,7 +83,7 @@ ${installedCapsuleLines(capsules)}
 ## Component Discovery
 
 - Start new public-service UI tasks with \`ashlar suggest "<task>"\` or MCP \`suggest_for_task\`.
-- Use \`ashlar search\` or MCP \`search_components\` with policy, feature, token, layer, stability, or evidence filters when choosing capsules.
+- Use \`ashlar search\` or MCP \`search_components\` with policy, feature, token, family, stability, or evidence filters when choosing capsules.
 - Inspect candidate capsules with \`ashlar view <component>\`, \`ashlar evidence <component>\`, MCP \`get_component\`, and MCP \`get_evidence\` before using them.
 - Suggestions are deterministic metadata matches. They do not install components, modify files, or prove accessibility conformance.
 

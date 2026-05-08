@@ -146,7 +146,7 @@ function filterReasons(component: RegistryComponent, input: ComponentSearchInput
     return null;
   }
   if (input.layer) {
-    reasons.push(`layer: ${formatRegistryLayer(component.layer)}`);
+    reasons.push(`family: ${formatRegistryLayer(component.layer)}`);
   }
   if (input.tier && component.tier !== input.tier) {
     return null;

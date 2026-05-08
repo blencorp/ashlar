@@ -110,6 +110,23 @@ describe("ashlar mcp server", () => {
     });
   });
 
+  it("searches components by capsule family", async () => {
+    await withMcpClient(async (client) => {
+      const search = parseToolJson<{
+        components: Array<{ name: string; layer: string }>;
+      }>(
+        await client.callTool({
+          name: "search_components",
+          arguments: { family: "service-patterns", limit: 5 },
+        }),
+      );
+
+      expect(search.components).toEqual([
+        expect.objectContaining({ layer: "service-patterns", name: "benefit-application" }),
+      ]);
+    });
+  });
+
   it("suggests capsules for public-service tasks without write access", async () => {
     await withMcpClient(async (client) => {
       const result = parseToolJson<{

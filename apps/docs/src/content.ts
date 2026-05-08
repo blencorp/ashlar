@@ -112,7 +112,7 @@ export const pages: DocPage[] = [
       {
         label: "Search registry metadata",
         command: "node packages/cli/dist/index.js search button --registry ./registry",
-        note: "Returns policy, feature, layer, stability, evidence, and install command context.",
+        note: "Returns policy, feature, family, stability, evidence, and install command context.",
       },
       {
         label: "Ask for a task suggestion",
