@@ -30,4 +30,15 @@ pnpm build
 pnpm examples:visual
 ```
 
+Start the public site, docs app, theme workbench, and every framework case-board
+example for hands-on review:
+
+```bash
+pnpm testing:start
+```
+
+The command writes the live URL list and health probe results to
+`reports/testing-session/summary.md`. Use `pnpm testing:start --check` to verify
+the same servers can boot and respond without leaving them running.
+
 Vue and Svelte currently use rendered HTML audit fixtures because Ashlar's first-party component validator targets HTML, TSX, JSX, and CSS today. The language matrix is intentionally honest: Vue and Svelte grammar registration is tracked as opt-in validator work rather than silently claiming source scanning that does not exist yet.

@@ -26,6 +26,7 @@
     "format": "biome format --write .",
     "format:check": "biome format .",
     "repo:doctor": "node scripts/doctor.mjs",
+    "testing:start": "node scripts/testing-session.mjs",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "pnpm build && node packages/cli/dist/index.js release provenance-check && changeset publish",
