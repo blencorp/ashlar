@@ -18,7 +18,7 @@ The current implementation proves enough of the substrate to keep going, but pub
 node packages/cli/dist/index.js release readiness --registry ./registry
 ```
 
-Current strict gate status from `main` at `265d5d8`:
+Current strict gate status from `main` at `73968a3`:
 
 - `stable-markup-evidence`: fails because 0 markup primitive capsules have published stable evidence.
 - `external-review-proof`: fails until real stable-evidence, release-trust, and design-partner review records exist under `docs/reviews/`.

@@ -318,7 +318,7 @@ export function registerViewCommand(program: Command) {
       }
 
       console.log(`${detail.name}@${detail.version}`);
-      console.log(`Layer: ${detail.layer}`);
+      console.log(`Family: ${detail.family}`);
       console.log(`Stability: ${detail.stability}`);
       console.log(`Evidence: ${detail.evidence.accessibilityStatus ?? "unknown"}`);
       console.log(`Path: ${detail.directory}`);
