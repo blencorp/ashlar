@@ -15,12 +15,16 @@ catalog:
   "@ast-grep/napi": ^0.42.1
   "@biomejs/biome": ^2.4.13
   "@tailwindcss/vite": ^4.2.4
+  "@tailwindcss/postcss": ^4.2.4
+  "@takumi-rs/image-response": ^1.1.2
   "@changesets/cli": ^2.31.0
   "@changesets/changelog-github": ^0.7.0
   "@commitlint/cli": ^20.5.3
   "@commitlint/config-conventional": ^20.5.3
   "@playwright/test": ^1.59.1
   "@tsconfig/svelte": ^5.0.8
+  "@types/mdast": ^4.0.4
+  "@types/mdx": ^2.0.13
   "@types/node": ^24.12.2
   "@types/react": ^19.2.14
   "@types/react-dom": ^19.2.3
@@ -30,6 +34,9 @@ catalog:
   ajv-formats: ^3.0.1
   commander: ^14.0.3
   fast-glob: ^3.3.3
+  fumadocs-core: ^16.8.8
+  fumadocs-mdx: ^15.0.0
+  fumadocs-ui: ^16.8.8
   next: ^16.2.5
   parse5: ^8.0.1
   react: ^19.2.6

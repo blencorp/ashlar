@@ -1,12 +1,12 @@
 # Ashlar Docs App
 
-Static first-run documentation app for Ashlar adoption.
+Next.js and Fumadocs documentation app for Ashlar adoption.
 
 ```bash
 pnpm --filter @blen/ashlar-docs dev
 pnpm --filter @blen/ashlar-docs build
+pnpm --filter @blen/ashlar-docs typecheck
 ```
 
-The app is intentionally custom Vite rather than a full docs framework for this
-first slice. It is a low-footprint public docs boundary with a typed content
-model and a registry-derived component index.
+Content lives in `content/docs` as source-owned MDX. The app uses Fumadocs for
+navigation, docs layout, MDX rendering, copyable code blocks, and search wiring.

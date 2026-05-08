@@ -1,0 +1,52 @@
+---
+title: Trust and release gates
+description: The docs must keep Ashlar's prototype boundaries visible until the public proof gates pass.
+---
+
+Ashlar's story only works if the proof trail is stricter than the visuals. Keep
+these gates visible in docs, PRs, releases, and examples.
+
+## Local checks
+
+```bash
+pnpm check
+pnpm build
+pnpm format:check
+pnpm public-language:check
+```
+
+## Release readiness
+
+```bash
+pnpm ashlar release readiness --registry ./registry
+pnpm ashlar release provenance-check
+pnpm release:smoke
+```
+
+## Current claim boundary
+
+Allowed:
+
+- USWDS-compatible audit, migration, and source-capsule prototype.
+- Public-service UI registry with local CLI, evidence records, and example apps.
+- v0.0 package line while proof blockers remain visible.
+
+Blocked:
+
+- USWDS replacement.
+- Public alpha.
+- Stable accessible component library.
+- Public npm provenance.
+- Public capsule Sigstore trust.
+
+## PR workflow
+
+```bash
+git status --short --branch
+pnpm check
+pnpm build
+pnpm format:check
+git commit -m "docs: rebuild docs app with fumadocs"
+git push -u origin docs/fumadocs-app
+gh pr create --draft --fill
+```

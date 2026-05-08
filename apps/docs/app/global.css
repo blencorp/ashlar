@@ -1,0 +1,236 @@
+@import "tailwindcss";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+
+:root {
+  --ashlar-blue: #005ea8;
+  --ashlar-blue-dark: #1a4480;
+  --ashlar-red: #b50909;
+  --ashlar-ink: #1b1b1b;
+  --ashlar-muted: #565c65;
+  --ashlar-border: #dfe1e2;
+  --ashlar-surface: #f8f9fa;
+}
+
+html {
+  letter-spacing: 0;
+}
+
+body {
+  color: var(--ashlar-ink);
+}
+
+pre,
+code {
+  letter-spacing: 0;
+}
+
+.ashlar-home {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(0, 94, 168, 0.08), transparent 360px), var(--fd-background);
+}
+
+.ashlar-home-shell {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 72px;
+}
+
+.ashlar-home-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0 48px;
+}
+
+.ashlar-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  color: inherit;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.ashlar-wordmark span {
+  color: var(--ashlar-red);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.ashlar-home-actions,
+.ashlar-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ashlar-button {
+  align-items: center;
+  border: 1px solid var(--ashlar-blue);
+  background: var(--ashlar-blue);
+  color: white;
+  display: inline-flex;
+  font-weight: 750;
+  min-height: 40px;
+  padding: 9px 14px;
+  text-decoration: none;
+}
+
+.ashlar-button[data-variant="secondary"] {
+  background: transparent;
+  color: var(--ashlar-blue-dark);
+}
+
+.ashlar-hero {
+  display: grid;
+  gap: 22px;
+  max-width: 820px;
+}
+
+.ashlar-kicker {
+  color: var(--ashlar-blue-dark);
+  font-size: 0.78rem;
+  font-weight: 800;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.ashlar-hero h1 {
+  font-size: clamp(2.4rem, 6vw, 5.7rem);
+  line-height: 0.98;
+  margin: 0;
+  max-width: 790px;
+}
+
+.ashlar-hero p {
+  color: var(--ashlar-muted);
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 760px;
+}
+
+.ashlar-status-band {
+  border-block: 1px solid var(--ashlar-border);
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 56px;
+  padding: 24px 0;
+}
+
+.ashlar-status-band div {
+  display: grid;
+  gap: 6px;
+}
+
+.ashlar-status-band strong {
+  font-size: 0.84rem;
+  text-transform: uppercase;
+}
+
+.ashlar-status-band span {
+  color: var(--ashlar-muted);
+  line-height: 1.5;
+}
+
+.ashlar-code-panel {
+  background: #111820;
+  color: #f7f9fb;
+  margin-top: 40px;
+  overflow-x: auto;
+  padding: 20px;
+}
+
+.ashlar-code-panel pre {
+  margin: 0;
+}
+
+.ashlar-code-panel code {
+  font-size: 0.94rem;
+}
+
+.ashlar-component-index {
+  border: 1px solid var(--ashlar-border);
+  display: grid;
+  margin: 24px 0;
+  width: 100%;
+}
+
+.ashlar-component-index caption {
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.ashlar-component-row {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(160px, 1.1fr) minmax(120px, 0.7fr) minmax(140px, 0.8fr) minmax(
+      180px,
+      1fr
+    );
+  padding: 14px 16px;
+  text-align: left;
+}
+
+.ashlar-component-row + .ashlar-component-row {
+  border-top: 1px solid var(--ashlar-border);
+}
+
+.ashlar-component-row[data-header="true"] {
+  background: var(--ashlar-surface);
+  color: var(--ashlar-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.ashlar-component-row th,
+.ashlar-component-row td,
+.ashlar-component-row strong {
+  min-width: 0;
+}
+
+.ashlar-component-row small {
+  color: var(--ashlar-muted);
+  display: block;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  margin-top: 4px;
+}
+
+.ashlar-research-note {
+  border-left: 4px solid var(--ashlar-blue);
+  color: var(--ashlar-muted);
+  margin: 18px 0 28px;
+  padding-left: 14px;
+}
+
+@media (max-width: 860px) {
+  .ashlar-home-nav,
+  .ashlar-status-band {
+    grid-template-columns: 1fr;
+  }
+
+  .ashlar-home-nav {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-bottom: 34px;
+  }
+
+  .ashlar-component-row {
+    grid-template-columns: 1fr;
+  }
+
+  .ashlar-component-row[data-header="true"] {
+    display: none;
+  }
+}

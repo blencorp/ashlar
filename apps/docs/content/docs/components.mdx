@@ -1,0 +1,36 @@
+---
+title: Components
+description: Source capsules are documented from registry metadata instead of hand-maintained marketing cards.
+---
+
+Ashlar components are source capsules: implementation files, CEM metadata,
+evidence records, hashes, and update metadata. The docs should teach the command
+path and expose current evidence status rather than implying everything is stable.
+
+## Add a single capsule
+
+```bash
+pnpm ashlar search button --registry ./registry
+pnpm ashlar add button --dry-run --diff
+pnpm ashlar add button --registry ./registry --yes
+pnpm ashlar verify --registry ./registry
+```
+
+## Add a form path
+
+```bash
+pnpm ashlar add form-field text-input textarea date-input select radio-group checkbox button alert error-summary identifier --registry ./registry --yes
+```
+
+## Current registry index
+
+<ComponentIndex />
+
+## Integration rules
+
+- Do not nest cards to make component pages look busier.
+- Keep examples task-oriented: intake forms, case queues, document review, and
+  service-flow confirmation.
+- Component docs must include copyable install commands, source paths, evidence
+  status, and known gaps.
+- Claim stability only from evidence records, not from visual polish.

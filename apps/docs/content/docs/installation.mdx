@@ -1,0 +1,60 @@
+---
+title: Installation
+description: Build the local CLI, inspect registry state, and try a source install without publishing assumptions.
+---
+
+The current install path is local-first. Published npm commands belong in this
+page after `@blen/*` packages are published with provenance and smoke tested from
+the registry.
+
+## Prerequisites
+
+```bash
+source ~/.nvm/nvm.sh
+nvm use 24.15.0
+pnpm install
+```
+
+## Build the CLI
+
+```bash
+pnpm --filter @blen/ashlar-cli build
+pnpm ashlar --help
+```
+
+## Inspect before writing files
+
+```bash
+pnpm ashlar status --registry ./registry
+pnpm ashlar search button --registry ./registry
+pnpm ashlar suggest "Build a benefits application form" --registry ./registry
+```
+
+## Smoke install in a temporary app
+
+Use a temporary directory when you are validating CLI behavior. It should copy
+source files, write `ashlar.config.json`, and update `ashlar-lock.json` without
+touching this workspace.
+
+```bash
+tmpdir="$(mktemp -d)"
+pnpm ashlar init --cwd "$tmpdir" --yes
+pnpm ashlar add button alert text-input --cwd "$tmpdir" --registry ./registry --yes
+pnpm ashlar verify --cwd "$tmpdir" --registry ./registry
+```
+
+## Future published path
+
+Once the first package is published under the `@blen` namespace, the docs should
+show this path with the exact package version that passed release smoke:
+
+```bash
+npm create @blen/ashlar@latest
+npx @blen/ashlar@latest init
+npx @blen/ashlar@latest add button alert text-input
+```
+
+<Callout type="warn">
+Do not publish this copy as the canonical path until GitHub Packages or npm
+publication has been verified from a clean consumer project.
+</Callout>

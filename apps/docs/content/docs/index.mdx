@@ -1,0 +1,50 @@
+---
+title: Introduction
+description: Ashlar is a proof-gated source registry for public-service interfaces.
+---
+
+Ashlar is not another closed component bundle. It is a source-capsule registry for
+government product teams that need readable markup, auditable evidence, and a CLI
+that can copy code into an application without hiding provenance.
+
+<Callout>
+Ashlar is still a v0.0 prototype. Do not describe it as a USWDS replacement,
+public-alpha-ready, or accessibility-stable until the release proof gates in
+`STATUS.md` pass.
+</Callout>
+
+## Start locally
+
+Run the workspace from a clean checkout before you install any capsules into an
+app:
+
+```bash
+pnpm install
+pnpm build
+pnpm ashlar status --registry ./registry
+```
+
+## What should feel familiar
+
+- Source ownership like shadcn/ui: generated files live in the consuming app.
+- Copyable command-first docs: every adoption path starts with a shell command.
+- Registry metadata: every capsule carries CEM, evidence, hashes, and lockfile
+  expectations.
+- Public-service defaults: forms, alerts, identifiers, service flows, and agency
+  theming are first-class concerns.
+
+## What should feel different
+
+- Ashlar starts with validation and trust checks, not visual novelty.
+- The stock theme is called Default, not Federal.
+- Agency themes must be traced to real agency design guidance before they become
+  more than illustrative presets.
+- AI guidance is generated alongside installed source so assistants can see what
+  code came from the registry.
+
+## Current docs stack
+
+This app uses Next.js, Fumadocs MDX, and Fumadocs UI. That direction was chosen
+because shadcn's current docs app uses the same family of tools, and it gives
+Ashlar source-owned MDX, structured navigation, copyable code blocks, and room for
+generated registry pages without maintaining a custom docs renderer.

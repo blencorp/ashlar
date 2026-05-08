@@ -1,0 +1,48 @@
+---
+title: Examples
+description: Run real apps across the framework matrix instead of relying on screenshots.
+---
+
+Examples should prove integration, not decorate the repo. The current matrix is
+a public site, docs app, Vite + Tailwind case board, vanilla TypeScript, React
+SPA, Next.js, Svelte, and Vue.
+
+## Start everything
+
+```bash
+pnpm testing:start
+```
+
+## One-shot verification
+
+```bash
+pnpm testing:start --check --visual
+```
+
+## Local URLs
+
+```txt
+Public site: http://127.0.0.1:4174/
+Docs: http://127.0.0.1:4175/
+Vite + Tailwind case board: http://127.0.0.1:4173/
+Vanilla TypeScript: http://127.0.0.1:4180/
+React SPA: http://127.0.0.1:4181/
+Next.js App Router: http://127.0.0.1:4182/
+Svelte: http://127.0.0.1:4183/
+Vue: http://127.0.0.1:4184/
+```
+
+## Visual smoke output
+
+```bash
+pnpm examples:visual
+open reports/example-visual-smoke
+```
+
+## Example quality bar
+
+- Use real public-service workflows like case queues, renewal forms, document
+  review, and approvals.
+- Avoid one-off demo shells that do not exercise components and theme tokens.
+- Do not use the old Vite experiment as the pattern for new examples.
+- Every example should have install, audit, build, and visual smoke coverage.

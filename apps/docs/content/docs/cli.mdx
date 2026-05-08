@@ -1,0 +1,55 @@
+---
+title: CLI
+description: Copyable Ashlar commands for status, audit, source install, verification, and release proof.
+---
+
+The CLI should feel modern and direct: command discovery first, explicit writes,
+and no hidden trust bypasses.
+
+## Command map
+
+```bash
+pnpm ashlar --help
+pnpm ashlar status --registry ./registry
+pnpm ashlar search button --registry ./registry
+pnpm ashlar suggest "Build a renewal case board" --registry ./registry
+pnpm ashlar audit --policy all --registry ./registry examples/service-flow/benefit-application.pass.html
+pnpm ashlar add button --dry-run --diff
+pnpm ashlar verify --registry ./registry
+pnpm ashlar update button --dry-run
+pnpm ashlar release readiness --registry ./registry
+```
+
+## First-run smoke
+
+This is the smallest command block a reviewer should run before trusting the CLI
+surface:
+
+```bash
+pnpm --filter @blen/ashlar-cli build
+pnpm ashlar --help
+pnpm ashlar status --registry ./registry
+pnpm ashlar add button --dry-run --diff
+```
+
+## Release checks
+
+Readiness should stay strict. A green build is not enough to claim public release
+quality.
+
+```bash
+pnpm check
+pnpm build
+pnpm format:check
+pnpm public-language:check
+pnpm ashlar release readiness --registry ./registry
+```
+
+Expected result today: the local checks should pass, while release readiness
+continues to fail on public proof gates until external review, stable evidence,
+published package provenance, and public signature trust are complete.
+
+## Attribution
+
+The interactive CLI intro should include BLEN attribution and `blencorp.com`.
+Keep that in the CLI output, not hidden in docs-only copy.
