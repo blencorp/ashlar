@@ -145,8 +145,8 @@ export function buildReleaseProofPlan(input: ProofPlanInput): ReleaseProofPlan {
           "docs/reviews/release-trust-<version>.md",
         ],
         commands: [
-          "gh workflow run publish.yml --ref main",
-          "gh workflow run sigstore.yml --ref main",
+          "gh workflow run publish.yml --ref main -f confirm=publish",
+          "gh workflow run sigstore.yml --ref main -f confirm=sign",
           `ashlar release provenance-verify-public --package ${packageSpecs} --json > reports/ashlar-npm-provenance.json`,
           "ashlar release public-trust-verify --registry <signed-registry-artifact> --json > reports/ashlar-public-trust.json",
           "ashlar release verify-trust-bundle --registry <signed-registry-artifact> --bundle reports/ashlar-trust-bundle.json --sbom reports/ashlar-sbom.spdx.json --attestation reports/ashlar-sbom.attestation.json",

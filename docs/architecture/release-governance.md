@@ -42,6 +42,18 @@ post-merge guard that turns accepted changesets into a release PR.
 
 Publishing remains manually gated by `Publish`, not automatic on every merge. That workflow is main-only, requires a `publish` confirmation, runs `pnpm check`, `pnpm build`, `pnpm release:smoke`, local provenance preflight, and release readiness with explicit prototype escape hatches before `changeset publish`.
 
+```bash
+gh workflow run publish.yml --ref main -f confirm=publish
+```
+
+Release-trust artifact signing is a separate guarded workflow. Run it only
+after the release candidate is on `main` and the public trust artifacts are
+ready for review:
+
+```bash
+gh workflow run sigstore.yml --ref main -f confirm=sign
+```
+
 The public packages use the BLEN-owned npm namespace:
 
 - `@blen/ashlar` is the public `npx @blen/ashlar` entrypoint and keeps the installed binary name as `ashlar`.
