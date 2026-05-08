@@ -1,7 +1,8 @@
 import { existsSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 import { checkExternalReviewRecords } from "./external-review-record.js";
 import { formatRegistryLayerCapsules } from "./layers.js";
+import { defaultRegistryPath, isDefaultRegistryAlias } from "./default-registry.js";
 import {
   defaultConfig,
   normalizeConfig,
@@ -9,7 +10,7 @@ import {
   type AshlarLockfile,
   type ResolvedAshlarConfig,
 } from "./project.js";
-import { getComponent, listComponents } from "./registry.js";
+import { getComponent, listComponents, resolveRegistryRoot } from "./registry.js";
 
 export type ProjectStatusLevel = "pass" | "action" | "blocked";
 
@@ -72,7 +73,7 @@ function readProjectLockfile(cwd: string): { lockfile: AshlarLockfile; exists: b
   if (!existsSync(path)) {
     return {
       exists: false,
-      lockfile: { version: "1", registry: "./registry", components: {} },
+      lockfile: { version: "1", registry: defaultRegistryPath(), components: {} },
     };
   }
 
@@ -133,7 +134,9 @@ export function buildProjectStatus(input: ProjectStatusInput): ProjectStatusRepo
   if (!initialized || !lockfileExists) {
     addAction(
       nextActions,
-      `ashlar init --registry ${registryPath}`,
+      isDefaultRegistryAlias(registryPath)
+        ? "ashlar init"
+        : `ashlar init --registry ${registryPath}`,
       "Create config, lockfile, themes, AGENTS.md, and DESIGN.md.",
     );
   }
@@ -207,7 +210,7 @@ export function buildProjectStatus(input: ProjectStatusInput): ProjectStatusRepo
         "registry-available",
         "pass",
         `Registry is readable with ${componentCount} capsule(s).`,
-        [resolve(input.cwd, registryPath)],
+        [resolveRegistryRoot(input.cwd, registryPath)],
       ),
     );
     checks.push(

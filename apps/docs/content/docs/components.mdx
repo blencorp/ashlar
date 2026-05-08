@@ -4,25 +4,27 @@ description: Source capsules are documented from registry metadata instead of ha
 ---
 
 Ashlar components are source capsules: implementation files, CEM metadata,
-evidence records, hashes, and update metadata. The docs should teach the command
-path and expose current evidence status rather than implying everything is stable.
+evidence records, hashes, and update metadata. Use the CLI to copy them into your
+app and verify the installed source after changes.
 
 ## Add a single capsule
 
 ```bash
-pnpm ashlar search button --registry ./registry
-pnpm ashlar add button --dry-run --diff
-pnpm ashlar add button --registry ./registry --yes
-pnpm ashlar verify --registry ./registry
+pnpm dlx @blen/ashlar@latest search button
+pnpm dlx @blen/ashlar@latest add button --dry-run --diff
+pnpm dlx @blen/ashlar@latest add button
+pnpm dlx @blen/ashlar@latest verify
 ```
 
 ## Add a form path
 
 ```bash
-pnpm ashlar add form-field text-input textarea date-input select radio-group checkbox button alert error-summary identifier --registry ./registry --yes
+pnpm dlx @blen/ashlar@latest add \
+  form-field text-input textarea date-input select \
+  radio-group checkbox button alert error-summary identifier
 ```
 
-## Current registry index
+## Available capsules
 
 <ComponentIndex />
 

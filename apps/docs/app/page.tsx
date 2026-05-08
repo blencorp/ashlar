@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-const smokeCommand = `pnpm install
-pnpm build
-pnpm testing:start --check --visual`;
+const smokeCommand = `pnpm dlx @blen/ashlar@latest init
+pnpm dlx @blen/ashlar@latest add button alert text-input
+pnpm dlx @blen/ashlar@latest verify`;
 
 export default function HomePage() {
   return (
@@ -24,11 +24,11 @@ export default function HomePage() {
 
         <section className="ashlar-hero" aria-labelledby="ashlar-home-title">
           <p className="ashlar-kicker">Government-first source capsules</p>
-          <h1 id="ashlar-home-title">Docs for adopting Ashlar without guessing.</h1>
+          <h1 id="ashlar-home-title">Install public-service UI source into your app.</h1>
           <p>
-            The docs app is now source-owned MDX on Next.js and Fumadocs: installation, CLI
-            commands, component capsules, examples, theming, and trust boundaries are written as
-            copyable operational guides.
+            Ashlar works like a source registry: initialize your project, copy audited component
+            source into your app, then verify what changed. No repo clone or local registry is
+            required for the published path.
           </p>
           <div className="ashlar-action-row">
             <Link className="ashlar-button" href="/docs">
@@ -50,12 +50,12 @@ export default function HomePage() {
             <span>Every setup and CLI path starts with commands that can be pasted.</span>
           </div>
           <div>
-            <strong>Proof-gated</strong>
-            <span>Prototype status and release blockers stay visible in public docs.</span>
+            <strong>Source-owned</strong>
+            <span>Installed files live in your codebase so teams can inspect and adapt them.</span>
           </div>
           <div>
             <strong>Framework-aware</strong>
-            <span>Examples cover vanilla, React SPA, Next.js, Svelte, Vue, and Vite.</span>
+            <span>Guides cover vanilla, React SPA, Next.js, Svelte, Vue, and Vite.</span>
           </div>
         </section>
 

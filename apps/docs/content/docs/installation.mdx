@@ -1,60 +1,60 @@
 ---
 title: Installation
-description: Build the local CLI, inspect registry state, and try a source install without publishing assumptions.
+description: Initialize Ashlar in an existing app and install your first source capsules.
 ---
 
-The current install path is local-first. Published npm commands belong in this
-page after `@blen/*` packages are published with provenance and smoke tested from
-the registry.
+Install Ashlar from the root of the app where you want the source files to live.
+You do not need to clone the Ashlar repository or pass a local registry path.
 
-## Prerequisites
+## Run init
 
 ```bash
-source ~/.nvm/nvm.sh
-nvm use 24.15.0
-pnpm install
+pnpm dlx @blen/ashlar@latest init
 ```
 
-## Build the CLI
+Other package managers:
 
 ```bash
-pnpm --filter @blen/ashlar-cli build
-pnpm ashlar --help
-```
-
-## Inspect before writing files
-
-```bash
-pnpm ashlar status --registry ./registry
-pnpm ashlar search button --registry ./registry
-pnpm ashlar suggest "Build a benefits application form" --registry ./registry
-```
-
-## Smoke install in a temporary app
-
-Use a temporary directory when you are validating CLI behavior. It should copy
-source files, write `ashlar.config.json`, and update `ashlar-lock.json` without
-touching this workspace.
-
-```bash
-tmpdir="$(mktemp -d)"
-pnpm ashlar init --cwd "$tmpdir" --yes
-pnpm ashlar add button alert text-input --cwd "$tmpdir" --registry ./registry --yes
-pnpm ashlar verify --cwd "$tmpdir" --registry ./registry
-```
-
-## Future published path
-
-Once the first package is published under the `@blen` namespace, the docs should
-show this path with the exact package version that passed release smoke:
-
-```bash
-npm create @blen/ashlar@latest
 npx @blen/ashlar@latest init
-npx @blen/ashlar@latest add button alert text-input
+bunx @blen/ashlar@latest init
 ```
 
-<Callout type="warn">
-Do not publish this copy as the canonical path until GitHub Packages or npm
-publication has been verified from a clean consumer project.
-</Callout>
+`init` writes:
+
+- `ashlar.config.json` for registry, output paths, and style paths.
+- `ashlar-lock.json` for installed capsule hashes.
+- `src/ashlar/ashlar.css` and theme files.
+- `AGENTS.md` and `DESIGN.md` context files for AI-assisted work.
+
+## Add components
+
+```bash
+pnpm dlx @blen/ashlar@latest add button alert text-input
+```
+
+The default component directory is `src/ashlar/components`. You can preview the
+write first:
+
+```bash
+pnpm dlx @blen/ashlar@latest add button --dry-run --diff
+```
+
+## Import styles
+
+Import the generated Ashlar entrypoint from your app's global stylesheet or main
+entry file:
+
+```css
+@import "./src/ashlar/ashlar.css";
+```
+
+Adjust the path to match where your global CSS file lives.
+
+## Verify
+
+```bash
+pnpm dlx @blen/ashlar@latest verify
+```
+
+Run `verify` after adding or updating components. It checks installed files
+against `ashlar-lock.json` and the registry metadata bundled with the CLI.

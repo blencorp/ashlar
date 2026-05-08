@@ -10,9 +10,8 @@ endorsed by an agency.
 ## Sync local token output
 
 ```bash
-pnpm ashlar theme sync
-pnpm ashlar theme validate
-pnpm --filter @blen/ashlar-example-vite build
+pnpm dlx @blen/ashlar@latest theme sync
+pnpm dlx @blen/ashlar@latest theme validate
 ```
 
 ## Theme names
@@ -32,9 +31,10 @@ pnpm --filter @blen/ashlar-example-vite build
 ## CSS output
 
 ```bash
-pnpm ashlar theme sync
-sed -n '1,160p' packages/tokens/dist/theme.css
-sed -n '1,160p' packages/tokens/dist/tailwind-theme.css
+src/ashlar/ashlar.css
+src/ashlar/themes/theme.css
+src/ashlar/themes/tailwind-theme.css
+src/ashlar/themes/tokens.ts
 ```
 
 ## Review checklist

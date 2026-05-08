@@ -29,16 +29,16 @@ export function ComponentIndex() {
       <tbody>
         {components.map((component) => (
           <tr className="ashlar-component-row" key={component.name}>
-            <td>
+            <td data-label="Capsule">
               <strong>{component.name}</strong>
               <small>{component.description}</small>
             </td>
-            <td>
+            <td data-label="Family">
               {component.family}
               <small>{component.stability}</small>
             </td>
-            <td>{component.evidenceStatus}</td>
-            <td>
+            <td data-label="Evidence">{component.evidenceStatus}</td>
+            <td data-label="Contract">
               <code>{component.selector}</code>
             </td>
           </tr>

@@ -1,52 +1,41 @@
 ---
-title: Trust and release gates
-description: The docs must keep Ashlar's prototype boundaries visible until the public proof gates pass.
+title: Trust and verification
+description: Verify installed source and keep public claims tied to evidence.
 ---
 
-Ashlar's story only works if the proof trail is stricter than the visuals. Keep
-these gates visible in docs, PRs, releases, and examples.
+Ashlar's trust model starts in the app that installs the source. The CLI writes a
+lockfile, records capsule hashes, and lets you verify local files after changes.
 
-## Local checks
-
-```bash
-pnpm check
-pnpm build
-pnpm format:check
-pnpm public-language:check
-```
-
-## Release readiness
+## Verify installed source
 
 ```bash
-pnpm ashlar release readiness --registry ./registry
-pnpm ashlar release provenance-check
-pnpm release:smoke
+pnpm dlx @blen/ashlar@latest verify
 ```
 
-## Current claim boundary
+`verify` checks:
+
+- the installed capsule version in `ashlar-lock.json`;
+- the registry capsule hash;
+- the copied files in your project;
+- local edits that no longer match the original source hash.
+
+## Audit before release
+
+```bash
+pnpm dlx @blen/ashlar@latest audit --policy all "src/**/*.{html,tsx,jsx,vue,svelte}"
+```
+
+## Claim boundary
 
 Allowed:
 
-- USWDS-compatible audit, migration, and source-capsule prototype.
-- Public-service UI registry with local CLI, evidence records, and example apps.
-- v0.0 package line while proof blockers remain visible.
+- Source-owned public-service UI starting points.
+- Component metadata, evidence records, and local verification.
+- Default theme plus agency-inspired theme adapters when sources are cited.
 
 Blocked:
 
 - USWDS replacement.
-- Public alpha.
-- Stable accessible component library.
-- Public npm provenance.
-- Public capsule Sigstore trust.
-
-## PR workflow
-
-```bash
-git status --short --branch
-pnpm check
-pnpm build
-pnpm format:check
-git commit -m "docs: rebuild docs app with fumadocs"
-git push -u origin docs/fumadocs-app
-gh pr create --draft --fill
-```
+- Agency endorsement.
+- Accessibility-stable claims without completed review evidence.
+- Visual-only claims that are not backed by code, tests, and registry metadata.

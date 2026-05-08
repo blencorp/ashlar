@@ -31,7 +31,7 @@ export function registerInitCommand(program: Command) {
     .option("--monorepo", "Record monorepo intent. Present for shadcn v4 CLI compatibility.")
     .option("-s, --silent", "Mute non-error output.")
     .option("-y, --yes", "Skip confirmation prompts. Present for shadcn CLI compatibility.")
-    .option("--registry <path>", "Registry path or URL", "./registry")
+    .option("--registry <path>", "Registry path, URL, or built-in registry alias")
     .option(
       "--components-dir <path>",
       "Installed component source directory",
@@ -54,7 +54,7 @@ export function registerInitCommand(program: Command) {
           monorepo?: boolean;
           name?: string;
           preset?: string | boolean;
-          registry: string;
+          registry?: string;
           silent?: boolean;
           template?: string;
         } & CwdOption,
@@ -68,7 +68,7 @@ export function registerInitCommand(program: Command) {
 
           const force = Boolean(options.force);
           const config = defaultConfig({
-            registry: options.registry,
+            ...(options.registry ? { registry: options.registry } : {}),
             componentsDir: options.componentsDir,
             indexesDir: "src/ashlar/indexes",
             styles: {

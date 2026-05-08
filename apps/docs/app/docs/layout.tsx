@@ -1,35 +1,12 @@
 import type { ReactNode } from "react";
-import { DocsLayout } from "fumadocs-ui/layouts/docs";
 
-import { source } from "@/lib/source";
+import { DocsSidebar } from "@/components/docs-sidebar";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <DocsLayout
-      githubUrl="https://github.com/blencorp/ashlar"
-      links={[
-        {
-          text: "Examples",
-          url: "/docs/examples",
-          active: "nested-url",
-        },
-        {
-          text: "Status",
-          url: "https://github.com/blencorp/ashlar/blob/main/STATUS.md",
-          external: true,
-        },
-      ]}
-      nav={{
-        title: (
-          <span className="ashlar-wordmark">
-            Ashlar <span>Docs</span>
-          </span>
-        ),
-        url: "/docs",
-      }}
-      tree={source.getPageTree()}
-    >
+    <div className="ashlar-docs-layout">
+      <DocsSidebar />
       {children}
-    </DocsLayout>
+    </div>
   );
 }
