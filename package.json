@@ -25,6 +25,7 @@
     "examples:visual": "pnpm build && node scripts/example-visual-smoke.mjs",
     "format": "biome format --write .",
     "format:check": "biome format .",
+    "public-language:check": "node scripts/check-public-language.mjs",
     "repo:doctor": "node scripts/doctor.mjs",
     "testing:start": "node scripts/testing-session.mjs",
     "changeset": "changeset",

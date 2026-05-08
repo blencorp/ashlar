@@ -40,6 +40,12 @@ const summaryMarkdown = join(outputDir, "summary.md");
 
 const steps = [
   {
+    name: "public-language:check",
+    bin: pnpm,
+    args: ["public-language:check"],
+    type: "local-check",
+  },
+  {
     name: "format:check",
     bin: pnpm,
     args: ["format:check"],
