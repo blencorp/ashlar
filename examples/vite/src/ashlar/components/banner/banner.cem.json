@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "banner.html",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "AshlarBanner",
+          "tagName": "section",
+          "description": "Official-site trust marker for federal and public-service pages.",
+          "_ashlar": {
+            "version": "0.0.3",
+            "tier": "primitive",
+            "layer": "markup-primitives",
+            "stability": "experimental",
+            "selector": ".ashlar-banner",
+            "a11yRequirements": [
+              {
+                "id": "official-site-label-required",
+                "wcag": "2.4.6",
+                "severity": "error",
+                "description": "Banner regions need a clear label so assistive technology users can identify the official-site trust marker."
+              },
+              {
+                "id": "details-summary-keyboard",
+                "wcag": "2.1.1",
+                "severity": "error",
+                "description": "The expandable trust explanation must remain operable with the keyboard."
+              }
+            ],
+            "antiPatterns": [
+              {
+                "id": "banner-needs-label",
+                "pattern": "<section $$$ATTRS>$$$CHILDREN</section>",
+                "regex": "class=\"[^\"]*\\bashlar-banner\\b",
+                "not": {
+                  "regex": "aria-label\\s*="
+                },
+                "message": "Ashlar Banner requires aria-label so the trust marker is identifiable.",
+                "fix": "Add aria-label=\"Official website of the United States government\" to the banner section.",
+                "wcag": "2.4.6",
+                "severity": "error",
+                "languages": ["html"]
+              }
+            ],
+            "tokensConsumed": [
+              "color.surface.muted",
+              "color.border.subtle",
+              "color.text",
+              "color.link",
+              "focus.ring.color"
+            ],
+            "platformFeatures": [
+              {
+                "feature": "details-summary",
+                "status": "required",
+                "fallback": "Uses native disclosure semantics and keyboard behavior for the trust explanation."
+              },
+              {
+                "feature": "forced-colors",
+                "status": "progressive",
+                "fallback": "Uses system link, border, and highlight colors."
+              }
+            ],
+            "policyMappings": [
+              {
+                "source": "USWDS Banner",
+                "requirement": "The banner header uses a decorative U.S. flag image and the official-site text pattern.",
+                "url": "https://designsystem.digital.gov/components/banner/"
+              },
+              {
+                "source": "Federal Website Standards",
+                "requirement": "Federal public-service pages should identify official government websites with a recognizable banner near the top of the page.",
+                "url": "https://standards.digital.gov/standards/banner/"
+              }
+            ],
+            "rendering": "server-safe",
+            "hydrationCost": "none",
+            "criticalForA11y": true
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "identifier.html",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "AshlarIdentifier",
+          "tagName": "footer",
+          "description": "Required agency identifier and trust-link footer for federal public-service pages.",
+          "_ashlar": {
+            "version": "0.0.1",
+            "tier": "primitive",
+            "layer": "markup-primitives",
+            "stability": "experimental",
+            "selector": ".ashlar-identifier",
+            "a11yRequirements": [
+              {
+                "id": "identifier-region-label-required",
+                "wcag": "2.4.6",
+                "severity": "error",
+                "description": "Identifier regions need an accessible label so users can recognize the official agency footer."
+              },
+              {
+                "id": "required-trust-links",
+                "wcag": "2.4.4",
+                "severity": "error",
+                "description": "Federal identifiers should include recognizable About, Accessibility, FOIA, No FEAR Act, OIG, Performance, and Privacy links."
+              },
+              {
+                "id": "focus-visible-required",
+                "wcag": "2.4.7",
+                "severity": "error",
+                "description": "Identifier links must have visible keyboard focus."
+              }
+            ],
+            "antiPatterns": [
+              {
+                "id": "identifier-needs-label",
+                "pattern": "<footer $$$ATTRS>$$$CHILDREN</footer>",
+                "regex": "class=\"[^\"]*\\bashlar-identifier\\b",
+                "not": {
+                  "regex": "(aria-label|aria-labelledby)\\s*="
+                },
+                "message": "Ashlar Identifier requires aria-label or aria-labelledby so the agency footer is identifiable.",
+                "fix": "Add aria-label=\"Agency identifier\" or point aria-labelledby at a visible heading.",
+                "wcag": "2.4.6",
+                "severity": "error",
+                "languages": ["html"]
+              }
+            ],
+            "tokensConsumed": [
+              "color.surface.inverse",
+              "color.text.inverse",
+              "color.text.inverse-muted",
+              "color.link.inverse",
+              "color.action.primary.bg",
+              "focus.ring.color"
+            ],
+            "platformFeatures": [
+              {
+                "feature": "contentinfo-landmark",
+                "status": "required",
+                "fallback": "Uses native footer semantics for the agency identifier."
+              },
+              {
+                "feature": "native-links",
+                "status": "required",
+                "fallback": "Uses regular anchor elements for required agency trust links."
+              },
+              {
+                "feature": "forced-colors",
+                "status": "progressive",
+                "fallback": "Uses system colors for link and focus affordances."
+              }
+            ],
+            "policyMappings": [
+              {
+                "source": "USWDS Identifier",
+                "requirement": "Federal sites should include an identifier with About, Accessibility, FOIA, No FEAR Act, OIG, Performance, and Privacy links.",
+                "url": "https://designsystem.digital.gov/components/identifier/"
+              },
+              {
+                "source": "M-23-22",
+                "requirement": "Public federal websites should provide recognizable agency trust, accessibility, privacy, and transparency links.",
+                "url": "https://www.whitehouse.gov/omb/management/ofcio/delivering-a-digital-first-public-experience/"
+              }
+            ],
+            "rendering": "server-safe",
+            "hydrationCost": "none",
+            "criticalForA11y": true
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -422,6 +422,129 @@
   }
 }
 
+/* Ashlar component: alert */
+@layer ashlar.components {
+  .ashlar-alert {
+    border-inline-start: 0.5rem solid var(--ashlar-color-status-info-border, #005ea8);
+    background: var(--ashlar-color-status-info-bg, #eef7ff);
+    color: var(--ashlar-color-text, #1b1b1b);
+    padding-block: 1rem;
+    padding-inline: 1rem;
+  }
+
+  .ashlar-alert[data-tone="error"] {
+    border-inline-start-color: var(--ashlar-color-status-error-border, #d54309);
+    background: var(--ashlar-color-status-error-bg, #fff3f2);
+  }
+
+  .ashlar-alert > :first-child {
+    margin-block-start: 0;
+  }
+
+  .ashlar-alert > :last-child {
+    margin-block-end: 0;
+  }
+}
+
+@media (forced-colors: active) {
+  .ashlar-alert {
+    border-color: CanvasText;
+    outline: 1px solid CanvasText;
+  }
+}
+
+/* Ashlar component: banner */
+@layer ashlar.components {
+  .ashlar-banner {
+    background: var(--ashlar-color-surface-muted, #f0f0f0);
+    border-block-end: 1px solid var(--ashlar-color-border-subtle, #dfe1e2);
+    color: var(--ashlar-color-text, #1b1b1b);
+    font-size: 0.875rem;
+    line-height: 1.45;
+    padding-block: 0.5rem;
+    padding-inline: max(1rem, env(safe-area-inset-left));
+  }
+
+  .ashlar-banner__text,
+  .ashlar-banner__details {
+    margin: 0 auto;
+    max-inline-size: var(--ashlar-page-max-inline-size, 72rem);
+  }
+
+  .ashlar-banner__text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+  }
+
+  .ashlar-banner__flag {
+    display: block;
+    inline-size: 1rem;
+    block-size: auto;
+    aspect-ratio: 16 / 11;
+    border: 1px solid #dfe1e2;
+    border-radius: 0.0625rem;
+    flex: 0 0 auto;
+  }
+
+  .ashlar-banner__flag [data-flag-stripe],
+  .ashlar-banner__flag [data-flag-canton],
+  .ashlar-banner__flag [data-flag-star] {
+    forced-color-adjust: none;
+  }
+
+  .ashlar-banner__details {
+    margin-block-start: 0.25rem;
+  }
+
+  .ashlar-banner__details > summary {
+    color: var(--ashlar-color-link, #005ea8);
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 700;
+  }
+
+  .ashlar-banner__details > summary:focus-visible {
+    outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
+    outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
+  }
+
+  .ashlar-banner__grid {
+    display: grid;
+    gap: 0.75rem;
+    margin-block-start: 0.75rem;
+  }
+
+  .ashlar-banner__grid p {
+    margin-block: 0.25rem 0;
+  }
+}
+
+@media (min-width: 48rem) {
+  .ashlar-banner__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (forced-colors: active) {
+  .ashlar-banner {
+    border-color: CanvasText;
+  }
+
+  .ashlar-banner__flag {
+    border-color: CanvasText;
+  }
+
+  .ashlar-banner__details > summary {
+    color: LinkText;
+  }
+
+  .ashlar-banner__details > summary:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
 /* Ashlar component: button */
 @layer ashlar.components {
   .ashlar-button {
@@ -495,6 +618,289 @@
   }
 
   .ashlar-button:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+/* Ashlar component: checkbox */
+@layer ashlar.components {
+  .ashlar-checkbox-field {
+    align-items: start;
+    display: grid;
+    gap: 0.625rem;
+    grid-template-columns: max-content minmax(0, 1fr);
+    max-inline-size: var(--ashlar-checkbox-max-inline-size, 36rem);
+  }
+
+  .ashlar-checkbox {
+    accent-color: var(--ashlar-color-action-primary-bg, #005ea8);
+    block-size: 1.25rem;
+    inline-size: 1.25rem;
+    margin-block-start: 0.125rem;
+  }
+
+  .ashlar-checkbox:focus-visible {
+    outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
+    outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
+  }
+
+  .ashlar-checkbox-label {
+    color: var(--ashlar-color-text, #1b1b1b);
+    line-height: 1.45;
+  }
+
+  .ashlar-checkbox[aria-invalid="true"] + .ashlar-checkbox-label {
+    color: var(--ashlar-color-status-error-fg, #b50909);
+    font-weight: 700;
+  }
+}
+
+@media (forced-colors: active) {
+  .ashlar-checkbox {
+    accent-color: ButtonText;
+  }
+
+  .ashlar-checkbox:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+/* Ashlar component: form-field */
+@layer ashlar.components {
+  .ashlar-form-field {
+    display: grid;
+    gap: 0.375rem;
+    max-inline-size: var(--ashlar-form-field-max-inline-size, 36rem);
+  }
+
+  .ashlar-form-field + .ashlar-form-field {
+    margin-block-start: 1.25rem;
+  }
+
+  .ashlar-form-field__label {
+    color: var(--ashlar-color-text, #1b1b1b);
+    font-weight: 700;
+  }
+
+  .ashlar-form-field__hint {
+    color: var(--ashlar-color-text-muted, #565c65);
+    font-size: 0.95rem;
+  }
+
+  .ashlar-form-field__error {
+    color: var(--ashlar-color-status-error-fg, #b50909);
+    font-weight: 700;
+  }
+}
+
+/* Ashlar component: identifier */
+@layer ashlar.components {
+  .ashlar-identifier {
+    background: var(--ashlar-color-surface-inverse, #1b1b1b);
+    border-block-start: 0.25rem solid var(--ashlar-color-action-primary-bg, #005ea8);
+    color: var(--ashlar-color-text-inverse, #ffffff);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    padding-block: 1.5rem;
+    padding-inline: max(1rem, env(safe-area-inset-left));
+  }
+
+  .ashlar-identifier__inner {
+    display: grid;
+    gap: 1rem;
+    margin: 0 auto;
+    max-inline-size: var(--ashlar-page-max-inline-size, 72rem);
+  }
+
+  .ashlar-identifier__eyebrow,
+  .ashlar-identifier__name {
+    margin: 0;
+  }
+
+  .ashlar-identifier__eyebrow {
+    color: var(--ashlar-color-text-inverse-muted, #dfe1e2);
+  }
+
+  .ashlar-identifier__name {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .ashlar-identifier__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  .ashlar-identifier__nav a {
+    color: var(--ashlar-color-link-inverse, #d9e8f6);
+    text-decoration-thickness: max(1px, 0.08em);
+    text-underline-offset: 0.18em;
+  }
+
+  .ashlar-identifier__nav a:focus-visible {
+    outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
+    outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
+  }
+}
+
+@media (min-width: 48rem) {
+  .ashlar-identifier__inner {
+    grid-template-columns: minmax(14rem, 1fr) 2fr;
+  }
+}
+
+@media (forced-colors: active) {
+  .ashlar-identifier {
+    border-color: LinkText;
+  }
+
+  .ashlar-identifier__eyebrow,
+  .ashlar-identifier__nav a {
+    color: LinkText;
+  }
+
+  .ashlar-identifier__nav a:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+/* Ashlar component: radio-group */
+@layer ashlar.components {
+  .ashlar-radio-group {
+    border: 0;
+    display: grid;
+    gap: 0.625rem;
+    margin: 0;
+    max-inline-size: var(--ashlar-radio-group-max-inline-size, 36rem);
+    padding: 0;
+  }
+
+  .ashlar-radio-group__legend {
+    color: var(--ashlar-color-text, #1b1b1b);
+    font-weight: 700;
+    margin-block-end: 0.25rem;
+    padding: 0;
+  }
+
+  .ashlar-radio-group__hint {
+    color: var(--ashlar-color-text-muted, #565c65);
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  .ashlar-radio-option {
+    align-items: start;
+    display: grid;
+    gap: 0.625rem;
+    grid-template-columns: max-content minmax(0, 1fr);
+  }
+
+  .ashlar-radio {
+    accent-color: var(--ashlar-color-action-primary-bg, #005ea8);
+    block-size: 1.25rem;
+    inline-size: 1.25rem;
+    margin-block-start: 0.125rem;
+  }
+
+  .ashlar-radio:focus-visible {
+    outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
+    outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
+  }
+
+  .ashlar-radio-label {
+    color: var(--ashlar-color-text, #1b1b1b);
+    line-height: 1.45;
+  }
+
+  .ashlar-radio[aria-invalid="true"] + .ashlar-radio-label,
+  .ashlar-radio-group[aria-invalid="true"] .ashlar-radio-label {
+    color: var(--ashlar-color-status-error-fg, #b50909);
+    font-weight: 700;
+  }
+}
+
+@media (forced-colors: active) {
+  .ashlar-radio {
+    accent-color: ButtonText;
+  }
+
+  .ashlar-radio:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+/* Ashlar component: select */
+@layer ashlar.components {
+  .ashlar-select {
+    background-color: var(--ashlar-color-surface, #ffffff);
+    border: 1px solid var(--ashlar-color-input-border, #565c65);
+    border-radius: var(--ashlar-radius-control, 0.25rem);
+    box-sizing: border-box;
+    color: var(--ashlar-color-text, #1b1b1b);
+    font: inherit;
+    inline-size: min(100%, var(--ashlar-select-max-inline-size, 30rem));
+    min-block-size: 2.75rem;
+    padding-block: 0.5rem;
+    padding-inline: 0.75rem;
+  }
+
+  .ashlar-select:focus-visible {
+    outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
+    outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
+  }
+
+  .ashlar-select[aria-invalid="true"] {
+    border-color: var(--ashlar-color-status-error-border, #d54309);
+    border-inline-start-width: 0.5rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .ashlar-select {
+    background-color: Field;
+    border-color: FieldText;
+    color: FieldText;
+  }
+
+  .ashlar-select:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+/* Ashlar component: text-input */
+@layer ashlar.components {
+  .ashlar-text-input {
+    background-color: var(--ashlar-color-surface, #ffffff);
+    border: 1px solid var(--ashlar-color-input-border, #565c65);
+    border-radius: var(--ashlar-radius-control, 0.25rem);
+    box-sizing: border-box;
+    color: var(--ashlar-color-text, #1b1b1b);
+    font: inherit;
+    inline-size: min(100%, var(--ashlar-text-input-max-inline-size, 30rem));
+    min-block-size: 2.75rem;
+    padding-block: 0.5rem;
+    padding-inline: 0.75rem;
+  }
+
+  .ashlar-text-input:focus-visible {
+    outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
+    outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
+  }
+
+  .ashlar-text-input[aria-invalid="true"] {
+    border-color: var(--ashlar-color-status-error-border, #d54309);
+    border-inline-start-width: 0.5rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .ashlar-text-input {
+    background-color: Field;
+    border-color: FieldText;
+  }
+
+  .ashlar-text-input:focus-visible {
     outline-color: Highlight;
   }
 }

@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "checkbox.html",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "AshlarCheckbox",
+          "tagName": "input",
+          "description": "Native checkbox control for consent, confirmation, and multi-select form questions.",
+          "_ashlar": {
+            "version": "0.0.1",
+            "tier": "primitive",
+            "layer": "markup-primitives",
+            "stability": "experimental",
+            "selector": ".ashlar-checkbox",
+            "a11yRequirements": [
+              {
+                "id": "native-checkbox-required",
+                "wcag": "4.1.2",
+                "severity": "error",
+                "description": "Checkboxes must use native input[type=checkbox] semantics, not ARIA-only custom controls."
+              },
+              {
+                "id": "label-required",
+                "wcag": "3.3.2",
+                "severity": "error",
+                "description": "Checkboxes must have a visible label associated with the input."
+              },
+              {
+                "id": "focus-visible-required",
+                "wcag": "2.4.7",
+                "severity": "error",
+                "description": "Keyboard focus must be visually distinct."
+              }
+            ],
+            "antiPatterns": [
+              {
+                "id": "checkbox-needs-associated-label",
+                "pattern": "<input $$$ATTRS>",
+                "regex": "class=\"[^\"]*\\bashlar-checkbox\\b[\\s\\S]*type=\"checkbox\"",
+                "not": {
+                  "regex": "(id|aria-label|aria-labelledby)\\s*="
+                },
+                "message": "Ashlar Checkbox requires an id plus associated label, aria-label, or aria-labelledby.",
+                "fix": "Add an id and a visible label with matching for, or provide aria-labelledby.",
+                "wcag": "3.3.2",
+                "severity": "error",
+                "languages": ["html"]
+              }
+            ],
+            "tokensConsumed": [
+              "color.action.primary.bg",
+              "color.text",
+              "color.status.error.fg",
+              "focus.ring.color"
+            ],
+            "platformFeatures": [
+              {
+                "feature": "native-checkbox",
+                "status": "required",
+                "fallback": "Uses input[type=checkbox] for keyboard, form, checked, and indeterminate semantics."
+              },
+              {
+                "feature": "accent-color",
+                "status": "progressive",
+                "fallback": "Browsers without accent-color keep native checkbox styling."
+              },
+              {
+                "feature": "forced-colors",
+                "status": "progressive",
+                "fallback": "Uses system colors for check state and focus outline."
+              }
+            ],
+            "policyMappings": [
+              {
+                "source": "Section 508",
+                "requirement": "Supports name, role, value, labels, keyboard operation, and visible focus expectations when used correctly.",
+                "url": "https://www.section508.gov/"
+              }
+            ],
+            "rendering": "server-safe",
+            "hydrationCost": "none",
+            "criticalForA11y": true
+          }
+        }
+      ]
+    }
+  ]
+}

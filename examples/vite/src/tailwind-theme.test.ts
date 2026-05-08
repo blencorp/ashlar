@@ -21,6 +21,7 @@ describe("Tailwind theme consumption", () => {
     const viteConfig = readFromExample("vite.config.ts");
     const styles = readFromExample("src/styles.css");
     const html = readFromExample("index.html");
+    const source = `${html}\n${readFromExample("src/main.ts")}`;
     const tailwindThemePath = resolve(exampleRoot, "src", "ashlar", "themes", "tailwind-theme.css");
 
     expect(packageJson).toContain('"tailwindcss": "catalog:"');
@@ -36,9 +37,9 @@ describe("Tailwind theme consumption", () => {
       "--color-ashlar-action-primary-bg: var(--ashlar-color-action-primary-bg);",
     );
 
-    expect(html).toContain("bg-ashlar-surface");
-    expect(html).toContain("rounded-ashlar-card");
-    expect(html).toContain("min-h-ashlar-button-min-block-size");
+    expect(source).toContain("bg-ashlar-surface");
+    expect(source).toContain("rounded-ashlar-card");
+    expect(source).toContain("min-h-ashlar-button-min-block-size");
 
     const lockfile = readFromWorkspace("pnpm-lock.yaml");
     expect(lockfile).toContain("tailwindcss@");

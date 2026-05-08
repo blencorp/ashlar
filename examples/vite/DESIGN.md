@@ -61,8 +61,32 @@ Derived from public USWDS token guidance and system-token values; not an officia
 
 ## Installed Capsules
 
-- button@0.0.1 (primitive, markup primitives, experimental, evidence: not-reviewed)
+- alert@0.0.1 (primitive, foundations, experimental, evidence: not-reviewed)
   - Platform features: forced-colors
+  - Policy mappings: WCAG
+- banner@0.0.3 (primitive, foundations, experimental, evidence: not-reviewed)
+  - Platform features: details-summary, forced-colors
+  - Policy mappings: USWDS Banner, Federal Website Standards
+- button@0.0.1 (primitive, foundations, experimental, evidence: not-reviewed)
+  - Platform features: forced-colors
+  - Policy mappings: Section 508
+- checkbox@0.0.1 (primitive, foundations, experimental, evidence: not-reviewed)
+  - Platform features: native-checkbox, accent-color, forced-colors
+  - Policy mappings: Section 508
+- form-field@0.0.1 (composite, foundations, experimental, evidence: not-reviewed)
+  - Platform features: semantic-label
+  - Policy mappings: Section 508
+- identifier@0.0.1 (primitive, foundations, experimental, evidence: not-reviewed)
+  - Platform features: contentinfo-landmark, native-links, forced-colors
+  - Policy mappings: USWDS Identifier, M-23-22
+- radio-group@0.0.1 (primitive, foundations, experimental, evidence: not-reviewed)
+  - Platform features: native-radio, fieldset-legend, accent-color, forced-colors
+  - Policy mappings: Section 508
+- select@0.0.1 (primitive, foundations, experimental, evidence: not-reviewed)
+  - Platform features: native-select, forced-colors
+  - Policy mappings: Section 508
+- text-input@0.0.1 (primitive, foundations, experimental, evidence: not-reviewed)
+  - Platform features: native-input, forced-colors
   - Policy mappings: Section 508
 
 ## Component Discovery

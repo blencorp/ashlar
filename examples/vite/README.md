@@ -1,15 +1,14 @@
 # Ashlar Vite Example
 
-Public-service Vite reference app for Ashlar. Demonstrates:
+Public-service Vite + Tailwind v4 case-board app for Ashlar. Demonstrates:
 
-- markup primitive Button capsule (`<button class="ashlar-button">`) installed via `ashlar add`.
-- Public-service page-shell compliance (banner, identifier with required links, ≥20-char page title, ≥50-char meta description).
+- A benefits-operations case board using installed Ashlar capsules as source.
+- Public-service page-shell compliance (banner, identifier with required links, >=20-char page title, >=50-char meta description).
 - Live runtime switching across the **Default**, **VA**, and **USDA** stock agency themes.
 - Light, dark, and system color modes.
-- Live token introspection — see resolved CSS custom-property values change as themes switch.
 - Tailwind v4 consumption of `src/ashlar/themes/tailwind-theme.css`, proving Ashlar tokens generate usable utility classes without making Tailwind the component authoring layer.
 
-The page is data-driven: themes are discovered automatically from `src/ashlar/themes/*.tokens.json`. Drop a new agency theme JSON into `packages/cli/themes/` (upstream) and re-run `ashlar init` and the picker grows. No code changes required.
+The visible page is intentionally an operational app surface, not a token-inspector sheet. Tailwind utility classes are present in the app source as a build proof, while the component markup continues to use Ashlar source capsules and generated theme CSS.
 
 ## Run it
 
@@ -63,14 +62,14 @@ pnpm exec ashlar init --registry ../../registry --force
 #    → writes ashlar.config.json, ashlar-lock.json, agency theme JSON files,
 #      a generated theme.css, AGENTS.md, DESIGN.md, src/ashlar/ashlar.css.
 
-# 4. Install the Button capsule
-pnpm exec ashlar add button
-#    → copies button.css + button.html + button.cem.json + button.evidence.json
-#      into src/ashlar/components/button/, hashes them in ashlar-lock.json,
+# 4. Install the capsules used by the case board
+pnpm exec ashlar add alert banner button checkbox form-field identifier radio-group select text-input
+#    → copies capsule CSS, HTML, CEM, and evidence files into
+#      src/ashlar/components/, hashes them in ashlar-lock.json, and
 #      regenerates ashlar.css and the indexes.
 
 # 5. Replace the scaffold's example index.html / main.ts / styles with the
-#    public-service shell versions in this directory.
+#    case-board versions in this directory.
 
 # 6. Verify
 pnpm exec ashlar audit --policy all --registry ../../registry index.html
@@ -80,25 +79,24 @@ pnpm --filter @blen/ashlar-example-vite build
 
 ## Adding a new agency theme
 
-Themes live as DTCG JSON files. To add a new agency:
-
-1. Create `packages/cli/themes/<agency>.tokens.json` matching the
-   [`agency-theme.schema.json`](../../packages/schemas/src/agency-theme.schema.json) contract.
-2. Run `pnpm --filter @blen/ashlar-cli build` and `pnpm exec ashlar init --force` from this example.
-3. The picker will list the new theme automatically.
-
-The CLI validates every theme file against the schema before compilation, so a malformed theme fails loudly rather than producing broken CSS.
+Themes live as DTCG JSON files. To add a new stock agency theme, create
+`packages/cli/themes/<agency>.tokens.json` matching the
+[`agency-theme.schema.json`](../../packages/schemas/src/agency-theme.schema.json)
+contract, run `pnpm --filter @blen/ashlar-cli build`, then rerun
+`pnpm exec ashlar init --force` in this example. The generated CSS and typed token
+outputs update from the theme JSON; the visible picker should only expose themes
+that the app is ready to QA visually.
 
 ## What changes when you switch themes
 
 `<html data-ashlar-theme>` cascades through:
 
-- `--ashlar-color-action-primary-bg` — Button background, eyebrow color, identifier link color.
-- `--ashlar-color-focus` — Focus rings on radio controls and identifier links.
-- `--ashlar-color-surface*` — Card backgrounds, banner background, control backgrounds.
-- `--ashlar-color-border` — All semantic borders.
-- `--ashlar-button-radius` — Button corner radius (USDA softens it; Default and VA stay tight).
-- `--ashlar-font-sans` — VA prefers Source Sans 3; Default and USDA prefer Public Sans.
+- `--ashlar-color-action-primary-bg` — Button background, eyebrow color, and workflow lane rules.
+- `--ashlar-color-focus` — Focus rings on radio controls, modal controls, and identifier links.
+- `--ashlar-color-surface*` — Case cards, banner background, controls, and modal surfaces.
+- `--ashlar-color-border` — Semantic borders across filters, metrics, and case cards.
+- `--ashlar-button-radius` — Button corner radius.
+- `--ashlar-font-sans` — Agency typography preference.
 
 `<html data-ashlar-mode>` cascades through:
 

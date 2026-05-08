@@ -28,7 +28,7 @@ const examples = [
   { name: "nextjs", path: "examples/nextjs", runner: "next", preferredPort: 4282, caseBoard: true },
   { name: "svelte", path: "examples/svelte", runner: "vite", preferredPort: 4283, caseBoard: true },
   { name: "vue", path: "examples/vue", runner: "vite", preferredPort: 4284, caseBoard: true },
-  { name: "vite", path: "examples/vite", runner: "vite", preferredPort: 4273, caseBoard: false },
+  { name: "vite", path: "examples/vite", runner: "vite", preferredPort: 4273, caseBoard: true },
 ];
 
 const viewports = [
@@ -200,6 +200,42 @@ async function inspectCaseBoardModal(context, example, url) {
   }
   if (structure.nestedCardSurface) {
     throw new Error("case-board contains a visual card nested inside another card");
+  }
+
+  const buttonStyles = await page.evaluate(() =>
+    Array.from(document.querySelectorAll(".case-card__actions .ashlar-button")).map((button) => {
+      const rect = button.getBoundingClientRect();
+      const style = getComputedStyle(button);
+      return {
+        backgroundColor: style.backgroundColor,
+        borderColor: style.borderTopColor,
+        borderStyle: style.borderTopStyle,
+        borderWidth: Number.parseFloat(style.borderTopWidth),
+        color: style.color,
+        display: style.display,
+        height: rect.height,
+        text: button.textContent?.trim() ?? "",
+        variant: button.getAttribute("data-variant"),
+      };
+    }),
+  );
+
+  if (buttonStyles.length < 6) {
+    throw new Error("case-board rendered too few Ashlar button controls");
+  }
+  for (const button of buttonStyles) {
+    if (!["flex", "inline-flex"].includes(button.display) || button.height < 32) {
+      throw new Error(`case-board button lost Ashlar sizing: ${button.text}`);
+    }
+    if (button.variant === "primary" && button.backgroundColor === "rgba(0, 0, 0, 0)") {
+      throw new Error(`case-board primary button lost its filled style: ${button.text}`);
+    }
+    if (
+      button.variant === "secondary" &&
+      (button.borderStyle === "none" || button.borderWidth < 1)
+    ) {
+      throw new Error(`case-board secondary button lost its bordered style: ${button.text}`);
+    }
   }
 
   await page.click(".agency-trigger");

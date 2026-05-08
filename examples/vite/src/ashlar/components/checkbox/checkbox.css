@@ -1,0 +1,41 @@
+@layer ashlar.components {
+  .ashlar-checkbox-field {
+    align-items: start;
+    display: grid;
+    gap: 0.625rem;
+    grid-template-columns: max-content minmax(0, 1fr);
+    max-inline-size: var(--ashlar-checkbox-max-inline-size, 36rem);
+  }
+
+  .ashlar-checkbox {
+    accent-color: var(--ashlar-color-action-primary-bg, #005ea8);
+    block-size: 1.25rem;
+    inline-size: 1.25rem;
+    margin-block-start: 0.125rem;
+  }
+
+  .ashlar-checkbox:focus-visible {
+    outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
+    outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
+  }
+
+  .ashlar-checkbox-label {
+    color: var(--ashlar-color-text, #1b1b1b);
+    line-height: 1.45;
+  }
+
+  .ashlar-checkbox[aria-invalid="true"] + .ashlar-checkbox-label {
+    color: var(--ashlar-color-status-error-fg, #b50909);
+    font-weight: 700;
+  }
+}
+
+@media (forced-colors: active) {
+  .ashlar-checkbox {
+    accent-color: ButtonText;
+  }
+
+  .ashlar-checkbox:focus-visible {
+    outline-color: Highlight;
+  }
+}
