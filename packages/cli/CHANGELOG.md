@@ -1,5 +1,11 @@
 # @blen/ashlar-cli
 
+## 0.3.17
+
+### Patch Changes
+
+- [#135](https://github.com/blencorp/ashlar/pull/135) [`36a9977`](https://github.com/blencorp/ashlar/commit/36a99775c2ad475bfd636d866899c646272f1efd) Thanks [@naodya](https://github.com/naodya)! - Carry stable-evidence reviewer bundles through maintainer publication and completed review-record handoff commands.
+
 ## 0.3.16
 
 ### Patch Changes
