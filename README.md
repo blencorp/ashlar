@@ -42,11 +42,11 @@ The current prototype implements:
 - `release sbom` to generate an SPDX 2.3 JSON release SBOM for the Ashlar packages and declared runtime dependencies;
 - `release attest` / `release verify-attestation` to create and verify a hash-based tamper-evidence artifact for release outputs;
 - `release sign-capsules` to generate capsule Sigstore bundles with cosign and write manifest metadata, `release public-trust-verify` to require all signed capsule bundles to pass the consumer Sigstore verifier, plus `release trust-bundle` / `release verify-trust-bundle` to tie the local registry trust root, signed capsule hashes, release SBOM, and SBOM attestation into one schema-backed offline-review artifact;
-- Guarded manual `publish.yml`, `sigstore.yml`, and `github-packages.yml` workflows that emit review-record JSON for npm provenance and public capsule trust, keylessly sign and verify release SBOM, SBOM attestation, and release trust bundle artifacts with cosign bundles, and publish an authenticated GitHub Packages mirror/canary under `@blen/*` without replacing the public npmjs path;
+- Guarded manual `publish.yml`, `sigstore.yml`, and `github-packages.yml` workflows plus `release provenance-check` and `release github-packages-check` readiness gates that emit review-record JSON for npm provenance and public capsule trust, keylessly sign and verify release SBOM, SBOM attestation, and release trust bundle artifacts with cosign bundles, and publish an authenticated GitHub Packages mirror/canary under `@blen/*` without replacing the public npmjs path;
 - A Vite theme workbench across Default, VA, and USDA themes with light/dark/system modes, plus a Tailwind v4 build proof that consumes the generated `@theme` output;
 - Real benefits-operations case-board examples for vanilla TypeScript, React SPA, Next.js App Router, Svelte, and Vue, each consuming source-owned Ashlar capsules and generated theme CSS. `pnpm examples:visual` screenshots every framework app and fails if the federal banner flag regresses to a fake background block;
 - A plain HTML demo;
-- CI that runs checks, build, release smoke, provenance readiness, strict replacement-readiness reporting, stable-evidence reviewer bundles and blocker reports, a portable release review-pack artifact, evidence reports, bundle budgets, AI evals, and SARIF artifact upload.
+- CI that runs checks, build, release smoke, npm and GitHub Packages publishing readiness, strict replacement-readiness reporting, stable-evidence reviewer bundles and blocker reports, a portable release review-pack artifact, evidence reports, bundle budgets, AI evals, and SARIF artifact upload.
 
 ## Why this exists
 
@@ -188,6 +188,10 @@ node /path/to/ashlar/packages/cli/dist/index.js evidence --report ./reports/ashl
 
 # Prove the packages install and run from tarballs
 pnpm release:smoke
+
+# Verify publish-path wiring without publishing
+node /path/to/ashlar/packages/cli/dist/index.js release provenance-check
+node /path/to/ashlar/packages/cli/dist/index.js release github-packages-check
 
 # Run the strict replacement-grade readiness gate
 # This intentionally fails while stable evidence, public npm provenance, or Sigstore trust are incomplete.

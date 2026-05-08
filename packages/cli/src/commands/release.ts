@@ -9,6 +9,7 @@ import {
 } from "../lib/external-review-record.js";
 import { verifyReleaseAttestation, writeReleaseAttestation } from "../lib/release-attestation.js";
 import {
+  checkGitHubPackagesReadiness,
   checkReleaseProvenanceReadiness,
   verifyPublicNpmProvenance,
 } from "../lib/release-provenance.js";
@@ -237,6 +238,34 @@ export function registerReleaseCommand(program: Command) {
         }
 
         console.log("npm provenance readiness verified");
+        for (const releasePackage of result.packages) {
+          console.log(`  - ${releasePackage.name} (${releasePackage.directory})`);
+        }
+        for (const warning of result.warnings) {
+          console.warn(`Warning: ${warning}`);
+        }
+      } catch (error) {
+        console.error(error instanceof Error ? error.message : String(error));
+        process.exitCode = 1;
+      }
+    });
+
+  release
+    .command("github-packages-check")
+    .description("Check GitHub Packages mirror publishing readiness")
+    .action(() => {
+      try {
+        const result = checkGitHubPackagesReadiness(process.cwd());
+        if (result.errors.length > 0) {
+          console.error("GitHub Packages readiness failed:");
+          for (const error of result.errors) {
+            console.error(`  - ${error}`);
+          }
+          process.exitCode = 1;
+          return;
+        }
+
+        console.log("GitHub Packages readiness verified");
         for (const releasePackage of result.packages) {
           console.log(`  - ${releasePackage.name} (${releasePackage.directory})`);
         }

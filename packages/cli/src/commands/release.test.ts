@@ -1120,6 +1120,16 @@ describe("release command", { timeout: slowReleaseTestTimeout }, () => {
     expect(result.stdout).toContain("@blen/ashlar-schemas");
   });
 
+  it("checks GitHub Packages mirror publishing readiness", () => {
+    const result = runCli(["release", "github-packages-check"]);
+
+    expect(result.status).toBe(0);
+    expect(result.stdout).toContain("GitHub Packages readiness verified");
+    expect(result.stdout).toContain("authenticated mirrors/canaries");
+    expect(result.stdout).toContain("@blen/ashlar-cli");
+    expect(result.stdout).toContain("@blen/ashlar-schemas");
+  });
+
   it("verifies public npm provenance for exact published package versions", () => {
     const npmPath = writeFakeNpm();
 

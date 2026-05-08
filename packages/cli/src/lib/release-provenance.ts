@@ -26,6 +26,12 @@ export type ReleaseProvenanceReadiness = {
   warnings: string[];
 };
 
+export type GitHubPackagesReadiness = {
+  errors: string[];
+  packages: ReleaseProvenancePackage[];
+  warnings: string[];
+};
+
 export type PublicProvenanceVerification = {
   errors: string[];
   packages: Array<{
@@ -44,6 +50,7 @@ type VerifyPublicProvenanceInput = {
 const releasePackageDirs = ["packages/schemas", "packages/cli", "packages/ashlar"];
 const expectedRepositoryUrl = "https://github.com/blencorp/ashlar.git";
 const ciWorkflowPath = ".github/workflows/ci.yml";
+const githubPackagesWorkflowPath = ".github/workflows/github-packages.yml";
 const publishWorkflowPath = ".github/workflows/publish.yml";
 
 function readJson<T>(path: string): T {
@@ -116,6 +123,16 @@ function checkReleasePackage(
   };
 }
 
+function checkBlenScopedPackageName(packageEntry: ReleaseProvenancePackage): string[] {
+  const errors: string[] = [];
+  if (!/^@blen\/[a-z0-9._-]+$/.test(packageEntry.name)) {
+    errors.push(
+      `${packageEntry.directory}/package.json: GitHub Packages package name must be lowercase and scoped to @blen`,
+    );
+  }
+  return errors;
+}
+
 function checkCiWorkflow(cwd: string): string[] {
   const path = join(cwd, ciWorkflowPath);
   if (!existsSync(path)) {
@@ -135,6 +152,81 @@ function checkCiWorkflow(cwd: string): string[] {
   }
 
   return errors;
+}
+
+function checkGitHubPackagesWorkflow(cwd: string): string[] {
+  const path = join(cwd, githubPackagesWorkflowPath);
+  if (!existsSync(path)) {
+    return [`${githubPackagesWorkflowPath}: workflow is missing`];
+  }
+
+  const workflow = readFileSync(path, "utf8");
+  const errors: string[] = [];
+  if (!/^\s*workflow_dispatch:\s*$/m.test(workflow)) {
+    errors.push(
+      `${githubPackagesWorkflowPath}: must be manually dispatchable for controlled mirror publishes`,
+    );
+  }
+  if (!/^\s*contents:\s*read(?:\s+#.*)?$/m.test(workflow)) {
+    errors.push(`${githubPackagesWorkflowPath}: permissions.contents should be read`);
+  }
+  if (!/^\s*packages:\s*write(?:\s+#.*)?$/m.test(workflow)) {
+    errors.push(`${githubPackagesWorkflowPath}: permissions.packages must be write`);
+  }
+  if (!/github\.ref\s*==\s*'refs\/heads\/main'/.test(workflow)) {
+    errors.push(
+      `${githubPackagesWorkflowPath}: workflow must restrict publishing to refs/heads/main`,
+    );
+  }
+  if (!/inputs\.confirm\s*==\s*'publish-github-packages'/.test(workflow)) {
+    errors.push(
+      `${githubPackagesWorkflowPath}: workflow must require publish-github-packages confirmation`,
+    );
+  }
+  if (!/^\s*runs-on:\s*ubuntu-latest(?:\s+#.*)?$/m.test(workflow)) {
+    errors.push(`${githubPackagesWorkflowPath}: publish job must run on a GitHub-hosted runner`);
+  }
+  if (!/registry-url:\s*https:\/\/npm\.pkg\.github\.com(?:\s+#.*)?/.test(workflow)) {
+    errors.push(`${githubPackagesWorkflowPath}: actions/setup-node must target npm.pkg.github.com`);
+  }
+  if (!/scope:\s*["']?@blen["']?(?:\s+#.*)?/.test(workflow)) {
+    errors.push(`${githubPackagesWorkflowPath}: actions/setup-node must configure the @blen scope`);
+  }
+  if (!/@blen:registry=https:\/\/npm\.pkg\.github\.com/.test(workflow)) {
+    errors.push(`${githubPackagesWorkflowPath}: must map @blen to npm.pkg.github.com`);
+  }
+  if (!/\/\/npm\.pkg\.github\.com\/:_authToken=\$\{NODE_AUTH_TOKEN\}/.test(workflow)) {
+    errors.push(
+      `${githubPackagesWorkflowPath}: must authenticate npm.pkg.github.com with NODE_AUTH_TOKEN`,
+    );
+  }
+  if (!/NODE_AUTH_TOKEN:\s*\$\{\{\s*secrets\.GITHUB_TOKEN\s*\}\}/.test(workflow)) {
+    errors.push(`${githubPackagesWorkflowPath}: must publish with the repository GITHUB_TOKEN`);
+  }
+  if (!/NPM_CONFIG_PROVENANCE:\s*["']?false["']?/.test(workflow)) {
+    errors.push(`${githubPackagesWorkflowPath}: must disable npm provenance for GitHub Packages`);
+  }
+  if (!/\bpnpm\s+release:github-packages\b/.test(workflow)) {
+    errors.push(`${githubPackagesWorkflowPath}: must publish with pnpm release:github-packages`);
+  }
+
+  return errors;
+}
+
+function checkRootNpmrc(cwd: string): string[] {
+  const path = join(cwd, ".npmrc");
+  if (!existsSync(path)) {
+    return [];
+  }
+
+  const npmrc = readFileSync(path, "utf8");
+  if (npmrc.includes("npm.pkg.github.com")) {
+    return [
+      ".npmrc: do not route @blen to GitHub Packages by default; keep the public npmjs path low-friction and configure GitHub Packages only in the mirror workflow",
+    ];
+  }
+
+  return [];
 }
 
 function checkPublishWorkflow(cwd: string): string[] {
@@ -214,6 +306,32 @@ export function checkReleaseProvenanceReadiness(cwd: string): ReleaseProvenanceR
     packages,
     warnings: [
       "npmjs.com trusted publisher settings are manual: configure @blen/ashlar, @blen/ashlar-cli, and @blen/ashlar-schemas with workflow filename publish.yml before release.",
+    ],
+  };
+}
+
+export function checkGitHubPackagesReadiness(cwd: string): GitHubPackagesReadiness {
+  const errors: string[] = [];
+  const packages: ReleaseProvenancePackage[] = [];
+
+  for (const directory of releasePackageDirs) {
+    const result = checkReleasePackage(cwd, directory);
+    errors.push(...result.errors);
+    if (result.packageEntry) {
+      errors.push(...checkBlenScopedPackageName(result.packageEntry));
+      packages.push(result.packageEntry);
+    }
+  }
+
+  errors.push(...checkRootNpmrc(cwd));
+  errors.push(...checkGitHubPackagesWorkflow(cwd));
+
+  return {
+    errors,
+    packages,
+    warnings: [
+      "GitHub Packages publishes are authenticated mirrors/canaries; npmjs trusted publishing remains the public npx path.",
+      "GitHub Packages sets first-published package visibility to private by default; switch package visibility manually if a public mirror is intended.",
     ],
   };
 }
