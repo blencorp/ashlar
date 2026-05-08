@@ -1,6 +1,6 @@
 # Replacement-Grade Audit
 
-Date: 2026-05-07
+Date: 2026-05-08
 
 This audit answers one question: is Ashlar already credible as a USWDS replacement-grade, shadcn-class public-service UI system, or is it still a prototype with a strong thesis?
 
@@ -18,7 +18,7 @@ The current implementation proves enough of the substrate to keep going, but pub
 node packages/cli/dist/index.js release readiness --registry ./registry
 ```
 
-Current strict gate status:
+Current strict gate status from `main` at `265d5d8`:
 
 - `stable-markup-evidence`: fails because 0 markup primitive capsules have published stable evidence.
 - `external-review-proof`: fails until real stable-evidence, release-trust, and design-partner review records exist under `docs/reviews/`.
