@@ -79,7 +79,7 @@ When the session is running, test these surfaces:
 | --- | --- |
 | Public site | `http://127.0.0.1:4174/` |
 | Docs | `http://127.0.0.1:4175/` |
-| Vite theme workbench | `http://127.0.0.1:4173/` |
+| Vite + Tailwind case board | `http://127.0.0.1:4173/` |
 | Vanilla TypeScript case board | `http://127.0.0.1:4180/` |
 | React SPA case board | `http://127.0.0.1:4181/` |
 | Next.js App Router case board | `http://127.0.0.1:4182/` |

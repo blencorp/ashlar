@@ -36,7 +36,7 @@ The work is led by engineers at [Blen](https://blencorp.com) with the intent to 
 22. [`superpowers/plans/2026-04-29-v0-0-standards-evidence-slice-revised.md`](./superpowers/plans/2026-04-29-v0-0-standards-evidence-slice-revised.md) — implementation plan for the standards/evidence slice.
 23. [`superpowers/specs/2026-05-05-first-service-flow-proof-spec.md`](./superpowers/specs/2026-05-05-first-service-flow-proof-spec.md) — first proof that capsules can power a small public-service flow.
 24. [`governance/`](./governance/) — community model and contribution rules.
-25. [`../examples/`](../examples/) — framework examples covering vanilla, React SPA, Next.js, Svelte, Vue, plain HTML, and the Vite theme workbench.
+25. [`../examples/`](../examples/) — framework examples covering vanilla, React SPA, Next.js, Svelte, Vue, plain HTML, and the Vite + Tailwind case board.
 
 ## What problem this solves
 

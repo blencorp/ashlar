@@ -1,0 +1,120 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "radio-group.html",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "AshlarRadioGroup",
+          "tagName": "fieldset",
+          "description": "Native radio group for mutually exclusive public-service form choices.",
+          "_ashlar": {
+            "version": "0.0.1",
+            "tier": "primitive",
+            "layer": "markup-primitives",
+            "stability": "experimental",
+            "selector": ".ashlar-radio-group",
+            "a11yRequirements": [
+              {
+                "id": "native-radio-required",
+                "wcag": "4.1.2",
+                "severity": "error",
+                "description": "Radio choices must use native input[type=radio] semantics, not ARIA-only custom controls."
+              },
+              {
+                "id": "legend-required",
+                "wcag": "3.3.2",
+                "severity": "error",
+                "description": "Radio groups must have a visible legend that names the question."
+              },
+              {
+                "id": "shared-name-required",
+                "wcag": "1.3.1",
+                "severity": "error",
+                "description": "Radio inputs in a group must share a name so only one choice can be selected."
+              },
+              {
+                "id": "focus-visible-required",
+                "wcag": "2.4.7",
+                "severity": "error",
+                "description": "Keyboard focus must be visually distinct."
+              }
+            ],
+            "antiPatterns": [
+              {
+                "id": "radio-group-needs-legend",
+                "pattern": "<fieldset $$$ATTRS>$$$CHILDREN</fieldset>",
+                "regex": "class=\"[^\"]*\\bashlar-radio-group\\b",
+                "not": {
+                  "has": {
+                    "pattern": "<legend $$$>$$$TEXT</legend>",
+                    "stopBy": "end"
+                  }
+                },
+                "message": "Ashlar Radio Group requires a legend that names the question.",
+                "fix": "Add a visible legend as the first fieldset child.",
+                "wcag": "3.3.2",
+                "severity": "error",
+                "languages": ["html"]
+              },
+              {
+                "id": "radio-needs-name",
+                "pattern": "<input $$$ATTRS>",
+                "regex": "class=\"[^\"]*\\bashlar-radio\\b[\\s\\S]*type=\"radio\"",
+                "not": {
+                  "regex": "name\\s*="
+                },
+                "message": "Ashlar Radio inputs require a shared name attribute.",
+                "fix": "Add the same name value to every radio input in the group.",
+                "wcag": "1.3.1",
+                "severity": "error",
+                "languages": ["html"]
+              }
+            ],
+            "tokensConsumed": [
+              "color.action.primary.bg",
+              "color.text",
+              "color.text-muted",
+              "color.status.error.fg",
+              "focus.ring.color"
+            ],
+            "platformFeatures": [
+              {
+                "feature": "native-radio",
+                "status": "required",
+                "fallback": "Uses input[type=radio] for keyboard, form, checked, and single-selection semantics."
+              },
+              {
+                "feature": "fieldset-legend",
+                "status": "required",
+                "fallback": "Uses native fieldset and legend grouping semantics."
+              },
+              {
+                "feature": "accent-color",
+                "status": "progressive",
+                "fallback": "Browsers without accent-color keep native radio styling."
+              },
+              {
+                "feature": "forced-colors",
+                "status": "progressive",
+                "fallback": "Uses system colors for checked state and focus outline."
+              }
+            ],
+            "policyMappings": [
+              {
+                "source": "Section 508",
+                "requirement": "Supports grouped form choice semantics, name/role/value, keyboard operation, visible labels, and visible focus expectations when used correctly.",
+                "url": "https://www.section508.gov/"
+              }
+            ],
+            "rendering": "server-safe",
+            "hydrationCost": "none",
+            "criticalForA11y": true
+          }
+        }
+      ]
+    }
+  ]
+}

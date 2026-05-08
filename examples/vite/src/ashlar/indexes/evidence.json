@@ -2,7 +2,47 @@
   "generatedBy": "ashlar-cli@0.0.0",
   "components": [
     {
+      "name": "alert",
+      "version": "0.0.1",
+      "accessibilityStatus": "not-reviewed"
+    },
+    {
+      "name": "banner",
+      "version": "0.0.3",
+      "accessibilityStatus": "not-reviewed"
+    },
+    {
       "name": "button",
+      "version": "0.0.1",
+      "accessibilityStatus": "not-reviewed"
+    },
+    {
+      "name": "checkbox",
+      "version": "0.0.1",
+      "accessibilityStatus": "not-reviewed"
+    },
+    {
+      "name": "form-field",
+      "version": "0.0.1",
+      "accessibilityStatus": "not-reviewed"
+    },
+    {
+      "name": "identifier",
+      "version": "0.0.1",
+      "accessibilityStatus": "not-reviewed"
+    },
+    {
+      "name": "radio-group",
+      "version": "0.0.1",
+      "accessibilityStatus": "not-reviewed"
+    },
+    {
+      "name": "select",
+      "version": "0.0.1",
+      "accessibilityStatus": "not-reviewed"
+    },
+    {
+      "name": "text-input",
       "version": "0.0.1",
       "accessibilityStatus": "not-reviewed"
     }

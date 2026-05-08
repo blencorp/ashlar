@@ -211,7 +211,7 @@ export const pages: DocPage[] = [
     ],
     links: [
       { label: "Token architecture", href: repoBlob("docs/architecture/tokens.md") },
-      { label: "Vite theme example", href: repoTree("examples/vite") },
+      { label: "Vite + Tailwind case-board example", href: repoTree("examples/vite") },
     ],
   },
   {
@@ -220,14 +220,14 @@ export const pages: DocPage[] = [
     eyebrow: "Hands-on QA",
     title: "Test docs and examples",
     summary:
-      "Start the public site, docs app, theme workbench, and framework case-board examples, then run visual smoke before trusting the surface.",
+      "Start the public site, docs app, Vite + Tailwind case board, and framework case-board examples, then run visual smoke before trusting the surface.",
     intent:
       "Testing is part of the product surface. The local matrix proves each example boots, catches banner and theme regressions, and keeps strict release proof blockers visible.",
     commands: [
       {
         label: "Start the local matrix",
         command: "pnpm testing:start",
-        note: "Builds and serves the public site, docs app, Vite workbench, vanilla, React SPA, Next.js, Svelte, and Vue examples.",
+        note: "Builds and serves the public site, docs app, Vite + Tailwind case board, vanilla, React SPA, Next.js, Svelte, and Vue examples.",
       },
       {
         label: "Run HTTP and visual smoke",
@@ -246,7 +246,7 @@ export const pages: DocPage[] = [
       },
     ],
     checkpoints: [
-      "Testing URLs cover docs, public site, Vite workbench, vanilla, React SPA, Next.js, Svelte, and Vue.",
+      "Testing URLs cover docs, public site, Vite + Tailwind case board, vanilla, React SPA, Next.js, Svelte, and Vue.",
       "The disclosure banner uses inline SVG flag geometry, not a CSS-painted placeholder block.",
       "Theme controls expose Default, VA, and USDA only; the stock theme must not be relabeled.",
       "Readiness failure should be limited to the four public proof blockers documented in STATUS.md.",

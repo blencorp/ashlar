@@ -19,6 +19,7 @@ const here = fileURLToPath(new URL(".", import.meta.url));
 const cliEntry = join(here, "..", "..", "dist", "index.js");
 const repoRoot = resolve(here, "..", "..", "..", "..");
 const sourceButton = join(repoRoot, "registry", "components", "button", "0.0.1");
+const sourceExampleShared = join(repoRoot, "examples", "shared");
 const sourceViteExample = join(repoRoot, "examples", "vite");
 const registrySigningKeyId = "ashlar-update-survival-test-key";
 const registrySigningKey = generateKeyPairSync("ed25519");
@@ -556,6 +557,7 @@ describe("update survival harness", () => {
       },
       recursive: true,
     });
+    cpSync(sourceExampleShared, join(root, "shared"), { recursive: true });
     symlinkSync(join(sourceViteExample, "node_modules"), join(app, "node_modules"), "dir");
     writeJson(join(app, "ashlar.config.json"), {
       $schema: "https://ashlar.dev/schemas/config.schema.json",

@@ -10,7 +10,7 @@ These examples prove the source-capsule flow across the stacks government teams 
 | [`nextjs`](./nextjs/) | Next.js App Router | Metadata/layout integration plus rendered audit fixture. |
 | [`svelte`](./svelte/) | Svelte + Vite | Svelte case-board app consuming generated Ashlar CSS. |
 | [`vue`](./vue/) | Vue + Vite | Vue case-board app consuming generated Ashlar CSS. |
-| [`vite`](./vite/) | Vite + Tailwind v4 | Theme workbench and Tailwind `@theme` proof. |
+| [`vite`](./vite/) | Vite + Tailwind v4 | Case-board app plus Tailwind `@theme` proof. |
 
 ## Theme Grounding
 
@@ -30,7 +30,7 @@ pnpm build
 pnpm examples:visual
 ```
 
-Start the public site, docs app, theme workbench, and every framework case-board
+Start the public site, docs app, Vite + Tailwind case board, and every framework case-board
 example for hands-on review:
 
 ```bash

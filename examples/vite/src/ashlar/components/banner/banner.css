@@ -1,0 +1,90 @@
+@layer ashlar.components {
+  .ashlar-banner {
+    background: var(--ashlar-color-surface-muted, #f0f0f0);
+    border-block-end: 1px solid var(--ashlar-color-border-subtle, #dfe1e2);
+    color: var(--ashlar-color-text, #1b1b1b);
+    font-size: 0.875rem;
+    line-height: 1.45;
+    padding-block: 0.5rem;
+    padding-inline: max(1rem, env(safe-area-inset-left));
+  }
+
+  .ashlar-banner__text,
+  .ashlar-banner__details {
+    margin: 0 auto;
+    max-inline-size: var(--ashlar-page-max-inline-size, 72rem);
+  }
+
+  .ashlar-banner__text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+  }
+
+  .ashlar-banner__flag {
+    display: block;
+    inline-size: 1rem;
+    block-size: auto;
+    aspect-ratio: 16 / 11;
+    border: 1px solid #dfe1e2;
+    border-radius: 0.0625rem;
+    flex: 0 0 auto;
+  }
+
+  .ashlar-banner__flag [data-flag-stripe],
+  .ashlar-banner__flag [data-flag-canton],
+  .ashlar-banner__flag [data-flag-star] {
+    forced-color-adjust: none;
+  }
+
+  .ashlar-banner__details {
+    margin-block-start: 0.25rem;
+  }
+
+  .ashlar-banner__details > summary {
+    color: var(--ashlar-color-link, #005ea8);
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 700;
+  }
+
+  .ashlar-banner__details > summary:focus-visible {
+    outline: var(--ashlar-focus-ring-width, 0.25rem) solid var(--ashlar-focus-ring-color, #2491ff);
+    outline-offset: var(--ashlar-focus-ring-offset, 0.25rem);
+  }
+
+  .ashlar-banner__grid {
+    display: grid;
+    gap: 0.75rem;
+    margin-block-start: 0.75rem;
+  }
+
+  .ashlar-banner__grid p {
+    margin-block: 0.25rem 0;
+  }
+}
+
+@media (min-width: 48rem) {
+  .ashlar-banner__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (forced-colors: active) {
+  .ashlar-banner {
+    border-color: CanvasText;
+  }
+
+  .ashlar-banner__flag {
+    border-color: CanvasText;
+  }
+
+  .ashlar-banner__details > summary {
+    color: LinkText;
+  }
+
+  .ashlar-banner__details > summary:focus-visible {
+    outline-color: Highlight;
+  }
+}

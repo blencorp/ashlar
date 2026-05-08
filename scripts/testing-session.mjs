@@ -32,7 +32,7 @@ const targets = [
   },
   {
     id: "vite",
-    label: "Vite theme workbench",
+    label: "Vite + Tailwind case board",
     packageName: "@blen/ashlar-example-vite",
     port: 4173,
     command: ["--filter", "@blen/ashlar-example-vite", "preview"],
@@ -320,9 +320,7 @@ function writeReports(items, error = null, visual = null) {
 }
 
 function writeChecklist(report) {
-  const caseBoardTargets = report.targets.filter(
-    (item) => item.id !== "www" && item.id !== "docs" && item.id !== "vite",
-  );
+  const caseBoardTargets = report.targets.filter((item) => item.id !== "www" && item.id !== "docs");
   const lines = [
     "# Ashlar Manual Testing Checklist",
     "",
@@ -334,7 +332,7 @@ function writeChecklist(report) {
     "## Start Here",
     "",
     "- Open the public site and docs first; confirm the project posture is clear and does not imply affiliation with USWDS, GSA, NDS, or the federal government.",
-    "- Open the Vite theme workbench; switch Default, VA, and USDA themes in light and dark modes.",
+    "- Open the Vite + Tailwind case board; switch Default, VA, and USDA themes in light and dark modes.",
     "- Open each case-board example; compare layout, theming, banner, and component behavior across stacks.",
   ];
 

@@ -5,14 +5,14 @@
   "components": {
     "button": {
       "version": "0.0.1",
-      "capsule_hash": "sha256:a80b55e584c2b99178f32c264a2ba7ee66cb8cdb40ec486953de92ca7b700be0",
+      "capsule_hash": "sha256:8febe777cbedfb97bec3c1e1262b97a47105814a2f19d1e4eff4564667ff882e",
       "stability": "experimental",
-      "installed_at": "2026-04-29T22:28:12.077Z",
+      "installed_at": "2026-05-08T10:44:16.465Z",
       "installed_via": "ashlar-cli@0.0.0",
       "files": {
         "src/ashlar/components/button/button.cem.json": {
-          "original_hash": "sha256:5b396583eae16a9d6ba91e7d8b1cd6000b1e549f77405c3749f3476a533ab5bb",
-          "current_hash": "sha256:5b396583eae16a9d6ba91e7d8b1cd6000b1e549f77405c3749f3476a533ab5bb",
+          "original_hash": "sha256:239d73de4112006a4500bf81dc31cf321aaece67e3ed9c706b52c4fb9b06327d",
+          "current_hash": "sha256:239d73de4112006a4500bf81dc31cf321aaece67e3ed9c706b52c4fb9b06327d",
           "critical_for_a11y": false
         },
         "src/ashlar/components/button/button.css": {
@@ -28,6 +28,238 @@
         "src/ashlar/components/button/button.html": {
           "original_hash": "sha256:19348cfb50efc163c936ab1c4eb3a65cff71a2b3578ee9a95f3eb407cdfa10bd",
           "current_hash": "sha256:19348cfb50efc163c936ab1c4eb3a65cff71a2b3578ee9a95f3eb407cdfa10bd",
+          "critical_for_a11y": true
+        }
+      }
+    },
+    "alert": {
+      "version": "0.0.1",
+      "capsule_hash": "sha256:37ac1c8fa68439d075691464c1af70707526cc49653a9052523960095d876f4f",
+      "stability": "experimental",
+      "installed_at": "2026-05-08T10:32:30.052Z",
+      "installed_via": "ashlar-cli@0.0.0",
+      "files": {
+        "src/ashlar/components/alert/alert.cem.json": {
+          "original_hash": "sha256:a932253b545ba030d3002e46f47602f10c1fefd75ac65119e397e737058a2ba5",
+          "current_hash": "sha256:a932253b545ba030d3002e46f47602f10c1fefd75ac65119e397e737058a2ba5",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/alert/alert.css": {
+          "original_hash": "sha256:b70e7398ca011e8f930e6175a60bd7abc3b96f7ab2b7474820c949b51c7560df",
+          "current_hash": "sha256:b70e7398ca011e8f930e6175a60bd7abc3b96f7ab2b7474820c949b51c7560df",
+          "critical_for_a11y": true
+        },
+        "src/ashlar/components/alert/alert.evidence.json": {
+          "original_hash": "sha256:0397bc273579d8a0852f8669da2917b4b8a9b21dbaa226d2b89fd5f9a0dfbbf1",
+          "current_hash": "sha256:0397bc273579d8a0852f8669da2917b4b8a9b21dbaa226d2b89fd5f9a0dfbbf1",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/alert/alert.html": {
+          "original_hash": "sha256:35c694c4c73ba8a68dba51ec128d161620a969a277df93097d777c905f7c1014",
+          "current_hash": "sha256:35c694c4c73ba8a68dba51ec128d161620a969a277df93097d777c905f7c1014",
+          "critical_for_a11y": true
+        }
+      }
+    },
+    "banner": {
+      "version": "0.0.3",
+      "capsule_hash": "sha256:07e8b459ae2fab11f4a26ecc2f0a62ddb9acb178451d911433ee922a0bf4b0d7",
+      "stability": "experimental",
+      "installed_at": "2026-05-08T10:32:30.053Z",
+      "installed_via": "ashlar-cli@0.0.0",
+      "files": {
+        "src/ashlar/components/banner/banner.cem.json": {
+          "original_hash": "sha256:0946a097b0eedd899fb9143dd904647208ff8d45c5d58773015936d9c053719a",
+          "current_hash": "sha256:0946a097b0eedd899fb9143dd904647208ff8d45c5d58773015936d9c053719a",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/banner/banner.css": {
+          "original_hash": "sha256:dc57b3945e42045cc48efc224201323a93115c6e79efcff3de5e2746bc4ccb3b",
+          "current_hash": "sha256:dc57b3945e42045cc48efc224201323a93115c6e79efcff3de5e2746bc4ccb3b",
+          "critical_for_a11y": true
+        },
+        "src/ashlar/components/banner/banner.evidence.json": {
+          "original_hash": "sha256:a645aedc676f2832eae10eed5eddac5c8915c4da0dcaa82d30bd1e4ffdd3adc3",
+          "current_hash": "sha256:a645aedc676f2832eae10eed5eddac5c8915c4da0dcaa82d30bd1e4ffdd3adc3",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/banner/banner.html": {
+          "original_hash": "sha256:ba0d5c4e2f9ce65f9e31f7a59ffc17cdcbb8942aa87a583434adcbb6bff960af",
+          "current_hash": "sha256:ba0d5c4e2f9ce65f9e31f7a59ffc17cdcbb8942aa87a583434adcbb6bff960af",
+          "critical_for_a11y": true
+        }
+      }
+    },
+    "checkbox": {
+      "version": "0.0.1",
+      "capsule_hash": "sha256:918b7cb9a92f4dbf2fa49dc1fb8a6fb72c3c15cf914130f2d5d559a8aabc8b56",
+      "stability": "experimental",
+      "installed_at": "2026-05-08T10:32:30.053Z",
+      "installed_via": "ashlar-cli@0.0.0",
+      "files": {
+        "src/ashlar/components/checkbox/checkbox.cem.json": {
+          "original_hash": "sha256:338bd673f405357ada9149d35266fa81f1b763fc0cbbe7651ab0b16daae9be1b",
+          "current_hash": "sha256:338bd673f405357ada9149d35266fa81f1b763fc0cbbe7651ab0b16daae9be1b",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/checkbox/checkbox.css": {
+          "original_hash": "sha256:6871f7b967dff94a67067007c3371da5fac3604918edac2d0b86c7826b84da47",
+          "current_hash": "sha256:6871f7b967dff94a67067007c3371da5fac3604918edac2d0b86c7826b84da47",
+          "critical_for_a11y": true
+        },
+        "src/ashlar/components/checkbox/checkbox.evidence.json": {
+          "original_hash": "sha256:5f76ae493a139c2402a6439ab3a367398585ad2854109d15b4359054b769d317",
+          "current_hash": "sha256:5f76ae493a139c2402a6439ab3a367398585ad2854109d15b4359054b769d317",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/checkbox/checkbox.html": {
+          "original_hash": "sha256:e9747a2829c19bb15679c10deb75d99e937ff5876769acf71645e1a5a3d33302",
+          "current_hash": "sha256:e9747a2829c19bb15679c10deb75d99e937ff5876769acf71645e1a5a3d33302",
+          "critical_for_a11y": true
+        }
+      }
+    },
+    "form-field": {
+      "version": "0.0.1",
+      "capsule_hash": "sha256:d808697310262ab0a0caf314a1f5dea5d11034cc3f5cf190bc9068ed50a32685",
+      "stability": "experimental",
+      "installed_at": "2026-05-08T10:32:30.054Z",
+      "installed_via": "ashlar-cli@0.0.0",
+      "files": {
+        "src/ashlar/components/form-field/form-field.cem.json": {
+          "original_hash": "sha256:e454736b4a8fd5841d72a384552e5ea17db4c9f8b1e23edced809c3e74c6c741",
+          "current_hash": "sha256:e454736b4a8fd5841d72a384552e5ea17db4c9f8b1e23edced809c3e74c6c741",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/form-field/form-field.css": {
+          "original_hash": "sha256:6b8bba9c3b0943a1902f36b5461cd2b45792a0106684b855a728c9f7df3e3757",
+          "current_hash": "sha256:6b8bba9c3b0943a1902f36b5461cd2b45792a0106684b855a728c9f7df3e3757",
+          "critical_for_a11y": true
+        },
+        "src/ashlar/components/form-field/form-field.evidence.json": {
+          "original_hash": "sha256:6f76d6f8cd4ee6530116c4e2c95460fb2eb310a6b8ca093803ccd883910bb734",
+          "current_hash": "sha256:6f76d6f8cd4ee6530116c4e2c95460fb2eb310a6b8ca093803ccd883910bb734",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/form-field/form-field.html": {
+          "original_hash": "sha256:11b520bf5ca530c1f1b70c125238340a33655716373b549440779e1e7ba293d6",
+          "current_hash": "sha256:11b520bf5ca530c1f1b70c125238340a33655716373b549440779e1e7ba293d6",
+          "critical_for_a11y": true
+        }
+      }
+    },
+    "identifier": {
+      "version": "0.0.1",
+      "capsule_hash": "sha256:7f01e708cfc2a1da85df4f250c2a48d51d8a029af4f4fca00d50b9c7747a76f1",
+      "stability": "experimental",
+      "installed_at": "2026-05-08T10:32:30.054Z",
+      "installed_via": "ashlar-cli@0.0.0",
+      "files": {
+        "src/ashlar/components/identifier/identifier.cem.json": {
+          "original_hash": "sha256:5cc545570253ac0fa3fe1efc0726f76b0d4757452d12b30cb572679c2903d11c",
+          "current_hash": "sha256:5cc545570253ac0fa3fe1efc0726f76b0d4757452d12b30cb572679c2903d11c",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/identifier/identifier.css": {
+          "original_hash": "sha256:620329d928edab11297e376e4798da56c9aa92bbe9c21da1cc1c3d3879e3755b",
+          "current_hash": "sha256:620329d928edab11297e376e4798da56c9aa92bbe9c21da1cc1c3d3879e3755b",
+          "critical_for_a11y": true
+        },
+        "src/ashlar/components/identifier/identifier.evidence.json": {
+          "original_hash": "sha256:b5ea7858758fc61dad6775af71b026ed4ce4390e0c2b3ef99add3d794c36e5bb",
+          "current_hash": "sha256:b5ea7858758fc61dad6775af71b026ed4ce4390e0c2b3ef99add3d794c36e5bb",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/identifier/identifier.html": {
+          "original_hash": "sha256:c58caccc787359102b80f095fab7031e67a9ecd923b8ff8b36fc60e7359691b4",
+          "current_hash": "sha256:c58caccc787359102b80f095fab7031e67a9ecd923b8ff8b36fc60e7359691b4",
+          "critical_for_a11y": true
+        }
+      }
+    },
+    "radio-group": {
+      "version": "0.0.1",
+      "capsule_hash": "sha256:f5bde22112129ae5bc551bc27bcb7cba314a46468c7109bc899079a09c0a6615",
+      "stability": "experimental",
+      "installed_at": "2026-05-08T10:32:30.055Z",
+      "installed_via": "ashlar-cli@0.0.0",
+      "files": {
+        "src/ashlar/components/radio-group/radio-group.cem.json": {
+          "original_hash": "sha256:011505b3b6328a662e750d8ef84c4268526bca16169630316e599821448d4f80",
+          "current_hash": "sha256:011505b3b6328a662e750d8ef84c4268526bca16169630316e599821448d4f80",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/radio-group/radio-group.css": {
+          "original_hash": "sha256:f4b465aa8b8671885e2f34fd4e986aed043bd5f16a5759e83e99caaaf3c802b7",
+          "current_hash": "sha256:f4b465aa8b8671885e2f34fd4e986aed043bd5f16a5759e83e99caaaf3c802b7",
+          "critical_for_a11y": true
+        },
+        "src/ashlar/components/radio-group/radio-group.evidence.json": {
+          "original_hash": "sha256:94d72fc144e286cd19644087ba5aac55b867a898d1eefa5e15d8c041a06bb9cd",
+          "current_hash": "sha256:94d72fc144e286cd19644087ba5aac55b867a898d1eefa5e15d8c041a06bb9cd",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/radio-group/radio-group.html": {
+          "original_hash": "sha256:455197fb2d614047bb52e73581936d9bbaf6b8b6dcbf8fe5b39664120a19e3f8",
+          "current_hash": "sha256:455197fb2d614047bb52e73581936d9bbaf6b8b6dcbf8fe5b39664120a19e3f8",
+          "critical_for_a11y": true
+        }
+      }
+    },
+    "select": {
+      "version": "0.0.1",
+      "capsule_hash": "sha256:d5c41cd0930419f8dd185b66a33d95d5cdfe739dee2012f7ebfb0c3d1c514962",
+      "stability": "experimental",
+      "installed_at": "2026-05-08T10:32:30.055Z",
+      "installed_via": "ashlar-cli@0.0.0",
+      "files": {
+        "src/ashlar/components/select/select.cem.json": {
+          "original_hash": "sha256:1c7bdc657f3df001dbbd7349f97e33d5a553f7c56835751b9ce5c55ca1e353de",
+          "current_hash": "sha256:1c7bdc657f3df001dbbd7349f97e33d5a553f7c56835751b9ce5c55ca1e353de",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/select/select.css": {
+          "original_hash": "sha256:fb7a3b52facb84342b2f7e09802aded89ee8a2690551a00a676866ba6e4d5ca2",
+          "current_hash": "sha256:fb7a3b52facb84342b2f7e09802aded89ee8a2690551a00a676866ba6e4d5ca2",
+          "critical_for_a11y": true
+        },
+        "src/ashlar/components/select/select.evidence.json": {
+          "original_hash": "sha256:b934c209952a02b387226f00a0f092713aacc2ca2df0e1ad2d06234428ef3be6",
+          "current_hash": "sha256:b934c209952a02b387226f00a0f092713aacc2ca2df0e1ad2d06234428ef3be6",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/select/select.html": {
+          "original_hash": "sha256:acf34714583560b24722179de71ee3bd92fbe943d5a889f4e7d8b68ac8dc6c7b",
+          "current_hash": "sha256:acf34714583560b24722179de71ee3bd92fbe943d5a889f4e7d8b68ac8dc6c7b",
+          "critical_for_a11y": true
+        }
+      }
+    },
+    "text-input": {
+      "version": "0.0.1",
+      "capsule_hash": "sha256:74c6e7efa8e6cb9e3ab1f72112e7bea66220adfa4813f21ebf86749a3267954c",
+      "stability": "experimental",
+      "installed_at": "2026-05-08T10:32:30.056Z",
+      "installed_via": "ashlar-cli@0.0.0",
+      "files": {
+        "src/ashlar/components/text-input/text-input.cem.json": {
+          "original_hash": "sha256:687e5395cd43b37192e3516c55dddfffc8b57cd2bfad0c878c0ea42c590660f1",
+          "current_hash": "sha256:687e5395cd43b37192e3516c55dddfffc8b57cd2bfad0c878c0ea42c590660f1",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/text-input/text-input.css": {
+          "original_hash": "sha256:571615ddb3af26db517e5313b924ce89f6426022c50a1bd1832430f221b11b05",
+          "current_hash": "sha256:571615ddb3af26db517e5313b924ce89f6426022c50a1bd1832430f221b11b05",
+          "critical_for_a11y": true
+        },
+        "src/ashlar/components/text-input/text-input.evidence.json": {
+          "original_hash": "sha256:afc25f1e667bf9cb50990741c18455ba655722941d73542225756c45d3a42ddb",
+          "current_hash": "sha256:afc25f1e667bf9cb50990741c18455ba655722941d73542225756c45d3a42ddb",
+          "critical_for_a11y": false
+        },
+        "src/ashlar/components/text-input/text-input.html": {
+          "original_hash": "sha256:cb5468625e04b048e2959bc1f67c658daca067235482f3f0056ad6e0367a5ef4",
+          "current_hash": "sha256:cb5468625e04b048e2959bc1f67c658daca067235482f3f0056ad6e0367a5ef4",
           "critical_for_a11y": true
         }
       }
