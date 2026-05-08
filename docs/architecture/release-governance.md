@@ -62,13 +62,15 @@ The public packages use the BLEN-owned npm namespace:
 
 Publish public developer-facing releases to npmjs through GitHub Actions trusted publishing. Do not make GitHub Packages the default public registry for these packages: [GitHub's npm registry requires an access token](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages) to publish, install, and delete public packages, which would break the low-friction `npx @blen/ashlar` adoption path.
 
-`GitHub Packages` is wired separately as an authenticated mirror/canary workflow for the BLEN-owned scope. It is manual-dispatch only, main-only, requires the `publish-github-packages` confirmation, grants `packages: write`, configures `@blen:registry=https://npm.pkg.github.com`, publishes with `GITHUB_TOKEN`, and disables npm provenance for that registry. `ashlar release github-packages-check` verifies this wiring before CI or an operator attempts the mirror publish. This does not satisfy `npm-provenance-public`; only the npmjs trusted-publishing path does.
+`GitHub Packages` is wired separately as an authenticated mirror/canary workflow for the BLEN-owned scope. It is manual-dispatch only, main-only, requires the `publish-github-packages` confirmation, grants `packages: write`, configures `@blen:registry=https://npm.pkg.github.com`, publishes with `BLEN_GITHUB_PACKAGES_TOKEN`, and disables npm provenance for that registry. `ashlar release github-packages-check` verifies this wiring before CI or an operator attempts the mirror publish. This does not satisfy `npm-provenance-public`; only the npmjs trusted-publishing path does.
 
 ```bash
 gh workflow run github-packages.yml --ref main -f confirm=publish-github-packages
 ```
 
 GitHub Packages first-publishes npm packages as private packages. If the mirror is meant to be publicly visible, an owner must change package visibility after the first publish and confirm package access inheritance from `blencorp/ashlar`. The committed root `.npmrc` must not route `@blen` to GitHub Packages by default; the scope mapping belongs in `github-packages.yml` so normal `npx @blen/ashlar` use still resolves through npmjs.
+
+The token split is intentional. GitHub's npm registry can publish with `GITHUB_TOKEN` when packages are associated with the workflow repository, but these package names use the `@blen` scope while the repository currently lives under `blencorp/ashlar`. Until the repository or mirror workflow lives under the `blen` owner namespace, the GitHub Packages mirror needs a BLEN-scoped packages token exposed as `BLEN_GITHUB_PACKAGES_TOKEN`. If the repository moves to `blen/ashlar`, prefer switching the mirror back to `GITHUB_TOKEN`.
 
 This split is deliberate:
 
