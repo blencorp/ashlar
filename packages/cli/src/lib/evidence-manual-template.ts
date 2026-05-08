@@ -16,6 +16,10 @@ function today(value: Date): string {
 export function buildManualEvidenceTemplate(input: ManualTemplateInput): ManualEvidenceArtifact {
   const detail = getComponent(input.cwd, input.component, input.registryPath);
   const reviewedAt = input.reviewedAt ?? new Date();
+  const keyboardNotes =
+    detail.name === "button"
+      ? "TODO: replace this blocked placeholder after real Tab, Shift+Tab, Enter, Space, and focus visibility review."
+      : "TODO: replace this blocked placeholder after real Tab, Shift+Tab, Enter, Space, focus visibility, and disabled-state review.";
 
   const artifact: ManualEvidenceArtifact = {
     $schema: "https://ashlar.dev/schemas/manual-evidence.schema.json",
@@ -45,8 +49,7 @@ export function buildManualEvidenceTemplate(input: ManualTemplateInput): ManualE
         tester: "TODO: tester name or email",
         result: "blocked",
         evidence: "TODO: path or URL to keyboard transcript or test notes.",
-        notes:
-          "TODO: replace this blocked placeholder after real Tab, Shift+Tab, Enter, Space, focus visibility, and disabled-state review.",
+        notes: keyboardNotes,
       },
       {
         tech: "TODO: screen reader (NVDA, JAWS, VoiceOver, Narrator, or equivalent)",
