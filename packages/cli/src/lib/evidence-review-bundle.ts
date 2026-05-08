@@ -59,6 +59,14 @@ function cwdRelative(cwd: string, path: string): string {
   return value.startsWith("../") ? path : value;
 }
 
+function localAshlarCommand(args: string): string {
+  return `pnpm ashlar ${args}`;
+}
+
+function cliCommandNote(): string {
+  return "Commands below use the repository-local `pnpm ashlar` entrypoint. External reviewers using an installed CLI can replace `pnpm ashlar` with `ashlar` or `npx @blen/ashlar`.";
+}
+
 function reviewerReadme(
   bundle: StableEvidenceReviewBundle,
   cwd: string,
@@ -102,27 +110,29 @@ This directory is a non-mutating reviewer bundle. It does not publish stable evi
 
 ## Reviewer Steps
 
+${cliCommandNote()}
+
 1. Open \`${files.reviewHarness}\` in the browser and assistive technology environment under review. The harness is test instrumentation only; do not treat its surrounding controls as component evidence.
 2. Replace all reviewer placeholders in the keyboard and screen-reader transcript JSON files with observed results from real manual runs.
 3. Validate the completed transcript artifacts:
 
 \`\`\`bash
-ashlar evidence transcript-validate ${bundle.component} --registry ${registryPath} --type keyboard --transcript ${files.keyboardTranscript}
-ashlar evidence transcript-validate ${bundle.component} --registry ${registryPath} --type screen-reader --transcript ${files.screenReaderTranscript}
+${localAshlarCommand(`evidence transcript-validate ${bundle.component} --registry ${registryPath} --type keyboard --transcript ${files.keyboardTranscript}`)}
+${localAshlarCommand(`evidence transcript-validate ${bundle.component} --registry ${registryPath} --type screen-reader --transcript ${files.screenReaderTranscript}`)}
 \`\`\`
 
 4. Replace all placeholders in the manual evidence worksheet, keeping its manual test evidence references pointed at the completed transcript JSON files.
 5. Check whether the bundle is ready:
 
 \`\`\`bash
-ashlar evidence review-status ${bundle.component} --registry ${registryPath} --review-dir ${cwdRelative(cwd, bundle.outputDir)}
+${localAshlarCommand(`evidence review-status ${bundle.component} --registry ${registryPath} --review-dir ${cwdRelative(cwd, bundle.outputDir)}`)}
 \`\`\`
 
 6. Finalize reviewed and stable proposal artifacts. This refuses to write anything until WCAG mappings, ICT Baseline mappings, automated evidence, manual keyboard evidence, manual screen-reader evidence, limitations, and review metadata all pass the stable gate.
 
 \`\`\`bash
-ashlar evidence finalize-stable ${bundle.component} --registry ${registryPath} --review-dir ${cwdRelative(cwd, bundle.outputDir)}
-ashlar evidence ${bundle.component} --check --registry ${registryPath} --evidence-file ${files.stableEvidence}
+${localAshlarCommand(`evidence finalize-stable ${bundle.component} --registry ${registryPath} --review-dir ${cwdRelative(cwd, bundle.outputDir)}`)}
+${localAshlarCommand(`evidence ${bundle.component} --check --registry ${registryPath} --evidence-file ${files.stableEvidence}`)}
 \`\`\`
 `;
 }
@@ -166,12 +176,14 @@ This checklist is for the human reviewer. It is not stable evidence by itself an
 
 ## Validation Commands
 
+${cliCommandNote()}
+
 \`\`\`bash
-ashlar evidence transcript-validate ${bundle.component} --registry ${registryPath} --type keyboard --transcript ${files.keyboardTranscript}
-ashlar evidence transcript-validate ${bundle.component} --registry ${registryPath} --type screen-reader --transcript ${files.screenReaderTranscript}
-ashlar evidence review-status ${bundle.component} --registry ${registryPath} --review-dir ${cwdRelative(cwd, bundle.outputDir)}
-ashlar evidence finalize-stable ${bundle.component} --registry ${registryPath} --review-dir ${cwdRelative(cwd, bundle.outputDir)}
-ashlar evidence ${bundle.component} --check --registry ${registryPath} --evidence-file ${files.stableEvidence}
+${localAshlarCommand(`evidence transcript-validate ${bundle.component} --registry ${registryPath} --type keyboard --transcript ${files.keyboardTranscript}`)}
+${localAshlarCommand(`evidence transcript-validate ${bundle.component} --registry ${registryPath} --type screen-reader --transcript ${files.screenReaderTranscript}`)}
+${localAshlarCommand(`evidence review-status ${bundle.component} --registry ${registryPath} --review-dir ${cwdRelative(cwd, bundle.outputDir)}`)}
+${localAshlarCommand(`evidence finalize-stable ${bundle.component} --registry ${registryPath} --review-dir ${cwdRelative(cwd, bundle.outputDir)}`)}
+${localAshlarCommand(`evidence ${bundle.component} --check --registry ${registryPath} --evidence-file ${files.stableEvidence}`)}
 \`\`\`
 
 ## Claim Boundary
@@ -188,7 +200,7 @@ function batchReviewerIndex(batch: StableEvidenceReviewBatch, cwd: string, regis
   const rows = batch.bundles
     .map((bundle) => {
       const reviewDir = cwdRelative(cwd, bundle.outputDir);
-      return `| ${bundle.component}@${bundle.version} | ${bundle.automatedStatus} | \`${reviewDir}\` | \`ashlar evidence review-status ${bundle.component} --registry ${registryPath} --review-dir ${reviewDir}\` |`;
+      return `| ${bundle.component}@${bundle.version} | ${bundle.automatedStatus} | \`${reviewDir}\` | \`${localAshlarCommand(`evidence review-status ${bundle.component} --registry ${registryPath} --review-dir ${reviewDir}`)}\` |`;
     })
     .join("\n");
 
@@ -204,11 +216,13 @@ ${rows}
 
 ## Review Flow
 
+${cliCommandNote()}
+
 1. Assign a reviewer to one capsule bundle.
 2. Complete the keyboard and screen-reader transcript JSON files from real manual observations.
 3. Complete the manual evidence worksheet and keep its evidence references pointed at the transcript JSON files.
 4. Run the bundle's status command until it reports ready.
-5. Run \`ashlar evidence finalize-stable <component> --registry ${registryPath} --review-dir <bundle-dir>\`.
+5. Run \`${localAshlarCommand(`evidence finalize-stable <component> --registry ${registryPath} --review-dir <bundle-dir>`)}\`.
 6. Attach the completed bundle, status output, and stable proposal artifact to a real stable-evidence review record.
 
 Do not create a top-level \`docs/reviews/stable-evidence-*.md\` record from this index alone. Strict readiness only counts completed external review records backed by reviewer output.
@@ -243,11 +257,13 @@ ${bundle.component}@${bundle.version}
 
 ## Review bundle
 
+${cliCommandNote()}
+
 Generated with:
 
 \`\`\`bash
-ashlar evidence prepare-stable ${bundle.component} --registry ${registryPath} --fixture ${relativeFixture} --output ${cwdRelative(cwd, bundle.outputDir)}
-ashlar evidence review-status ${bundle.component} --registry ${registryPath} --review-dir ${cwdRelative(cwd, bundle.outputDir)}
+${localAshlarCommand(`evidence prepare-stable ${bundle.component} --registry ${registryPath} --fixture ${relativeFixture} --output ${cwdRelative(cwd, bundle.outputDir)}`)}
+${localAshlarCommand(`evidence review-status ${bundle.component} --registry ${registryPath} --review-dir ${cwdRelative(cwd, bundle.outputDir)}`)}
 \`\`\`
 
 Bundle files:
@@ -280,10 +296,10 @@ Reviewer to complete \`${files.manualEvidence}\` by replacing all known-issue, b
 ## Graduation gates
 
 - [ ] Manual review artifacts contain no TODO, TBD, placeholder, or blocked result.
-- [ ] \`ashlar evidence transcript-validate\` passes for each local transcript reference.
-- [ ] \`ashlar evidence review-status\` reports ready before finalization.
-- [ ] \`ashlar evidence finalize-stable\` writes reviewed and stable proposal artifacts.
-- [ ] \`ashlar evidence --check --evidence-file <stable proposal>\` passes before any registry publication.
+- [ ] \`${localAshlarCommand("evidence transcript-validate")}\` passes for each local transcript reference.
+- [ ] \`${localAshlarCommand("evidence review-status")}\` reports ready before finalization.
+- [ ] \`${localAshlarCommand("evidence finalize-stable")}\` writes reviewed and stable proposal artifacts.
+- [ ] \`${localAshlarCommand("evidence --check --evidence-file <stable proposal>")}\` passes before any registry publication.
 - [ ] No application-level compliance claim is added.
 `;
 }
