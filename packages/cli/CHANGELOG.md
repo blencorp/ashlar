@@ -18,7 +18,7 @@
 
 - [#129](https://github.com/blencorp/ashlar/pull/129) [`4f00eea`](https://github.com/blencorp/ashlar/commit/4f00eeab37ba4688241eb3d13f731749da729119) Thanks [@naodya](https://github.com/naodya)! - Reject incomplete manual transcript worksheets during `ashlar evidence transcript-validate` so stable-evidence reviewer handoffs cannot treat schema-valid placeholders as completed accessibility evidence.
 
-- [#131](https://github.com/blencorp/ashlar/pull/131) [`7f14c6e`](https://github.com/blencorp/ashlar/commit/7f14c6e5871ba6be3c17bf559dd3e6655084f962) Thanks [@naodya](https://github.com/naodya)! - Remove internal tier labels from normal CLI discovery, preview, metadata, and evidence-report output so users see product families, stability, and evidence state instead.
+- [#131](https://github.com/blencorp/ashlar/pull/131) [`7f14c6e`](https://github.com/blencorp/ashlar/commit/7f14c6e5871ba6be3c17bf559dd3e6655084f962) Thanks [@naodya](https://github.com/naodya)! - Keep normal CLI discovery, preview, metadata, and evidence-report output on product families, stability, and evidence state.
 
 ## 0.3.14
 

@@ -5,7 +5,16 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = fileURLToPath(new URL("..", import.meta.url));
 
-const targets = ["README.md", "STATUS.md", "apps", "docs", "examples", "packages", "registry"];
+const targets = [
+  "README.md",
+  "STATUS.md",
+  "apps",
+  "docs",
+  "examples",
+  "packages",
+  "registry",
+  "reports",
+];
 
 const ignoredDirectories = new Set([".next", ".turbo", "coverage", "dist", "node_modules"]);
 
@@ -48,6 +57,11 @@ const forbidden = [
   {
     label: "layer code wording",
     pattern: /\blayer[- ]codes?\b/gi,
+  },
+  {
+    label: "legacy numbered-label cleanup wording",
+    pattern:
+      /\b(internal tier labels?|numbered tier labels?|numbered product labels?|numbered levels?|registry codes?|family codes?)\b/gi,
   },
   {
     label: "legacy default theme name",
