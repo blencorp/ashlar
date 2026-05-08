@@ -54,6 +54,34 @@ export function isManualTranscriptType(value: string | undefined): value is Manu
   return value === "keyboard" || value === "screen-reader";
 }
 
+function hasPlaceholderText(value: unknown): boolean {
+  const normalized = JSON.stringify(value).toLowerCase();
+  return /\b(todo|tbd|placeholder)\b/.test(normalized);
+}
+
+export function checkManualTranscriptCompletion(transcript: ManualTranscriptArtifact): string[] {
+  const findings: string[] = [];
+
+  if (hasPlaceholderText(transcript)) {
+    findings.push("contains TODO, TBD, or placeholder text");
+  }
+
+  if (transcript.result === "blocked" || transcript.result === "fail") {
+    findings.push(`overall result is ${transcript.result}`);
+  }
+
+  const incompleteSteps = transcript.steps.filter(
+    (step) => step.result === "blocked" || step.result === "fail",
+  );
+  if (incompleteSteps.length > 0) {
+    findings.push(
+      `step result is blocked or fail: ${incompleteSteps.map((step) => step.id).join(", ")}`,
+    );
+  }
+
+  return findings;
+}
+
 function genericKeyboardSteps(detail: RegistryComponent): ManualTranscriptStep[] {
   const label = `${detail.name}@${detail.version}`;
   return [

@@ -15,6 +15,7 @@ import {
 import { buildStableEvidenceReviewStatus } from "../lib/evidence-review-status.js";
 import {
   buildManualTranscriptTemplate,
+  checkManualTranscriptCompletion,
   isManualTranscriptType,
   readManualTranscriptArtifact,
 } from "../lib/evidence-transcript.js";
@@ -491,6 +492,14 @@ export function registerEvidenceCommand(program: Command) {
             path: options.transcript,
             registryPath: registry,
           });
+          const completionFindings = checkManualTranscriptCompletion(artifact);
+          if (completionFindings.length > 0) {
+            throw new Error(
+              `Manual ${artifact.transcriptType} transcript is incomplete:\n${completionFindings
+                .map((finding) => `  - ${finding}`)
+                .join("\n")}`,
+            );
+          }
 
           console.log(
             `Valid ${artifact.transcriptType} manual transcript for ${artifact.component}@${artifact.version}: ${artifact.result}`,

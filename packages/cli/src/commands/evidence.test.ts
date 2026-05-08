@@ -884,6 +884,41 @@ describe("evidence command", () => {
     expect(result.stdout).toContain("Valid screen-reader manual transcript for button@0.0.1: pass");
   });
 
+  it("fails transcript validation when a reviewer worksheet is still incomplete", () => {
+    const transcriptPath = join(scratch, "reports", "button-keyboard-transcript.json");
+    expect(
+      runCli([
+        "evidence",
+        "transcript-template",
+        "button",
+        "--type",
+        "keyboard",
+        "--output",
+        transcriptPath,
+        "--registry",
+        join(repoRoot, "registry"),
+      ]).status,
+    ).toBe(0);
+
+    const result = runCli([
+      "evidence",
+      "transcript-validate",
+      "button",
+      "--type",
+      "keyboard",
+      "--transcript",
+      transcriptPath,
+      "--registry",
+      join(repoRoot, "registry"),
+    ]);
+
+    expect(result.status).toBe(1);
+    expect(result.stdout).toContain("Manual keyboard transcript is incomplete");
+    expect(result.stdout).toContain("contains TODO, TBD, or placeholder text");
+    expect(result.stdout).toContain("overall result is blocked");
+    expect(result.stdout).toContain("button-focus-visible");
+  });
+
   it("fails transcript validation when the transcript type does not match", () => {
     writeManualEvidenceFiles();
     const transcriptPath = join(scratch, "manual", "button-keyboard-review.json");
