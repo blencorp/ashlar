@@ -1,5 +1,12 @@
 # @blen/ashlar
 
+## 0.3.15
+
+### Patch Changes
+
+- Updated dependencies [[`4f00eea`](https://github.com/blencorp/ashlar/commit/4f00eeab37ba4688241eb3d13f731749da729119), [`7f14c6e`](https://github.com/blencorp/ashlar/commit/7f14c6e5871ba6be3c17bf559dd3e6655084f962)]:
+  - @blen/ashlar-cli@0.3.15
+
 ## 0.3.14
 
 ### Patch Changes
