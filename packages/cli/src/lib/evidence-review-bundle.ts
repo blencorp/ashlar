@@ -90,6 +90,8 @@ function reviewerReadme(
       cwd,
       join(bundle.outputDir, `${bundle.component}.evidence.reviewed.json`),
     ),
+    publicationReceipt: `reports/${bundle.component}-evidence-publication.json`,
+    reviewRecord: `docs/reviews/stable-evidence-${bundle.component}-<yyyy-mm-dd>.md`,
   };
 
   return `# ${bundle.component}@${bundle.version} Stable Evidence Review
@@ -134,6 +136,16 @@ ${localAshlarCommand(`evidence review-status ${bundle.component} --registry ${re
 ${localAshlarCommand(`evidence finalize-stable ${bundle.component} --registry ${registryPath} --review-dir ${cwdRelative(cwd, bundle.outputDir)}`)}
 ${localAshlarCommand(`evidence ${bundle.component} --check --registry ${registryPath} --evidence-file ${files.stableEvidence}`)}
 \`\`\`
+
+## Maintainer Publication Handoff
+
+Do not run these commands until the reviewer bundle is complete, \`review-status\` reports ready, and the stable proposal check above passes. These commands mutate registry source or create completed proof records, so they belong in a maintainer PR after reviewer sign-off.
+
+\`\`\`bash
+${localAshlarCommand(`evidence publish ${bundle.component} --registry ${registryPath} --evidence-file ${files.stableEvidence} --signing-key <trusted-local-signing-key> --key-id <trusted-key-id> --output ${files.publicationReceipt}`)}
+${localAshlarCommand(`release review-record stable-evidence --output ${files.reviewRecord} --reviewer "<reviewer>" --affiliation "<organization>" --review-date <yyyy-mm-dd> --source-issue https://github.com/blencorp/ashlar/issues/22 --repo-commit <commit-sha> --rationale "<why the review passed>" --component ${bundle.component} --registry ${registryPath} --review-dir ${cwdRelative(cwd, bundle.outputDir)} --publication-receipt ${files.publicationReceipt}`)}
+${localAshlarCommand("release review-record-check")}
+\`\`\`
 `;
 }
 
@@ -155,6 +167,8 @@ function reviewerChecklist(
       cwd,
       join(bundle.outputDir, `${bundle.component}.evidence.stable.json`),
     ),
+    publicationReceipt: `reports/${bundle.component}-evidence-publication.json`,
+    reviewRecord: `docs/reviews/stable-evidence-${bundle.component}-<yyyy-mm-dd>.md`,
   };
 
   return `# Stable Evidence Reviewer Checklist
@@ -185,6 +199,13 @@ ${localAshlarCommand(`evidence review-status ${bundle.component} --registry ${re
 ${localAshlarCommand(`evidence finalize-stable ${bundle.component} --registry ${registryPath} --review-dir ${cwdRelative(cwd, bundle.outputDir)}`)}
 ${localAshlarCommand(`evidence ${bundle.component} --check --registry ${registryPath} --evidence-file ${files.stableEvidence}`)}
 \`\`\`
+
+## Maintainer Handoff
+
+- [ ] \`${files.stableEvidence}\` passes the stable evidence check before registry mutation.
+- [ ] Maintainer publishes the graduated packet with \`${localAshlarCommand(`evidence publish ${bundle.component} --registry ${registryPath} --evidence-file ${files.stableEvidence} --signing-key <trusted-local-signing-key> --key-id <trusted-key-id> --output ${files.publicationReceipt}`)}\`.
+- [ ] Maintainer creates \`${files.reviewRecord}\` with \`${localAshlarCommand(`release review-record stable-evidence --component ${bundle.component} --registry ${registryPath} --review-dir ${cwdRelative(cwd, bundle.outputDir)} --publication-receipt ${files.publicationReceipt}`)}\` and the real reviewer metadata.
+- [ ] \`${localAshlarCommand("release review-record-check")}\` passes after the completed record is added.
 
 ## Claim Boundary
 
@@ -223,7 +244,8 @@ ${cliCommandNote()}
 3. Complete the manual evidence worksheet and keep its evidence references pointed at the transcript JSON files.
 4. Run the bundle's status command until it reports ready.
 5. Run \`${localAshlarCommand(`evidence finalize-stable <component> --registry ${registryPath} --review-dir <bundle-dir>`)}\`.
-6. Attach the completed bundle, status output, and stable proposal artifact to a real stable-evidence review record.
+6. Hand the completed bundle, ready status output, and stable proposal artifact to a maintainer for \`${localAshlarCommand(`evidence publish <component> --registry ${registryPath} --evidence-file <bundle-dir>/<component>.evidence.stable.json --signing-key <trusted-local-signing-key> --key-id <trusted-key-id> --output reports/<component>-evidence-publication.json`)}\`.
+7. After publication, create a completed \`docs/reviews/stable-evidence-*.md\` record with \`${localAshlarCommand(`release review-record stable-evidence`)}\` and run \`${localAshlarCommand("release review-record-check")}\`.
 
 Do not create a top-level \`docs/reviews/stable-evidence-*.md\` record from this index alone. Strict readiness only counts completed external review records backed by reviewer output.
 `;
@@ -300,6 +322,9 @@ Reviewer to complete \`${files.manualEvidence}\` by replacing all known-issue, b
 - [ ] \`${localAshlarCommand("evidence review-status")}\` reports ready before finalization.
 - [ ] \`${localAshlarCommand("evidence finalize-stable")}\` writes reviewed and stable proposal artifacts.
 - [ ] \`${localAshlarCommand("evidence --check --evidence-file <stable proposal>")}\` passes before any registry publication.
+- [ ] Maintainer runs \`${localAshlarCommand("evidence publish")}\` only after reviewer sign-off and keeps the publication receipt.
+- [ ] Maintainer creates a completed \`${localAshlarCommand("release review-record stable-evidence")}\` record backed by the ready bundle and publication receipt.
+- [ ] \`${localAshlarCommand("release review-record-check")}\` passes after the completed record is added.
 - [ ] No application-level compliance claim is added.
 `;
 }
