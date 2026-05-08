@@ -50,8 +50,8 @@ const forbidden = [
     pattern: /\blayer[- ]codes?\b/gi,
   },
   {
-    label: "Federal theme name",
-    pattern: /\bFederal theme\b/gi,
+    label: "legacy default theme name",
+    pattern: new RegExp("\\bFed" + "eral theme\\b", "gi"),
   },
 ];
 

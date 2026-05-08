@@ -99,8 +99,8 @@ Check:
   theme.
 - Agency selection uses a centered dialog with agency marks and provenance
   badges, not a corner control box.
-- Theme labels are `Default`, `VA`, and `USDA`; there is no user-facing
-  `Federal` theme option.
+- Theme labels are `Default`, `VA`, and `USDA` only; no legacy default-agency
+  alias appears.
 - Default, VA, and USDA themes work in light, dark, and system modes.
 - Form fields, selects, radios, checkboxes, alerts, and buttons remain readable
   in each agency and color mode.
@@ -142,7 +142,8 @@ BLEN attribution. JSON commands must not print branding text.
 
 ## Defect Report Template
 
-For every issue, capture:
+Use the GitHub `Manual testing report` issue template for hands-on visual,
+interaction, theming, and DX findings. For every issue, capture:
 
 - target URL and viewport size;
 - browser and OS;
