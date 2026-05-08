@@ -25,7 +25,7 @@ describe("search command", () => {
     const result = runCli(["search", "official website", "--policy", "Federal Website Standards"]);
 
     expect(result.status).toBe(0);
-    expect(result.stdout).toContain("banner@0.0.3 [foundations, primitive, experimental]");
+    expect(result.stdout).toContain("banner@0.0.3 [foundations, experimental]");
     expect(result.stdout).toContain("Reasons:");
     expect(result.stdout).toContain("policy: Federal Website Standards");
     expect(result.stdout).toContain("Install: ashlar add banner");
@@ -89,5 +89,6 @@ describe("search command", () => {
     expect(result.status).toBe(0);
     expect(result.stdout).toContain("--family <family>");
     expect(result.stdout).not.toContain("--layer");
+    expect(result.stdout).not.toContain("--tier");
   });
 });

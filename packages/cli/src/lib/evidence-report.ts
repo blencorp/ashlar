@@ -71,7 +71,6 @@ export function buildEvidenceReport(
       `- stability: ${evidence.stability}`,
       `- accessibility: ${evidence.accessibilityStatus}`,
       `- family: ${formatRegistryLayer(component.layer)}`,
-      `- tier: ${component.tier}`,
       `- WCAG mappings: ${summarizeStatuses(evidence.wcag)}`,
       `- ICT Baseline mappings: ${summarizeStatuses(evidence.baselineTests)}`,
       `- manual tests: ${evidence.manualTests?.length ?? 0}`,
