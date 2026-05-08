@@ -1,5 +1,11 @@
 # @blen/ashlar-cli
 
+## 0.3.11
+
+### Patch Changes
+
+- [#113](https://github.com/blencorp/ashlar/pull/113) [`8b27dda`](https://github.com/blencorp/ashlar/commit/8b27ddaa613822eb99a379907ca3212f3d9d7499) Thanks [@naodya](https://github.com/naodya)! - Include the guarded GitHub Packages mirror workflow in the release proof plan so operators do not miss the authenticated `@blen` package mirror step.
+
 ## 0.3.10
 
 ### Patch Changes
