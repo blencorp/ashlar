@@ -81,6 +81,9 @@ pnpm build
 # Run the maintainer health stack before opening or merging a PR
 pnpm repo:doctor
 
+# Start the public site, docs, and every framework example for manual testing
+pnpm testing:start
+
 # Initialize a target project (e.g. a Vite app)
 node /path/to/ashlar/packages/cli/dist/index.js init
 mkdir -p ./my-public-service-app
