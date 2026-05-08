@@ -84,6 +84,9 @@ pnpm repo:doctor
 # Start the public site, docs, and every framework example for manual testing
 pnpm testing:start
 
+# Verify the same session and produce visual screenshots plus a manual checklist
+pnpm testing:start --check --visual
+
 # Initialize a target project (e.g. a Vite app)
 node /path/to/ashlar/packages/cli/dist/index.js init
 mkdir -p ./my-public-service-app
