@@ -12,6 +12,7 @@ const logsDir = resolve(outputDir, "logs");
 const args = new Set(process.argv.slice(2));
 const checkOnly = args.has("--check");
 const skipBuild = args.has("--skip-build");
+const runVisual = args.has("--visual");
 const help = args.has("--help") || args.has("-h");
 
 const targets = [
@@ -92,11 +93,13 @@ then writes a URL and health report under reports/testing-session.
 Usage:
   pnpm testing:start
   pnpm testing:start --check
+  pnpm testing:start --check --visual
   pnpm testing:start --skip-build
 
 Options:
   --check       Start every target, verify HTTP responses, write reports, then stop.
   --skip-build  Start from the current build output instead of running pnpm build first.
+  --visual      Also run the Playwright visual smoke and write screenshot pointers.
 `);
   process.exit(0);
 }
@@ -146,8 +149,10 @@ try {
     });
   }
 
-  writeReports(results);
-  printSummary(results);
+  const visual = runVisual ? runVisualSmoke() : null;
+
+  writeReports(results, null, visual);
+  printSummary(results, visual);
 
   if (checkOnly) {
     stopping = true;
@@ -164,6 +169,32 @@ try {
   stopping = true;
   await stopStarted();
   process.exit(1);
+}
+
+function runVisualSmoke() {
+  const startedAt = Date.now();
+  console.log("");
+  console.log("Running framework visual smoke...");
+  const result = spawnSync(
+    process.execPath,
+    [resolve(repoRoot, "scripts", "example-visual-smoke.mjs")],
+    {
+      cwd: repoRoot,
+      encoding: "utf8",
+      env: cleanEnv(),
+      stdio: "inherit",
+    },
+  );
+  const durationMs = Date.now() - startedAt;
+  if (result.status !== 0) {
+    throw new Error(`example visual smoke failed with exit code ${result.status ?? 1}`);
+  }
+  return {
+    durationMs,
+    screenshotsDir: "reports/example-visual-smoke",
+    status: "pass",
+    summary: "reports/example-visual-smoke/summary.json",
+  };
 }
 
 function runBuild() {
@@ -242,11 +273,12 @@ async function probeTarget(target) {
   }
 }
 
-function writeReports(items, error = null) {
+function writeReports(items, error = null, visual = null) {
   const report = {
     generatedAt: new Date().toISOString(),
     status: error ? "fail" : "pass",
     targets: items,
+    visual,
     error: error ? formatError(error) : null,
   };
   writeFileSync(resolve(outputDir, "summary.json"), `${JSON.stringify(report, null, 2)}\n`);
@@ -266,11 +298,110 @@ function writeReports(items, error = null) {
   if (error) {
     lines.push("", "## Error", "", formatError(error));
   }
+  if (visual) {
+    lines.push(
+      "",
+      "## Visual Smoke",
+      "",
+      `Status: ${visual.status}`,
+      `Screenshots: \`${visual.screenshotsDir}/\``,
+      `Summary: \`${visual.summary}\``,
+    );
+  }
+  lines.push(
+    "",
+    "## Manual Checklist",
+    "",
+    "Use `reports/testing-session/checklist.md` for the visual and DX review path.",
+  );
   lines.push("");
   writeFileSync(resolve(outputDir, "summary.md"), `${lines.join("\n")}\n`);
+  writeChecklist(report);
 }
 
-function printSummary(items) {
+function writeChecklist(report) {
+  const caseBoardTargets = report.targets.filter(
+    (item) => item.id !== "www" && item.id !== "docs" && item.id !== "vite",
+  );
+  const lines = [
+    "# Ashlar Manual Testing Checklist",
+    "",
+    `Generated: ${report.generatedAt}`,
+    `Status: ${report.status}`,
+    "",
+    "This checklist is for hands-on review after `pnpm testing:start`. It does not create stable accessibility evidence or external review proof records.",
+    "",
+    "## Start Here",
+    "",
+    "- Open the public site and docs first; confirm the project posture is clear and does not imply affiliation with USWDS, GSA, NDS, or the federal government.",
+    "- Open the Vite theme workbench; switch Default, VA, and USDA themes in light and dark modes.",
+    "- Open each case-board example; compare layout, theming, banner, and component behavior across stacks.",
+  ];
+
+  if (report.visual) {
+    lines.push(
+      "- Review the Playwright screenshots in `reports/example-visual-smoke/` before filing visual defects.",
+    );
+  } else {
+    lines.push("- Run `pnpm testing:start --check --visual` when screenshot evidence is needed.");
+  }
+
+  lines.push("", "## URLs", "", "| Target | URL | Status |", "| --- | --- | ---: |");
+  for (const item of report.targets) {
+    lines.push(`| ${item.label} | ${item.url} | ${item.status ?? "n/a"} |`);
+  }
+
+  lines.push(
+    "",
+    "## Visual Review",
+    "",
+    "- Government banner uses a real inline SVG flag, not a CSS-painted block or placeholder.",
+    "- Banner text, disclosure trigger, and focus outline are legible in each theme.",
+    "- Agency selection is a centered dialog with agency marks and source/provenance badges, not a corner control box.",
+    "- Theme labels use Default, VA, and USDA; there is no user-facing Federal theme name.",
+    "- Light, dark, and system modes keep text inputs, selects, radios, checkboxes, alerts, and buttons readable.",
+    "- Board columns read as unframed workflow lanes; individual cases may be cards, but cards are not nested inside other cards.",
+    "- Mobile widths do not introduce horizontal scrolling, clipped text, or overlapped controls.",
+    "- Buttons and compact controls keep stable dimensions through hover, focus, selection, and theme changes.",
+    "",
+    "## Interaction Review",
+    "",
+    "- Tab through the banner disclosure, agency trigger, theme controls, filters, board actions, and case actions.",
+    "- Confirm Enter and Space activate buttons without double activation.",
+    "- Confirm visible focus rings are strong enough on light and dark surfaces.",
+    "- Confirm Escape closes the agency dialog and focus returns to the agency trigger.",
+    "- Confirm agency selection closes the dialog and updates the current theme immediately.",
+    "- Confirm filter controls can be changed without layout jumps.",
+    "",
+    "## Stack Parity",
+    "",
+    "| Stack | Checks |",
+    "| --- | --- |",
+  );
+  for (const item of caseBoardTargets) {
+    lines.push(
+      `| ${item.label} | Banner, agency dialog, theme switch, filters, board lanes, case actions, mobile layout |`,
+    );
+  }
+
+  lines.push(
+    "",
+    "## Defect Notes",
+    "",
+    "For each issue, capture:",
+    "",
+    "- target URL and viewport size;",
+    "- selected agency and color mode;",
+    "- expected behavior;",
+    "- actual behavior;",
+    "- screenshot path or browser recording;",
+    "- whether `pnpm examples:visual` catches it.",
+    "",
+  );
+  writeFileSync(resolve(outputDir, "checklist.md"), `${lines.join("\n")}\n`);
+}
+
+function printSummary(items, visual = null) {
   console.log("");
   console.log("Ashlar testing URLs:");
   for (const item of items) {
@@ -281,7 +412,11 @@ function printSummary(items) {
   console.log("Reports:");
   console.log("- reports/testing-session/summary.md");
   console.log("- reports/testing-session/summary.json");
+  console.log("- reports/testing-session/checklist.md");
   console.log("- reports/testing-session/logs/");
+  if (visual) {
+    console.log("- reports/example-visual-smoke/");
+  }
 }
 
 async function stopAndExit(exitCode) {
