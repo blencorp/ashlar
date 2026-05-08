@@ -7,7 +7,15 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!node_modules", "!dist", "!coverage", "!.turbo", "!pnpm-lock.yaml"]
+    "includes": [
+      "**",
+      "!node_modules",
+      "!dist",
+      "!coverage",
+      "!.turbo",
+      "!.worktrees",
+      "!pnpm-lock.yaml"
+    ]
   },
   "formatter": {
     "enabled": true,
