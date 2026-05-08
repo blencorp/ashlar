@@ -64,6 +64,10 @@ Publish public developer-facing releases to npmjs through GitHub Actions trusted
 
 `GitHub Packages` is wired separately as an authenticated mirror/canary workflow for the BLEN-owned scope. It is manual-dispatch only, main-only, requires the `publish-github-packages` confirmation, grants `packages: write`, configures `@blen:registry=https://npm.pkg.github.com`, publishes with `GITHUB_TOKEN`, and disables npm provenance for that registry. `ashlar release github-packages-check` verifies this wiring before CI or an operator attempts the mirror publish. This does not satisfy `npm-provenance-public`; only the npmjs trusted-publishing path does.
 
+```bash
+gh workflow run github-packages.yml --ref main -f confirm=publish-github-packages
+```
+
 GitHub Packages first-publishes npm packages as private packages. If the mirror is meant to be publicly visible, an owner must change package visibility after the first publish and confirm package access inheritance from `blencorp/ashlar`. The committed root `.npmrc` must not route `@blen` to GitHub Packages by default; the scope mapping belongs in `github-packages.yml` so normal `npx @blen/ashlar` use still resolves through npmjs.
 
 This split is deliberate:

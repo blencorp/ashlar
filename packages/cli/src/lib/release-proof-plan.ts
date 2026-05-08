@@ -146,6 +146,7 @@ export function buildReleaseProofPlan(input: ProofPlanInput): ReleaseProofPlan {
         ],
         commands: [
           "gh workflow run publish.yml --ref main -f confirm=publish",
+          "gh workflow run github-packages.yml --ref main -f confirm=publish-github-packages",
           "gh workflow run sigstore.yml --ref main -f confirm=sign",
           `ashlar release provenance-verify-public --package ${packageSpecs} --json > reports/ashlar-npm-provenance.json`,
           "ashlar release public-trust-verify --registry <signed-registry-artifact> --json > reports/ashlar-public-trust.json",

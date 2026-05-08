@@ -78,11 +78,13 @@ Maintainer prep:
 
 1. Configure npm trusted publishers for `@blen/ashlar`, `@blen/ashlar-cli`, and `@blen/ashlar-schemas`.
 2. Run `.github/workflows/publish.yml` from GitHub Actions with `confirm=publish`.
-3. Run `.github/workflows/sigstore.yml` from GitHub Actions with `confirm=sign`.
-4. Download the signed registry, SBOM, attestation, trust bundle, `ashlar-npm-provenance.json`, `ashlar-public-trust.json`, release-trust reviewer checklist, and Sigstore bundles.
+3. If the authenticated mirror is part of the release candidate, run `.github/workflows/github-packages.yml` from GitHub Actions with `confirm=publish-github-packages`.
+4. Run `.github/workflows/sigstore.yml` from GitHub Actions with `confirm=sign`.
+5. Download the signed registry, SBOM, attestation, trust bundle, `ashlar-npm-provenance.json`, `ashlar-public-trust.json`, release-trust reviewer checklist, and Sigstore bundles.
 
 ```bash
 gh workflow run publish.yml --ref main -f confirm=publish
+gh workflow run github-packages.yml --ref main -f confirm=publish-github-packages
 gh workflow run sigstore.yml --ref main -f confirm=sign
 ```
 
