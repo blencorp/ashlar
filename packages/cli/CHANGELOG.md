@@ -1,5 +1,11 @@
 # @blen/ashlar-cli
 
+## 0.3.8
+
+### Patch Changes
+
+- [#98](https://github.com/blencorp/ashlar/pull/98) [`f59d23b`](https://github.com/blencorp/ashlar/commit/f59d23b9d530187a063172ec247a2f9924329355) Thanks [@naodya](https://github.com/naodya)! - Prefer public capsule family language in CLI output, help text, and MCP search filters while keeping the legacy `--layer` search alias working for existing scripts.
+
 ## 0.3.7
 
 ### Patch Changes
