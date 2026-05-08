@@ -180,7 +180,7 @@ This checklist is for the human reviewer. It is not stable evidence by itself an
 ## Required Observations
 
 - [ ] Reviewer opens \`${files.reviewHarness}\` in the tested browser and treats it as instrumentation around the target fixture, not as part of the component claim.
-- [ ] Keyboard run records environment, focus order, activation behavior, unavailable states, result, steps, and limitations in \`${files.keyboardTranscript}\`.
+- [ ] Keyboard run records environment, focus order, activation behavior, result, steps, and limitations in \`${files.keyboardTranscript}\`.
 - [ ] Screen-reader run records reader, browser, OS, version, name/role/state output, activation behavior, surrounding context, result, steps, and limitations in \`${files.screenReaderTranscript}\`.
 - [ ] Manual evidence worksheet \`${files.manualEvidence}\` references the completed transcript JSON files.
 - [ ] WCAG mappings are reviewed as pass, pass-with-note, or not-applicable with evidence.
@@ -303,7 +303,7 @@ Current automated status: \`${bundle.automatedStatus}\`
 
 ## Keyboard transcript
 
-Reviewer to complete \`${files.keyboardTranscript}\` with observed keyboard focus order, activation behavior, unavailable states, environment, result, and known limitations.
+Reviewer to complete \`${files.keyboardTranscript}\` with observed keyboard focus order, activation behavior, environment, result, and known limitations.
 
 Open \`${files.reviewHarness}\` for the target fixture and use the activation log only as test instrumentation.
 

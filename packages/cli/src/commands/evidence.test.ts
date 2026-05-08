@@ -711,7 +711,7 @@ describe("evidence command", () => {
         reviewer: string;
         wcag?: Array<{ criterion: string; evidence: string; status: string }>;
         baselineTests?: Array<{ evidence: string; status: string; test: string }>;
-        manualTests: Array<{ result: string; tech: string }>;
+        manualTests: Array<{ notes: string; result: string; tech: string }>;
         knownLimitations: unknown[];
       };
 
@@ -739,6 +739,8 @@ describe("evidence command", () => {
       );
       expect(artifact.manualTests).toEqual([
         expect.objectContaining({
+          notes:
+            "TODO: replace this blocked placeholder after real Tab, Shift+Tab, Enter, Space, and focus visibility review.",
           result: "blocked",
           tech: "Keyboard",
         }),
@@ -747,6 +749,7 @@ describe("evidence command", () => {
           tech: "TODO: screen reader (NVDA, JAWS, VoiceOver, Narrator, or equivalent)",
         }),
       ]);
+      expect(artifact.manualTests[0]?.notes).not.toContain("disabled-state");
       expect(artifact.knownLimitations).toEqual([]);
     },
     CLI_SMOKE_TIMEOUT_MS,
@@ -1038,7 +1041,7 @@ describe("evidence command", () => {
       automatedResults?: { ashlarAudit?: { status: string } };
     };
     const manual = JSON.parse(readFileSync(manualPath, "utf8")) as {
-      manualTests: Array<{ evidence?: string; result: string; tech: string }>;
+      manualTests: Array<{ evidence?: string; notes?: string; result: string; tech: string }>;
     };
     const keyboardTranscript = JSON.parse(readFileSync(keyboardPath, "utf8")) as {
       result: string;
@@ -1167,6 +1170,7 @@ describe("evidence command", () => {
     expect(issue).toContain("button-keyboard-transcript.json");
     expect(issue).toContain("REVIEW.html");
     expect(issue).toContain("REVIEWER_CHECKLIST.md");
+    expect(issue).not.toContain("unavailable states");
     expect(checklist).toContain("Stable Evidence Reviewer Checklist");
     expect(checklist).toContain("REVIEW.html");
     expect(checklist).toContain("The review records observed behavior, not intent");
@@ -1175,6 +1179,8 @@ describe("evidence command", () => {
     expect(checklist).toContain("Maintainer Handoff");
     expect(checklist).toContain("ashlar evidence publish button");
     expect(checklist).toContain("ashlar release review-record-check");
+    expect(checklist).not.toContain("unavailable states");
+    expect(manual.manualTests[0]?.notes).not.toContain("disabled-state");
   });
 
   it("prepares non-mutating stable evidence review bundles for every foundation capsule", () => {
