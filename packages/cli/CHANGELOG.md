@@ -1,5 +1,11 @@
 # @blen/ashlar-cli
 
+## 0.3.9
+
+### Patch Changes
+
+- [#100](https://github.com/blencorp/ashlar/pull/100) [`62daf57`](https://github.com/blencorp/ashlar/commit/62daf57e281a79a22e4d112349220cb2393b1813) Thanks [@naodya](https://github.com/naodya)! - Add a GitHub Packages mirror readiness check that verifies BLEN-scoped package names, workflow registry/auth configuration, and the npmjs-first distribution split before publishing.
+
 ## 0.3.8
 
 ### Patch Changes
