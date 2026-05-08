@@ -3,36 +3,55 @@ title: Introduction
 description: Ashlar is a proof-gated source registry for public-service interfaces.
 ---
 
-Ashlar is a source registry for public-service interfaces. It gives product teams
-copyable UI source, registry metadata, and verification commands without hiding
-the files in a runtime package.
+Ashlar installs public-service UI source into your application. You run the CLI,
+choose components, and own the copied files in your repo.
 
-<Callout>
-Ashlar is not a USWDS replacement. Treat it as a source-owned starter system for
-public-service apps while evidence and agency-specific review continue.
+<Callout type="warn" title="Current release posture">
+Ashlar is early software. Use it as source-owned starter material, not as an
+accessibility-stable replacement for an agency design system.
 </Callout>
 
-## Start in your app
+## Quick start
 
-Run Ashlar from the root of the app you already own:
+Run these from the root of the app that should receive the component source:
 
 <AshlarCommand lines={["init", "add button alert text-input", "verify"]} />
 
-## What should feel familiar
+## The model
 
-- `init` writes project-local configuration and stylesheet entrypoints.
-- `add` copies component source into your app instead of importing an opaque UI
-  bundle.
-- `verify` checks the installed source against registry metadata and the
-  lockfile.
-- Commands are copyable and package-manager first, following the same user shape
-  as modern source-registry tools.
+<Steps>
+<Step>
 
-## What should feel different
+### Initialize
 
-- Ashlar starts with validation and trust checks, not visual novelty.
-- The stock theme is called Default, not Federal.
-- Agency themes must be traced to real agency design guidance before they become
-  more than illustrative presets.
-- AI guidance is generated alongside installed source so assistants can see what
-  code came from the registry.
+`init` writes `ashlar.config.json`, `ashlar-lock.json`, generated theme files,
+and AI-readable project guidance.
+
+</Step>
+<Step>
+
+### Add source
+
+`add` copies selected components into your configured source directory. The
+default path is `src/ashlar/components`.
+
+</Step>
+<Step>
+
+### Verify
+
+`verify` compares installed files with the lockfile and bundled registry
+metadata so local changes are visible.
+
+</Step>
+</Steps>
+
+## Principles
+
+- Source ownership: installed files live in the consuming app.
+- Small runtime surface: the CLI does the registry work; the app keeps ordinary
+  source and CSS.
+- Evidence before claims: accessibility and agency alignment must be backed by
+  review records, tests, and cited sources.
+- Default first: the base theme is named `default`. Agency themes are explicit
+  adapters, not endorsements.

@@ -1,38 +1,66 @@
 ---
 title: CLI
-description: Copyable Ashlar commands for init, search, add, update, audit, and verify.
+description: Use the Ashlar CLI to initialize an app, add source, and verify it.
 ---
 
-The CLI is the main install surface. Run commands from your app root.
+Run the CLI from the app that should own the copied source. Most teams only need
+three commands to start.
 
-## Command map
+## Start here
 
-<AshlarCommand
-  lines={[
-    "--help",
-    "init",
-    "search button",
-    'suggest "Build a renewal case board"',
-    "add button --dry-run --diff",
-    "add button",
-    "verify",
-    "update button --dry-run",
-  ]}
-/>
+<Steps>
+<Step>
 
-## Package manager forms
+### Initialize Ashlar
 
-Each command in these docs can be run with npm, pnpm, or bun. Use the tab that
-matches your project and copy the generated command.
+Creates `ashlar.config.json`, `ashlar-lock.json`, generated theme files, and the
+default source directory.
 
-## Audit markup
+<AshlarCommand args="init" />
 
-<AshlarCommand args={'audit --policy federal "src/**/*.{html,tsx,jsx,vue,svelte}"'} />
+</Step>
+<Step>
 
-Use `--policy components` for component-specific checks or `--policy all` when
-you want both federal shell checks and installed-component checks.
+### Add components
 
-## Attribution
+Copies source files into your app. Start small, then add more components as the
+screen needs them.
 
-The interactive CLI intro should include BLEN attribution and `blencorp.com`.
-Keep that in the CLI output, not hidden in docs-only copy.
+<AshlarCommand args="add button alert text-input" />
+
+</Step>
+<Step>
+
+### Verify the install
+
+Checks the installed files against the lockfile and bundled registry metadata.
+
+<AshlarCommand args="verify" />
+
+</Step>
+</Steps>
+
+## Package managers
+
+Every command block has npm, pnpm, and bun tabs. Use the package manager your app
+already uses.
+
+## Find components
+
+Use search when you know the component name. Use suggest when you know the task
+but not the component list.
+
+<AshlarCommand lines={["search button", 'suggest "Build a renewal case board"']} />
+
+## Preview changes
+
+Use dry runs before writing files or updating installed source.
+
+<AshlarCommand lines={["add button --dry-run --diff", "update button --dry-run"]} />
+
+## Audit before release
+
+<AshlarCommand args={'audit --policy all "src/**/*.{html,tsx,jsx,vue,svelte}"'} />
+
+Use `--policy components` for installed-component rules or `--policy all` for
+the broadest local check.

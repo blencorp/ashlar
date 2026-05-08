@@ -1,13 +1,13 @@
 ---
 title: Components
-description: Source capsules are documented from registry metadata instead of hand-maintained marketing cards.
+description: Components are installed as source files, metadata, and verification records.
 ---
 
-Ashlar components are source capsules: implementation files, CEM metadata,
-evidence records, hashes, and update metadata. Use the CLI to copy them into your
-app and verify the installed source after changes.
+Ashlar does not ask you to import a permanent runtime component package. The CLI
+copies component source into your app, records what was installed, and leaves the
+files available for review and customization.
 
-## Add a single capsule
+## Add one component
 
 <AshlarCommand
   lines={["search button", "add button --dry-run --diff", "add button", "verify"]}
@@ -17,15 +17,13 @@ app and verify the installed source after changes.
 
 <AshlarCommand args="add form-field text-input textarea date-input select radio-group checkbox button alert error-summary identifier" />
 
-## Available capsules
+## Available components
 
 <ComponentIndex />
 
 ## Integration rules
 
-- Do not nest cards to make component pages look busier.
-- Keep examples task-oriented: intake forms, case queues, document review, and
-  service-flow confirmation.
-- Component docs must include copyable install commands, source paths, evidence
-  status, and known gaps.
-- Claim stability only from evidence records, not from visual polish.
+- Keep installed source in version control.
+- Use `add --dry-run --diff` before large installs.
+- Run `verify` after manual edits so the lockfile reflects intentional drift.
+- Treat evidence status as the claim boundary. Visual polish is not proof.

@@ -15,11 +15,15 @@ type ComponentDoc = {
 export function ComponentIndex() {
   const components = readComponents();
 
+  if (components.length === 0) {
+    return <p>No registry components were found in this checkout.</p>;
+  }
+
   return (
-    <table className="ashlar-component-index">
-      <caption>Ashlar registry capsules</caption>
+    <table>
+      <caption>Ashlar registry components</caption>
       <thead>
-        <tr className="ashlar-component-row" data-header="true">
+        <tr>
           <th scope="col">Capsule</th>
           <th scope="col">Family</th>
           <th scope="col">Evidence</th>
@@ -28,17 +32,17 @@ export function ComponentIndex() {
       </thead>
       <tbody>
         {components.map((component) => (
-          <tr className="ashlar-component-row" key={component.name}>
-            <td data-label="Capsule">
+          <tr key={component.name}>
+            <td>
               <strong>{component.name}</strong>
               <small>{component.description}</small>
             </td>
-            <td data-label="Family">
+            <td>
               {component.family}
               <small>{component.stability}</small>
             </td>
-            <td data-label="Evidence">{component.evidenceStatus}</td>
-            <td data-label="Contract">
+            <td>{component.evidenceStatus}</td>
+            <td>
               <code>{component.selector}</code>
             </td>
           </tr>

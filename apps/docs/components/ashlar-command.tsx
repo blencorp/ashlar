@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 
 type PackageManager = "npm" | "pnpm" | "bun";
 
@@ -23,53 +24,33 @@ export function AshlarCommand({
   lines?: string[];
   defaultManager?: PackageManager;
 }) {
-  const [activeManager, setActiveManager] = useState<PackageManager>(defaultManager);
-  const [copied, setCopied] = useState(false);
-
-  const commandLines = useMemo(() => {
-    const source = lines ?? (args ? [args] : [""]);
-    return source.map((line) => line.trim());
-  }, [args, lines]);
-
-  const command = useMemo(() => {
-    const manager = packageManagers.find((item) => item.id === activeManager) ?? packageManagers[0];
-
-    if (!manager) {
-      return commandLines.join("\n");
-    }
-
-    return commandLines.map((line) => `${manager.runner}${line ? ` ${line}` : ""}`).join("\n");
-  }, [activeManager, commandLines]);
-
-  async function copyCommand() {
-    await navigator.clipboard.writeText(command);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1400);
-  }
+  const commandLines = (lines ?? (args ? [args] : [""])).map((line) => line.trim());
+  const defaultIndex = Math.max(
+    0,
+    packageManagers.findIndex((manager) => manager.id === defaultManager),
+  );
 
   return (
-    <div className="ashlar-command-tabs">
-      <div className="ashlar-command-tabs-header">
-        <div aria-label="Package manager" role="tablist">
-          {packageManagers.map((manager) => (
-            <button
-              aria-selected={activeManager === manager.id}
-              key={manager.id}
-              onClick={() => setActiveManager(manager.id)}
-              role="tab"
-              type="button"
-            >
-              {manager.label}
-            </button>
-          ))}
-        </div>
-        <button type="button" onClick={copyCommand}>
-          {copied ? "Copied" : "Copy"}
-        </button>
-      </div>
-      <pre>
-        <code>{command}</code>
-      </pre>
-    </div>
+    <Tabs
+      defaultIndex={defaultIndex}
+      items={packageManagers.map((manager) => manager.label)}
+      label="Package manager"
+    >
+      {packageManagers.map((manager) => (
+        <Tab key={manager.id} value={manager.label}>
+          <CodeBlock>
+            <Pre className="!w-full whitespace-pre-wrap break-words px-4">
+              <code className="whitespace-pre-wrap break-words pr-12">
+                {formatCommand(manager.runner, commandLines)}
+              </code>
+            </Pre>
+          </CodeBlock>
+        </Tab>
+      ))}
+    </Tabs>
   );
+}
+
+function formatCommand(runner: string, commandLines: string[]) {
+  return commandLines.map((line) => `${runner}${line ? ` ${line}` : ""}`).join("\n");
 }

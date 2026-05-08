@@ -1,29 +1,36 @@
 ---
 title: Theming
-description: Default, VA, and USDA themes are token contracts that must stay grounded in real agency guidance.
+description: Use the Default theme first, then opt into source-derived agency adapters.
 ---
 
-The stock theme is **Default**. Do not label it Federal. Agency-specific themes
-should be treated as adapters around semantic tokens, not as proof that Ashlar is
-endorsed by an agency.
+Ashlar ships a `default` theme and source-derived agency adapters. The adapters
+are token files grounded in public guidance; they are not agency endorsements or
+official brand systems.
 
-## Sync local token output
+## Sync generated theme output
 
 <AshlarCommand lines={["theme sync", "theme validate"]} />
 
 ## Theme names
 
-- `default`: neutral Ashlar baseline for public-service apps.
-- `va`: illustrative VA-aligned adapter; ground changes in VA.gov Design System
-  guidance before calling the theme accurate.
-- `usda`: illustrative USDA-aligned adapter; ground changes in USDA digital and
-  style guidance before calling the theme accurate.
+- `default`: Ashlar's base public-service theme.
+- `va`: source-derived adapter based on VA.gov Design System color and
+  typography guidance.
+- `usda`: source-derived adapter based on USDA digital brand guidance and USWDS
+  color guidance.
 
-## Agency research sources
+## Recorded sources
 
-- USWDS: https://designsystem.digital.gov/
-- VA.gov Design System: https://design.va.gov/
-- USDA Style Guide: https://www.usda.gov/about-usda/policies-and-links/digital/usda-style-guide
+- USWDS color guidance:
+  https://designsystem.digital.gov/design-tokens/color/overview/
+- USWDS system color tokens:
+  https://designsystem.digital.gov/design-tokens/color/system-tokens/
+- VA.gov color palette:
+  https://design.va.gov/foundation/color-palette
+- VA.gov typography:
+  https://design.va.gov/foundation/typography
+- USDA Design and Brand Plays:
+  https://www.usda.gov/about-usda/policies-and-links/digital/digital-strategy/design-and-brand/design-and-brand-plays
 
 ## CSS output
 

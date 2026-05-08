@@ -3,15 +3,15 @@ title: Examples
 description: Integrate Ashlar into real apps across the framework matrix.
 ---
 
-Examples should prove integration, not decorate the docs. Start with a real app,
-run `init`, add components, import the generated CSS, and keep the copied source
-under version control.
+Examples should prove that Ashlar works inside real app shapes. Each example
+should start from the same user flow: initialize, add components, import CSS,
+verify.
 
-## Existing app flow
+## Standard flow
 
 <AshlarCommand lines={["init", "add button alert text-input", "verify"]} />
 
-## Framework notes
+## Framework matrix
 
 - Vanilla: import the generated stylesheet from your main CSS file and use the
   copied HTML/CSS contracts directly.
@@ -25,7 +25,8 @@ under version control.
 
 - Use real public-service workflows like case queues, renewal forms, document
   review, and approvals.
-- Avoid one-off demo shells that do not exercise components and theme tokens.
 - Cover vanilla, React SPA, Next.js, Svelte, Vue, and Vite with the same
   init/add/verify path.
-- Every example should have install, build, audit, and visual smoke coverage.
+- Exercise theming, forms, alerts, buttons, identifiers, and validation states.
+- Include install, build, audit, and visual smoke coverage before calling an
+  example representative.

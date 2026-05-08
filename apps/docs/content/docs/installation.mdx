@@ -1,45 +1,44 @@
 ---
 title: Installation
-description: Initialize Ashlar in an existing app and install your first source capsules.
+description: Initialize Ashlar in an existing app and install your first source components.
 ---
 
-Install Ashlar from the root of the app where you want the source files to live.
-You do not need to clone the Ashlar repository or pass a local registry path.
+Install Ashlar in the application you are building. The CLI package is
+`@blen/ashlar`.
 
-## Run init
+## 1. Initialize
 
 <AshlarCommand args="init" />
 
 `init` writes:
 
 - `ashlar.config.json` for registry, output paths, and style paths.
-- `ashlar-lock.json` for installed capsule hashes.
-- `src/ashlar/ashlar.css` and theme files.
+- `ashlar-lock.json` for installed component hashes.
+- `src/ashlar/ashlar.css` plus generated theme files.
 - `AGENTS.md` and `DESIGN.md` context files for AI-assisted work.
 
-## Add components
+## 2. Add components
 
 <AshlarCommand args="add button alert text-input" />
 
-The default component directory is `src/ashlar/components`. You can preview the
-write first:
+Preview a write before changing files:
 
 <AshlarCommand args="add button --dry-run --diff" />
 
-## Import styles
+## 3. Import styles
 
-Import the generated Ashlar entrypoint from your app's global stylesheet or main
-entry file:
+Import the generated stylesheet from your app's global stylesheet or entry file.
+The path depends on your framework:
 
 ```css
 @import "./src/ashlar/ashlar.css";
 ```
 
-Adjust the path to match where your global CSS file lives.
+For Next.js this usually lives in `app/globals.css`. For Vite, Vue, and Svelte
+apps it usually belongs in the root stylesheet imported by the app entry.
 
-## Verify
+## 4. Verify
 
 <AshlarCommand args="verify" />
 
-Run `verify` after adding or updating components. It checks installed files
-against `ashlar-lock.json` and the registry metadata bundled with the CLI.
+Run `verify` after installing, updating, or editing Ashlar-managed files.
