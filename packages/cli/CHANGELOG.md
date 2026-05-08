@@ -1,5 +1,11 @@
 # @blen/ashlar-cli
 
+## 0.3.22
+
+### Patch Changes
+
+- [#148](https://github.com/blencorp/ashlar/pull/148) [`b7f299f`](https://github.com/blencorp/ashlar/commit/b7f299f1eac21324233f8410e1e5111b62f10515) Thanks [@naodya](https://github.com/naodya)! - Keep `ashlar release proof-plan --json --output <path>` stdout machine-parseable by suppressing the human Markdown-write notice in JSON mode.
+
 ## 0.3.21
 
 ### Patch Changes
