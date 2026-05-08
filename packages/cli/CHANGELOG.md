@@ -1,5 +1,11 @@
 # @blen/ashlar-cli
 
+## 0.3.16
+
+### Patch Changes
+
+- [#132](https://github.com/blencorp/ashlar/pull/132) [`4dd92d7`](https://github.com/blencorp/ashlar/commit/4dd92d797f3478a826231747d24c21ed3595b47b) Thanks [@naodya](https://github.com/naodya)! - Tighten Vite example update-survival coverage for shared example styles.
+
 ## 0.3.15
 
 ### Patch Changes
