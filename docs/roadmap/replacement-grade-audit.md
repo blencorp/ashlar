@@ -15,15 +15,15 @@ The direction is coherent because the project is not trying to win by shipping a
 The current implementation proves enough of the substrate to keep going, but public replacement claims must remain blocked until strict readiness passes:
 
 ```bash
-node packages/cli/dist/index.js release readiness --registry ./registry
+pnpm ashlar release readiness --registry ./registry
 ```
 
 Current strict gate status from the current checkout:
 
 - `stable-markup-evidence`: fails because 0 markup primitive capsules have published stable evidence.
 - `external-review-proof`: fails until real stable-evidence, release-trust, and design-partner review records exist under `docs/reviews/`.
-- `npm-provenance-public`: fails until a real npm trusted-publishing release exists and `release provenance-verify-public` passes.
-- `sigstore-public-trust`: fails until real capsule Sigstore bundles are produced, published, and verified with `release public-trust-verify`.
+- `npm-provenance-public`: fails until a real npm trusted-publishing release exists and `pnpm ashlar release provenance-verify-public` passes.
+- `sigstore-public-trust`: fails until real capsule Sigstore bundles are produced, published, and verified with `pnpm ashlar release public-trust-verify`.
 
 ## Prompt-To-Artifact Checklist
 
@@ -52,12 +52,12 @@ Ashlar can make stronger replacement language only when these pass without local
 pnpm check
 pnpm build
 pnpm repo:doctor
-node packages/cli/dist/index.js release readiness --registry ./registry
-node packages/cli/dist/index.js release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version>
-node packages/cli/dist/index.js release public-trust-verify --registry <signed-registry-artifact>
-node packages/cli/dist/index.js evidence --check --registry ./registry
-node packages/cli/dist/index.js audit --policy all --registry ./registry examples/service-flow/benefit-application.pass.html
-node packages/cli/dist/index.js audit --policy federal --explain examples/legacy-federal-project/index.html
+pnpm ashlar release readiness --registry ./registry
+pnpm ashlar release provenance-verify-public --package @blen/ashlar@<version> @blen/ashlar-cli@<version> @blen/ashlar-schemas@<version>
+pnpm ashlar release public-trust-verify --registry <signed-registry-artifact>
+pnpm ashlar evidence --check --registry ./registry
+pnpm ashlar audit --policy all --registry ./registry examples/service-flow/benefit-application.pass.html
+pnpm ashlar audit --policy federal --explain examples/legacy-federal-project/index.html
 ```
 
 The third and fourth commands require real public release artifacts. They cannot be satisfied from a local checkout alone.

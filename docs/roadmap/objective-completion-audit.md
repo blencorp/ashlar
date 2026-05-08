@@ -1,7 +1,7 @@
 # Objective Completion Audit
 
 Date: 2026-05-08
-Branch inspected: `main` at `d4502a6` after #95 through #117 merged, with repo doctor, testing-session launcher, manual testing checklist, docs testing guide/app coverage, docs disclosure-flag SVG regression coverage, public family-language cleanup, release proof-plan GitHub Packages wiring, versioned `@blen/*` packages, and post-merge CI/Version Packages success on `main`
+Branch inspected: `main` at `4ffcf14` after #95 through #124 merged, with repo doctor, testing-session launcher, manual testing checklist, docs testing guide/app coverage, docs disclosure-flag SVG regression coverage, public family-language cleanup, release proof-plan GitHub Packages wiring, repo-local `pnpm ashlar` review handoff commands, versioned `@blen/*` packages, and post-merge CI/Version Packages success on `main`
 
 ## Objective
 
@@ -11,14 +11,14 @@ Build a government-first UI library that can credibly replace day-to-day USWDS u
 
 Not achieved yet.
 
-Ashlar has a real substrate now: signed source capsules, federal and component audits, migration planning, update survival tests, local MCP, first-run docs, evidence tooling, release readiness gates, bundle budgets, framework examples, a memorable `npx @blen/ashlar` package entrypoint, banner and docs disclosure-flag visual/geometry regression checks, shadcn-v4-compatible CLI ergonomics, `@blen/*` package metadata, GitHub Packages canary workflow wiring, release proof-plan commands for npm, GitHub Packages, and Sigstore, product-facing capsule family names across docs, CLI output, options, and gates, a one-command repo doctor for local maintainer health checks, and a one-command testing session for docs plus all example apps with a generated manual visual-review checklist. The remaining blockers are not implementation effort proxies; they are proof gates:
+Ashlar has a real substrate now: signed source capsules, federal and component audits, migration planning, update survival tests, local MCP, first-run docs, evidence tooling, release readiness gates, bundle budgets, framework examples, a memorable `npx @blen/ashlar` package entrypoint, banner and docs disclosure-flag visual/geometry regression checks, shadcn-v4-compatible CLI ergonomics, `@blen/*` package metadata, GitHub Packages canary workflow wiring, release proof-plan commands for npm, GitHub Packages, and Sigstore, product-facing capsule family names across docs, CLI output, options, and gates, repo-local `pnpm ashlar` commands across reviewer handoffs and docs testing surfaces, a one-command repo doctor for local maintainer health checks, and a one-command testing session for docs plus all example apps with a generated manual visual-review checklist. The remaining blockers are not implementation effort proxies; they are proof gates:
 
 - one stable-evidence markup primitive component with real manual accessibility evidence;
 - completed external review records;
 - public npm trusted-publishing provenance for `@blen/ashlar`, `@blen/ashlar-cli`, and `@blen/ashlar-schemas`;
 - public capsule Sigstore trust material.
 
-Strict readiness evidence: `node packages/cli/dist/index.js release readiness --registry ./registry --json-output reports/current-release-readiness.json --report reports/current-release-readiness.md` returned `status: "fail"` on 2026-05-08 with 9 passing checks and 4 failing checks: `stable-markup-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
+Strict readiness evidence: `pnpm ashlar release readiness --registry ./registry --json-output reports/current-release-readiness.json --report reports/current-release-readiness.md` returned `status: "fail"` on 2026-05-08 with 9 passing checks and 4 failing checks: `stable-markup-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
 
 Current testing evidence: `pnpm testing:start --check --visual` passed on 2026-05-08 after rebuilding the workspace. It verified HTTP 200 for the public site, docs app, Vite theme workbench, and the vanilla TypeScript, React SPA, Next.js App Router, Svelte, and Vue case-board examples, then ran Playwright visual smoke for the six framework apps with zero failures. The generated local review material is under `reports/testing-session/` and `reports/example-visual-smoke/`.
 
@@ -87,13 +87,20 @@ Merged implementation stack now includes the earlier foundation work plus the re
 - #115 `docs(status): refresh objective audit after release`
 - #116 `docs(testing): add hands-on QA guide`
 - #117 `fix(docs): add testing path and real flag`
+- #118 `chore(release): version packages`
+- #119 `fix(cli): use local commands in review docs`
+- #120 `chore(release): version packages`
+- #121 `fix(cli): refresh stable evidence handoff commands`
+- #122 `chore(release): version packages`
+- #123 `fix(cli): use local commands in review handoffs`
+- #124 `chore(release): version packages`
 
-Post-merge evidence through #117: GitHub `CI` and `Version Packages` completed successfully after the proof-audit refresh, family-language cleanup, repo doctor merge, testing-session launcher, nested-worktree doctor fix, manual testing checklist merge, public product-language guard, release proof-plan workflow confirmation commands, GitHub Packages proof-plan step, generated version merges, hands-on QA guide, and docs testing/flag fix. The #100 feature PR completed `status`, `commitlint`, and `checks`; after merge, main CI completed `pnpm check`, `pnpm build`, `pnpm examples:visual`, `pnpm release:smoke`, `release provenance-check`, `release github-packages-check`, SBOM/trust-bundle/evidence/audit/report generation, and artifact upload. The generated version PRs #101, #112, and #114 were verified locally before merge where needed, then their post-merge `main` `CI` and `Version Packages` workflows passed. The final verified `main` runs for `d4502a6` are GitHub Actions `CI` run `25540268868` and `Version Packages` run `25540268840`, both successful.
+Post-merge evidence through #124: GitHub `CI` and `Version Packages` completed successfully after the proof-audit refresh, family-language cleanup, repo doctor merge, testing-session launcher, nested-worktree doctor fix, manual testing checklist merge, public product-language guard, release proof-plan workflow confirmation commands, GitHub Packages proof-plan step, generated version merges, hands-on QA guide, docs testing/flag fix, stable-evidence handoff command cleanup, and release/design-partner reviewer handoff command cleanup. The #100 feature PR completed `status`, `commitlint`, and `checks`; after merge, main CI completed `pnpm check`, `pnpm build`, `pnpm examples:visual`, `pnpm release:smoke`, `release provenance-check`, `release github-packages-check`, SBOM/trust-bundle/evidence/audit/report generation, and artifact upload. The generated version PRs #101, #112, #114, #118, #120, #122, and #124 were verified locally before merge where needed, then their post-merge `main` `CI` and `Version Packages` workflows passed. The final verified `main` runs for `4ffcf14` are GitHub Actions `CI` run `25545225422` and `Version Packages` run `25545225411`, both successful.
 
 Package state:
 
-- `@blen/ashlar@0.3.11`
-- `@blen/ashlar-cli@0.3.11`
+- `@blen/ashlar@0.3.14`
+- `@blen/ashlar-cli@0.3.14`
 - `@blen/ashlar-schemas@0.1.5`
 
 ## Gate Audit
@@ -114,7 +121,7 @@ The following release-readiness checks fail today:
 
 - `stable-markup-evidence`: requires at least one stable-evidence markup primitive component; found 0.
 - `external-review-proof`: missing `stable-evidence-*.md`, `release-trust-*.md`, and `design-partner-*.md`.
-- `npm-provenance-public`: requires real npm trusted publishing and `ashlar release provenance-verify-public` against published versions.
+- `npm-provenance-public`: requires real npm trusted publishing and `pnpm ashlar release provenance-verify-public` against published versions.
 - `sigstore-public-trust`: 0/13 capsule manifests include public Sigstore bundle metadata; current capsules still use local Ed25519 signatures.
 
 Current Button reviewer intake and release-review artifacts are produced by green CI runs; they remain intake artifacts only. They do not count as completed external review records.
