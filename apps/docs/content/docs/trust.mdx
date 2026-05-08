@@ -8,9 +8,7 @@ lockfile, records capsule hashes, and lets you verify local files after changes.
 
 ## Verify installed source
 
-```bash
-pnpm dlx @blen/ashlar@latest verify
-```
+<AshlarCommand args="verify" />
 
 `verify` checks:
 
@@ -21,9 +19,7 @@ pnpm dlx @blen/ashlar@latest verify
 
 ## Audit before release
 
-```bash
-pnpm dlx @blen/ashlar@latest audit --policy all "src/**/*.{html,tsx,jsx,vue,svelte}"
-```
+<AshlarCommand args={'audit --policy all "src/**/*.{html,tsx,jsx,vue,svelte}"'} />
 
 ## Claim boundary
 

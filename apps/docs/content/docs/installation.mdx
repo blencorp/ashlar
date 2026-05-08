@@ -8,16 +8,7 @@ You do not need to clone the Ashlar repository or pass a local registry path.
 
 ## Run init
 
-```bash
-pnpm dlx @blen/ashlar@latest init
-```
-
-Other package managers:
-
-```bash
-npx @blen/ashlar@latest init
-bunx @blen/ashlar@latest init
-```
+<AshlarCommand args="init" />
 
 `init` writes:
 
@@ -28,16 +19,12 @@ bunx @blen/ashlar@latest init
 
 ## Add components
 
-```bash
-pnpm dlx @blen/ashlar@latest add button alert text-input
-```
+<AshlarCommand args="add button alert text-input" />
 
 The default component directory is `src/ashlar/components`. You can preview the
 write first:
 
-```bash
-pnpm dlx @blen/ashlar@latest add button --dry-run --diff
-```
+<AshlarCommand args="add button --dry-run --diff" />
 
 ## Import styles
 
@@ -52,9 +39,7 @@ Adjust the path to match where your global CSS file lives.
 
 ## Verify
 
-```bash
-pnpm dlx @blen/ashlar@latest verify
-```
+<AshlarCommand args="verify" />
 
 Run `verify` after adding or updating components. It checks installed files
 against `ashlar-lock.json` and the registry metadata bundled with the CLI.

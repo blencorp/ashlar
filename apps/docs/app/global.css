@@ -37,35 +37,101 @@ code {
   letter-spacing: 0;
 }
 
-.ashlar-docs-layout {
-  display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
+.ashlar-docs-shell {
+  --ashlar-header-height: 58px;
+  --ashlar-docs-sidebar-width: 288px;
+  --ashlar-docs-menu-width: 224px;
   min-height: 100vh;
 }
 
+.ashlar-docs-topbar {
+  background: color-mix(in srgb, var(--color-fd-background) 94%, transparent);
+  backdrop-filter: blur(14px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.ashlar-docs-topbar-inner {
+  align-items: center;
+  display: flex;
+  gap: 22px;
+  height: var(--ashlar-header-height);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.ashlar-docs-logo {
+  align-items: center;
+  color: var(--color-fd-foreground);
+  display: inline-flex;
+  font-weight: 760;
+  text-decoration: none;
+}
+
+.ashlar-docs-topbar nav {
+  align-items: center;
+  display: flex;
+  gap: 24px;
+}
+
+.ashlar-docs-topbar-link,
+.ashlar-docs-github {
+  color: var(--color-fd-foreground);
+  font-size: 0.92rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.ashlar-docs-topbar-link:hover,
+.ashlar-docs-github:hover {
+  color: var(--ashlar-blue);
+}
+
+.ashlar-docs-github {
+  margin-left: auto;
+}
+
+.ashlar-docs-layout {
+  display: grid;
+  grid-template-columns: var(--ashlar-docs-sidebar-width) minmax(0, 1fr);
+  margin-inline: auto;
+  min-height: calc(100vh - var(--ashlar-header-height));
+  padding-inline: 8px;
+}
+
 .ashlar-docs-sidebar {
-  border-right: 1px solid var(--ashlar-border);
-  background: var(--color-fd-card);
-  color: var(--color-fd-card-foreground);
+  background: transparent;
+  color: var(--color-fd-foreground);
+  position: relative;
+}
+
+.ashlar-docs-sidebar::after {
+  background: linear-gradient(180deg, transparent, var(--ashlar-border) 18%, transparent);
+  bottom: 0;
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 36px;
+  width: 1px;
 }
 
 .ashlar-docs-sidebar-inner {
   display: flex;
   flex-direction: column;
   gap: 28px;
-  height: 100vh;
+  height: calc(100vh - var(--ashlar-header-height));
   margin-inline: auto;
   overflow-y: auto;
-  padding: 24px 16px 18px;
+  padding: 34px 8px 18px;
   position: sticky;
-  top: 0;
-  width: 236px;
+  top: var(--ashlar-header-height);
+  width: var(--ashlar-docs-menu-width);
 }
 
 .ashlar-docs-nav {
   display: grid;
   gap: 4px;
-  padding-top: 44px;
 }
 
 .ashlar-docs-nav p,
@@ -80,10 +146,10 @@ code {
   border: 1px solid transparent;
   border-radius: 8px;
   color: var(--color-fd-foreground);
-  font-size: 0.92rem;
-  font-weight: 650;
-  min-height: 34px;
-  padding: 7px 10px;
+  font-size: 0.88rem;
+  font-weight: 620;
+  min-height: 30px;
+  padding: 5px 10px;
   text-decoration: none;
   width: fit-content;
 }
@@ -119,24 +185,29 @@ code {
 }
 
 .ashlar-docs-page {
-  align-items: flex-start;
+  align-items: stretch;
   display: flex;
-  gap: 48px;
   min-width: 0;
-  padding: 56px 48px 72px;
+  padding: 0 0 72px;
+}
+
+.ashlar-docs-content {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .ashlar-docs-article {
   margin-inline: auto;
-  max-width: 760px;
+  max-width: 40rem;
   min-width: 0;
-  width: 100%;
+  padding: 42px 0 0;
+  width: min(100%, 40rem);
 }
 
 .ashlar-docs-header {
   display: grid;
   gap: 12px;
-  margin-bottom: 56px;
+  margin-bottom: 46px;
 }
 
 .ashlar-docs-header h1 {
@@ -149,10 +220,10 @@ code {
 
 .ashlar-docs-header p {
   color: var(--ashlar-muted);
-  font-size: 1.08rem;
+  font-size: 1rem;
   line-height: 1.55;
   margin: 0;
-  max-width: 620px;
+  max-width: 35rem;
 }
 
 .ashlar-docs-body {
@@ -160,15 +231,15 @@ code {
 }
 
 .ashlar-docs-toc {
-  align-self: stretch;
   align-content: start;
   display: grid;
   gap: 10px;
-  flex: 0 0 240px;
-  max-height: calc(100vh - 80px);
+  flex: 0 0 var(--ashlar-docs-sidebar-width);
+  max-height: calc(100vh - var(--ashlar-header-height));
   overflow-y: auto;
+  padding: 44px 32px 64px;
   position: sticky;
-  top: 56px;
+  top: var(--ashlar-header-height);
 }
 
 .ashlar-docs-toc a {
@@ -324,6 +395,68 @@ code {
   font-size: 0.94rem;
 }
 
+.ashlar-command-tabs {
+  background: var(--color-fd-card);
+  border: 1px solid var(--ashlar-border);
+  border-radius: 10px;
+  color: var(--color-fd-card-foreground);
+  margin: 22px 0 34px;
+  overflow: hidden;
+}
+
+.ashlar-command-tabs-header {
+  align-items: center;
+  background: var(--ashlar-surface-subtle);
+  border-bottom: 1px solid var(--ashlar-border);
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.ashlar-command-tabs-header div {
+  display: flex;
+  gap: 4px;
+}
+
+.ashlar-command-tabs button {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: var(--ashlar-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 750;
+  min-height: 30px;
+  padding: 4px 9px;
+}
+
+.ashlar-command-tabs button[aria-selected="true"] {
+  background: var(--color-fd-background);
+  border-color: var(--ashlar-border);
+  color: var(--color-fd-foreground);
+}
+
+.ashlar-command-tabs pre {
+  margin: 0;
+  overflow-x: auto;
+  padding: 16px 18px;
+}
+
+.ashlar-command-tabs code {
+  color: var(--ashlar-blue-dark);
+  display: block;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.dark .ashlar-command-tabs code {
+  color: #8ec8ff;
+}
+
 .ashlar-component-index {
   background: var(--color-fd-card);
   border: 1px solid var(--ashlar-border);
@@ -433,6 +566,12 @@ code {
   .ashlar-docs-page {
     display: block;
     padding: 36px 18px 56px;
+  }
+
+  .ashlar-docs-article {
+    max-width: none;
+    padding: 0;
+    width: 100%;
   }
 
   .ashlar-docs-header {

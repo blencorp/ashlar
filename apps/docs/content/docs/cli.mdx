@@ -7,32 +7,27 @@ The CLI is the main install surface. Run commands from your app root.
 
 ## Command map
 
-```bash
-pnpm dlx @blen/ashlar@latest --help
-pnpm dlx @blen/ashlar@latest init
-pnpm dlx @blen/ashlar@latest search button
-pnpm dlx @blen/ashlar@latest suggest "Build a renewal case board"
-pnpm dlx @blen/ashlar@latest add button --dry-run --diff
-pnpm dlx @blen/ashlar@latest add button
-pnpm dlx @blen/ashlar@latest verify
-pnpm dlx @blen/ashlar@latest update button --dry-run
-```
+<AshlarCommand
+  lines={[
+    "--help",
+    "init",
+    "search button",
+    'suggest "Build a renewal case board"',
+    "add button --dry-run --diff",
+    "add button",
+    "verify",
+    "update button --dry-run",
+  ]}
+/>
 
 ## Package manager forms
 
-Use the one that matches your project:
-
-```bash
-pnpm dlx @blen/ashlar@latest add alert
-npx @blen/ashlar@latest add alert
-bunx @blen/ashlar@latest add alert
-```
+Each command in these docs can be run with npm, pnpm, or bun. Use the tab that
+matches your project and copy the generated command.
 
 ## Audit markup
 
-```bash
-pnpm dlx @blen/ashlar@latest audit --policy federal "src/**/*.{html,tsx,jsx,vue,svelte}"
-```
+<AshlarCommand args={'audit --policy federal "src/**/*.{html,tsx,jsx,vue,svelte}"'} />
 
 Use `--policy components` for component-specific checks or `--policy all` when
 you want both federal shell checks and installed-component checks.

@@ -1,8 +1,6 @@
 import Link from "next/link";
 
-const smokeCommand = `pnpm dlx @blen/ashlar@latest init
-pnpm dlx @blen/ashlar@latest add button alert text-input
-pnpm dlx @blen/ashlar@latest verify`;
+import { AshlarCommand } from "@/components/ashlar-command";
 
 export default function HomePage() {
   return (
@@ -59,11 +57,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <div className="ashlar-code-panel">
-          <pre>
-            <code>{smokeCommand}</code>
-          </pre>
-        </div>
+        <AshlarCommand lines={["init", "add button alert text-input", "verify"]} />
       </div>
     </main>
   );

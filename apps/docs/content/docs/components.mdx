@@ -9,20 +9,13 @@ app and verify the installed source after changes.
 
 ## Add a single capsule
 
-```bash
-pnpm dlx @blen/ashlar@latest search button
-pnpm dlx @blen/ashlar@latest add button --dry-run --diff
-pnpm dlx @blen/ashlar@latest add button
-pnpm dlx @blen/ashlar@latest verify
-```
+<AshlarCommand
+  lines={["search button", "add button --dry-run --diff", "add button", "verify"]}
+/>
 
 ## Add a form path
 
-```bash
-pnpm dlx @blen/ashlar@latest add \
-  form-field text-input textarea date-input select \
-  radio-group checkbox button alert error-summary identifier
-```
+<AshlarCommand args="add form-field text-input textarea date-input select radio-group checkbox button alert error-summary identifier" />
 
 ## Available capsules
 

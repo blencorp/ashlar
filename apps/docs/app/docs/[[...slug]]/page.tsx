@@ -43,19 +43,21 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <main className="ashlar-docs-page">
-      <article className="ashlar-docs-article">
-        <header className="ashlar-docs-header">
-          <h1>{page.data.title}</h1>
-          {page.data.description ? <p>{page.data.description}</p> : null}
-        </header>
-        <div className="prose ashlar-docs-body">
-          <Mdx
-            components={getMDXComponents({
-              a: createRelativeLink(source, page),
-            })}
-          />
-        </div>
-      </article>
+      <div className="ashlar-docs-content">
+        <article className="ashlar-docs-article">
+          <header className="ashlar-docs-header">
+            <h1>{page.data.title}</h1>
+            {page.data.description ? <p>{page.data.description}</p> : null}
+          </header>
+          <div className="prose ashlar-docs-body">
+            <Mdx
+              components={getMDXComponents({
+                a: createRelativeLink(source, page),
+              })}
+            />
+          </div>
+        </article>
+      </div>
       {toc.length > 0 ? (
         <aside className="ashlar-docs-toc" aria-label="On this page">
           <p>On This Page</p>
