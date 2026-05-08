@@ -46,9 +46,9 @@ jobs:
           printf '@blen:registry=https://npm.pkg.github.com\n' >> .npmrc
           printf '//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}\n' >> .npmrc
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.BLEN_GITHUB_PACKAGES_TOKEN }}
 
       - run: pnpm release:github-packages
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.BLEN_GITHUB_PACKAGES_TOKEN }}
           NPM_CONFIG_PROVENANCE: "false"

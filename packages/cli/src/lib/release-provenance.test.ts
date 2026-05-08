@@ -106,10 +106,10 @@ function writeValidFixture() {
       "          printf '@blen:registry=https://npm.pkg.github.com\\n' >> .npmrc",
       "          printf '//npm.pkg.github.com/:_authToken=$" + "{NODE_AUTH_TOKEN}\\n' >> .npmrc",
       "        env:",
-      "          NODE_AUTH_TOKEN: $" + "{{ secrets.GITHUB_TOKEN }}",
+      "          NODE_AUTH_TOKEN: $" + "{{ secrets.BLEN_GITHUB_PACKAGES_TOKEN }}",
       "      - run: pnpm release:github-packages",
       "        env:",
-      "          NODE_AUTH_TOKEN: $" + "{{ secrets.GITHUB_TOKEN }}",
+      "          NODE_AUTH_TOKEN: $" + "{{ secrets.BLEN_GITHUB_PACKAGES_TOKEN }}",
       '          NPM_CONFIG_PROVENANCE: "false"',
       "",
     ].join("\n"),
@@ -217,6 +217,7 @@ describe("checkGitHubPackagesReadiness", () => {
     expect(result.warnings).toEqual(
       expect.arrayContaining([
         expect.stringContaining("authenticated mirrors/canaries"),
+        expect.stringContaining("BLEN_GITHUB_PACKAGES_TOKEN"),
         expect.stringContaining("visibility to private by default"),
       ]),
     );
@@ -270,7 +271,7 @@ describe("checkGitHubPackagesReadiness", () => {
         ".github/workflows/github-packages.yml: actions/setup-node must configure the @blen scope",
         ".github/workflows/github-packages.yml: must map @blen to npm.pkg.github.com",
         ".github/workflows/github-packages.yml: must authenticate npm.pkg.github.com with NODE_AUTH_TOKEN",
-        ".github/workflows/github-packages.yml: must publish with the repository GITHUB_TOKEN",
+        ".github/workflows/github-packages.yml: must publish @blen GitHub Packages with secrets.BLEN_GITHUB_PACKAGES_TOKEN; repository GITHUB_TOKEN only works for packages in the repository owner namespace",
         ".github/workflows/github-packages.yml: must disable npm provenance for GitHub Packages",
         ".github/workflows/github-packages.yml: must publish with pnpm release:github-packages",
       ]),

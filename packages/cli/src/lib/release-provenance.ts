@@ -52,6 +52,7 @@ const expectedRepositoryUrl = "https://github.com/blencorp/ashlar.git";
 const ciWorkflowPath = ".github/workflows/ci.yml";
 const githubPackagesWorkflowPath = ".github/workflows/github-packages.yml";
 const publishWorkflowPath = ".github/workflows/publish.yml";
+const githubPackagesTokenSecret = "BLEN_GITHUB_PACKAGES_TOKEN";
 
 function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
@@ -200,8 +201,19 @@ function checkGitHubPackagesWorkflow(cwd: string): string[] {
       `${githubPackagesWorkflowPath}: must authenticate npm.pkg.github.com with NODE_AUTH_TOKEN`,
     );
   }
-  if (!/NODE_AUTH_TOKEN:\s*\$\{\{\s*secrets\.GITHUB_TOKEN\s*\}\}/.test(workflow)) {
-    errors.push(`${githubPackagesWorkflowPath}: must publish with the repository GITHUB_TOKEN`);
+  if (
+    !new RegExp(
+      `NODE_AUTH_TOKEN:\\s*\\$\\{\\{\\s*secrets\\.${githubPackagesTokenSecret}\\s*\\}\\}`,
+    ).test(workflow)
+  ) {
+    errors.push(
+      `${githubPackagesWorkflowPath}: must publish @blen GitHub Packages with secrets.${githubPackagesTokenSecret}; repository GITHUB_TOKEN only works for packages in the repository owner namespace`,
+    );
+  }
+  if (/NODE_AUTH_TOKEN:\s*\$\{\{\s*secrets\.GITHUB_TOKEN\s*\}\}/.test(workflow)) {
+    errors.push(
+      `${githubPackagesWorkflowPath}: must not use repository GITHUB_TOKEN for the @blen mirror while the repository owner is blencorp`,
+    );
   }
   if (!/NPM_CONFIG_PROVENANCE:\s*["']?false["']?/.test(workflow)) {
     errors.push(`${githubPackagesWorkflowPath}: must disable npm provenance for GitHub Packages`);
@@ -331,6 +343,7 @@ export function checkGitHubPackagesReadiness(cwd: string): GitHubPackagesReadine
     packages,
     warnings: [
       "GitHub Packages publishes are authenticated mirrors/canaries; npmjs trusted publishing remains the public npx path.",
+      `Set ${githubPackagesTokenSecret} to a GitHub Packages token for the BLEN-owned package scope, or move the mirror workflow under a blen-owned repository before using GITHUB_TOKEN.`,
       "GitHub Packages sets first-published package visibility to private by default; switch package visibility manually if a public mirror is intended.",
     ],
   };
