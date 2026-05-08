@@ -17,7 +17,7 @@ const packageManagers: Array<{
 export function AshlarCommand({
   args,
   lines,
-  defaultManager = "pnpm",
+  defaultManager = "npm",
 }: {
   args?: string;
   lines?: string[];

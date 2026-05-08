@@ -72,168 +72,50 @@ Ashlar is the substrate beneath the components: the verifier, the signer, the up
 - Ashlar **engineers to WCAG 2.2 AA** while documenting the legal baselines clearly: Section 508 incorporates WCAG 2.0 AA; ADA Title II references 2.1 AA (compliance dates April 26, 2027 / April 26, 2028).
 - Ashlar provides component-level evidence; it does not claim to make an application compliant by itself.
 
-## Try it
+## Use it
+
+Run Ashlar from the root of an existing app. Pick the package manager your app
+already uses:
+
+```bash
+# npm
+npx @blen/ashlar@latest init
+npx @blen/ashlar@latest add button alert text-input
+npx @blen/ashlar@latest verify
+
+# pnpm
+pnpm dlx @blen/ashlar@latest init
+pnpm dlx @blen/ashlar@latest add button alert text-input
+pnpm dlx @blen/ashlar@latest verify
+
+# bun
+bunx @blen/ashlar@latest init
+bunx @blen/ashlar@latest add button alert text-input
+bunx @blen/ashlar@latest verify
+```
+
+Common commands use the same runner:
+
+```bash
+npx @blen/ashlar@latest status
+npx @blen/ashlar@latest search button
+npx @blen/ashlar@latest suggest "Build a benefits application form"
+npx @blen/ashlar@latest audit --policy federal --explain ./public/index.html
+npx @blen/ashlar@latest add button --dry-run --diff
+npx @blen/ashlar@latest update button --dry-run
+npx @blen/ashlar@latest theme sync
+npx @blen/ashlar@latest mcp
+```
+
+For local maintainer work in this repository:
 
 ```bash
 pnpm install
 pnpm build
-
-# Run the maintainer health stack before opening or merging a PR
 pnpm repo:doctor
-
-# Start the public site, docs, and every framework example for manual testing
 pnpm testing:start
-
-# Verify the same session and produce visual screenshots plus a manual checklist
 pnpm testing:start --check --visual
-
-# Initialize a target project (e.g. a Vite app)
-node /path/to/ashlar/packages/cli/dist/index.js init
-mkdir -p ./my-public-service-app
-node /path/to/ashlar/packages/cli/dist/index.js create --cwd ./my-public-service-app --registry /path/to/ashlar/registry --yes
-
-# See the current adoption state and next commands
-node /path/to/ashlar/packages/cli/dist/index.js status --registry ./registry
-
-# Inspect the registry
-node /path/to/ashlar/packages/cli/dist/index.js search button
-node /path/to/ashlar/packages/cli/dist/index.js search "official website" --policy "Federal Website Standards"
-node /path/to/ashlar/packages/cli/dist/index.js search --query "official website" --policy "Federal Website Standards" --limit 1
-node /path/to/ashlar/packages/cli/dist/index.js search --feature details-summary --json
-node /path/to/ashlar/packages/cli/dist/index.js suggest "Build a benefits application form"
-node /path/to/ashlar/packages/cli/dist/index.js suggest "Ask yes/no eligibility questions"
-node /path/to/ashlar/packages/cli/dist/index.js view button
-
-# Plan a USWDS-to-Ashlar migration without writing files
-node /path/to/ashlar/packages/cli/dist/index.js migrate uswds --registry ./registry examples/uswds-project/index.html
-node /path/to/ashlar/packages/cli/dist/index.js migrate uswds --registry ./registry "examples/uswds-project/**/*.{html,tsx,jsx}"
-node /path/to/ashlar/packages/cli/dist/index.js migrate uswds --registry ./registry --json "examples/uswds-project/**/*.{html,tsx,jsx}"
-
-# Install capsules as source
-node /path/to/ashlar/packages/cli/dist/index.js add button --view
-node /path/to/ashlar/packages/cli/dist/index.js add button --dry-run
-node /path/to/ashlar/packages/cli/dist/index.js add button --diff
-node /path/to/ashlar/packages/cli/dist/index.js add --all --dry-run
-node /path/to/ashlar/packages/cli/dist/index.js add form-field text-input textarea date-input select radio-group checkbox button alert error-summary identifier
-
-# Verify the install
-node /path/to/ashlar/packages/cli/dist/index.js verify
-
-# Mirror the verified local registry for offline use
-node /path/to/ashlar/packages/cli/dist/index.js registry mirror --registry ./registry --output ./ashlar-mirror
-
-# Merge upstream capsule changes into source-owned installs
-node /path/to/ashlar/packages/cli/dist/index.js update button --yes
-
-# Start the read-only local MCP server for coding agents
-node /path/to/ashlar/packages/cli/dist/index.js mcp
-
-# Sync theme CSS/Tailwind output and validate agency tokens
-node /path/to/ashlar/packages/cli/dist/index.js theme sync
-node /path/to/ashlar/packages/cli/dist/index.js theme validate
-
-# Audit static HTML against federal page-shell standards
-node /path/to/ashlar/packages/cli/dist/index.js audit --policy federal --explain examples/plain-html/index.html
-
-# Audit an existing non-Ashlar federal page and surface adoption-wedge findings
-node /path/to/ashlar/packages/cli/dist/index.js audit --policy federal --explain examples/legacy-federal-project/index.html
-
-# Audit the first service-flow proof
-node /path/to/ashlar/packages/cli/dist/index.js audit --policy all --registry ./registry examples/service-flow/benefit-application.pass.html
-
-# Run the deterministic AI-generated-output eval suite
-node /path/to/ashlar/packages/cli/dist/index.js ai-eval --suite examples/ai-eval/ashlar-ai-eval.json --registry ./registry
-
-# Prove the markup primitive capsules stay lightweight
-node /path/to/ashlar/packages/cli/dist/index.js bundle budget button --registry ./registry
-node /path/to/ashlar/packages/cli/dist/index.js bundle budget --registry ./registry
-
-# Show the evidence packet
-node /path/to/ashlar/packages/cli/dist/index.js evidence button --format json
-
-# Collect automated evidence for a capsule fixture
-node /path/to/ashlar/packages/cli/dist/index.js evidence collect button --registry ./registry --fixture registry/components/button/0.0.1/button.html --output ./reports/button-evidence.json
-
-# Apply the artifact into a proposed evidence packet for review
-node /path/to/ashlar/packages/cli/dist/index.js evidence apply button --registry ./registry --artifact ./reports/button-evidence.json --output ./reports/button.evidence.proposed.json
-
-# Prepare the full non-mutating reviewer bundle in one command
-node /path/to/ashlar/packages/cli/dist/index.js evidence prepare-stable button --registry ./registry --fixture registry/components/button/0.0.1/button.html --output ./reports/button-stable-review
-
-# Open ./reports/button-stable-review/REVIEW.html for the manual keyboard and screen-reader run
-
-# Prepare reviewer bundles for every markup primitive capsule in one intake directory
-node /path/to/ashlar/packages/cli/dist/index.js evidence prepare-stable-all --registry ./registry --output ./reports/markup-primitive-stable-review
-
-# Check what still blocks that reviewer bundle from stable-evidence
-node /path/to/ashlar/packages/cli/dist/index.js evidence review-status button --registry ./registry --review-dir ./reports/button-stable-review
-node /path/to/ashlar/packages/cli/dist/index.js evidence review-status button --registry ./registry --review-dir ./reports/markup-primitive-stable-review/button
-node /path/to/ashlar/packages/cli/dist/index.js evidence review-status button --registry ./registry --review-dir ./reports/markup-primitive-stable-review/button --format json --output ./reports/button-stable-review-status.json
-
-# After a reviewer completes the bundle and review-status is ready, write reviewed/stable proposal files
-node /path/to/ashlar/packages/cli/dist/index.js evidence finalize-stable button --registry ./registry --review-dir ./reports/button-stable-review
-
-# Generate and validate manual transcript artifacts for reviewer completion
-node /path/to/ashlar/packages/cli/dist/index.js evidence transcript-template button --registry ./registry --type keyboard --output ./reports/button-keyboard-transcript.json
-node /path/to/ashlar/packages/cli/dist/index.js evidence transcript-template button --registry ./registry --type screen-reader --output ./reports/button-screen-reader-transcript.json
-node /path/to/ashlar/packages/cli/dist/index.js evidence transcript-validate button --registry ./registry --type screen-reader --transcript ./reports/button-screen-reader-transcript.json
-
-# Apply a human review artifact without mutating registry evidence
-node /path/to/ashlar/packages/cli/dist/index.js evidence review button --registry ./registry --evidence-file ./reports/button.evidence.proposed.json --manual-file ./reports/button-manual-review.json --output ./reports/button.evidence.reviewed.json
-
-# Graduate a reviewed packet only if stable-evidence gates pass
-node /path/to/ashlar/packages/cli/dist/index.js evidence graduate button --registry ./registry --evidence-file ./reports/button.evidence.reviewed.json --output ./reports/button.evidence.stable.json
-
-# Publish a graduated packet into a local signed registry source
-# Existing capsule evidence paths are reused only when the file content matches.
-node /path/to/ashlar/packages/cli/dist/index.js evidence publish button --registry ./registry --evidence-file ./reports/button.evidence.stable.json --signing-key ./private/ashlar-local-ed25519.pem --key-id ashlar-local-dev-2026-05-05 --output ./reports/button-evidence-publication.json
-
-# Check proposed evidence packets, then the registry evidence gates
-node /path/to/ashlar/packages/cli/dist/index.js evidence button --check --registry ./registry --evidence-file ./reports/button.evidence.stable.json
-node /path/to/ashlar/packages/cli/dist/index.js evidence --check --registry ./registry
-
-# Write a Markdown evidence report for CI/procurement review
-node /path/to/ashlar/packages/cli/dist/index.js evidence --report ./reports/ashlar-evidence.md --registry ./registry
-
-# Prove the packages install and run from tarballs
 pnpm release:smoke
-
-# Verify publish-path wiring without publishing
-node /path/to/ashlar/packages/cli/dist/index.js release provenance-check
-node /path/to/ashlar/packages/cli/dist/index.js release github-packages-check
-
-# Run the strict replacement-grade readiness gate
-# This intentionally fails while stable evidence, public npm provenance, or Sigstore trust are incomplete.
-node /path/to/ashlar/packages/cli/dist/index.js release readiness --registry ./registry
-node /path/to/ashlar/packages/cli/dist/index.js release readiness --registry ./registry --report ./reports/release-readiness.md
-node /path/to/ashlar/packages/cli/dist/index.js release readiness --registry ./registry --json-output ./reports/release-readiness.json
-node /path/to/ashlar/packages/cli/dist/index.js release readiness --registry ./registry --report ./reports/release-readiness.md --json-output ./reports/release-readiness.json
-
-# Prepare external review checklists, then write guarded top-level records after real reviews
-node /path/to/ashlar/packages/cli/dist/index.js release proof-plan --registry ./registry --output ./reports/proof-action-plan.md
-node /path/to/ashlar/packages/cli/dist/index.js release review-pack --registry ./registry --output ./reports/review-pack
-node /path/to/ashlar/packages/cli/dist/index.js release design-partner-checklist --output ./reports/ashlar-design-partner-checklist.md
-node /path/to/ashlar/packages/cli/dist/index.js release review-record stable-evidence --output docs/reviews/stable-evidence-button-2026-05-05.md --reviewer "<reviewer>" --affiliation "<organization>" --review-date 2026-05-05 --source-issue "<issue-url>" --repo-commit "<commit-sha>" --rationale "<why the review passed>" --component button --registry ./registry --review-dir ./reports/markup-primitive-stable-review/button --publication-receipt ./reports/button-evidence-publication.json
-# For stable-evidence, local release-trust, and local design-partner artifacts, this reruns or checks referenced proof.
-node /path/to/ashlar/packages/cli/dist/index.js release review-record-check
-
-# After a real npm publish, verify public provenance for the exact release versions
-node /path/to/ashlar/packages/cli/dist/index.js release provenance-verify-public --package @blen/ashlar@0.0.0 @blen/ashlar-cli@0.0.0 @blen/ashlar-schemas@0.0.0
-node /path/to/ashlar/packages/cli/dist/index.js release provenance-verify-public --package @blen/ashlar@0.0.0 @blen/ashlar-cli@0.0.0 @blen/ashlar-schemas@0.0.0 --json > ./reports/ashlar-npm-provenance.json
-
-# Write an SPDX release SBOM
-node /path/to/ashlar/packages/cli/dist/index.js release sbom --output ./reports/ashlar-sbom.spdx.json
-
-# Write and verify a tamper-evident release attestation
-node /path/to/ashlar/packages/cli/dist/index.js release attest --subject ./reports/ashlar-sbom.spdx.json --output ./reports/ashlar-sbom.attestation.json
-node /path/to/ashlar/packages/cli/dist/index.js release verify-attestation --subject ./reports/ashlar-sbom.spdx.json --attestation ./reports/ashlar-sbom.attestation.json
-
-# Bundle local registry trust material with release artifacts for offline review
-node /path/to/ashlar/packages/cli/dist/index.js release sign-capsules --registry ./registry
-node /path/to/ashlar/packages/cli/dist/index.js release public-trust-verify --registry ./registry
-node /path/to/ashlar/packages/cli/dist/index.js release public-trust-verify --registry ./registry --json > ./reports/ashlar-public-trust.json
-node /path/to/ashlar/packages/cli/dist/index.js release trust-bundle --registry ./registry --sbom ./reports/ashlar-sbom.spdx.json --attestation ./reports/ashlar-sbom.attestation.json --output ./reports/ashlar-trust-bundle.json --checklist ./reports/ashlar-release-trust-checklist.md
-node /path/to/ashlar/packages/cli/dist/index.js release verify-trust-bundle --registry ./registry --bundle ./reports/ashlar-trust-bundle.json --sbom ./reports/ashlar-sbom.spdx.json --attestation ./reports/ashlar-sbom.attestation.json
 ```
 
 For the durable tester path, expected local URLs, visual checks, CLI checks, and
