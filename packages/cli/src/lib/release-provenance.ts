@@ -398,6 +398,7 @@ function runNpm(input: { args: string[]; cwd: string; npmPath: string }): {
   const result = spawnSync(input.npmPath, input.args, {
     cwd: input.cwd,
     encoding: "utf8",
+    env: cleanPublicNpmVerificationEnv(),
     stdio: ["ignore", "pipe", "pipe"],
   });
 
@@ -405,6 +406,18 @@ function runNpm(input: { args: string[]; cwd: string; npmPath: string }): {
     output: `${result.stdout ?? ""}${result.stderr ?? ""}`,
     status: result.status ?? 1,
   };
+}
+
+function cleanPublicNpmVerificationEnv(): NodeJS.ProcessEnv {
+  const env = { ...process.env };
+
+  for (const key of Object.keys(env)) {
+    if (key.toLowerCase().startsWith("npm_config_")) {
+      delete env[key];
+    }
+  }
+
+  return env;
 }
 
 function allValues(value: unknown): unknown[] {
