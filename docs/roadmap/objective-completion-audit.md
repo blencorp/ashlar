@@ -1,7 +1,7 @@
 # Objective Completion Audit
 
 Date: 2026-05-08
-Branch inspected: current checkout after #95 through #108 merged, with repo doctor, testing-session launcher, manual testing checklist, public family-language cleanup, and post-merge CI/Version Packages success on `main`
+Branch inspected: current checkout after #95 through #109 merged, with repo doctor, testing-session launcher, manual testing checklist, public family-language cleanup, and post-merge CI/Version Packages success on `main`
 
 ## Objective
 
@@ -25,7 +25,7 @@ Strict readiness evidence: `node packages/cli/dist/index.js release readiness --
 | Requirement | Current evidence | Coverage judgment | Missing proof |
 | --- | --- | --- | --- |
 | Replace day-to-day USWDS usage | `ashlar audit --policy federal`, `ashlar migrate uswds`, 12 markup primitive capsules in `registry/components`, `benefit-application` service-flow capsule, `examples/uswds-project` migration fixture, `examples/legacy-federal-project` audit fixture, `docs/roadmap/uswds-coverage-matrix.md`, framework case-board examples, banner visual smoke | Strong prototype, not replacement-grade. Coverage gaps are now explicit. | Stable accessibility evidence, external design-partner validation, wider component/pattern coverage, public release |
-| Become memorable like shadcn/ui | `@blen/ashlar` package entrypoint, `npx @blen/ashlar` docs/status alignment, source-capsule distribution model, public family names, `apps/www` marketing surface, and `apps/docs` first-run docs app are merged to `main` | Good naming/DX direction with a first-run docs surface. The old public numbered-family language regression is gone. | Package name must be reserved by real npm publish; public docs deployment and community launch still missing |
+| Become memorable like shadcn/ui | `@blen/ashlar` package entrypoint, `npx @blen/ashlar` docs/status alignment, source-capsule distribution model, public family names, `apps/www` marketing surface, and `apps/docs` first-run docs app are merged to `main` | Good naming/DX direction with a first-run docs surface. Public product language now uses family names instead of internal family codes. | Package name must be reserved by real npm publish; public docs deployment and community launch still missing |
 | Address shadcn gaps | `ashlar update`, `ashlar verify`, capsule lockfile hashes, update survival tests, signed capsule manifests, release readiness, SBOM/trust-bundle/provenance tooling | Strongest product wedge in repo | Needs real release traffic, public Sigstore bundles, npm provenance, external security review |
 | AI-native gov app workflow | `ashlar mcp`, MCP `validate_usage`, `search_components`, `suggest_for_task`, `list_tokens`, `get_token`, `ashlar ai-eval`, generated `AGENTS.md` and `DESIGN.md`, and `examples/ai-eval/generated-output-corpus` | Useful local AI-native substrate with a small seed corpus | Independent model/tool outputs beyond the Codex seed corpus, hosted/remote MCP decision, write-tool threat model if write tools are ever added |
 | Amazing DX and easy integration | `ashlar init|create`, `status|info`, `add --all --view --dry-run --diff`, `search|list -q -l`, `suggest`, `view|docs`, `-c/--cwd` on common commands, `audit`, `theme sync`, `theme validate`, `pnpm repo:doctor`, `pnpm testing:start`, `pnpm testing:start --check --visual`, release smoke installing packed CLI into a clean consumer, `apps/docs` first-run path for install/audit/add/verify/theme/AI/trust, and real framework examples for vanilla TypeScript, React SPA, Next.js App Router, Svelte, and Vue | Good local DX and first-run guidance; main includes shadcn-v4-compatible ergonomics without claiming template/preset support. | Public npm install path, public docs deployment, real user feedback, real template/preset system if Ashlar chooses to mirror that shadcn surface |
@@ -54,9 +54,9 @@ Merged implementation stack now includes the earlier foundation work plus the re
 - #86 `chore(release): version packages`
 - #87 `fix(docs): clarify capsule layer language`
 - #88 `ci(release): add github packages publish workflow`
-- #89 `fix(language): replace public layer codes`
+- #89 language cleanup for internal family labels
 - #90 `chore(release): version packages`
-- #91 `docs(language): remove remaining layer code references`
+- #91 documentation cleanup for internal family labels
 - #92 `docs(status): refresh current proof audit`
 - #93 `ci(release): require main for npm publish`
 - #94 `chore(release): version packages`
@@ -68,14 +68,14 @@ Merged implementation stack now includes the earlier foundation work plus the re
 - #100 `feat(release): check GitHub Packages readiness`
 - #101 `chore(release): version packages`
 - #102 `docs(status): refresh current proof audit`
-- #103 `docs(language): remove numbered family leaks`
+- #103 documentation cleanup for family naming
 - #104 `chore(testing): add repo doctor command`
 - #105 `chore(testing): add manual testing launcher`
 - #106 `fix(doctor): ignore nested worktrees`
 - #107 `docs(language): prefer family wording in public docs`
 - #108 `feat(testing): add manual testing checklist`
 
-Post-merge evidence through #108: GitHub `CI` and `Version Packages` completed successfully after the current proof-audit refresh, numbered-family leak cleanup, repo doctor merge, testing-session launcher, nested-worktree doctor fix, family-language cleanup, and manual testing checklist merge. The #100 feature PR completed `status`, `commitlint`, and `checks`; after merge, main CI completed `pnpm check`, `pnpm build`, `pnpm examples:visual`, `pnpm release:smoke`, `release provenance-check`, `release github-packages-check`, SBOM/trust-bundle/evidence/audit/report generation, and artifact upload. The #101 generated version PR had no remote PR checks, so it was verified locally before merge with `pnpm install --frozen-lockfile`, `pnpm format:check`, `pnpm check`, `pnpm build`, `pnpm release:smoke`, `release provenance-check`, `release github-packages-check`, `pnpm commitlint --from HEAD~1 --to HEAD`, and `git diff --check`; its post-merge `CI` and `Version Packages` runs then passed on `main`. #102 refreshed the current proof audit and passed post-merge `CI` and `Version Packages`; #103 removed the remaining public numbered-family leaks and also passed post-merge `CI` and `Version Packages`; #104 added `pnpm repo:doctor`; #105 added `pnpm testing:start`; #106 fixed nested-worktree doctor handling; #107 removed public numbered-code product language; and #108 added `pnpm testing:start --check --visual` plus `reports/testing-session/checklist.md`. PR and post-merge `main` CI/Version Packages passed for each of those slices.
+Post-merge evidence through #109: GitHub `CI` and `Version Packages` completed successfully after the current proof-audit refresh, family-language cleanup, repo doctor merge, testing-session launcher, nested-worktree doctor fix, manual testing checklist merge, and current objective-audit refresh. The #100 feature PR completed `status`, `commitlint`, and `checks`; after merge, main CI completed `pnpm check`, `pnpm build`, `pnpm examples:visual`, `pnpm release:smoke`, `release provenance-check`, `release github-packages-check`, SBOM/trust-bundle/evidence/audit/report generation, and artifact upload. The #101 generated version PR had no remote PR checks, so it was verified locally before merge with `pnpm install --frozen-lockfile`, `pnpm format:check`, `pnpm check`, `pnpm build`, `pnpm release:smoke`, `release provenance-check`, `release github-packages-check`, `pnpm commitlint --from HEAD~1 --to HEAD`, and `git diff --check`; its post-merge `CI` and `Version Packages` runs then passed on `main`. #102 refreshed the current proof audit and passed post-merge `CI` and `Version Packages`; #103 cleaned public family naming and also passed post-merge `CI` and `Version Packages`; #104 added `pnpm repo:doctor`; #105 added `pnpm testing:start`; #106 fixed nested-worktree doctor handling; #107 removed internal-code product language from public docs; #108 added `pnpm testing:start --check --visual` plus `reports/testing-session/checklist.md`; and #109 refreshed this audit after testing. PR and post-merge `main` CI/Version Packages passed for each of those slices.
 
 Package state:
 

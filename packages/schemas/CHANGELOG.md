@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- [#89](https://github.com/blencorp/ashlar/pull/89) [`e285840`](https://github.com/blencorp/ashlar/commit/e2858405ffa199d55a16c7fb12e2481262d7fa94) Thanks [@naodya](https://github.com/naodya)! - Replace public layer codes with human-readable layer slugs across CLI output,
+- [#89](https://github.com/blencorp/ashlar/pull/89) [`e285840`](https://github.com/blencorp/ashlar/commit/e2858405ffa199d55a16c7fb12e2481262d7fa94) Thanks [@naodya](https://github.com/naodya)! - Replace public internal labels with human-readable family slugs across CLI output,
   schemas, registry metadata, generated examples, and release-readiness gates.
 
 ## 0.1.4
