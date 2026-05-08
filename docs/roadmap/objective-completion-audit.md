@@ -1,7 +1,7 @@
 # Objective Completion Audit
 
 Date: 2026-05-08
-Branch inspected: `main` at `b09ebcc` after #95 through #138 merged, with repo doctor, testing-session launcher, manual testing checklist/report intake, docs testing guide/app coverage, docs disclosure-flag SVG regression coverage, public family-language cleanup, product-family language guardrails, Vite case-board visual QA, release proof-plan GitHub Packages wiring, repo-local `pnpm ashlar` review handoff commands, versioned `@blen/*` packages, stable-evidence handoff cleanup, and post-merge CI/Version Packages success on `main`
+Branch inspected: `main` at `cc4cc6a` after #95 through #143 merged, with repo doctor, testing-session launcher, manual testing checklist/report intake, docs testing guide/app coverage, docs disclosure-flag SVG regression coverage, public family-language cleanup, product-family language guardrails, Vite case-board visual QA, release proof-plan GitHub Packages wiring, repo-local `pnpm ashlar` review handoff commands, versioned `@blen/*` packages, stable-evidence handoff cleanup, GitHub Packages token-scope hardening, clean public-provenance verification output, and post-merge CI/Version Packages success on `main`
 
 ## Objective
 
@@ -18,7 +18,7 @@ Ashlar has a real substrate now: signed source capsules, federal and component a
 - public npm trusted-publishing provenance for `@blen/ashlar`, `@blen/ashlar-cli`, and `@blen/ashlar-schemas`;
 - public capsule Sigstore trust material.
 
-Strict readiness evidence: `pnpm ashlar release readiness --registry ./registry --json-output reports/current-release-readiness.json --report reports/current-release-readiness.md` returned `status: "fail"` on 2026-05-08 after #138 with 9 passing checks and 4 failing checks: `stable-markup-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
+Strict readiness evidence: `pnpm ashlar release readiness --registry ./registry --json-output reports/current-release-readiness.json --report reports/current-release-readiness.md` returned `status: "fail"` on 2026-05-08 after #143 with 9 passing checks and 4 failing checks: `stable-markup-evidence`, `external-review-proof`, `npm-provenance-public`, and `sigstore-public-trust`.
 
 Current testing evidence: `pnpm testing:start --check --visual` passed on 2026-05-08 after rebuilding the workspace. It verified HTTP 200 for the public site, docs app, Vite + Tailwind case board, and the vanilla TypeScript, React SPA, Next.js App Router, Svelte, and Vue case-board examples, then ran Playwright visual smoke for the six framework apps with zero failures. The generated local review material is under `reports/testing-session/` and `reports/example-visual-smoke/`. Local testing URLs from the latest run are `http://127.0.0.1:4174/`, `http://127.0.0.1:4175/`, `http://127.0.0.1:4173/`, and `http://127.0.0.1:4180/` through `http://127.0.0.1:4184/`.
 
@@ -108,13 +108,18 @@ Merged implementation stack now includes the earlier foundation work plus the re
 - #136 `chore(release): version packages`
 - #137 `fix(language): enforce product family wording`
 - #138 `chore(release): version packages`
+- #139 `docs(status): refresh audit after version merge`
+- #140 `fix(release): require scoped token for github packages`
+- #141 `chore(release): version packages`
+- #142 `fix(release): clean npm provenance environment`
+- #143 `chore(release): version packages`
 
-Post-merge evidence through #138: GitHub `CI` and `Version Packages` completed successfully after the proof-audit refresh, family-language cleanup, repo doctor merge, testing-session launcher, nested-worktree doctor fix, manual testing checklist merge, public product-language guard, release proof-plan workflow confirmation commands, GitHub Packages proof-plan step, generated version merges, hands-on QA guide, docs testing/flag fix, stable-evidence handoff command cleanup, release/design-partner reviewer handoff command cleanup, manual testing report intake, incomplete-transcript rejection, Vite case-board visual QA, product-family language guardrails, and the generated release PRs. The #132 feature PR completed CI and then post-merge `main` `CI` run `25551894817` and `Version Packages` run `25551894850` passed. The generated version PR #133 was inspected, merged, and its final `main` `CI` run `25552151675` plus `Version Packages` run `25552151673` both passed on `3e7375d`. The #135 handoff cleanup merged, then the generated version PR #136 merged and final `main` `CI` run `25554117202` plus `Version Packages` run `25554117208` both passed on `48f2397`. The #137 language guardrail merge passed final `main` `CI` run `25555079209` plus `Version Packages` run `25555079215` on `da09822`. The generated version PR #138 merged and final `main` `CI` run `25555400814` plus `Version Packages` run `25555400804` both passed on `b09ebcc`. Current open PR list is empty.
+Post-merge evidence through #143: GitHub `CI` and `Version Packages` completed successfully after the proof-audit refresh, family-language cleanup, repo doctor merge, testing-session launcher, nested-worktree doctor fix, manual testing checklist merge, public product-language guard, release proof-plan workflow confirmation commands, GitHub Packages proof-plan step, generated version merges, hands-on QA guide, docs testing/flag fix, stable-evidence handoff command cleanup, release/design-partner reviewer handoff command cleanup, manual testing report intake, incomplete-transcript rejection, Vite case-board visual QA, product-family language guardrails, GitHub Packages scoped-token hardening, clean public provenance verification output, and the generated release PRs. The #137 language guardrail merge passed final `main` `CI` run `25555079209` plus `Version Packages` run `25555079215` on `da09822`. The generated version PR #138 merged and final `main` `CI` run `25555400814` plus `Version Packages` run `25555400804` both passed on `b09ebcc`. The #140 release hardening merge passed final `main` `CI` run `25557293869` plus `Version Packages` run `25557293871` on `846ae1b`. The generated version PR #141 merged and final `main` `CI` run `25557618235` plus `Version Packages` run `25557618197` both passed on `d9ee5d2`. The #142 public provenance cleanup merged and final `main` `CI` run `25558611339` plus `Version Packages` run `25558611354` both passed on `38dfb90`. The generated version PR #143 merged and final `main` `CI` run `25558957663` plus `Version Packages` run `25558957655` both passed on `cc4cc6a`. Current open PR list is empty.
 
 Package state:
 
-- `@blen/ashlar@0.3.18`
-- `@blen/ashlar-cli@0.3.18`
+- `@blen/ashlar@0.3.20`
+- `@blen/ashlar-cli@0.3.20`
 - `@blen/ashlar-schemas@0.1.5`
 
 ## Gate Audit
