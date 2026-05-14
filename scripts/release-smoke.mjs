@@ -138,6 +138,9 @@ try {
   assertPublicTarball(schemasTarball);
   assertPublicTarball(cliTarball);
   assertPublicTarball(ashlarTarball);
+  assertTarballEntry(schemasTarball, "package/README.md");
+  assertTarballEntry(cliTarball, "package/README.md");
+  assertTarballEntry(ashlarTarball, "package/README.md");
   assertTarballEntry(cliTarball, "package/dist/registry/index.json");
 
   const packedCli = tarballPackageJson(cliTarball);
