@@ -17,14 +17,15 @@ Checked against current public references:
 
 ## Current evidence
 
-- Latest commit on `main`: `02f348e` (`docs: document first npm publish runbook`)
-- CI passed: https://github.com/blencorp/ashlar/actions/runs/25870676243
-- Version Packages passed: https://github.com/blencorp/ashlar/actions/runs/25870676251
+- Latest commit on `main`: `d5f9d30` (`docs: improve public package metadata`)
+- CI passed: https://github.com/blencorp/ashlar/actions/runs/25874980868
+- Version Packages passed: https://github.com/blencorp/ashlar/actions/runs/25874980895
 - Package manifests:
   - `@blen/ashlar@0.3.23`
   - `@blen/ashlar-cli@0.3.23`
   - `@blen/ashlar-schemas@0.1.5`
-  - all have `publishConfig.access: "public"` and `publishConfig.provenance: true`
+  - all have `publishConfig.access: "public"`, `publishConfig.provenance: true`, repository metadata, homepage links, issue links, keywords, bundled `README.md`, and bundled `LICENSE`
+- Package smoke: `pnpm release:smoke` now requires `package/README.md` and `package/LICENSE` in all three public tarballs and verifies the packed CLI installs into a throwaway consumer app
 - Public npm state: `npm view @blen/ashlar version --registry https://registry.npmjs.org` returns `E404`
 - GitHub secret state: `gh secret list --repo blencorp/ashlar` currently does not list `NPM_TOKEN`
 - GitHub Releases state: no releases yet
@@ -34,7 +35,7 @@ Checked against current public references:
 
 | Requirement | Current artifact or evidence | Status | Notes |
 | --- | --- | --- | --- |
-| Give developers something meaningful to test | `pnpm release:smoke` packs and installs `@blen/ashlar` into a throwaway consumer; `scripts/public-install-smoke.mjs` verifies `npx`, `pnpm dlx`, and `bunx` after publish | Blocked | Public npm install is still impossible until first publish succeeds |
+| Give developers something meaningful to test | `pnpm release:smoke` packs and installs `@blen/ashlar` into a throwaway consumer; public package tarballs include README and LICENSE; `scripts/public-install-smoke.mjs` verifies `npx`, `pnpm dlx`, and `bunx` after publish | Blocked | Public npm install is still impossible until first publish succeeds |
 | Highly inspired by shadcn v4 | CLI supports `init/create`, `add`, `search/list`, `view/docs`, dry-run/diff/view paths, source-owned installed files, and registry metadata | Partial | Direction is right, but public docs and first-run UX still need real user testing after publish |
 | Address shadcn weaknesses | Capsule manifests, index-pinned hashes, lockfile verification, update survival tests, evidence packets, SBOM/trust bundle, provenance gates | Partial | Stronger than plain copy-paste locally; public npm provenance and public capsule Sigstore trust remain open |
 | Gov-ready foundation | Federal audit rules, USWDS migration mapper, banner/identifier checks, ICT Baseline/WCAG evidence model, source-backed agency themes | Partial | Not replacement-grade until stable evidence and external review records exist |
@@ -44,6 +45,7 @@ Checked against current public references:
 | Real framework examples | `examples/vanilla`, `react-spa`, `nextjs`, `svelte`, `vue`, `vite`, `plain-html`; `pnpm examples:visual` in CI | Pass | CI passed on latest `main` |
 | Docs app | `apps/docs` rebuilt on Fumadocs, CI build passes | Partial | Technically green; needs post-publish user review for clarity and visual acceptance |
 | Conventional release/version path | Changesets/version workflows, npm bootstrap workflow, tokenless publish workflow, guarded GitHub Release workflow | Partial | Workflows are present and CI-green; npm token/trusted-publisher setup is still external |
+| Public npm package quality | Package READMEs, Apache license files, npm descriptions, keywords, homepage, bugs URL, and release-smoke tarball guards | Pass for first prototype publish | Does not replace real external install testing after publish |
 | Public npm package | `npm-bootstrap.yml` can publish with `NPM_TOKEN`; `publish.yml` is tokenless long-term path | Blocked | No `NPM_TOKEN` secret exists; packages return `E404` |
 | GitHub Releases visible | `github-release.yml` creates `v<version>` only after npm packages and public install commands pass | Blocked | Cannot run until npm publish succeeds |
 
