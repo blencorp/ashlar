@@ -32,6 +32,7 @@
     "version-packages": "changeset version",
     "release": "pnpm build && node packages/cli/dist/index.js release provenance-check && changeset publish",
     "release:github-packages": "pnpm build && changeset publish",
+    "release:verify-public": "node scripts/public-install-smoke.mjs",
     "release:smoke": "node scripts/release-smoke.mjs",
     "ashlar": "node packages/cli/dist/index.js"
   },

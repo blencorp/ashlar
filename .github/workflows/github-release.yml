@@ -33,6 +33,12 @@ jobs:
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.2
+
+      - uses: oven-sh/setup-bun@v2
+
       - name: Resolve release version
         id: version
         run: |
@@ -54,6 +60,11 @@ jobs:
           test "$(npm view @blen/ashlar-cli version --registry https://registry.npmjs.org)" = "$version"
           node -e "const root=require('./packages/schemas/package.json').version; if (!root) process.exit(1)"
           test "$(npm view @blen/ashlar-schemas version --registry https://registry.npmjs.org)" = "$(node -p "require('./packages/schemas/package.json').version")"
+
+      - name: Verify public install commands
+        run: node scripts/public-install-smoke.mjs
+        env:
+          ASHLAR_PUBLIC_SMOKE_REQUIRE_BUN: "true"
 
       - name: Create GitHub release
         env:
