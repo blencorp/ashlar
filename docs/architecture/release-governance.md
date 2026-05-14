@@ -70,6 +70,21 @@ npm token that can publish public packages under the `@blen` scope and bypass
 2FA for publish actions. Do not paste the token into chat, issue bodies, or
 commit history.
 
+Create the bootstrap token from npmjs.com, not the npm CLI. Granular token
+creation is still a website flow. Use:
+
+- **Bypass two-factor authentication**: enabled for this one automated publish.
+- **Packages and scopes**: `Read and write`, then either `All Packages` or the
+  `@blen` scope.
+- **Organizations**: do not rely on this section for package publishing. npm
+  organization access on a token manages organization settings and users; the
+  package publish right comes from package/scope access plus the user's own
+  maintainer permission.
+- **Expiration**: short-lived, then revoke it after trusted publishing works.
+
+The npm `@blen` organization must already exist, and the npm user behind the
+token must have package write permission for that scope.
+
 ```bash
 read -rs NPM_TOKEN
 gh secret set NPM_TOKEN --repo blencorp/ashlar --body "$NPM_TOKEN"

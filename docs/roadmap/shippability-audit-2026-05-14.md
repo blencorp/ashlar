@@ -54,6 +54,12 @@ Do not call this replacement-grade or public-alpha yet.
 It is reasonable to ship a first public prototype once these gates pass:
 
 1. Set `NPM_TOKEN` in `blencorp/ashlar`.
+
+   Create it as a short-lived granular npm token from the npm website with
+   package/scope `Read and write` access to `@blen` or all packages, and with
+   bypass 2FA enabled for the bootstrap workflow. Organization access alone is
+   not package publish access.
+
 2. Run `npm-bootstrap.yml` with `confirm=bootstrap-npm`.
 3. Verify public install:
 
