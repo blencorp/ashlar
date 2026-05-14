@@ -35,6 +35,8 @@ jobs:
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
+      - uses: oven-sh/setup-bun@v2
+
       - name: Require npm bootstrap token
         run: test -n "$NODE_AUTH_TOKEN"
         env:
@@ -49,6 +51,10 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: "true"
+      - name: Verify public install commands
+        run: node scripts/public-install-smoke.mjs
+        env:
+          ASHLAR_PUBLIC_SMOKE_REQUIRE_BUN: "true"
       - run: node packages/cli/dist/index.js release provenance-verify-public
       - run: mkdir -p reports && node packages/cli/dist/index.js release provenance-verify-public --json > reports/ashlar-npm-provenance.json
 

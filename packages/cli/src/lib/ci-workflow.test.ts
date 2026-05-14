@@ -190,6 +190,38 @@ describe("CI workflow", () => {
     expect(workflow).not.toMatch(/\b(?:NODE_AUTH_TOKEN|NPM_TOKEN)\b/);
   });
 
+  it("keeps npm bootstrap publish guarded and publicly smoke-tested", () => {
+    const workflow = readFileSync(
+      resolve(repoRoot, ".github", "workflows", "npm-bootstrap.yml"),
+      "utf8",
+    );
+
+    expect(workflow).toContain("workflow_dispatch:");
+    expect(workflow).toContain("inputs.confirm == 'bootstrap-npm'");
+    expect(workflow).toContain("github.ref == 'refs/heads/main'");
+    expect(workflow).toContain("runs-on: ubuntu-latest");
+    expect(workflow).toContain("registry-url: https://registry.npmjs.org");
+    expect(workflow).toContain("package-manager-cache: false");
+    expect(workflow).toContain("uses: oven-sh/setup-bun@v2");
+    expect(workflow).toContain("Require npm bootstrap token");
+    expect(workflow).toContain("NODE_AUTH_TOKEN: $" + "{{ secrets.NPM_TOKEN }}");
+    expect(workflow).toContain("pnpm release:smoke");
+    expect(workflow).toContain("pnpm release");
+    expect(workflow).toContain("name: Verify public install commands");
+    expect(workflow).toContain("run: node scripts/public-install-smoke.mjs");
+    expect(workflow).toContain('ASHLAR_PUBLIC_SMOKE_REQUIRE_BUN: "true"');
+    expect(workflow).toContain("node packages/cli/dist/index.js release provenance-verify-public");
+    expect(workflow).toContain(
+      "node packages/cli/dist/index.js release provenance-verify-public --json > reports/ashlar-npm-provenance.json",
+    );
+    expect(workflow.indexOf("- run: pnpm release\n")).toBeLessThan(
+      workflow.indexOf("run: node scripts/public-install-smoke.mjs"),
+    );
+    expect(workflow.indexOf("run: node scripts/public-install-smoke.mjs")).toBeLessThan(
+      workflow.indexOf("node packages/cli/dist/index.js release provenance-verify-public"),
+    );
+  });
+
   it("keeps release artifact signing on a keyless Sigstore path", () => {
     const workflow = readFileSync(
       resolve(repoRoot, ".github", "workflows", "sigstore.yml"),

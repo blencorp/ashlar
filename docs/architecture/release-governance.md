@@ -96,8 +96,9 @@ gh workflow run npm-bootstrap.yml \
   -f confirm=bootstrap-npm
 ```
 
-After the workflow passes, verify the public install path before announcing the
-release:
+The bootstrap workflow verifies the public install path with `npx`,
+`pnpm dlx`, and `bunx` immediately after publishing. Re-run the same check
+locally before announcing the release:
 
 ```bash
 pnpm release:verify-public

@@ -46,7 +46,7 @@ Checked against current public references:
 | Docs app | `apps/docs` rebuilt on Fumadocs, CI build passes | Partial | Technically green; needs post-publish user review for clarity and visual acceptance |
 | Conventional release/version path | Changesets/version workflows, npm bootstrap workflow, tokenless publish workflow, guarded GitHub Release workflow | Partial | Workflows are present and CI-green; npm token/trusted-publisher setup is still external |
 | Public npm package quality | Package READMEs, Apache license files, npm descriptions, keywords, homepage, bugs URL, and release-smoke tarball guards | Pass for first prototype publish | Does not replace real external install testing after publish |
-| Public npm package | `npm-bootstrap.yml` can publish with `NPM_TOKEN`; `publish.yml` is tokenless long-term path | Blocked | No `NPM_TOKEN` secret exists; packages return `E404` |
+| Public npm package | `npm-bootstrap.yml` can publish with `NPM_TOKEN` and now verifies `npx`, `pnpm dlx`, and `bunx` immediately after publish; `publish.yml` is the tokenless long-term path | Blocked | No `NPM_TOKEN` secret exists; packages return `E404` |
 | GitHub Releases visible | `github-release.yml` creates `v<version>` only after npm packages and public install commands pass | Blocked | Cannot run until npm publish succeeds |
 
 ## Ship decision
@@ -62,7 +62,8 @@ It is reasonable to ship a first public prototype once these gates pass:
    bypass 2FA enabled for the bootstrap workflow. Organization access alone is
    not package publish access.
 
-2. Run `npm-bootstrap.yml` with `confirm=bootstrap-npm`.
+2. Run `npm-bootstrap.yml` with `confirm=bootstrap-npm`; the workflow publishes,
+   verifies public install commands, and verifies public npm provenance.
 3. Verify public install:
 
    ```bash
