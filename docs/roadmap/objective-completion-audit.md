@@ -3,6 +3,9 @@
 Date: 2026-05-08
 Branch inspected: `main` at `449a804` after #95 through #149 merged, with repo doctor, testing-session launcher, manual testing checklist/report intake, docs testing guide/app coverage, docs disclosure-flag SVG regression coverage, public family-language cleanup, product-family language guardrails, Vite case-board visual QA, release proof-plan GitHub Packages wiring, repo-local `pnpm ashlar` review handoff commands, versioned `@blen/*` packages, stable-evidence handoff cleanup, GitHub Packages token-scope hardening, clean public-provenance verification output, Button stable-evidence reviewer-handoff cleanup, clean proof-plan JSON output, `0.3.22` package versioning, and post-merge CI/Version Packages success on `main`
 
+Update note: this is a historical completion audit. The current first-publish
+state is tracked in `docs/roadmap/shippability-audit-2026-05-14.md`.
+
 ## Objective
 
 Build a government-first UI library that can credibly replace day-to-day USWDS usage, become a memorable shadcn-like name in the gov space, address shadcn's source-copy/update/provenance gaps, and let government developers build AI-native public-service apps with strong DX, light footprint, and easy integration.

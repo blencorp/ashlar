@@ -65,9 +65,10 @@ Publish public developer-facing releases to npmjs through GitHub Actions trusted
 ### First npm publish
 
 The first npm publish is a bootstrap exception because the `@blen/*` packages do
-not exist on npm yet. Use `npm-bootstrap.yml` once with a short-lived npm token
-that can publish public packages under the `@blen` scope. Do not paste the token
-into chat, issue bodies, or commit history.
+not exist on npm yet. Use `npm-bootstrap.yml` once with a short-lived granular
+npm token that can publish public packages under the `@blen` scope and bypass
+2FA for publish actions. Do not paste the token into chat, issue bodies, or
+commit history.
 
 ```bash
 read -rs NPM_TOKEN
@@ -100,7 +101,10 @@ gh workflow run github-release.yml \
 ```
 
 Once the packages exist on npm, configure trusted publishers for the long-term
-tokenless workflow:
+tokenless workflow. Run these commands from an interactive npm login session
+with npm 11.10+ and account-level 2FA enabled; `npm trust` cannot configure a
+package before it exists on the npm registry, and granular access tokens with
+bypass 2FA do not work for the trust-management commands.
 
 ```bash
 npm trust github @blen/ashlar --repo blencorp/ashlar --file publish.yml

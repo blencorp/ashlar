@@ -13,19 +13,20 @@ Checked against current public references:
 - USWDS design tokens: federal design systems should expose reusable tokens across color, typography, spacing, and related style primitives. Source: https://designsystem.digital.gov/design-tokens/
 - USWDS spacing/token conventions: token names and output values must be systematic rather than ad hoc CSS literals. Source: https://designsystem.digital.gov/design-tokens/spacing-units/
 - Tailwind v4 `@theme`: design tokens can be emitted as CSS variables and made available to utilities without JavaScript config sprawl. Source: https://tailwindcss.com/docs/theme
-- npm Trusted Publishing: long-term publishing should use GitHub Actions OIDC and npm provenance; first-publish bootstrap still needs an authenticated package publish path because the packages do not exist yet. Sources: https://docs.npmjs.com/trusted-publishers and https://docs.npmjs.com/cli/v11/commands/npm-trust/
+- npm Trusted Publishing: long-term publishing should use GitHub Actions OIDC and npm provenance; first-publish bootstrap still needs an authenticated package publish path because the packages do not exist yet. `npm trust` itself also requires npm 11.10+, package write access, account-level 2FA, and an already-published package. Sources: https://docs.npmjs.com/trusted-publishers and https://docs.npmjs.com/cli/v11/commands/npm-trust/
 
 ## Current evidence
 
-- Latest commit on `main`: `ec4039c` (`ci: verify public install commands before release`)
-- CI passed: https://github.com/blencorp/ashlar/actions/runs/25869266426
-- Version Packages passed: https://github.com/blencorp/ashlar/actions/runs/25869266340
+- Latest commit on `main`: `02f348e` (`docs: document first npm publish runbook`)
+- CI passed: https://github.com/blencorp/ashlar/actions/runs/25870676243
+- Version Packages passed: https://github.com/blencorp/ashlar/actions/runs/25870676251
 - Package manifests:
   - `@blen/ashlar@0.3.23`
   - `@blen/ashlar-cli@0.3.23`
   - `@blen/ashlar-schemas@0.1.5`
   - all have `publishConfig.access: "public"` and `publishConfig.provenance: true`
 - Public npm state: `npm view @blen/ashlar version --registry https://registry.npmjs.org` returns `E404`
+- GitHub secret state: `gh secret list --repo blencorp/ashlar` currently does not list `NPM_TOKEN`
 - GitHub Releases state: no releases yet
 - Local dirty state: one unrelated `.gitignore` modification remains outside this audit
 
@@ -67,6 +68,8 @@ It is reasonable to ship a first public prototype once these gates pass:
    npm trust github @blen/ashlar-cli --repo blencorp/ashlar --file publish.yml
    npm trust github @blen/ashlar-schemas --repo blencorp/ashlar --file publish.yml
    ```
+
+   Run these from an npm login session with npm 11.10+ and account 2FA enabled. The package must already exist on npm before these commands can configure trust.
 
 5. Run `github-release.yml` with `confirm=release`.
 6. Revoke/delete the bootstrap token after Trusted Publishing is confirmed.
