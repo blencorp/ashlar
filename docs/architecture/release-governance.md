@@ -62,6 +62,55 @@ The public packages use the BLEN-owned npm namespace:
 
 Publish public developer-facing releases to npmjs through GitHub Actions trusted publishing. Do not make GitHub Packages the default public registry for these packages: [GitHub's npm registry requires an access token](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages) to publish, install, and delete public packages, which would break the low-friction `npx @blen/ashlar` adoption path.
 
+### First npm publish
+
+The first npm publish is a bootstrap exception because the `@blen/*` packages do
+not exist on npm yet. Use `npm-bootstrap.yml` once with a short-lived npm token
+that can publish public packages under the `@blen` scope. Do not paste the token
+into chat, issue bodies, or commit history.
+
+```bash
+read -rs NPM_TOKEN
+gh secret set NPM_TOKEN --repo blencorp/ashlar --body "$NPM_TOKEN"
+unset NPM_TOKEN
+
+gh workflow run npm-bootstrap.yml \
+  --repo blencorp/ashlar \
+  --ref main \
+  -f confirm=bootstrap-npm
+```
+
+After the workflow passes, verify the public install path before announcing the
+release:
+
+```bash
+pnpm release:verify-public
+```
+
+That command checks that npmjs has the current package versions and that `npx`,
+`pnpm dlx`, and `bunx` can execute `@blen/ashlar` from the public registry. The
+GitHub Release workflow also runs this check and refuses to create a release
+until the public install path works:
+
+```bash
+gh workflow run github-release.yml \
+  --repo blencorp/ashlar \
+  --ref main \
+  -f confirm=release
+```
+
+Once the packages exist on npm, configure trusted publishers for the long-term
+tokenless workflow:
+
+```bash
+npm trust github @blen/ashlar --repo blencorp/ashlar --file publish.yml
+npm trust github @blen/ashlar-cli --repo blencorp/ashlar --file publish.yml
+npm trust github @blen/ashlar-schemas --repo blencorp/ashlar --file publish.yml
+```
+
+Then delete the `NPM_TOKEN` GitHub secret and revoke the npm token. Future
+npmjs releases should use `publish.yml`, not `npm-bootstrap.yml`.
+
 `GitHub Packages` is wired separately as an authenticated mirror/canary workflow for the BLEN-owned scope. It is manual-dispatch only, main-only, requires the `publish-github-packages` confirmation, grants `packages: write`, configures `@blen:registry=https://npm.pkg.github.com`, publishes with `BLEN_GITHUB_PACKAGES_TOKEN`, and disables npm provenance for that registry. `ashlar release github-packages-check` verifies this wiring before CI or an operator attempts the mirror publish. This does not satisfy `npm-provenance-public`; only the npmjs trusted-publishing path does.
 
 ```bash
