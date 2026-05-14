@@ -20,7 +20,9 @@ Checked against current public references on 2026-05-14:
 
 ## Current evidence
 
-- Latest local commit on `main`: `2711007` (`ci: verify public installs during npm bootstrap`)
+- Latest pushed commit on `main`: `f6c0ce3` (`docs: clarify shippability evidence`)
+- CI passed on `f6c0ce3`: https://github.com/blencorp/ashlar/actions/runs/25883983360
+- Version Packages passed on `f6c0ce3`: https://github.com/blencorp/ashlar/actions/runs/25883983353
 - Package manifests:
   - `@blen/ashlar@0.3.23`
   - `@blen/ashlar-cli@0.3.23`
