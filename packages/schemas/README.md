@@ -7,9 +7,9 @@ registry indexes, lockfiles, agency themes, release readiness records, or trust
 bundle artifacts.
 
 ```ts
-import { schemaIds } from "@blen/ashlar-schemas";
+import { capsuleSchemaId } from "@blen/ashlar-schemas";
 
-console.log(schemaIds.capsule);
+console.log(capsuleSchemaId);
 ```
 
 Published schema entrypoints include:
