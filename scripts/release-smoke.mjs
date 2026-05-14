@@ -154,8 +154,10 @@ try {
   if (packedEntrypoint.bin?.ashlar !== "./bin/ashlar.js") {
     throw new Error("Packed @blen/ashlar package does not expose the ashlar binary.");
   }
-  if (typeof packedEntrypoint.dependencies?.["@blen/ashlar-cli"] !== "string") {
-    throw new Error("Packed @blen/ashlar package does not depend on @blen/ashlar-cli.");
+  if (packedEntrypoint.dependencies?.["@blen/ashlar-cli"] !== cliVersion) {
+    throw new Error(
+      `Packed @blen/ashlar package must depend on @blen/ashlar-cli ${cliVersion}; found ${packedEntrypoint.dependencies?.["@blen/ashlar-cli"] ?? "missing"}.`,
+    );
   }
 
   writeFileSync(
