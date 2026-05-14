@@ -154,6 +154,7 @@ See [docs/roadmap/00-roadmap.md](docs/roadmap/00-roadmap.md), [docs/roadmap/01-v
 - [Philosophy](docs/philosophy.md)
 - [Replacement-grade audit](docs/roadmap/replacement-grade-audit.md)
 - [Objective completion audit](docs/roadmap/objective-completion-audit.md)
+- [Shippability audit](docs/roadmap/shippability-audit-2026-05-14.md)
 - [Hands-on testing guide](docs/testing.md)
 - [External review plan](docs/roadmap/external-review-plan.md)
 - [Architecture overview](docs/architecture/overview.md)

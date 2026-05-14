@@ -2,7 +2,7 @@
 
 The honest, live index of what Ashlar implements, what is experimental, and what is planned. Every claim in `README.md`, `docs/strategy.md`, `docs/philosophy.md`, and the architecture docs should be consistent with this file. When a doc and STATUS disagree, STATUS is canonical.
 
-For the current prompt-to-artifact gap map against the broader "gov shadcn" objective, see [docs/roadmap/objective-completion-audit.md](docs/roadmap/objective-completion-audit.md).
+For the current prompt-to-artifact gap map against the broader "gov shadcn" objective, see [docs/roadmap/objective-completion-audit.md](docs/roadmap/objective-completion-audit.md). For the current release/testability decision, see [docs/roadmap/shippability-audit-2026-05-14.md](docs/roadmap/shippability-audit-2026-05-14.md).
 
 Date: 2026-05-08
 Phase: v0.0 prototype
