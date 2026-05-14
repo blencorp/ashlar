@@ -1,0 +1,58 @@
+name: npm Bootstrap
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: Type "bootstrap-npm" to publish the first public npm versions with NPM_TOKEN.
+        required: true
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+concurrency: npm-bootstrap-${{ github.ref }}
+
+jobs:
+  npm:
+    if: github.repository == 'blencorp/ashlar' && github.ref == 'refs/heads/main' && inputs.confirm == 'bootstrap-npm'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.2
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.15.0
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Require npm bootstrap token
+        run: test -n "$NODE_AUTH_TOKEN"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm build
+      - run: pnpm release:smoke
+      - run: node packages/cli/dist/index.js release readiness --registry ./registry --min-stable-markup-primitives 0 --allow-unverified-public --allow-local-signatures
+      - run: pnpm release
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: "true"
+      - run: node packages/cli/dist/index.js release provenance-verify-public
+      - run: mkdir -p reports && node packages/cli/dist/index.js release provenance-verify-public --json > reports/ashlar-npm-provenance.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ashlar-npm-bootstrap-provenance
+          path: reports/ashlar-npm-provenance.json
