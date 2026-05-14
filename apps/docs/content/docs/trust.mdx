@@ -27,6 +27,8 @@ visible.
 - You are using source-owned Ashlar starting points.
 - Installed files can be checked against registry metadata.
 - Theme adapters cite public design-system sources.
+- The current foundation capsules are v0.0 prototype material with explicit
+  evidence boundaries.
 
 ## What you cannot claim
 
@@ -34,3 +36,14 @@ visible.
 - Ashlar is endorsed by a government agency.
 - A component is accessibility-stable without completed evidence records.
 - A theme is accurate because it looks close in a screenshot.
+
+## Release gates
+
+The public release path is intentionally stricter than a local build:
+
+- public npm packages must exist and install through npm, pnpm, and bun;
+- npm provenance must verify for the exact published package versions;
+- capsule trust material must be published and verifiable by consumers;
+- external review records must match the evidence being claimed.
+
+Until those pass, Ashlar can ship only as an honest public prototype.

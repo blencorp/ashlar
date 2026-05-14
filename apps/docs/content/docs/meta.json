@@ -1,4 +1,13 @@
 {
   "title": "Documentation",
-  "pages": ["index", "installation", "cli", "components", "theming", "examples", "trust"]
+  "pages": [
+    "index",
+    "why-ashlar",
+    "installation",
+    "cli",
+    "components",
+    "theming",
+    "examples",
+    "trust"
+  ]
 }

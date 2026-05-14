@@ -7,6 +7,23 @@ Examples should prove that Ashlar works inside real app shapes. Each example
 should start from the same user flow: initialize, add components, import CSS,
 verify.
 
+## Case-board demo
+
+The current product demo is the Vite benefits case board. It is a dense
+public-service workflow, not a landing page.
+
+```bash
+pnpm --filter @blen/ashlar-example-vite dev
+```
+
+Look for:
+
+- official website banner and identifier footer;
+- queue metrics, filters, status messaging, and case actions;
+- Default, VA, and USDA theme switching;
+- light, dark, and system modes;
+- mobile layout with the same content and controls.
+
 ## Standard flow
 
 <AshlarCommand lines={["init", "add button alert text-input", "verify"]} />

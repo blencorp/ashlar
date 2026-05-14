@@ -1,0 +1,73 @@
+---
+title: Why Ashlar
+description: Ashlar keeps shadcn's source-ownership model and adds public-service proof gates.
+---
+
+Ashlar is inspired by shadcn's best idea: install source into your app so your
+team can read it, own it, and change it. Ashlar keeps that source-owned workflow
+but changes the contract around it for public-service teams.
+
+## The wedge
+
+shadcn is excellent at developer adoption. The weakness for government and
+regulated teams is not the copy step itself. It is everything after the copy:
+proving where source came from, seeing drift after local edits, updating safely,
+checking public-service rules, and giving AI tools contracts they can validate
+instead of paraphrasing.
+
+Ashlar treats those as first-class product requirements.
+
+| Need | shadcn-style baseline | Ashlar v0.0 answer |
+| --- | --- | --- |
+| Install source | Copy component source into the app | `ashlar add` copies capsule source into the app |
+| Configure theme | Global CSS variables | DTCG-shaped token JSON compiled to `ashlar.css`, `theme.css`, Tailwind v4 `@theme`, and typed tokens |
+| Know what changed | Manual code review | `ashlar verify` compares installed files to lockfile hashes |
+| Update safely | Re-copy or hand-merge | `ashlar update` uses three-way merge and capsule codemods |
+| Prove claims | Docs and examples | Evidence packets, audit rules, bundle budgets, release gates |
+| Help AI tools | Prose docs and source files | CEM metadata, `AGENTS.md`, `DESIGN.md`, MCP tools, and audit-backed validation |
+
+## What is real today
+
+- Source-owned foundation capsules for banners, forms, alerts, buttons, and
+  public-service page shells.
+- Federal policy audit rules that run against existing markup before a team
+  installs anything.
+- A theme system that starts with semantic tokens rather than agency color
+  trivia.
+- A Vite benefits case-board example that exercises the generated CSS, Tailwind
+  `@theme` output, Default/VA/USDA themes, light/dark/system modes, and
+  installed capsule contracts.
+- A release path that refuses stronger claims until public npm provenance,
+  capsule trust material, and external review records exist.
+
+<Callout type="warn" title="Claim boundary">
+Ashlar is a v0.0 prototype. It is useful for evaluating the source-owned,
+proof-gated model. It is not an accessibility-stable replacement for an agency
+design system yet.
+</Callout>
+
+## Product principles
+
+- **Default first.** Start with `default`. Agency adapters are opt-in and
+  source-derived; they are not endorsements.
+- **Native where possible.** Foundation capsules use platform HTML and CSS.
+  Custom elements are reserved for interactive controls that need behavior.
+- **Proof before language.** If a component does not have completed evidence, the
+  product should not describe it as stable.
+- **Small surface.** The app receives ordinary files. The registry, signing,
+  audits, and update mechanics live in the CLI.
+
+## Research alignment
+
+Current shadcn docs still center CSS-variable theming, `components.json`,
+registry distribution, and CLI commands such as `init`, `add`, `info`, and
+`docs`. Ashlar should stay close to that DX shape while making the missing
+government proof layer visible.
+
+Current public standards also support the Ashlar direction:
+
+- DTCG published a stable 2025.10 design-token Community Group report for
+  vendor-neutral token exchange.
+- USWDS continues to model tokens across color, spacing, and typography.
+- WHATWG custom elements and form-associated custom elements are real platform
+  primitives, but native HTML should remain the default for simple controls.

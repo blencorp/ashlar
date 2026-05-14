@@ -1,15 +1,35 @@
 ---
 title: Introduction
-description: Ashlar is a proof-gated source registry for public-service interfaces.
+description: Ashlar is source-owned UI infrastructure for public-service interfaces.
 ---
 
 Ashlar installs public-service UI source into your application. You run the CLI,
-choose components, and own the copied files in your repo.
+choose capsules, and own the copied files in your repo.
+
+The model is deliberately close to shadcn's source-owned workflow, but the proof
+layer is different: hashes, lockfiles, update survival, public-service audits,
+theme provenance, AI-readable contracts, and release gates.
 
 <Callout type="warn" title="Current release posture">
 Ashlar is early software. Use it as source-owned starter material, not as an
 accessibility-stable replacement for an agency design system.
 </Callout>
+
+## What to test first
+
+From this checkout, the most useful product test is the Vite case board:
+
+```bash
+pnpm --filter @blen/ashlar-example-vite dev
+```
+
+Open the local URL and check whether the same components hold up across the
+Default, VA, and USDA themes, plus light, dark, and system modes.
+
+For a clean consumer install after public npm publish, the intended first-run
+path is:
+
+<AshlarCommand lines={["init", "add button alert text-input", "verify"]} />
 
 ## Quick start
 
@@ -55,3 +75,10 @@ metadata so local changes are visible.
   review records, tests, and cited sources.
 - Default first: the base theme is named `default`. Agency themes are explicit
   adapters, not endorsements.
+
+## How Ashlar should feel
+
+- Like shadcn when installing source.
+- Like a government validator when checking public-service rules.
+- Like a token compiler when producing global CSS.
+- Like a release engineer when proving provenance and evidence.

@@ -1,15 +1,46 @@
 ---
 title: Theming
-description: Use the Default theme first, then opt into source-derived agency adapters.
+description: Use one semantic token contract, then opt into source-derived agency adapters.
 ---
 
-Ashlar ships a `default` theme and source-derived agency adapters. The adapters
-are token files grounded in public guidance; they are not agency endorsements or
-official brand systems.
+Ashlar's theme system is the "global CSS" part of the product, but it is not a
+loose pile of CSS variables. Theme source lives in DTCG-shaped JSON. The CLI
+compiles that source into plain CSS variables, a Tailwind v4 `@theme` companion
+file, and typed token names.
 
-## Sync generated theme output
+Ashlar ships a `default` theme and source-derived agency adapters. The adapters
+are grounded in public guidance; they are not agency endorsements or official
+brand systems.
+
+## The contract
+
+```bash
+src/ashlar/themes/default.tokens.json
+src/ashlar/themes/va.tokens.json
+src/ashlar/themes/usda.tokens.json
+```
+
+Those files produce:
+
+```bash
+src/ashlar/ashlar.css
+src/ashlar/themes/theme.css
+src/ashlar/themes/tailwind-theme.css
+src/ashlar/themes/tokens.ts
+```
+
+Use the generated entrypoint from your app stylesheet:
+
+```css
+@import "./src/ashlar/ashlar.css";
+```
+
+## Sync and validate
 
 <AshlarCommand lines={["theme sync", "theme validate"]} />
+
+`theme validate` checks schema shape, reviewed provenance, public source dates,
+required semantic token paths, and action color contrast in light and dark mode.
 
 ## Theme names
 
@@ -32,14 +63,37 @@ official brand systems.
 - USDA Design and Brand Plays:
   https://www.usda.gov/about-usda/policies-and-links/digital/digital-strategy/design-and-brand/design-and-brand-plays
 
-## CSS output
+## Token shape
 
-```bash
-src/ashlar/ashlar.css
-src/ashlar/themes/theme.css
-src/ashlar/themes/tailwind-theme.css
-src/ashlar/themes/tokens.ts
+Use semantic paths first:
+
+```json
+{
+  "color": {
+    "action": {
+      "primary": {
+        "bg": { "$type": "color", "$value": "#005ea8" },
+        "fg": { "$type": "color", "$value": "#ffffff" }
+      }
+    }
+  },
+  "focus": {
+    "ring": {
+      "color": { "$type": "color", "$value": "{color.focus}" }
+    }
+  }
+}
 ```
+
+The generated CSS uses predictable names such as
+`--ashlar-color-action-primary-bg` and
+`--ashlar-focus-ring-color`.
+
+## Tailwind v4
+
+Ashlar emits `tailwind-theme.css` so Tailwind utilities can consume the same
+tokens without a JavaScript config fork. That keeps the source of truth in token
+JSON while still supporting utility-first app code.
 
 ## Review checklist
 
