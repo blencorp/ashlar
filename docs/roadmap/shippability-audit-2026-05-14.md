@@ -30,7 +30,7 @@ Checked against current public references on 2026-05-14:
 - Public npm state: `npm view @blen/ashlar version --registry https://registry.npmjs.org` returns `E404`
 - GitHub secret state: `gh secret list --repo blencorp/ashlar` lists `NPM_TOKEN` updated at `2026-05-14T20:16:32Z`
 - GitHub Releases state: no releases yet
-- Local browser evidence: `output/playwright/ashlar-vite-desktop.png`, `output/playwright/ashlar-vite-mobile.png`, and `output/playwright/ashlar-docs-desktop.png` capture the Vite case board and first-run docs surfaces
+- Browser evidence: local Playwright checks covered the Vite case board and first-run docs surfaces before this audit refresh; durable automated visual evidence remains the CI `examples:visual` artifact set
 - Local dirty state before this audit refresh: `.gitignore` already had `.remember/`
 
 ## Prompt-to-artifact checklist
