@@ -1,7 +1,21 @@
 {
   "name": "@blen/ashlar-cli",
   "version": "0.3.23",
-  "description": "Ashlar component registry CLI.",
+  "description": "Command-line implementation for Ashlar source capsules, audits, themes, and provenance checks.",
+  "keywords": [
+    "accessibility",
+    "ai",
+    "cli",
+    "design-system",
+    "government",
+    "public-services",
+    "registry",
+    "ui"
+  ],
+  "homepage": "https://github.com/blencorp/ashlar#readme",
+  "bugs": {
+    "url": "https://github.com/blencorp/ashlar/issues"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

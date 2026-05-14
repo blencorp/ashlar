@@ -1,7 +1,21 @@
 {
   "name": "@blen/ashlar",
   "version": "0.3.23",
-  "description": "Scoped npx entrypoint for the Ashlar CLI.",
+  "description": "Source-owned UI infrastructure for public-service teams.",
+  "keywords": [
+    "accessibility",
+    "ai",
+    "cli",
+    "design-system",
+    "government",
+    "public-services",
+    "registry",
+    "ui"
+  ],
+  "homepage": "https://github.com/blencorp/ashlar#readme",
+  "bugs": {
+    "url": "https://github.com/blencorp/ashlar/issues"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

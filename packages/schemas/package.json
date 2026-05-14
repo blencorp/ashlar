@@ -2,6 +2,20 @@
   "name": "@blen/ashlar-schemas",
   "version": "0.1.5",
   "description": "JSON Schemas and TypeScript constants for Ashlar registry artifacts.",
+  "keywords": [
+    "accessibility",
+    "ai",
+    "design-system",
+    "government",
+    "json-schema",
+    "public-services",
+    "registry",
+    "ui"
+  ],
+  "homepage": "https://github.com/blencorp/ashlar#readme",
+  "bugs": {
+    "url": "https://github.com/blencorp/ashlar/issues"
+  },
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
