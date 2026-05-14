@@ -13,6 +13,7 @@ describe("CI workflow", () => {
       "ci.yml",
       "conventional-commits.yml",
       "github-packages.yml",
+      "github-release.yml",
       "npm-bootstrap.yml",
       "publish.yml",
       "sigstore.yml",
