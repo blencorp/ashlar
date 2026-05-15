@@ -50,7 +50,7 @@ Checked against current public references on 2026-05-14:
 | Docs app | `apps/docs` rebuilt on Fumadocs; first-run docs now explain the shadcn-inspired wedge, the simple theme contract, what to test, and release claim boundaries | Partial | Needs post-publish user review for clarity and visual acceptance |
 | Conventional release/version path | Changesets/version workflows, npm bootstrap workflow, tokenless publish workflow, guarded GitHub Release workflow | Partial | Workflows are present and CI-green; npm token/trusted-publisher setup is still external |
 | Public npm package quality | Package READMEs, Apache license files, npm descriptions, keywords, homepage, bugs URL, and release-smoke tarball guards | Pass for first prototype publish | Does not replace real external install testing after publish |
-| Public npm package | `npm-bootstrap.yml` can publish with `NPM_TOKEN` and now verifies `npx`, `pnpm dlx`, and `bunx` immediately after publish; `publish.yml` is the tokenless long-term path | Ready for approval | `NPM_TOKEN` exists; packages still return `E404` until bootstrap publish runs |
+| Public npm package | `npm-bootstrap.yml` can publish with a GitHub Actions release secret and now verifies `npx`, `pnpm dlx`, and `bunx` immediately after publish; `publish.yml` is the tokenless long-term path | Ready for approval | Packages still return `E404` until bootstrap publish runs |
 | GitHub Releases visible | `github-release.yml` creates `v<version>` only after npm packages and public install commands pass | Blocked | Cannot run until npm publish succeeds |
 
 ## Ship decision
