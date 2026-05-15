@@ -9,3 +9,4 @@ ashlar.sarif
 ashlar-lock.json
 output/
 reports/
+.remember/

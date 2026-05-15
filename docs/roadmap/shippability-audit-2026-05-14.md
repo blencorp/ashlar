@@ -30,7 +30,7 @@ Checked against current public references on 2026-05-14:
   - all have `publishConfig.access: "public"`, `publishConfig.provenance: true`, repository metadata, homepage links, issue links, keywords, bundled `README.md`, and bundled `LICENSE`
 - Package smoke: `pnpm release:smoke` now requires `package/README.md` and `package/LICENSE` in all three public tarballs and verifies the packed CLI installs into a throwaway consumer app
 - Public npm state: `npm view @blen/ashlar version --registry https://registry.npmjs.org` returns `E404`
-- GitHub secret state: `gh secret list --repo blencorp/ashlar` lists `NPM_TOKEN` updated at `2026-05-14T20:16:32Z`
+- GitHub Actions release secrets are managed outside the repository; secret values and update timestamps are intentionally not recorded in docs.
 - GitHub Releases state: no releases yet
 - Browser evidence: local Playwright checks covered the Vite case board and first-run docs surfaces before this audit refresh; durable automated visual evidence remains the CI `examples:visual` artifact set
 - Local dirty state before this audit refresh: `.gitignore` already had `.remember/`
