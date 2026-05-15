@@ -512,110 +512,120 @@ const scenarios: Scenario[] = [
   },
 ];
 
+const updateSurvivalTimeoutMs = 60_000;
+
 describe("update survival harness", () => {
-  it("measures conflict rate and samples merge correctness across 11 scenarios", () => {
-    const reports: UpdateReport[] = [];
-    let correctnessSamples = 0;
+  it(
+    "measures conflict rate and samples merge correctness across 11 scenarios",
+    () => {
+      const reports: UpdateReport[] = [];
+      let correctnessSamples = 0;
 
-    for (const scenario of scenarios) {
-      const fixture = createFixture();
-      try {
-        scenario.editLocal?.(fixture);
-        scenario.publish(fixture);
+      for (const scenario of scenarios) {
+        const fixture = createFixture();
+        try {
+          scenario.editLocal?.(fixture);
+          scenario.publish(fixture);
 
-        const result = updateWithReport(fixture);
+          const result = updateWithReport(fixture);
 
-        expect(result.status, scenario.name).toBe(scenario.status);
-        expect(result.report.updates, scenario.name).toHaveLength(1);
-        scenario.assert(fixture, result.report);
-        reports.push(result.report);
-        correctnessSamples += 1;
-      } finally {
-        rmSync(fixture.root, { recursive: true, force: true });
+          expect(result.status, scenario.name).toBe(scenario.status);
+          expect(result.report.updates, scenario.name).toHaveLength(1);
+          scenario.assert(fixture, result.report);
+          reports.push(result.report);
+          correctnessSamples += 1;
+        } finally {
+          rmSync(fixture.root, { recursive: true, force: true });
+        }
       }
-    }
 
-    const files = reports.reduce((total, report) => total + report.totals.files, 0);
-    const conflicts = reports.reduce((total, report) => total + report.totals.conflicts, 0);
-    const conflictRate = conflicts / files;
+      const files = reports.reduce((total, report) => total + report.totals.files, 0);
+      const conflicts = reports.reduce((total, report) => total + report.totals.conflicts, 0);
+      const conflictRate = conflicts / files;
 
-    expect(scenarios).toHaveLength(11);
-    expect(correctnessSamples).toBe(11);
-    expect(files).toBeGreaterThanOrEqual(44);
-    expect(conflicts).toBe(2);
-    expect(conflictRate).toBeLessThan(0.05);
-  }, 20_000);
+      expect(scenarios).toHaveLength(11);
+      expect(correctnessSamples).toBe(11);
+      expect(files).toBeGreaterThanOrEqual(44);
+      expect(conflicts).toBe(2);
+      expect(conflictRate).toBeLessThan(0.05);
+    },
+    updateSurvivalTimeoutMs,
+  );
 
-  it("updates a copied Vite consumer and preserves a production build", () => {
-    const root = mkdtempSync(join(tmpdir(), "ashlar-vite-update-survival-"));
-    const app = join(root, "app");
-    const registry = seedRegistry(root);
-    cpSync(sourceViteExample, app, {
-      filter: (source) => {
-        const segments = relative(sourceViteExample, source).split(/[\\/]+/);
-        return !segments.some((segment) => [".turbo", "dist", "node_modules"].includes(segment));
-      },
-      recursive: true,
-    });
-    cpSync(sourceExampleShared, join(root, "shared"), { recursive: true });
-    symlinkSync(join(sourceViteExample, "node_modules"), join(app, "node_modules"), "dir");
-    writeJson(join(app, "ashlar.config.json"), {
-      $schema: "https://ashlar.dev/schemas/config.schema.json",
-      registry,
-      componentsDir: "src/ashlar/components",
-      indexesDir: "src/ashlar/indexes",
-      styles: {
-        entrypoint: "src/ashlar/ashlar.css",
-        theme: "src/ashlar/themes/theme.css",
-        tailwindTheme: "src/ashlar/themes/tailwind-theme.css",
-        tokenTypes: "src/ashlar/themes/tokens.ts",
-      },
-    });
+  it(
+    "updates a copied Vite consumer and preserves a production build",
+    () => {
+      const root = mkdtempSync(join(tmpdir(), "ashlar-vite-update-survival-"));
+      const app = join(root, "app");
+      const registry = seedRegistry(root);
+      cpSync(sourceViteExample, app, {
+        filter: (source) => {
+          const segments = relative(sourceViteExample, source).split(/[\\/]+/);
+          return !segments.some((segment) => [".turbo", "dist", "node_modules"].includes(segment));
+        },
+        recursive: true,
+      });
+      cpSync(sourceExampleShared, join(root, "shared"), { recursive: true });
+      symlinkSync(join(sourceViteExample, "node_modules"), join(app, "node_modules"), "dir");
+      writeJson(join(app, "ashlar.config.json"), {
+        $schema: "https://ashlar.dev/schemas/config.schema.json",
+        registry,
+        componentsDir: "src/ashlar/components",
+        indexesDir: "src/ashlar/indexes",
+        styles: {
+          entrypoint: "src/ashlar/ashlar.css",
+          theme: "src/ashlar/themes/theme.css",
+          tailwindTheme: "src/ashlar/themes/tailwind-theme.css",
+          tokenTypes: "src/ashlar/themes/tokens.ts",
+        },
+      });
 
-    const fixture: Fixture = {
-      cssPath: join(app, "src", "ashlar", "components", "button", "button.css"),
-      htmlPath: join(app, "src", "ashlar", "components", "button", "button.html"),
-      registry,
-      root: app,
-      runCli: (args: string[]) => {
-        const result = spawnSync(process.execPath, [cliEntry, ...args], {
+      const fixture: Fixture = {
+        cssPath: join(app, "src", "ashlar", "components", "button", "button.css"),
+        htmlPath: join(app, "src", "ashlar", "components", "button", "button.html"),
+        registry,
+        root: app,
+        runCli: (args: string[]) => {
+          const result = spawnSync(process.execPath, [cliEntry, ...args], {
+            cwd: app,
+            encoding: "utf8",
+            stdio: ["ignore", "pipe", "pipe"],
+          });
+
+          return {
+            status: result.status ?? 1,
+            stdout: `${result.stdout ?? ""}${result.stderr ?? ""}`,
+          };
+        },
+      };
+
+      try {
+        writeFileSync(
+          fixture.cssPath,
+          `${readFileSync(fixture.cssPath, "utf8")}\n.vite-local-action { letter-spacing: 0.01em; }\n`,
+        );
+        publishButtonV2(fixture, {
+          cssTransform: (css) => css.replace("transform 150ms ease;", "transform 200ms ease;"),
+        });
+
+        const update = updateWithReport(fixture);
+        const css = readFileSync(fixture.cssPath, "utf8");
+        const build = spawnSync(join(app, "node_modules", ".bin", "vite"), ["build"], {
           cwd: app,
           encoding: "utf8",
           stdio: ["ignore", "pipe", "pipe"],
         });
 
-        return {
-          status: result.status ?? 1,
-          stdout: `${result.stdout ?? ""}${result.stderr ?? ""}`,
-        };
-      },
-    };
-
-    try {
-      writeFileSync(
-        fixture.cssPath,
-        `${readFileSync(fixture.cssPath, "utf8")}\n.vite-local-action { letter-spacing: 0.01em; }\n`,
-      );
-      publishButtonV2(fixture, {
-        cssTransform: (css) => css.replace("transform 150ms ease;", "transform 200ms ease;"),
-      });
-
-      const update = updateWithReport(fixture);
-      const css = readFileSync(fixture.cssPath, "utf8");
-      const build = spawnSync(join(app, "node_modules", ".bin", "vite"), ["build"], {
-        cwd: app,
-        encoding: "utf8",
-        stdio: ["ignore", "pipe", "pipe"],
-      });
-
-      expect(update.status).toBe(0);
-      expect(update.report.updates[0]?.files.merged).toBeGreaterThan(0);
-      expect(update.report.totals.conflictRate).toBe(0);
-      expect(css).toContain("transform 200ms ease;");
-      expect(css).toContain(".vite-local-action { letter-spacing: 0.01em; }");
-      expect(build.status, `${build.stdout}\n${build.stderr}`).toBe(0);
-    } finally {
-      rmSync(root, { recursive: true, force: true });
-    }
-  }, 20_000);
+        expect(update.status).toBe(0);
+        expect(update.report.updates[0]?.files.merged).toBeGreaterThan(0);
+        expect(update.report.totals.conflictRate).toBe(0);
+        expect(css).toContain("transform 200ms ease;");
+        expect(css).toContain(".vite-local-action { letter-spacing: 0.01em; }");
+        expect(build.status, `${build.stdout}\n${build.stderr}`).toBe(0);
+      } finally {
+        rmSync(root, { recursive: true, force: true });
+      }
+    },
+    updateSurvivalTimeoutMs,
+  );
 });
